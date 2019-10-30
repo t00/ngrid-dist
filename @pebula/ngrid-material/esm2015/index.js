@@ -1,0 +1,6 @@
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+export { PblNgridMaterialModule } from './lib/ngrid-material.module';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290Ijoibmc6Ly9AcGVidWxhL25ncmlkLW1hdGVyaWFsLyIsInNvdXJjZXMiOlsiaW5kZXgudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7OztBQUFBLHVDQUFjLDZCQUE2QixDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiZXhwb3J0ICogZnJvbSAnLi9saWIvbmdyaWQtbWF0ZXJpYWwubW9kdWxlJztcblxuZXhwb3J0IHsgQ2VsbFRvb2x0aXBPcHRpb25zIH0gZnJvbSAnQHBlYnVsYS9uZ3JpZC1tYXRlcmlhbC9jZWxsLXRvb2x0aXAnO1xuIl19

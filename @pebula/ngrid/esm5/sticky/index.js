@@ -1,0 +1,7 @@
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+export { setStickyRow, setStickyColumns } from './lib/sticky/sticky-plugin';
+export { PblNgridStickyModule } from './lib/sticky.module';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290Ijoibmc6Ly9AcGVidWxhL25ncmlkL3N0aWNreS8iLCJzb3VyY2VzIjpbImluZGV4LnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7QUFBQSxPQUFPLEVBQUUsWUFBWSxFQUFFLGdCQUFnQixFQUFHLE1BQU0sNEJBQTRCLENBQUM7QUFDN0UsT0FBTyxFQUFFLG9CQUFvQixFQUFFLE1BQU0scUJBQXFCLENBQUMiLCJzb3VyY2VzQ29udGVudCI6WyJleHBvcnQgeyBzZXRTdGlja3lSb3csIHNldFN0aWNreUNvbHVtbnMgIH0gZnJvbSAnLi9saWIvc3RpY2t5L3N0aWNreS1wbHVnaW4nO1xuZXhwb3J0IHsgUGJsTmdyaWRTdGlja3lNb2R1bGUgfSBmcm9tICcuL2xpYi9zdGlja3kubW9kdWxlJztcbiJdfQ==

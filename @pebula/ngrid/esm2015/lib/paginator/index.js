@@ -1,0 +1,6 @@
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+export { PblTokenPaginator, PblPagingPaginator } from './paginator';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290Ijoibmc6Ly9AcGVidWxhL25ncmlkLyIsInNvdXJjZXMiOlsibGliL3BhZ2luYXRvci9pbmRleC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7O0FBQUEsT0FBTyxFQUF1QyxpQkFBaUIsRUFBRSxrQkFBa0IsRUFBMkIsTUFBTSxhQUFhLENBQUMiLCJzb3VyY2VzQ29udGVudCI6WyJleHBvcnQgeyBQYmxOZ3JpZFBhZ2luYXRvcktpbmQsIFBibFBhZ2luYXRvciwgUGJsVG9rZW5QYWdpbmF0b3IsIFBibFBhZ2luZ1BhZ2luYXRvciwgUGJsUGFnaW5hdG9yQ2hhbmdlRXZlbnQgfSBmcm9tICcuL3BhZ2luYXRvcic7XG4iXX0=

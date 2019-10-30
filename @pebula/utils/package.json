@@ -1,0 +1,44 @@
+{
+  "_from": "@pebula/utils@latest",
+  "_id": "@pebula/utils@1.0.0",
+  "_inBundle": false,
+  "_integrity": "sha512-xAo1ipQV1sQqCeaApp2m6Us3J26k+TJUf0CoxhJBvTj0HeZQI+/cPPhtVuf8+4euCuFrpoOSN2ubTRsMMITRZQ==",
+  "_location": "/@pebula/utils",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "@pebula/utils@latest",
+    "name": "@pebula/utils",
+    "escapedName": "@pebula%2futils",
+    "scope": "@pebula",
+    "rawSpec": "latest",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/@pebula/utils/-/utils-1.0.0.tgz",
+  "_shasum": "c92a55148c2d99d780e0e920977e637874bd2550",
+  "_spec": "@pebula/utils@latest",
+  "_where": "C:\\dev\\products\\Speedwell\\Speedwell.WebApp\\Speedwell.WebApp",
+  "bundleDependencies": false,
+  "dependencies": {
+    "tslib": "^1.9.0"
+  },
+  "deprecated": false,
+  "es2015": "fesm2015/pebula-utils.js",
+  "esm2015": "esm2015/pebula-utils.js",
+  "esm5": "esm5/pebula-utils.js",
+  "fesm2015": "fesm2015/pebula-utils.js",
+  "fesm5": "fesm5/pebula-utils.js",
+  "main": "bundles/pebula-utils.umd.js",
+  "metadata": "pebula-utils.metadata.json",
+  "module": "fesm5/pebula-utils.js",
+  "name": "@pebula/utils",
+  "sideEffects": false,
+  "typings": "pebula-utils.d.ts",
+  "version": "1.0.0"
+}

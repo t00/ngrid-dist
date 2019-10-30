@@ -1,0 +1,69 @@
+{
+  "_from": "@pebula/ngrid@latest",
+  "_id": "@pebula/ngrid@1.0.0-rc.9",
+  "_inBundle": false,
+  "_integrity": "sha512-V8BJPAzdSZsIUNDTufKjvFdCRYEXxDmYAgZCHMqGyOoQaKw1Xa6UjgH6V4V4xDj3R+8GJzYMkZ7pPFfRdj0yQA==",
+  "_location": "/@pebula/ngrid",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "@pebula/ngrid@latest",
+    "name": "@pebula/ngrid",
+    "escapedName": "@pebula%2fngrid",
+    "scope": "@pebula",
+    "rawSpec": "latest",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/@pebula/ngrid/-/ngrid-1.0.0-rc.9.tgz",
+  "_shasum": "909e83008511de0d6ed49e660ec173f2a500c725",
+  "_spec": "@pebula/ngrid@latest",
+  "_where": "C:\\dev\\products\\Speedwell\\Speedwell.WebApp\\Speedwell.WebApp",
+  "author": {
+    "name": "Shlomi Assaf"
+  },
+  "bugs": {
+    "url": "https://github.com/shlomiassaf/ngrid/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "tslib": "^1.9.0"
+  },
+  "deprecated": false,
+  "description": "Angular Grid",
+  "es2015": "fesm2015/pebula-ngrid.js",
+  "esm2015": "esm2015/pebula-ngrid.js",
+  "esm5": "esm5/pebula-ngrid.js",
+  "fesm2015": "fesm2015/pebula-ngrid.js",
+  "fesm5": "fesm5/pebula-ngrid.js",
+  "homepage": "https://github.com/shlomiassaf/ngrid",
+  "keywords": [
+    "angular",
+    "grid",
+    "table"
+  ],
+  "license": "MIT",
+  "main": "bundles/pebula-ngrid.umd.js",
+  "metadata": "pebula-ngrid.metadata.json",
+  "module": "fesm5/pebula-ngrid.js",
+  "name": "@pebula/ngrid",
+  "peerDependencies": {
+    "@angular/common": "^8.0.0",
+    "@angular/core": "^8.0.0",
+    "@angular/cdk": "^8.0.0",
+    "resize-observer-polyfill": "^1.5.0",
+    "@pebula/utils": "1.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shlomiassaf/ngrid.git"
+  },
+  "sideEffects": false,
+  "typings": "pebula-ngrid.d.ts",
+  "version": "1.0.0-rc.9"
+}

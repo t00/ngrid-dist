@@ -1,0 +1,7 @@
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+export { PblNgridMatSortDirective } from './lib/mat-sort.directive';
+export { PblNgridMatSortModule } from './lib/mat-sort.module';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290Ijoibmc6Ly9AcGVidWxhL25ncmlkLW1hdGVyaWFsL3NvcnQvIiwic291cmNlcyI6WyJpbmRleC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7O0FBQUEsT0FBTyxFQUFFLHdCQUF3QixFQUFFLE1BQU8sMEJBQTBCLENBQUM7QUFDckUsT0FBTyxFQUFFLHFCQUFxQixFQUFFLE1BQU0sdUJBQXVCLENBQUMiLCJzb3VyY2VzQ29udGVudCI6WyJleHBvcnQgeyBQYmxOZ3JpZE1hdFNvcnREaXJlY3RpdmUgfSAgZnJvbSAnLi9saWIvbWF0LXNvcnQuZGlyZWN0aXZlJztcbmV4cG9ydCB7IFBibE5ncmlkTWF0U29ydE1vZHVsZSB9IGZyb20gJy4vbGliL21hdC1zb3J0Lm1vZHVsZSc7XG4iXX0=

@@ -1,0 +1,7 @@
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+export { toggleDetailRow } from './lib/detail-row/detail-row-plugin';
+export { PblNgridDetailRowModule } from './lib/table-detail-row.module';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290Ijoibmc6Ly9AcGVidWxhL25ncmlkL2RldGFpbC1yb3cvIiwic291cmNlcyI6WyJpbmRleC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7O0FBQUEsT0FBTyxFQUFFLGVBQWUsRUFBNEIsTUFBTSxvQ0FBb0MsQ0FBQztBQUMvRixPQUFPLEVBQUUsdUJBQXVCLEVBQUUsTUFBTSwrQkFBK0IsQ0FBQyIsInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCB7IHRvZ2dsZURldGFpbFJvdywgUGJsRGV0YWlsc1Jvd1RvZ2dsZUV2ZW50IH0gZnJvbSAnLi9saWIvZGV0YWlsLXJvdy9kZXRhaWwtcm93LXBsdWdpbic7XG5leHBvcnQgeyBQYmxOZ3JpZERldGFpbFJvd01vZHVsZSB9IGZyb20gJy4vbGliL3RhYmxlLWRldGFpbC1yb3cubW9kdWxlJztcbiJdfQ==

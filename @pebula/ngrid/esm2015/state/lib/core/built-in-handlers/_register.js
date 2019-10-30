@@ -1,0 +1,16 @@
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+import { registerGridHandlers } from './grid-primitives/index';
+import { registerColumnOrderHandlers } from './column-order/index';
+import { registerColumnDefHandlers } from './column-def/index';
+/**
+ * @return {?}
+ */
+export function registerBuiltInHandlers() {
+    registerGridHandlers();
+    registerColumnOrderHandlers();
+    registerColumnDefHandlers();
+}
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiX3JlZ2lzdGVyLmpzIiwic291cmNlUm9vdCI6Im5nOi8vQHBlYnVsYS9uZ3JpZC9zdGF0ZS8iLCJzb3VyY2VzIjpbImxpYi9jb3JlL2J1aWx0LWluLWhhbmRsZXJzL19yZWdpc3Rlci50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7O0FBQUEsT0FBTyxFQUFFLG9CQUFvQixFQUFFLE1BQU0seUJBQXlCLENBQUM7QUFDL0QsT0FBTyxFQUFFLDJCQUEyQixFQUFFLE1BQU0sc0JBQXNCLENBQUM7QUFDbkUsT0FBTyxFQUFFLHlCQUF5QixFQUFFLE1BQU0sb0JBQW9CLENBQUM7Ozs7QUFFL0QsTUFBTSxVQUFVLHVCQUF1QjtJQUNyQyxvQkFBb0IsRUFBRSxDQUFDO0lBQ3ZCLDJCQUEyQixFQUFFLENBQUM7SUFDOUIseUJBQXlCLEVBQUUsQ0FBQztBQUM5QixDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgcmVnaXN0ZXJHcmlkSGFuZGxlcnMgfSBmcm9tICcuL2dyaWQtcHJpbWl0aXZlcy9pbmRleCc7XG5pbXBvcnQgeyByZWdpc3RlckNvbHVtbk9yZGVySGFuZGxlcnMgfSBmcm9tICcuL2NvbHVtbi1vcmRlci9pbmRleCc7XG5pbXBvcnQgeyByZWdpc3RlckNvbHVtbkRlZkhhbmRsZXJzIH0gZnJvbSAnLi9jb2x1bW4tZGVmL2luZGV4JztcblxuZXhwb3J0IGZ1bmN0aW9uIHJlZ2lzdGVyQnVpbHRJbkhhbmRsZXJzKCkge1xuICByZWdpc3RlckdyaWRIYW5kbGVycygpO1xuICByZWdpc3RlckNvbHVtbk9yZGVySGFuZGxlcnMoKTtcbiAgcmVnaXN0ZXJDb2x1bW5EZWZIYW5kbGVycygpO1xufVxuIl19
