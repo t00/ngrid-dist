@@ -3,8 +3,8 @@ import { ReplaySubject, fromEvent, timer } from 'rxjs';
 import { filter, tap, switchMap, takeUntil, map, bufferWhen, debounce } from 'rxjs/operators';
 import { EventEmitter, ChangeDetectorRef, Injector, Directive, Input, NgModule, Optional, SkipSelf } from '@angular/core';
 import { UnRx } from '@pebula/utils';
-import { PblColumn, PblNgridPluginController, TablePlugin, PblNgridComponent, PblNgridModule, PblNgridConfigService } from '@pebula/ngrid';
-import { UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW } from '@angular/cdk/keycodes';
+import { PblColumn, PblNgridPluginController, PblNgridComponent, TablePlugin, PblNgridModule, PblNgridConfigService } from '@pebula/ngrid';
+import { RIGHT_ARROW, LEFT_ARROW, DOWN_ARROW, UP_ARROW } from '@angular/cdk/keycodes';
 import { CommonModule } from '@angular/common';
 import { CdkTableModule } from '@angular/cdk/table';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
@@ -1008,6 +1008,11 @@ var PblNgridTargetEventsPlugin = /** @class */ (function () {
         this.table._cdkTable.syncRows(event.type, event.rowIndex);
     };
     var PblNgridTargetEventsPlugin_1;
+    PblNgridTargetEventsPlugin.ctorParameters = function () { return [
+        { type: PblNgridComponent },
+        { type: Injector },
+        { type: PblNgridPluginController }
+    ]; };
     /**
      * @template T
      */
@@ -1087,6 +1092,11 @@ var PblNgridTargetEventsPluginDirective = /** @class */ (function (_super) {
     function () {
         this.destroy();
     };
+    PblNgridTargetEventsPluginDirective.ctorParameters = function () { return [
+        { type: PblNgridComponent },
+        { type: Injector },
+        { type: PblNgridPluginController }
+    ]; };
     PblNgridTargetEventsPluginDirective.decorators = [
         { type: Directive, args: [{
                     // tslint:disable-next-line:directive-selector
@@ -1208,6 +1218,11 @@ var PblNgridCellEditDirective = /** @class */ (function () {
             }
         }
     };
+    PblNgridCellEditDirective.ctorParameters = function () { return [
+        { type: PblNgridComponent },
+        { type: Injector },
+        { type: PblNgridPluginController }
+    ]; };
     PblNgridCellEditDirective.decorators = [
         { type: Directive, args: [{
                     // tslint:disable-next-line:directive-selector

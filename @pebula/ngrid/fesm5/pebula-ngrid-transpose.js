@@ -529,6 +529,11 @@ var PblNgridTransposePluginDirective = /** @class */ (function () {
             this.selfColumn = new PblColumn(this._header, this.pluginCtrl.extApi.columnStore.groupStore);
         }
     };
+    PblNgridTransposePluginDirective.ctorParameters = function () { return [
+        { type: PblNgridComponent },
+        { type: PblNgridPluginController },
+        { type: PblNgridConfigService }
+    ]; };
     PblNgridTransposePluginDirective.decorators = [
         { type: Directive, args: [{ selector: 'pbl-ngrid[transpose]' },] }
     ];

@@ -143,6 +143,11 @@ let PblNgridMatSortDirective = class PblNgridMatSortDirective {
         }
     }
 };
+PblNgridMatSortDirective.ctorParameters = () => [
+    { type: PblNgridComponent },
+    { type: PblNgridPluginController },
+    { type: MatSort }
+];
 PblNgridMatSortDirective.decorators = [
     { type: Directive, args: [{ selector: 'pbl-ngrid[matSort]', exportAs: 'pblMatSort' },] }
 ];

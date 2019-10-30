@@ -1,5 +1,5 @@
 import { __decorate, __metadata } from 'tslib';
-import { Directive, TemplateRef, IterableDiffers, Component, EventEmitter, ComponentFactoryResolver, Injector, Input, Output, ChangeDetectionStrategy, ViewEncapsulation, Optional, Inject, ElementRef, ViewContainerRef, NgModule } from '@angular/core';
+import { Directive, TemplateRef, IterableDiffers, Component, EventEmitter, ComponentFactoryResolver, Injector, Input, Output, ElementRef, ViewContainerRef, ChangeDetectionStrategy, ViewEncapsulation, Optional, Inject, NgModule } from '@angular/core';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { UnRx } from '@pebula/utils';
 import { PblNgridSingleTemplateRegistry, PblNgridRegistryService, PblNgridPluginController, PblNgridComponent, TablePlugin, PblNgridRowComponent, EXT_API_TOKEN, PblNgridModule } from '@pebula/ngrid';
@@ -443,6 +443,11 @@ class PblNgridDetailRowPluginDirective {
         this.table._cdkTable.multiTemplateDataRows = !!this._detailRow;
     }
 };
+PblNgridDetailRowPluginDirective.ctorParameters = () => [
+    { type: PblNgridComponent },
+    { type: PblNgridPluginController },
+    { type: Injector }
+];
 PblNgridDetailRowPluginDirective.decorators = [
     { type: Directive, args: [{ selector: 'pbl-ngrid[detailRow]', exportAs: 'pblNgridDetailRow' },] }
 ];
@@ -728,6 +733,11 @@ let PblNgridDetailRowComponent = PblNgridDetailRowComponent_1 = class PblNgridDe
         }
     }
 };
+PblNgridDetailRowComponent.ctorParameters = () => [
+    { type: undefined },
+    { type: ElementRef },
+    { type: ViewContainerRef }
+];
 PblNgridDetailRowComponent.decorators = [
     { type: Component, args: [{
                 selector: 'pbl-ngrid-row[detailRow]',

@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, ViewEncapsulation, Optional, ChangeDetectorRef, Input, NgModule, ComponentFactoryResolver, Injector } from '@angular/core';
+import { ChangeDetectorRef, Component, ChangeDetectionStrategy, ViewEncapsulation, Optional, Input, NgModule, ComponentFactoryResolver, Injector } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatPaginatorIntl, MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
@@ -152,6 +152,11 @@ var PblPaginatorComponent = /** @class */ (function () {
         this.cdr.detectChanges();
         this.cdr.markForCheck();
     };
+    PblPaginatorComponent.ctorParameters = function () { return [
+        { type: PblNgridComponent },
+        { type: MatPaginatorIntl },
+        { type: ChangeDetectorRef }
+    ]; };
     PblPaginatorComponent.decorators = [
         { type: Component, args: [{
                     selector: 'pbl-ngrid-paginator',
@@ -161,7 +166,7 @@ var PblPaginatorComponent = /** @class */ (function () {
                     },
                     changeDetection: ChangeDetectionStrategy.OnPush,
                     encapsulation: ViewEncapsulation.None,
-                    styles: [".mat-paginator-range-label{flex-grow:1}.mat-paginator-container{box-sizing:border-box}"]
+                    styles: [".mat-paginator-range-label{-webkit-box-flex:1;flex-grow:1}.mat-paginator-container{box-sizing:border-box}"]
                 }] }
     ];
     /** @nocollapse */

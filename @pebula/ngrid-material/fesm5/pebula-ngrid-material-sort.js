@@ -147,6 +147,11 @@ var PblNgridMatSortDirective = /** @class */ (function () {
             table.ds.setSort(column, newSort);
         }
     };
+    PblNgridMatSortDirective.ctorParameters = function () { return [
+        { type: PblNgridComponent },
+        { type: PblNgridPluginController },
+        { type: MatSort }
+    ]; };
     PblNgridMatSortDirective.decorators = [
         { type: Directive, args: [{ selector: 'pbl-ngrid[matSort]', exportAs: 'pblMatSort' },] }
     ];

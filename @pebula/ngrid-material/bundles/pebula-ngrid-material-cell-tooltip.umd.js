@@ -2,7 +2,7 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/common'), require('@angular/cdk/overlay'), require('@angular/material/tooltip'), require('@pebula/ngrid'), require('@pebula/ngrid/target-events'), require('@angular/cdk/coercion'), require('@angular/cdk/a11y'), require('@angular/cdk/bidi'), require('@angular/cdk/scrolling'), require('@angular/cdk/platform'), require('@pebula/utils')) :
     typeof define === 'function' && define.amd ? define('@pebula/ngrid-material/cell-tooltip', ['exports', '@angular/core', '@angular/common', '@angular/cdk/overlay', '@angular/material/tooltip', '@pebula/ngrid', '@pebula/ngrid/target-events', '@angular/cdk/coercion', '@angular/cdk/a11y', '@angular/cdk/bidi', '@angular/cdk/scrolling', '@angular/cdk/platform', '@pebula/utils'], factory) :
     (global = global || self, factory((global.pebula = global.pebula || {}, global.pebula['ngrid-material'] = global.pebula['ngrid-material'] || {}, global.pebula['ngrid-material']['cell-tooltip'] = {}), global.ng.core, global.ng.common, global.ng.cdk.overlay, global.ng.material.tooltip, global.pebula.ngrid, global.pebula.ngrid['target-events'], global.ng.cdk.coercion, global.ng.cdk.a11y, global.ng.cdk.bidi, global.ng.cdk.scrolling, global.ng.cdk.platform, global.pebula.utils));
-}(this, function (exports, core, common, overlay, tooltip, ngrid, targetEvents, coercion, a11y, bidi, scrolling, platform, utils) { 'use strict';
+}(this, (function (exports, core, common, overlay, tooltip, ngrid, targetEvents, coercion, a11y, bidi, scrolling, platform, utils) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -444,6 +444,11 @@
         };
         var PblNgridCellTooltipDirective_1;
         PblNgridCellTooltipDirective.PLUGIN_KEY = PLUGIN_KEY;
+        PblNgridCellTooltipDirective.ctorParameters = function () { return [
+            { type: ngrid.PblNgridComponent },
+            { type: core.Injector },
+            { type: ngrid.PblNgridPluginController }
+        ]; };
         PblNgridCellTooltipDirective.decorators = [
             { type: core.Directive, args: [{ selector: '[cellTooltip]', exportAs: 'pblOverflowTooltip' },] }
         ];
@@ -596,5 +601,5 @@
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-}));
+})));
 //# sourceMappingURL=pebula-ngrid-material-cell-tooltip.umd.js.map

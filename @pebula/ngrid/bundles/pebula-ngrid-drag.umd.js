@@ -2,7 +2,7 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('rxjs/operators'), require('@angular/core'), require('@angular/cdk/drag-drop'), require('rxjs'), require('@angular/cdk/coercion'), require('@angular/common'), require('@angular/cdk/bidi'), require('@angular/cdk/scrolling'), require('@pebula/ngrid'), require('@angular/cdk/platform')) :
     typeof define === 'function' && define.amd ? define('@pebula/ngrid/drag', ['exports', 'rxjs/operators', '@angular/core', '@angular/cdk/drag-drop', 'rxjs', '@angular/cdk/coercion', '@angular/common', '@angular/cdk/bidi', '@angular/cdk/scrolling', '@pebula/ngrid', '@angular/cdk/platform'], factory) :
     (global = global || self, factory((global.pebula = global.pebula || {}, global.pebula.ngrid = global.pebula.ngrid || {}, global.pebula.ngrid.drag = {}), global.rxjs.operators, global.ng.core, global.ng.cdk['drag-drop'], global.rxjs, global.ng.cdk.coercion, global.ng.common, global.ng.cdk.bidi, global.ng.cdk.scrolling, global.pebula.ngrid, global.ng.cdk.platform));
-}(this, function (exports, operators, core, dragDrop, rxjs, coercion, common, bidi, scrolling, ngrid, platform) { 'use strict';
+}(this, (function (exports, operators, core, dragDrop, rxjs, coercion, common, bidi, scrolling, ngrid, platform) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -853,6 +853,17 @@
             this._removePlugin(this.table);
         };
         var PblNgridRowReorderPluginDirective_1;
+        PblNgridRowReorderPluginDirective.ctorParameters = function () { return [
+            { type: ngrid.PblNgridComponent },
+            { type: ngrid.PblNgridPluginController },
+            { type: core.ElementRef },
+            { type: dragDrop.DragDrop },
+            { type: core.ChangeDetectorRef },
+            { type: bidi.Directionality },
+            { type: dragDrop.CdkDropListGroup },
+            { type: dragDrop.DragDropRegistry },
+            { type: undefined }
+        ]; };
         PblNgridRowReorderPluginDirective.decorators = [
             { type: core.Directive, args: [{
                         selector: 'pbl-ngrid[rowReorder]',
@@ -1651,6 +1662,17 @@
             });
         };
         var PblNgridColumnReorderPluginDirective_1;
+        PblNgridColumnReorderPluginDirective.ctorParameters = function () { return [
+            { type: ngrid.PblNgridComponent },
+            { type: ngrid.PblNgridPluginController },
+            { type: core.ElementRef },
+            { type: dragDrop.DragDrop },
+            { type: core.ChangeDetectorRef },
+            { type: bidi.Directionality },
+            { type: dragDrop.CdkDropListGroup },
+            { type: dragDrop.DragDropRegistry },
+            { type: undefined }
+        ]; };
         PblNgridColumnReorderPluginDirective.decorators = [
             { type: core.Directive, args: [{
                         selector: 'pbl-ngrid[columnReorder]',
@@ -2389,6 +2411,14 @@
             this._pointerMoveSubscription.unsubscribe();
             this._pointerUpSubscription.unsubscribe();
         };
+        PblNgridDragResizeComponent.ctorParameters = function () { return [
+            { type: core.ElementRef },
+            { type: core.NgZone },
+            { type: scrolling.ViewportRuler },
+            { type: dragDrop.DragDropRegistry },
+            { type: undefined },
+            { type: bidi.Directionality }
+        ]; };
         PblNgridDragResizeComponent.decorators = [
             { type: core.Component, args: [{
                         selector: 'pbl-ngrid-drag-resize',
@@ -2911,5 +2941,5 @@
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-}));
+})));
 //# sourceMappingURL=pebula-ngrid-drag.umd.js.map

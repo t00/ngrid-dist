@@ -20,6 +20,10 @@ var PblNgridMatHeaderContextMenuPlugin = /** @class */ (function () {
         this.pluginCtrl = pluginCtrl;
         this.overlayPanel = overlayPanelFactory.create(pluginCtrl.extApi.table);
     }
+    PblNgridMatHeaderContextMenuPlugin.ctorParameters = function () { return [
+        { type: PblNgridOverlayPanelFactory },
+        { type: PblNgridPluginController }
+    ]; };
     PblNgridMatHeaderContextMenuPlugin.decorators = [
         { type: Directive, args: [{ selector: 'pbl-ngrid[matHeaderContextMenu]' },] }
     ];
@@ -80,7 +84,7 @@ var MatHeaderContextMenuTrigger = /** @class */ (function () {
                     },
                     template: "<mat-icon style=\"height: 16px; width: 16px; font-size: 16px; line-height: 16px;\">more_vert</mat-icon>\n",
                     encapsulation: ViewEncapsulation.None,
-                    styles: ["div[mat-header-context-menu-trigger]{position:absolute;display:flex;align-items:center;right:0;height:100%;cursor:pointer;margin-right:12px;z-index:100}"]
+                    styles: ["div[mat-header-context-menu-trigger]{position:absolute;display:-webkit-box;display:flex;-webkit-box-align:center;align-items:center;right:0;height:100%;cursor:pointer;margin-right:12px;z-index:100}"]
                 }] }
     ];
     /** @nocollapse */

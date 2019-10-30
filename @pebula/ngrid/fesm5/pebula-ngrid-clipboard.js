@@ -1,6 +1,6 @@
 import { __values, __decorate, __metadata } from 'tslib';
 import { filter, first } from 'rxjs/operators';
-import { Injectable, Inject, ɵɵdefineInjectable, ɵɵinject, Directive, Injector, Input, NgModule, Optional, SkipSelf } from '@angular/core';
+import { Injectable, Inject, ɵɵdefineInjectable, ɵɵinject, Injector, Directive, Input, NgModule, Optional, SkipSelf } from '@angular/core';
 import { DOCUMENT, CommonModule } from '@angular/common';
 import { UnRx } from '@pebula/utils';
 import { PblNgridConfigService, PblNgridPluginController, PblNgridComponent, TablePlugin, PblNgridModule } from '@pebula/ngrid';
@@ -364,6 +364,11 @@ var PblNgridClipboardPlugin = /** @class */ (function () {
         function (event) { return _this.doCopy(); }));
     };
     var PblNgridClipboardPlugin_1;
+    PblNgridClipboardPlugin.ctorParameters = function () { return [
+        { type: PblNgridComponent },
+        { type: Injector },
+        { type: PblNgridPluginController }
+    ]; };
     PblNgridClipboardPlugin.decorators = [
         { type: Directive, args: [{ selector: 'pbl-ngrid[clipboard]', exportAs: 'pblNgridClipboard' },] }
     ];

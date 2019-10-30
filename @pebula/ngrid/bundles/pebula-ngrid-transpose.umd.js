@@ -2,7 +2,7 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/common'), require('@angular/material/checkbox'), require('@pebula/ngrid'), require('@angular/cdk/coercion'), require('@pebula/utils'), require('rxjs'), require('rxjs/operators')) :
     typeof define === 'function' && define.amd ? define('@pebula/ngrid/transpose', ['exports', '@angular/core', '@angular/common', '@angular/material/checkbox', '@pebula/ngrid', '@angular/cdk/coercion', '@pebula/utils', 'rxjs', 'rxjs/operators'], factory) :
     (global = global || self, factory((global.pebula = global.pebula || {}, global.pebula.ngrid = global.pebula.ngrid || {}, global.pebula.ngrid.transpose = {}), global.ng.core, global.ng.common, global.ng.material.checkbox, global.pebula.ngrid, global.ng.cdk.coercion, global.pebula.utils, global.rxjs, global.rxjs.operators));
-}(this, function (exports, core, common, checkbox, ngrid, coercion, utils, rxjs, operators) { 'use strict';
+}(this, (function (exports, core, common, checkbox, ngrid, coercion, utils, rxjs, operators) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -722,6 +722,11 @@
                 this.selfColumn = new ngrid.PblColumn(this._header, this.pluginCtrl.extApi.columnStore.groupStore);
             }
         };
+        PblNgridTransposePluginDirective.ctorParameters = function () { return [
+            { type: ngrid.PblNgridComponent },
+            { type: ngrid.PblNgridPluginController },
+            { type: ngrid.PblNgridConfigService }
+        ]; };
         PblNgridTransposePluginDirective.decorators = [
             { type: core.Directive, args: [{ selector: 'pbl-ngrid[transpose]' },] }
         ];
@@ -842,5 +847,5 @@
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-}));
+})));
 //# sourceMappingURL=pebula-ngrid-transpose.umd.js.map

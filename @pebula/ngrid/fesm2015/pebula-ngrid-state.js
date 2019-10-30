@@ -1,4 +1,4 @@
-import { PblNgridPluginController, utils, TablePlugin, PblNgridComponent, PblNgridModule, PblNgridConfigService } from '@pebula/ngrid';
+import { PblNgridPluginController, utils, PblNgridComponent, TablePlugin, PblNgridModule, PblNgridConfigService } from '@pebula/ngrid';
 import { __decorate, __metadata } from 'tslib';
 import { Subject } from 'rxjs';
 import { filter, mapTo, map, take, skip, debounceTime } from 'rxjs/operators';
@@ -1737,6 +1737,11 @@ let PblNgridStatePlugin = PblNgridStatePlugin_1 = class PblNgridStatePlugin {
         error => this._events.next({ phase: 'load', position: 'after', error })));
     }
 };
+PblNgridStatePlugin.ctorParameters = () => [
+    { type: PblNgridComponent },
+    { type: Injector },
+    { type: PblNgridPluginController }
+];
 PblNgridStatePlugin = PblNgridStatePlugin_1 = __decorate([
     TablePlugin({ id: PLUGIN_KEY, factory: 'create', runOnce: registerBuiltInHandlers }),
     UnRx(),
@@ -1794,6 +1799,11 @@ let PblNgridStatePluginDirective = class PblNgridStatePluginDirective extends Pb
         this.destroy();
     }
 };
+PblNgridStatePluginDirective.ctorParameters = () => [
+    { type: PblNgridComponent },
+    { type: Injector },
+    { type: PblNgridPluginController }
+];
 PblNgridStatePluginDirective.decorators = [
     { type: Directive, args: [{
                 selector: 'pbl-ngrid[persistState]',

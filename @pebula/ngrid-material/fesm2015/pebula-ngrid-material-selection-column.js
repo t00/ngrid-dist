@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, ViewEncapsulation, Optional, ChangeDetectorRef, Input, ViewChild, Directive, ComponentFactoryResolver, Injector, NgModule } from '@angular/core';
+import { ChangeDetectorRef, Component, ChangeDetectionStrategy, ViewEncapsulation, Optional, Input, ViewChild, ComponentFactoryResolver, Injector, Directive, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { PblNgridComponent, PblNgridHeaderCellDefDirective, PblNgridCellDefDirective, PblNgridFooterCellDefDirective, PblNgridPluginController, TablePlugin, PblNgridModule } from '@pebula/ngrid';
@@ -169,13 +169,17 @@ let PblNgridCheckboxComponent = class PblNgridCheckboxComponent {
         }
     }
 };
+PblNgridCheckboxComponent.ctorParameters = () => [
+    { type: PblNgridComponent },
+    { type: ChangeDetectorRef }
+];
 PblNgridCheckboxComponent.decorators = [
     { type: Component, args: [{
                 selector: 'pbl-ngrid-checkbox',
                 template: "<ng-container *pblNgridHeaderCellDef=\"name; col as col;\">\n  <mat-checkbox *ngIf=\"bulkSelectMode !== 'none'\"\n                style=\"overflow: initial\"\n                [color]=\"color\"\n                (click)=\"$event.stopPropagation()\"\n                (change)=\"$event ? masterToggle() : null\"\n                [checked]=\"allSelected\"\n                [indeterminate]=\"length > 0 && !allSelected\">\n  </mat-checkbox>\n</ng-container>\n<mat-checkbox *pblNgridCellDef=\"name; row as row;\"\n              style=\"overflow: initial\"\n              [color]=\"color\"\n              [disabled]=isCheckboxDisabled(row)\n              (click)=\"$event.stopPropagation()\"\n              (change)=\"rowItemChange(row)\"\n              [checked]=\"selection.isSelected(row)\">\n</mat-checkbox>\n<span *pblNgridFooterCellDef=\"name; col as col;\">{{ length ? length : '' }}</span>\n",
                 changeDetection: ChangeDetectionStrategy.OnPush,
                 encapsulation: ViewEncapsulation.None,
-                styles: [".mat-cell.pbl-ngrid-checkbox,.mat-header-cell.pbl-ngrid-checkbox{box-sizing:content-box;flex:0 0 24px;overflow:visible}"]
+                styles: [".mat-cell.pbl-ngrid-checkbox,.mat-header-cell.pbl-ngrid-checkbox{box-sizing:content-box;-webkit-box-flex:0;flex:0 0 24px;overflow:visible}"]
             }] }
 ];
 /** @nocollapse */
@@ -365,6 +369,12 @@ let PblNgridMatCheckboxSelectionDirective = class PblNgridMatCheckboxSelectionDi
         this._removePlugin(this.table);
     }
 };
+PblNgridMatCheckboxSelectionDirective.ctorParameters = () => [
+    { type: PblNgridComponent },
+    { type: ComponentFactoryResolver },
+    { type: Injector },
+    { type: PblNgridPluginController }
+];
 PblNgridMatCheckboxSelectionDirective.decorators = [
     { type: Directive, args: [{ selector: 'pbl-ngrid[matCheckboxSelection]' },] }
 ];

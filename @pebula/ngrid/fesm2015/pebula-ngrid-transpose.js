@@ -455,6 +455,11 @@ class PblNgridTransposePluginDirective {
         }
     }
 };
+PblNgridTransposePluginDirective.ctorParameters = () => [
+    { type: PblNgridComponent },
+    { type: PblNgridPluginController },
+    { type: PblNgridConfigService }
+];
 PblNgridTransposePluginDirective.decorators = [
     { type: Directive, args: [{ selector: 'pbl-ngrid[transpose]' },] }
 ];

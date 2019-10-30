@@ -2,7 +2,7 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/common'), require('@angular/material/icon'), require('@angular/material/button'), require('@angular/material/menu'), require('@angular/material/form-field'), require('@angular/material/input'), require('@pebula/ngrid'), require('@pebula/ngrid/overlay-panel')) :
     typeof define === 'function' && define.amd ? define('@pebula/ngrid-material/context-menu', ['exports', '@angular/core', '@angular/common', '@angular/material/icon', '@angular/material/button', '@angular/material/menu', '@angular/material/form-field', '@angular/material/input', '@pebula/ngrid', '@pebula/ngrid/overlay-panel'], factory) :
     (global = global || self, factory((global.pebula = global.pebula || {}, global.pebula['ngrid-material'] = global.pebula['ngrid-material'] || {}, global.pebula['ngrid-material']['context-menu'] = {}), global.ng.core, global.ng.common, global.ng.material.icon, global.ng.material.button, global.ng.material.menu, global.ng.material['form-field'], global.ng.material.input, global.pebula.ngrid, global.overlayPanel));
-}(this, function (exports, core, common, icon, button, menu, formField, input, ngrid, overlayPanel) { 'use strict';
+}(this, (function (exports, core, common, icon, button, menu, formField, input, ngrid, overlayPanel) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -212,6 +212,10 @@
             this.pluginCtrl = pluginCtrl;
             this.overlayPanel = overlayPanelFactory.create(pluginCtrl.extApi.table);
         }
+        PblNgridMatHeaderContextMenuPlugin.ctorParameters = function () { return [
+            { type: overlayPanel.PblNgridOverlayPanelFactory },
+            { type: ngrid.PblNgridPluginController }
+        ]; };
         PblNgridMatHeaderContextMenuPlugin.decorators = [
             { type: core.Directive, args: [{ selector: 'pbl-ngrid[matHeaderContextMenu]' },] }
         ];
@@ -272,7 +276,7 @@
                         },
                         template: "<mat-icon style=\"height: 16px; width: 16px; font-size: 16px; line-height: 16px;\">more_vert</mat-icon>\n",
                         encapsulation: core.ViewEncapsulation.None,
-                        styles: ["div[mat-header-context-menu-trigger]{position:absolute;display:flex;align-items:center;right:0;height:100%;cursor:pointer;margin-right:12px;z-index:100}"]
+                        styles: ["div[mat-header-context-menu-trigger]{position:absolute;display:-webkit-box;display:flex;-webkit-box-align:center;align-items:center;right:0;height:100%;cursor:pointer;margin-right:12px;z-index:100}"]
                     }] }
         ];
         /** @nocollapse */
@@ -594,5 +598,5 @@
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-}));
+})));
 //# sourceMappingURL=pebula-ngrid-material-context-menu.umd.js.map

@@ -2,7 +2,7 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@pebula/ngrid'), require('rxjs'), require('rxjs/operators'), require('@angular/core'), require('@angular/cdk/bidi'), require('@angular/cdk/overlay'), require('@angular/cdk/portal'), require('@angular/common')) :
     typeof define === 'function' && define.amd ? define('@pebula/ngrid/overlay-panel', ['exports', '@pebula/ngrid', 'rxjs', 'rxjs/operators', '@angular/core', '@angular/cdk/bidi', '@angular/cdk/overlay', '@angular/cdk/portal', '@angular/common'], factory) :
     (global = global || self, factory((global.pebula = global.pebula || {}, global.pebula.ngrid = global.pebula.ngrid || {}, global.pebula.ngrid['overlay-panel'] = {}), global.pebula.ngrid, global.rxjs, global.rxjs.operators, global.ng.core, global.ng.cdk.bidi, global.ng.cdk.overlay, global.ng.cdk.portal, global.ng.common));
-}(this, function (exports, ngrid, rxjs, operators, core, bidi, overlay, portal, common) { 'use strict';
+}(this, (function (exports, ngrid, rxjs, operators, core, bidi, overlay, portal, common) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -853,5 +853,5 @@
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-}));
+})));
 //# sourceMappingURL=pebula-ngrid-overlay-panel.umd.js.map

@@ -2,7 +2,7 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/common'), require('@angular/material/checkbox'), require('@pebula/ngrid'), require('@pebula/utils'), require('@angular/cdk/collections')) :
     typeof define === 'function' && define.amd ? define('@pebula/ngrid-material/selection-column', ['exports', '@angular/core', '@angular/common', '@angular/material/checkbox', '@pebula/ngrid', '@pebula/utils', '@angular/cdk/collections'], factory) :
     (global = global || self, factory((global.pebula = global.pebula || {}, global.pebula['ngrid-material'] = global.pebula['ngrid-material'] || {}, global.pebula['ngrid-material']['selection-column'] = {}), global.ng.core, global.ng.common, global.ng.material.checkbox, global.pebula.ngrid, global.pebula.utils));
-}(this, function (exports, core, common, checkbox, ngrid, utils) { 'use strict';
+}(this, (function (exports, core, common, checkbox, ngrid, utils) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -409,13 +409,17 @@
                 this.length = 0;
             }
         };
+        PblNgridCheckboxComponent.ctorParameters = function () { return [
+            { type: ngrid.PblNgridComponent },
+            { type: core.ChangeDetectorRef }
+        ]; };
         PblNgridCheckboxComponent.decorators = [
             { type: core.Component, args: [{
                         selector: 'pbl-ngrid-checkbox',
                         template: "<ng-container *pblNgridHeaderCellDef=\"name; col as col;\">\n  <mat-checkbox *ngIf=\"bulkSelectMode !== 'none'\"\n                style=\"overflow: initial\"\n                [color]=\"color\"\n                (click)=\"$event.stopPropagation()\"\n                (change)=\"$event ? masterToggle() : null\"\n                [checked]=\"allSelected\"\n                [indeterminate]=\"length > 0 && !allSelected\">\n  </mat-checkbox>\n</ng-container>\n<mat-checkbox *pblNgridCellDef=\"name; row as row;\"\n              style=\"overflow: initial\"\n              [color]=\"color\"\n              [disabled]=isCheckboxDisabled(row)\n              (click)=\"$event.stopPropagation()\"\n              (change)=\"rowItemChange(row)\"\n              [checked]=\"selection.isSelected(row)\">\n</mat-checkbox>\n<span *pblNgridFooterCellDef=\"name; col as col;\">{{ length ? length : '' }}</span>\n",
                         changeDetection: core.ChangeDetectionStrategy.OnPush,
                         encapsulation: core.ViewEncapsulation.None,
-                        styles: [".mat-cell.pbl-ngrid-checkbox,.mat-header-cell.pbl-ngrid-checkbox{box-sizing:content-box;flex:0 0 24px;overflow:visible}"]
+                        styles: [".mat-cell.pbl-ngrid-checkbox,.mat-header-cell.pbl-ngrid-checkbox{box-sizing:content-box;-webkit-box-flex:0;flex:0 0 24px;overflow:visible}"]
                     }] }
         ];
         /** @nocollapse */
@@ -631,6 +635,12 @@
             }
             this._removePlugin(this.table);
         };
+        PblNgridMatCheckboxSelectionDirective.ctorParameters = function () { return [
+            { type: ngrid.PblNgridComponent },
+            { type: core.ComponentFactoryResolver },
+            { type: core.Injector },
+            { type: ngrid.PblNgridPluginController }
+        ]; };
         PblNgridMatCheckboxSelectionDirective.decorators = [
             { type: core.Directive, args: [{ selector: 'pbl-ngrid[matCheckboxSelection]' },] }
         ];
@@ -729,5 +739,5 @@
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-}));
+})));
 //# sourceMappingURL=pebula-ngrid-material-selection-column.umd.js.map

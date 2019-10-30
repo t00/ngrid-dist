@@ -2,7 +2,7 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/material/sort'), require('@pebula/utils'), require('@pebula/ngrid'), require('@angular/common'), require('@angular/material/button')) :
     typeof define === 'function' && define.amd ? define('@pebula/ngrid-material/sort', ['exports', '@angular/core', '@angular/material/sort', '@pebula/utils', '@pebula/ngrid', '@angular/common', '@angular/material/button'], factory) :
     (global = global || self, factory((global.pebula = global.pebula || {}, global.pebula['ngrid-material'] = global.pebula['ngrid-material'] || {}, global.pebula['ngrid-material'].sort = {}), global.ng.core, global.ng.material.sort, global.pebula.utils, global.pebula.ngrid, global.ng.common, global.ng.material.button));
-}(this, function (exports, core, sort, utils, ngrid, common, button) { 'use strict';
+}(this, (function (exports, core, sort, utils, ngrid, common, button) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -342,6 +342,11 @@
                 table.ds.setSort(column, newSort);
             }
         };
+        PblNgridMatSortDirective.ctorParameters = function () { return [
+            { type: ngrid.PblNgridComponent },
+            { type: ngrid.PblNgridPluginController },
+            { type: sort.MatSort }
+        ]; };
         PblNgridMatSortDirective.decorators = [
             { type: core.Directive, args: [{ selector: 'pbl-ngrid[matSort]', exportAs: 'pblMatSort' },] }
         ];
@@ -506,5 +511,5 @@
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-}));
+})));
 //# sourceMappingURL=pebula-ngrid-material-sort.umd.js.map

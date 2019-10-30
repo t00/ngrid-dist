@@ -2,7 +2,7 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@pebula/ngrid'), require('rxjs'), require('rxjs/operators'), require('@angular/core'), require('@pebula/utils'), require('@angular/common')) :
     typeof define === 'function' && define.amd ? define('@pebula/ngrid/state', ['exports', '@pebula/ngrid', 'rxjs', 'rxjs/operators', '@angular/core', '@pebula/utils', '@angular/common'], factory) :
     (global = global || self, factory((global.pebula = global.pebula || {}, global.pebula.ngrid = global.pebula.ngrid || {}, global.pebula.ngrid.state = {}), global.pebula.ngrid, global.rxjs, global.rxjs.operators, global.ng.core, global.pebula.utils, global.ng.common));
-}(this, function (exports, ngrid, rxjs, operators, core, utils, common) { 'use strict';
+}(this, (function (exports, ngrid, rxjs, operators, core, utils, common) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -2262,6 +2262,11 @@
             function (error) { return _this._events.next({ phase: 'load', position: 'after', error: error }); }));
         };
         var PblNgridStatePlugin_1;
+        PblNgridStatePlugin.ctorParameters = function () { return [
+            { type: ngrid.PblNgridComponent },
+            { type: core.Injector },
+            { type: ngrid.PblNgridPluginController }
+        ]; };
         PblNgridStatePlugin = PblNgridStatePlugin_1 = __decorate([
             ngrid.TablePlugin({ id: PLUGIN_KEY, factory: 'create', runOnce: registerBuiltInHandlers }),
             utils.UnRx(),
@@ -2320,6 +2325,11 @@
         function () {
             this.destroy();
         };
+        PblNgridStatePluginDirective.ctorParameters = function () { return [
+            { type: ngrid.PblNgridComponent },
+            { type: core.Injector },
+            { type: ngrid.PblNgridPluginController }
+        ]; };
         PblNgridStatePluginDirective.decorators = [
             { type: core.Directive, args: [{
                         selector: 'pbl-ngrid[persistState]',
@@ -2437,5 +2447,5 @@
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-}));
+})));
 //# sourceMappingURL=pebula-ngrid-state.umd.js.map

@@ -3,8 +3,8 @@ import { ReplaySubject, fromEvent, timer } from 'rxjs';
 import { filter, tap, switchMap, takeUntil, map, bufferWhen, debounce } from 'rxjs/operators';
 import { EventEmitter, ChangeDetectorRef, Injector, Directive, Input, NgModule, Optional, SkipSelf } from '@angular/core';
 import { UnRx } from '@pebula/utils';
-import { PblColumn, PblNgridPluginController, TablePlugin, PblNgridComponent, PblNgridModule, PblNgridConfigService } from '@pebula/ngrid';
-import { UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW } from '@angular/cdk/keycodes';
+import { PblColumn, PblNgridPluginController, PblNgridComponent, TablePlugin, PblNgridModule, PblNgridConfigService } from '@pebula/ngrid';
+import { RIGHT_ARROW, LEFT_ARROW, DOWN_ARROW, UP_ARROW } from '@angular/cdk/keycodes';
 import { CommonModule } from '@angular/common';
 import { CdkTableModule } from '@angular/cdk/table';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
@@ -944,6 +944,11 @@ class PblNgridTargetEventsPlugin {
         this.table._cdkTable.syncRows(event.type, event.rowIndex);
     }
 };
+PblNgridTargetEventsPlugin.ctorParameters = () => [
+    { type: PblNgridComponent },
+    { type: Injector },
+    { type: PblNgridPluginController }
+];
 /**
  * @template T
  */
@@ -1026,6 +1031,11 @@ class PblNgridTargetEventsPluginDirective extends PblNgridTargetEventsPlugin {
         this.destroy();
     }
 };
+PblNgridTargetEventsPluginDirective.ctorParameters = () => [
+    { type: PblNgridComponent },
+    { type: Injector },
+    { type: PblNgridPluginController }
+];
 PblNgridTargetEventsPluginDirective.decorators = [
     { type: Directive, args: [{
                 // tslint:disable-next-line:directive-selector
@@ -1141,6 +1151,11 @@ class PblNgridCellEditDirective {
         }
     }
 };
+PblNgridCellEditDirective.ctorParameters = () => [
+    { type: PblNgridComponent },
+    { type: Injector },
+    { type: PblNgridPluginController }
+];
 PblNgridCellEditDirective.decorators = [
     { type: Directive, args: [{
                 // tslint:disable-next-line:directive-selector

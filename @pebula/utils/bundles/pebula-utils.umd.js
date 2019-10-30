@@ -2,7 +2,7 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('rxjs'), require('rxjs/operators')) :
     typeof define === 'function' && define.amd ? define('@pebula/utils', ['exports', 'rxjs', 'rxjs/operators'], factory) :
     (global = global || self, factory((global.pebula = global.pebula || {}, global.pebula.utils = {}), global.rxjs, global.rxjs.operators));
-}(this, function (exports, rxjs, operators) { 'use strict';
+}(this, (function (exports, rxjs, operators) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -421,5 +421,5 @@
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-}));
+})));
 //# sourceMappingURL=pebula-utils.umd.js.map

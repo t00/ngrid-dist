@@ -30,7 +30,7 @@ var MatHeaderContextMenuTrigger = /** @class */ (function () {
                     },
                     template: "<mat-icon style=\"height: 16px; width: 16px; font-size: 16px; line-height: 16px;\">more_vert</mat-icon>\n",
                     encapsulation: ViewEncapsulation.None,
-                    styles: ["div[mat-header-context-menu-trigger]{position:absolute;display:flex;align-items:center;right:0;height:100%;cursor:pointer;margin-right:12px;z-index:100}"]
+                    styles: ["div[mat-header-context-menu-trigger]{position:absolute;display:-webkit-box;display:flex;-webkit-box-align:center;align-items:center;right:0;height:100%;cursor:pointer;margin-right:12px;z-index:100}"]
                 }] }
     ];
     /** @nocollapse */

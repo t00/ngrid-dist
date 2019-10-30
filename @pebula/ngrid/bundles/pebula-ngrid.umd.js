@@ -2,7 +2,7 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('rxjs'), require('@angular/core'), require('@angular/cdk/table'), require('resize-observer-polyfill'), require('rxjs/operators'), require('@angular/cdk/coercion'), require('@pebula/utils'), require('@angular/cdk/collections'), require('@angular/cdk/drag-drop'), require('@angular/common'), require('@angular/cdk/platform'), require('@angular/cdk/bidi'), require('@angular/cdk/scrolling'), require('@angular/cdk-experimental/scrolling')) :
     typeof define === 'function' && define.amd ? define('@pebula/ngrid', ['exports', 'rxjs', '@angular/core', '@angular/cdk/table', 'resize-observer-polyfill', 'rxjs/operators', '@angular/cdk/coercion', '@pebula/utils', '@angular/cdk/collections', '@angular/cdk/drag-drop', '@angular/common', '@angular/cdk/platform', '@angular/cdk/bidi', '@angular/cdk/scrolling', '@angular/cdk-experimental/scrolling'], factory) :
     (global = global || self, factory((global.pebula = global.pebula || {}, global.pebula.ngrid = {}), global.rxjs, global.ng.core, global.ng.cdk.table, global.ResizeObserver, global.rxjs.operators, global.ng.cdk.coercion, global.pebula.utils, global.ng.cdk.collections, global.ng.cdk['drag-drop'], global.ng.common, global.ng.cdk.platform, global.ng.cdk.bidi, global.ng.cdk.scrolling, global.ng['cdk-experimental'].scrolling));
-}(this, function (exports, rxjs, core, table, ResizeObserver, operators, coercion, utils$1, collections, dragDrop, common, platform, bidi, scrolling, scrolling$1) { 'use strict';
+}(this, (function (exports, rxjs, core, table, ResizeObserver, operators, coercion, utils$1, collections, dragDrop, common, platform, bidi, scrolling, scrolling$1) { 'use strict';
 
     ResizeObserver = ResizeObserver && ResizeObserver.hasOwnProperty('default') ? ResizeObserver['default'] : ResizeObserver;
 
@@ -6688,6 +6688,9 @@
                 this.changes$.next(e);
             }
         };
+        PblNgridRegistryService.ctorParameters = function () { return [
+            { type: PblNgridRegistryService }
+        ]; };
         PblNgridRegistryService.decorators = [
             { type: core.Injectable, args: [{ providedIn: 'root' },] }
         ];
@@ -10175,6 +10178,10 @@
                 finally { if (e_1) throw e_1.error; }
             }
         };
+        PblNgridMetaRowContainerComponent.ctorParameters = function () { return [
+            { type: PblNgridMetaRowService },
+            { type: core.ElementRef }
+        ]; };
         PblNgridMetaRowContainerComponent.decorators = [
             { type: core.Component, args: [{
                         selector: 'div[pbl-ngrid-fixed-meta-row-container]',
@@ -10296,6 +10303,10 @@
                 this.metaRows.addMetaRow(this);
             }
         };
+        PblMetaRowDirective.ctorParameters = function () { return [
+            { type: PblNgridMetaRowService },
+            { type: core.ElementRef }
+        ]; };
         PblMetaRowDirective.decorators = [
             { type: core.Directive, args: [{
                         selector: '[pblMetaRow]',
@@ -12013,6 +12024,17 @@
             }
         };
         var PblNgridComponent_1;
+        PblNgridComponent.ctorParameters = function () { return [
+            { type: core.Injector },
+            { type: core.ViewContainerRef },
+            { type: core.ElementRef },
+            { type: core.IterableDiffers },
+            { type: core.NgZone },
+            { type: core.ChangeDetectorRef },
+            { type: PblNgridConfigService },
+            { type: PblNgridRegistryService },
+            { type: String }
+        ]; };
         PblNgridComponent.decorators = [
             { type: core.Component, args: [{
                         selector: 'pbl-ngrid',
@@ -12046,7 +12068,7 @@
                         ],
                         changeDetection: core.ChangeDetectionStrategy.OnPush,
                         encapsulation: core.ViewEncapsulation.None,
-                        styles: ["pbl-ngrid{display:block}.pbl-ngrid-row-visually-hidden{border-top:0;border-bottom:0;clip:rect(0 0 0 0);height:0;min-height:0;max-height:0;overflow:hidden!important;visibility:collapse!important;outline:0;-webkit-appearance:none;-moz-appearance:none}.pbl-ngrid-row-hidden{display:none!important}.pbl-ngrid-container{position:relative;height:100%;width:100%;flex-direction:column;box-sizing:border-box;display:flex;overflow:auto;min-height:inherit}.pbl-ngrid-scroll-container{flex:1 1 auto;box-sizing:border-box;min-height:auto}.pbl-ngrid-scroll-container.cdk-virtual-scroll-disabled{flex:1 0 auto}.pbl-ngrid-sticky-row-scroll-container{position:fixed;overflow:hidden}.pbl-ngrid-empty-spacer{display:none}.pbl-ngrid-empty .cdk-virtual-scroll-content-wrapper{min-height:100%;display:flex;flex-direction:column}.pbl-ngrid-empty .cdk-virtual-scroll-content-wrapper .pbl-cdk-table{display:flex;flex-direction:column;flex:1 1 100%}.pbl-ngrid-empty .cdk-virtual-scroll-content-wrapper .pbl-cdk-table>*{flex:0 0 auto}.pbl-ngrid-empty .cdk-virtual-scroll-content-wrapper .pbl-cdk-table>.pbl-ngrid-empty-spacer{display:block;flex:1 1 auto}.pbl-ngrid-scrolling pbl-cdk-table{pointer-events:none}"]
+                        styles: ["pbl-ngrid{display:block}.pbl-ngrid-row-visually-hidden{border-top:0;border-bottom:0;clip:rect(0 0 0 0);height:0;min-height:0;max-height:0;overflow:hidden!important;visibility:collapse!important;outline:0;-webkit-appearance:none;-moz-appearance:none}.pbl-ngrid-row-hidden{display:none!important}.pbl-ngrid-container{position:relative;height:100%;width:100%;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-direction:column;box-sizing:border-box;display:-webkit-box;display:flex;overflow:auto;min-height:inherit}.pbl-ngrid-scroll-container{-webkit-box-flex:1;flex:1 1 auto;box-sizing:border-box;min-height:auto}.pbl-ngrid-scroll-container.cdk-virtual-scroll-disabled{-webkit-box-flex:1;flex:1 0 auto}.pbl-ngrid-sticky-row-scroll-container{position:fixed;overflow:hidden}.pbl-ngrid-empty-spacer{display:none}.pbl-ngrid-empty .cdk-virtual-scroll-content-wrapper{min-height:100%;display:-webkit-box;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-direction:column}.pbl-ngrid-empty .cdk-virtual-scroll-content-wrapper .pbl-cdk-table{display:-webkit-box;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-direction:column;-webkit-box-flex:1;flex:1 1 100%}.pbl-ngrid-empty .cdk-virtual-scroll-content-wrapper .pbl-cdk-table>*{-webkit-box-flex:0;flex:0 0 auto}.pbl-ngrid-empty .cdk-virtual-scroll-content-wrapper .pbl-cdk-table>.pbl-ngrid-empty-spacer{display:block;-webkit-box-flex:1;flex:1 1 auto}.pbl-ngrid-scrolling pbl-cdk-table{pointer-events:none}"]
                     }] }
         ];
         /** @nocollapse */
@@ -16183,7 +16205,7 @@
                         },
                         encapsulation: core.ViewEncapsulation.None,
                         changeDetection: core.ChangeDetectionStrategy.OnPush,
-                        styles: [".pbl-cdk-table{display:block}.pbl-ngrid-footer-row,.pbl-ngrid-header-row,.pbl-ngrid-row{display:flex;border-width:0 0 1px;border-style:solid;align-items:center;box-sizing:border-box;position:relative}.pbl-ngrid-footer-row::after,.pbl-ngrid-header-row::after,.pbl-ngrid-row::after{display:inline-block;min-height:inherit;content:''}.pbl-ngrid-cell,.pbl-ngrid-footer-cell,.pbl-ngrid-header-cell{flex:1;display:flex;align-items:center;overflow:hidden;word-wrap:break-word;min-height:inherit}.pbl-ngrid-header-cell.pbl-header-group-cell{display:flex;align-items:center}.pbl-ngrid-header-cell.pbl-header-group-cell.pbl-header-group-cell-placeholder{border:none}.pbl-ngrid-footer-cell,.pbl-ngrid-header-cell{position:relative}.pbl-ngrid-cell{cursor:default;outline:0}.pbl-ngrid-editable-cell{cursor:text}"]
+                        styles: [".pbl-cdk-table{display:block}.pbl-ngrid-footer-row,.pbl-ngrid-header-row,.pbl-ngrid-row{display:-webkit-box;display:flex;border-width:0 0 1px;border-style:solid;-webkit-box-align:center;align-items:center;box-sizing:border-box;position:relative}.pbl-ngrid-footer-row::after,.pbl-ngrid-header-row::after,.pbl-ngrid-row::after{display:inline-block;min-height:inherit;content:''}.pbl-ngrid-cell,.pbl-ngrid-footer-cell,.pbl-ngrid-header-cell{-webkit-box-flex:1;flex:1;display:-webkit-box;display:flex;-webkit-box-align:center;align-items:center;overflow:hidden;word-wrap:break-word;min-height:inherit}.pbl-ngrid-header-cell.pbl-header-group-cell{display:-webkit-box;display:flex;-webkit-box-align:center;align-items:center}.pbl-ngrid-header-cell.pbl-header-group-cell.pbl-header-group-cell-placeholder{border:none}.pbl-ngrid-footer-cell,.pbl-ngrid-header-cell{position:relative}.pbl-ngrid-cell{cursor:default;outline:0}.pbl-ngrid-editable-cell{cursor:text}"]
                     }] }
         ];
         /** @nocollapse */
@@ -17485,6 +17507,17 @@
                 scrolling++;
             }));
         };
+        PblCdkVirtualScrollViewportComponent.ctorParameters = function () { return [
+            { type: core.ElementRef },
+            { type: core.ChangeDetectorRef },
+            { type: core.NgZone },
+            { type: PblNgridConfigService },
+            { type: undefined },
+            { type: bidi.Directionality },
+            { type: scrolling.ScrollDispatcher },
+            { type: PblNgridPluginController },
+            { type: PblNgridComponent }
+        ]; };
         PblCdkVirtualScrollViewportComponent.decorators = [
             { type: core.Component, args: [{
                         selector: 'pbl-cdk-virtual-scroll-viewport',
@@ -18018,5 +18051,5 @@
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-}));
+})));
 //# sourceMappingURL=pebula-ngrid.umd.js.map

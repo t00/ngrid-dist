@@ -1,6 +1,6 @@
 import { take, auditTime } from 'rxjs/operators';
 import { EventEmitter, ElementRef, Directive, Input, Optional, ChangeDetectorRef, SkipSelf, Inject, NgZone, ViewContainerRef, Injectable, ɵɵdefineInjectable, ɵɵinject, Output, Component, ChangeDetectionStrategy, ViewEncapsulation, HostListener, TemplateRef, NgModule } from '@angular/core';
-import { DropListRef, DragRef, CdkDropList, CDK_DROP_LIST, CdkDrag, CdkDragHandle, CdkDropListGroup, DragDrop, DragDropRegistry, CDK_DRAG_CONFIG, DragDropModule } from '@angular/cdk/drag-drop';
+import { DropListRef, DragRef, CdkDropList, CDK_DROP_LIST, CdkDrag, CdkDragHandle, DragDrop, CdkDropListGroup, DragDropRegistry, CDK_DRAG_CONFIG, DragDropModule } from '@angular/cdk/drag-drop';
 import { Subject, BehaviorSubject, Subscription, animationFrameScheduler } from 'rxjs';
 import { coerceElement, coerceBooleanProperty } from '@angular/cdk/coercion';
 import { __decorate, __metadata } from 'tslib';
@@ -544,6 +544,17 @@ class PblNgridRowReorderPluginDirective extends CdkDropList {
         this._removePlugin(this.table);
     }
 };
+PblNgridRowReorderPluginDirective.ctorParameters = () => [
+    { type: PblNgridComponent },
+    { type: PblNgridPluginController },
+    { type: ElementRef },
+    { type: DragDrop },
+    { type: ChangeDetectorRef },
+    { type: Directionality },
+    { type: CdkDropListGroup },
+    { type: DragDropRegistry },
+    { type: undefined }
+];
 PblNgridRowReorderPluginDirective.decorators = [
     { type: Directive, args: [{
                 selector: 'pbl-ngrid[rowReorder]',
@@ -1194,6 +1205,17 @@ class PblNgridColumnReorderPluginDirective extends CdkDropList {
         });
     }
 };
+PblNgridColumnReorderPluginDirective.ctorParameters = () => [
+    { type: PblNgridComponent },
+    { type: PblNgridPluginController },
+    { type: ElementRef },
+    { type: DragDrop },
+    { type: ChangeDetectorRef },
+    { type: Directionality },
+    { type: CdkDropListGroup },
+    { type: DragDropRegistry },
+    { type: undefined }
+];
 PblNgridColumnReorderPluginDirective.decorators = [
     { type: Directive, args: [{
                 selector: 'pbl-ngrid[columnReorder]',
@@ -1832,6 +1854,14 @@ let PblNgridDragResizeComponent = class PblNgridDragResizeComponent {
         this._pointerUpSubscription.unsubscribe();
     }
 };
+PblNgridDragResizeComponent.ctorParameters = () => [
+    { type: ElementRef },
+    { type: NgZone },
+    { type: ViewportRuler },
+    { type: DragDropRegistry },
+    { type: undefined },
+    { type: Directionality }
+];
 PblNgridDragResizeComponent.decorators = [
     { type: Component, args: [{
                 selector: 'pbl-ngrid-drag-resize',

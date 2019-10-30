@@ -2,7 +2,7 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/common'), require('@angular/cdk/table'), require('@pebula/ngrid'), require('rxjs'), require('@angular/cdk/coercion'), require('@pebula/utils')) :
     typeof define === 'function' && define.amd ? define('@pebula/ngrid/block-ui', ['exports', '@angular/core', '@angular/common', '@angular/cdk/table', '@pebula/ngrid', 'rxjs', '@angular/cdk/coercion', '@pebula/utils'], factory) :
     (global = global || self, factory((global.pebula = global.pebula || {}, global.pebula.ngrid = global.pebula.ngrid || {}, global.pebula.ngrid['block-ui'] = {}), global.ng.core, global.ng.common, global.ng.cdk.table, global.pebula.ngrid, global.rxjs, global.ng.cdk.coercion, global.pebula.utils));
-}(this, function (exports, core, common, table, ngrid, rxjs, coercion, utils) { 'use strict';
+}(this, (function (exports, core, common, table, ngrid, rxjs, coercion, utils) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -431,6 +431,10 @@
                 this._blockerEmbeddedVRef = undefined;
             }
         };
+        PblNgridBlockUiPluginDirective.ctorParameters = function () { return [
+            { type: ngrid.PblNgridComponent },
+            { type: ngrid.PblNgridPluginController }
+        ]; };
         PblNgridBlockUiPluginDirective.decorators = [
             { type: core.Directive, args: [{ selector: 'pbl-ngrid[blockUi]', exportAs: 'blockUi' },] }
         ];
@@ -503,5 +507,5 @@
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-}));
+})));
 //# sourceMappingURL=pebula-ngrid-block-ui.umd.js.map

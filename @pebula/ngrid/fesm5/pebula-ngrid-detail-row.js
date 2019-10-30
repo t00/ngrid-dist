@@ -1,5 +1,5 @@
 import { __extends, __values, __decorate, __metadata } from 'tslib';
-import { Directive, TemplateRef, IterableDiffers, Component, EventEmitter, ComponentFactoryResolver, Injector, Input, Output, ChangeDetectionStrategy, ViewEncapsulation, Optional, Inject, ElementRef, ViewContainerRef, NgModule } from '@angular/core';
+import { Directive, TemplateRef, IterableDiffers, Component, EventEmitter, ComponentFactoryResolver, Injector, Input, Output, ElementRef, ViewContainerRef, ChangeDetectionStrategy, ViewEncapsulation, Optional, Inject, NgModule } from '@angular/core';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { UnRx } from '@pebula/utils';
 import { PblNgridRegistryService, PblNgridSingleTemplateRegistry, PblNgridPluginController, PblNgridComponent, TablePlugin, EXT_API_TOKEN, PblNgridRowComponent, PblNgridModule } from '@pebula/ngrid';
@@ -513,6 +513,11 @@ var PblNgridDetailRowPluginDirective = /** @class */ (function () {
         // for example, if material will chack for change in `multiTemplateDataRows` setter from previous value...
         this.table._cdkTable.multiTemplateDataRows = !!this._detailRow;
     };
+    PblNgridDetailRowPluginDirective.ctorParameters = function () { return [
+        { type: PblNgridComponent },
+        { type: PblNgridPluginController },
+        { type: Injector }
+    ]; };
     PblNgridDetailRowPluginDirective.decorators = [
         { type: Directive, args: [{ selector: 'pbl-ngrid[detailRow]', exportAs: 'pblNgridDetailRow' },] }
     ];
@@ -843,6 +848,11 @@ var PblNgridDetailRowComponent = /** @class */ (function (_super) {
         }
     };
     var PblNgridDetailRowComponent_1;
+    PblNgridDetailRowComponent.ctorParameters = function () { return [
+        { type: undefined },
+        { type: ElementRef },
+        { type: ViewContainerRef }
+    ]; };
     PblNgridDetailRowComponent.decorators = [
         { type: Component, args: [{
                     selector: 'pbl-ngrid-row[detailRow]',

@@ -2,7 +2,7 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('rxjs/operators'), require('@angular/core'), require('@pebula/ngrid'), require('@angular/common'), require('@angular/cdk/table')) :
     typeof define === 'function' && define.amd ? define('@pebula/ngrid/sticky', ['exports', 'rxjs/operators', '@angular/core', '@pebula/ngrid', '@angular/common', '@angular/cdk/table'], factory) :
     (global = global || self, factory((global.pebula = global.pebula || {}, global.pebula.ngrid = global.pebula.ngrid || {}, global.pebula.ngrid.sticky = {}), global.rxjs.operators, global.ng.core, global.pebula.ngrid, global.ng.common, global.ng.cdk.table));
-}(this, function (exports, operators, core, ngrid, common, table) { 'use strict';
+}(this, (function (exports, operators, core, ngrid, common, table) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -594,6 +594,11 @@
                 setStickyRow(this.table, type, bulk);
             }
         };
+        PblNgridStickyPluginDirective.ctorParameters = function () { return [
+            { type: ngrid.PblNgridComponent },
+            { type: core.IterableDiffers },
+            { type: ngrid.PblNgridPluginController }
+        ]; };
         PblNgridStickyPluginDirective.decorators = [
             { type: core.Directive, args: [{ selector: 'pbl-ngrid[stickyColumnStart], pbl-ngrid[stickyColumnEnd], pbl-ngrid[stickyHeader], pbl-ngrid[stickyFooter]' },] }
         ];
@@ -744,5 +749,5 @@
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-}));
+})));
 //# sourceMappingURL=pebula-ngrid-sticky.umd.js.map

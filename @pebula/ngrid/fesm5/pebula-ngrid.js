@@ -1,6 +1,6 @@
 import { __values, __assign, __spread, __read, __extends, __decorate, __metadata } from 'tslib';
 import { ReplaySubject, Subject, combineLatest, of, isObservable, from, asapScheduler, BehaviorSubject, animationFrameScheduler, fromEventPattern, fromEvent, race, timer } from 'rxjs';
-import { InjectionToken, Injectable, Optional, Inject, ɵɵdefineInjectable, ɵɵinject, isDevMode, SkipSelf, Directive, TemplateRef, Component, ElementRef, Input, Injector, ViewContainerRef, ChangeDetectorRef, forwardRef, ChangeDetectionStrategy, ViewEncapsulation, IterableDiffers, NgZone, Attribute, ViewChild, ViewChildren, KeyValueDiffers, EventEmitter, Output, ANALYZE_FOR_ENTRY_COMPONENTS, NgModule, NgModuleRef, Self } from '@angular/core';
+import { InjectionToken, Injectable, Optional, Inject, ɵɵdefineInjectable, ɵɵinject, isDevMode, SkipSelf, Directive, TemplateRef, ElementRef, Component, Input, Injector, ViewContainerRef, ChangeDetectorRef, IterableDiffers, NgZone, forwardRef, ChangeDetectionStrategy, ViewEncapsulation, Attribute, ViewChild, ViewChildren, KeyValueDiffers, EventEmitter, Output, ANALYZE_FOR_ENTRY_COMPONENTS, NgModule, NgModuleRef, Self } from '@angular/core';
 import { DataSource, CdkRowDef, CdkHeaderRowDef, CdkFooterRowDef, CDK_ROW_TEMPLATE, CdkRow, CdkColumnDef, CdkHeaderCell, CdkCell, CdkFooterCell, CDK_TABLE_TEMPLATE, CdkTable, CdkTableModule } from '@angular/cdk/table';
 import ResizeObserver from 'resize-observer-polyfill';
 import { map, filter as filter$1, debounceTime, switchMap, tap, observeOn, mapTo, skip, buffer, auditTime, take, startWith, pairwise, first, takeUntil } from 'rxjs/operators';
@@ -6499,6 +6499,9 @@ var PblNgridRegistryService = /** @class */ (function () {
             this.changes$.next(e);
         }
     };
+    PblNgridRegistryService.ctorParameters = function () { return [
+        { type: PblNgridRegistryService }
+    ]; };
     PblNgridRegistryService.decorators = [
         { type: Injectable, args: [{ providedIn: 'root' },] }
     ];
@@ -9986,6 +9989,10 @@ var PblNgridMetaRowContainerComponent = /** @class */ (function () {
             finally { if (e_1) throw e_1.error; }
         }
     };
+    PblNgridMetaRowContainerComponent.ctorParameters = function () { return [
+        { type: PblNgridMetaRowService },
+        { type: ElementRef }
+    ]; };
     PblNgridMetaRowContainerComponent.decorators = [
         { type: Component, args: [{
                     selector: 'div[pbl-ngrid-fixed-meta-row-container]',
@@ -10107,6 +10114,10 @@ var PblMetaRowDirective = /** @class */ (function () {
             this.metaRows.addMetaRow(this);
         }
     };
+    PblMetaRowDirective.ctorParameters = function () { return [
+        { type: PblNgridMetaRowService },
+        { type: ElementRef }
+    ]; };
     PblMetaRowDirective.decorators = [
         { type: Directive, args: [{
                     selector: '[pblMetaRow]',
@@ -11824,6 +11835,17 @@ var PblNgridComponent = /** @class */ (function () {
         }
     };
     var PblNgridComponent_1;
+    PblNgridComponent.ctorParameters = function () { return [
+        { type: Injector },
+        { type: ViewContainerRef },
+        { type: ElementRef },
+        { type: IterableDiffers },
+        { type: NgZone },
+        { type: ChangeDetectorRef },
+        { type: PblNgridConfigService },
+        { type: PblNgridRegistryService },
+        { type: String }
+    ]; };
     PblNgridComponent.decorators = [
         { type: Component, args: [{
                     selector: 'pbl-ngrid',
@@ -11857,7 +11879,7 @@ var PblNgridComponent = /** @class */ (function () {
                     ],
                     changeDetection: ChangeDetectionStrategy.OnPush,
                     encapsulation: ViewEncapsulation.None,
-                    styles: ["pbl-ngrid{display:block}.pbl-ngrid-row-visually-hidden{border-top:0;border-bottom:0;clip:rect(0 0 0 0);height:0;min-height:0;max-height:0;overflow:hidden!important;visibility:collapse!important;outline:0;-webkit-appearance:none;-moz-appearance:none}.pbl-ngrid-row-hidden{display:none!important}.pbl-ngrid-container{position:relative;height:100%;width:100%;flex-direction:column;box-sizing:border-box;display:flex;overflow:auto;min-height:inherit}.pbl-ngrid-scroll-container{flex:1 1 auto;box-sizing:border-box;min-height:auto}.pbl-ngrid-scroll-container.cdk-virtual-scroll-disabled{flex:1 0 auto}.pbl-ngrid-sticky-row-scroll-container{position:fixed;overflow:hidden}.pbl-ngrid-empty-spacer{display:none}.pbl-ngrid-empty .cdk-virtual-scroll-content-wrapper{min-height:100%;display:flex;flex-direction:column}.pbl-ngrid-empty .cdk-virtual-scroll-content-wrapper .pbl-cdk-table{display:flex;flex-direction:column;flex:1 1 100%}.pbl-ngrid-empty .cdk-virtual-scroll-content-wrapper .pbl-cdk-table>*{flex:0 0 auto}.pbl-ngrid-empty .cdk-virtual-scroll-content-wrapper .pbl-cdk-table>.pbl-ngrid-empty-spacer{display:block;flex:1 1 auto}.pbl-ngrid-scrolling pbl-cdk-table{pointer-events:none}"]
+                    styles: ["pbl-ngrid{display:block}.pbl-ngrid-row-visually-hidden{border-top:0;border-bottom:0;clip:rect(0 0 0 0);height:0;min-height:0;max-height:0;overflow:hidden!important;visibility:collapse!important;outline:0;-webkit-appearance:none;-moz-appearance:none}.pbl-ngrid-row-hidden{display:none!important}.pbl-ngrid-container{position:relative;height:100%;width:100%;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-direction:column;box-sizing:border-box;display:-webkit-box;display:flex;overflow:auto;min-height:inherit}.pbl-ngrid-scroll-container{-webkit-box-flex:1;flex:1 1 auto;box-sizing:border-box;min-height:auto}.pbl-ngrid-scroll-container.cdk-virtual-scroll-disabled{-webkit-box-flex:1;flex:1 0 auto}.pbl-ngrid-sticky-row-scroll-container{position:fixed;overflow:hidden}.pbl-ngrid-empty-spacer{display:none}.pbl-ngrid-empty .cdk-virtual-scroll-content-wrapper{min-height:100%;display:-webkit-box;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-direction:column}.pbl-ngrid-empty .cdk-virtual-scroll-content-wrapper .pbl-cdk-table{display:-webkit-box;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-direction:column;-webkit-box-flex:1;flex:1 1 100%}.pbl-ngrid-empty .cdk-virtual-scroll-content-wrapper .pbl-cdk-table>*{-webkit-box-flex:0;flex:0 0 auto}.pbl-ngrid-empty .cdk-virtual-scroll-content-wrapper .pbl-cdk-table>.pbl-ngrid-empty-spacer{display:block;-webkit-box-flex:1;flex:1 1 auto}.pbl-ngrid-scrolling pbl-cdk-table{pointer-events:none}"]
                 }] }
     ];
     /** @nocollapse */
@@ -15994,7 +16016,7 @@ var PblCdkTableComponent = /** @class */ (function (_super) {
                     },
                     encapsulation: ViewEncapsulation.None,
                     changeDetection: ChangeDetectionStrategy.OnPush,
-                    styles: [".pbl-cdk-table{display:block}.pbl-ngrid-footer-row,.pbl-ngrid-header-row,.pbl-ngrid-row{display:flex;border-width:0 0 1px;border-style:solid;align-items:center;box-sizing:border-box;position:relative}.pbl-ngrid-footer-row::after,.pbl-ngrid-header-row::after,.pbl-ngrid-row::after{display:inline-block;min-height:inherit;content:''}.pbl-ngrid-cell,.pbl-ngrid-footer-cell,.pbl-ngrid-header-cell{flex:1;display:flex;align-items:center;overflow:hidden;word-wrap:break-word;min-height:inherit}.pbl-ngrid-header-cell.pbl-header-group-cell{display:flex;align-items:center}.pbl-ngrid-header-cell.pbl-header-group-cell.pbl-header-group-cell-placeholder{border:none}.pbl-ngrid-footer-cell,.pbl-ngrid-header-cell{position:relative}.pbl-ngrid-cell{cursor:default;outline:0}.pbl-ngrid-editable-cell{cursor:text}"]
+                    styles: [".pbl-cdk-table{display:block}.pbl-ngrid-footer-row,.pbl-ngrid-header-row,.pbl-ngrid-row{display:-webkit-box;display:flex;border-width:0 0 1px;border-style:solid;-webkit-box-align:center;align-items:center;box-sizing:border-box;position:relative}.pbl-ngrid-footer-row::after,.pbl-ngrid-header-row::after,.pbl-ngrid-row::after{display:inline-block;min-height:inherit;content:''}.pbl-ngrid-cell,.pbl-ngrid-footer-cell,.pbl-ngrid-header-cell{-webkit-box-flex:1;flex:1;display:-webkit-box;display:flex;-webkit-box-align:center;align-items:center;overflow:hidden;word-wrap:break-word;min-height:inherit}.pbl-ngrid-header-cell.pbl-header-group-cell{display:-webkit-box;display:flex;-webkit-box-align:center;align-items:center}.pbl-ngrid-header-cell.pbl-header-group-cell.pbl-header-group-cell-placeholder{border:none}.pbl-ngrid-footer-cell,.pbl-ngrid-header-cell{position:relative}.pbl-ngrid-cell{cursor:default;outline:0}.pbl-ngrid-editable-cell{cursor:text}"]
                 }] }
     ];
     /** @nocollapse */
@@ -17296,6 +17318,17 @@ var PblCdkVirtualScrollViewportComponent = /** @class */ (function (_super) {
             scrolling++;
         }));
     };
+    PblCdkVirtualScrollViewportComponent.ctorParameters = function () { return [
+        { type: ElementRef },
+        { type: ChangeDetectorRef },
+        { type: NgZone },
+        { type: PblNgridConfigService },
+        { type: undefined },
+        { type: Directionality },
+        { type: ScrollDispatcher },
+        { type: PblNgridPluginController },
+        { type: PblNgridComponent }
+    ]; };
     PblCdkVirtualScrollViewportComponent.decorators = [
         { type: Component, args: [{
                     selector: 'pbl-cdk-virtual-scroll-viewport',

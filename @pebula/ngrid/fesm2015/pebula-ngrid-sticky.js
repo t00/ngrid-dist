@@ -1,6 +1,6 @@
 import { __decorate, __metadata } from 'tslib';
 import { filter, first } from 'rxjs/operators';
-import { Directive, IterableDiffers, Input, NgModule, Optional, SkipSelf } from '@angular/core';
+import { IterableDiffers, Directive, Input, NgModule, Optional, SkipSelf } from '@angular/core';
 import { PblNgridComponent, PblNgridPluginController, TablePlugin, PblNgridModule, PblNgridConfigService } from '@pebula/ngrid';
 import { CommonModule } from '@angular/common';
 import { CdkTableModule } from '@angular/cdk/table';
@@ -307,6 +307,11 @@ let PblNgridStickyPluginDirective = class PblNgridStickyPluginDirective {
         }
     }
 };
+PblNgridStickyPluginDirective.ctorParameters = () => [
+    { type: PblNgridComponent },
+    { type: IterableDiffers },
+    { type: PblNgridPluginController }
+];
 PblNgridStickyPluginDirective.decorators = [
     { type: Directive, args: [{ selector: 'pbl-ngrid[stickyColumnStart], pbl-ngrid[stickyColumnEnd], pbl-ngrid[stickyHeader], pbl-ngrid[stickyFooter]' },] }
 ];

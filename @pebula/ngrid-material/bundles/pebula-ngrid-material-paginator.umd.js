@@ -2,7 +2,7 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/common'), require('@angular/material/paginator'), require('@angular/material/select'), require('@angular/material/tooltip'), require('@angular/material/button'), require('@pebula/ngrid'), require('@angular/cdk/coercion'), require('@pebula/utils')) :
     typeof define === 'function' && define.amd ? define('@pebula/ngrid-material/paginator', ['exports', '@angular/core', '@angular/common', '@angular/material/paginator', '@angular/material/select', '@angular/material/tooltip', '@angular/material/button', '@pebula/ngrid', '@angular/cdk/coercion', '@pebula/utils'], factory) :
     (global = global || self, factory((global.pebula = global.pebula || {}, global.pebula['ngrid-material'] = global.pebula['ngrid-material'] || {}, global.pebula['ngrid-material'].paginator = {}), global.ng.core, global.ng.common, global.ng.material.paginator, global.ng.material.select, global.ng.material.tooltip, global.ng.material.button, global.pebula.ngrid, global.ng.cdk.coercion, global.pebula.utils));
-}(this, function (exports, core, common, paginator, select, tooltip, button, ngrid, coercion, utils) { 'use strict';
+}(this, (function (exports, core, common, paginator, select, tooltip, button, ngrid, coercion, utils) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -344,6 +344,11 @@
             this.cdr.detectChanges();
             this.cdr.markForCheck();
         };
+        PblPaginatorComponent.ctorParameters = function () { return [
+            { type: ngrid.PblNgridComponent },
+            { type: paginator.MatPaginatorIntl },
+            { type: core.ChangeDetectorRef }
+        ]; };
         PblPaginatorComponent.decorators = [
             { type: core.Component, args: [{
                         selector: 'pbl-ngrid-paginator',
@@ -353,7 +358,7 @@
                         },
                         changeDetection: core.ChangeDetectionStrategy.OnPush,
                         encapsulation: core.ViewEncapsulation.None,
-                        styles: [".mat-paginator-range-label{flex-grow:1}.mat-paginator-container{box-sizing:border-box}"]
+                        styles: [".mat-paginator-range-label{-webkit-box-flex:1;flex-grow:1}.mat-paginator-container{box-sizing:border-box}"]
                     }] }
         ];
         /** @nocollapse */
@@ -445,5 +450,5 @@
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-}));
+})));
 //# sourceMappingURL=pebula-ngrid-material-paginator.umd.js.map

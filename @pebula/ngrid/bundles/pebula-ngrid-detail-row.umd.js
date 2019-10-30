@@ -2,7 +2,7 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/cdk/coercion'), require('@pebula/utils'), require('@pebula/ngrid'), require('@angular/cdk/table'), require('@angular/common'), require('@pebula/ngrid/target-events'), require('@angular/cdk/keycodes')) :
     typeof define === 'function' && define.amd ? define('@pebula/ngrid/detail-row', ['exports', '@angular/core', '@angular/cdk/coercion', '@pebula/utils', '@pebula/ngrid', '@angular/cdk/table', '@angular/common', '@pebula/ngrid/target-events', '@angular/cdk/keycodes'], factory) :
     (global = global || self, factory((global.pebula = global.pebula || {}, global.pebula.ngrid = global.pebula.ngrid || {}, global.pebula.ngrid['detail-row'] = {}), global.ng.core, global.ng.cdk.coercion, global.pebula.utils, global.pebula.ngrid, global.ng.cdk.table, global.ng.common, global.pebula.ngrid['target-events'], global.ng.cdk.keycodes));
-}(this, function (exports, core, coercion, utils, ngrid, table, common, targetEvents, keycodes) { 'use strict';
+}(this, (function (exports, core, coercion, utils, ngrid, table, common, targetEvents, keycodes) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -706,6 +706,11 @@
             // for example, if material will chack for change in `multiTemplateDataRows` setter from previous value...
             this.table._cdkTable.multiTemplateDataRows = !!this._detailRow;
         };
+        PblNgridDetailRowPluginDirective.ctorParameters = function () { return [
+            { type: ngrid.PblNgridComponent },
+            { type: ngrid.PblNgridPluginController },
+            { type: core.Injector }
+        ]; };
         PblNgridDetailRowPluginDirective.decorators = [
             { type: core.Directive, args: [{ selector: 'pbl-ngrid[detailRow]', exportAs: 'pblNgridDetailRow' },] }
         ];
@@ -1036,6 +1041,11 @@
             }
         };
         var PblNgridDetailRowComponent_1;
+        PblNgridDetailRowComponent.ctorParameters = function () { return [
+            { type: undefined },
+            { type: core.ElementRef },
+            { type: core.ViewContainerRef }
+        ]; };
         PblNgridDetailRowComponent.decorators = [
             { type: core.Component, args: [{
                         selector: 'pbl-ngrid-row[detailRow]',
@@ -1126,5 +1136,5 @@
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-}));
+})));
 //# sourceMappingURL=pebula-ngrid-detail-row.umd.js.map

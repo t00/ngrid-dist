@@ -1,4 +1,4 @@
-import { ViewContainerRef, NgZone, ElementRef, Directive, Injector, Input, NgModule, Optional, SkipSelf } from '@angular/core';
+import { ViewContainerRef, NgZone, ElementRef, Injector, Directive, Input, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Overlay, OverlayModule } from '@angular/cdk/overlay';
 import { MAT_TOOLTIP_SCROLL_STRATEGY, MAT_TOOLTIP_DEFAULT_OPTIONS, MatTooltip, MatTooltipModule } from '@angular/material/tooltip';
@@ -255,6 +255,11 @@ var PblNgridCellTooltipDirective = /** @class */ (function () {
     };
     var PblNgridCellTooltipDirective_1;
     PblNgridCellTooltipDirective.PLUGIN_KEY = PLUGIN_KEY;
+    PblNgridCellTooltipDirective.ctorParameters = function () { return [
+        { type: PblNgridComponent },
+        { type: Injector },
+        { type: PblNgridPluginController }
+    ]; };
     PblNgridCellTooltipDirective.decorators = [
         { type: Directive, args: [{ selector: '[cellTooltip]', exportAs: 'pblOverflowTooltip' },] }
     ];

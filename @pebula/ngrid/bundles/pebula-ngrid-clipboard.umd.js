@@ -2,7 +2,7 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('rxjs/operators'), require('@angular/core'), require('@angular/common'), require('@pebula/utils'), require('@pebula/ngrid'), require('@pebula/ngrid/target-events')) :
     typeof define === 'function' && define.amd ? define('@pebula/ngrid/clipboard', ['exports', 'rxjs/operators', '@angular/core', '@angular/common', '@pebula/utils', '@pebula/ngrid', '@pebula/ngrid/target-events'], factory) :
     (global = global || self, factory((global.pebula = global.pebula || {}, global.pebula.ngrid = global.pebula.ngrid || {}, global.pebula.ngrid.clipboard = {}), global.rxjs.operators, global.ng.core, global.ng.common, global.pebula.utils, global.pebula.ngrid, global.pebula.ngrid['target-events']));
-}(this, function (exports, operators, core, common, utils, ngrid, targetEvents) { 'use strict';
+}(this, (function (exports, operators, core, common, utils, ngrid, targetEvents) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -559,6 +559,11 @@
             function (event) { return _this.doCopy(); }));
         };
         var PblNgridClipboardPlugin_1;
+        PblNgridClipboardPlugin.ctorParameters = function () { return [
+            { type: ngrid.PblNgridComponent },
+            { type: core.Injector },
+            { type: ngrid.PblNgridPluginController }
+        ]; };
         PblNgridClipboardPlugin.decorators = [
             { type: core.Directive, args: [{ selector: 'pbl-ngrid[clipboard]', exportAs: 'pblNgridClipboard' },] }
         ];
@@ -682,5 +687,5 @@
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-}));
+})));
 //# sourceMappingURL=pebula-ngrid-clipboard.umd.js.map

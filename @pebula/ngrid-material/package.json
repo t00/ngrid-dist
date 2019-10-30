@@ -1,49 +1,21 @@
 {
-  "_from": "@pebula/ngrid-material@latest",
-  "_id": "@pebula/ngrid-material@1.0.0-rc.9",
-  "_inBundle": false,
-  "_integrity": "sha512-XkzAvnTx74qfCK/ep9+x6lAJGpTlytGVewvCaQM6OKai0VoIm4njNgxj2c/8fBU4ZA1gPnjjBsvYOu5YRjTs0w==",
-  "_location": "/@pebula/ngrid-material",
-  "_phantomChildren": {},
-  "_requested": {
-    "type": "tag",
-    "registry": true,
-    "raw": "@pebula/ngrid-material@latest",
-    "name": "@pebula/ngrid-material",
-    "escapedName": "@pebula%2fngrid-material",
-    "scope": "@pebula",
-    "rawSpec": "latest",
-    "saveSpec": null,
-    "fetchSpec": "latest"
-  },
-  "_requiredBy": [
-    "#USER",
-    "/"
-  ],
-  "_resolved": "https://registry.npmjs.org/@pebula/ngrid-material/-/ngrid-material-1.0.0-rc.9.tgz",
-  "_shasum": "b92441517071e93c60678f059afcd45c54702996",
-  "_spec": "@pebula/ngrid-material@latest",
-  "_where": "C:\\dev\\products\\Speedwell\\Speedwell.WebApp\\Speedwell.WebApp",
-  "bundleDependencies": false,
-  "dependencies": {
-    "tslib": "^1.9.0"
-  },
-  "deprecated": false,
-  "description": "A UI collection of plugins that wrap components from `@angular/material` to be used in the `@pebula/ngrid`.",
-  "es2015": "fesm2015/pebula-ngrid-material.js",
-  "esm2015": "esm2015/pebula-ngrid-material.js",
-  "esm5": "esm5/pebula-ngrid-material.js",
-  "fesm2015": "fesm2015/pebula-ngrid-material.js",
-  "fesm5": "fesm5/pebula-ngrid-material.js",
-  "main": "bundles/pebula-ngrid-material.umd.js",
-  "metadata": "pebula-ngrid-material.metadata.json",
-  "module": "fesm5/pebula-ngrid-material.js",
   "name": "@pebula/ngrid-material",
+  "version": "1.0.0-rc.9",
   "peerDependencies": {
     "@angular/material": "^8.0.0",
     "@pebula/ngrid": "1.0.0-rc.9"
   },
-  "sideEffects": false,
+  "main": "bundles/pebula-ngrid-material.umd.js",
+  "module": "fesm5/pebula-ngrid-material.js",
+  "es2015": "fesm2015/pebula-ngrid-material.js",
+  "esm5": "esm5/pebula-ngrid-material.js",
+  "esm2015": "esm2015/pebula-ngrid-material.js",
+  "fesm5": "fesm5/pebula-ngrid-material.js",
+  "fesm2015": "fesm2015/pebula-ngrid-material.js",
   "typings": "pebula-ngrid-material.d.ts",
-  "version": "1.0.0-rc.9"
+  "metadata": "pebula-ngrid-material.metadata.json",
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^1.9.0"
+  }
 }

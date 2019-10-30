@@ -237,6 +237,10 @@ var PblNgridBlockUiPluginDirective = /** @class */ (function () {
             this._blockerEmbeddedVRef = undefined;
         }
     };
+    PblNgridBlockUiPluginDirective.ctorParameters = function () { return [
+        { type: PblNgridComponent },
+        { type: PblNgridPluginController }
+    ]; };
     PblNgridBlockUiPluginDirective.decorators = [
         { type: Directive, args: [{ selector: 'pbl-ngrid[blockUi]', exportAs: 'blockUi' },] }
     ];

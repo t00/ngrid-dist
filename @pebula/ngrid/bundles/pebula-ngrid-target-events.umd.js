@@ -2,7 +2,7 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('rxjs'), require('rxjs/operators'), require('@angular/core'), require('@pebula/utils'), require('@pebula/ngrid'), require('@angular/cdk/keycodes'), require('@angular/common'), require('@angular/cdk/table'), require('@angular/cdk/coercion')) :
     typeof define === 'function' && define.amd ? define('@pebula/ngrid/target-events', ['exports', 'rxjs', 'rxjs/operators', '@angular/core', '@pebula/utils', '@pebula/ngrid', '@angular/cdk/keycodes', '@angular/common', '@angular/cdk/table', '@angular/cdk/coercion'], factory) :
     (global = global || self, factory((global.pebula = global.pebula || {}, global.pebula.ngrid = global.pebula.ngrid || {}, global.pebula.ngrid['target-events'] = {}), global.rxjs, global.rxjs.operators, global.ng.core, global.pebula.utils, global.pebula.ngrid, global.ng.cdk.keycodes, global.ng.common, global.ng.cdk.table, global.ng.cdk.coercion));
-}(this, function (exports, rxjs, operators, core, utils, ngrid, keycodes, common, table, coercion) { 'use strict';
+}(this, (function (exports, rxjs, operators, core, utils, ngrid, keycodes, common, table, coercion) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -1200,6 +1200,11 @@
             this.table._cdkTable.syncRows(event.type, event.rowIndex);
         };
         var PblNgridTargetEventsPlugin_1;
+        PblNgridTargetEventsPlugin.ctorParameters = function () { return [
+            { type: ngrid.PblNgridComponent },
+            { type: core.Injector },
+            { type: ngrid.PblNgridPluginController }
+        ]; };
         /**
          * @template T
          */
@@ -1279,6 +1284,11 @@
         function () {
             this.destroy();
         };
+        PblNgridTargetEventsPluginDirective.ctorParameters = function () { return [
+            { type: ngrid.PblNgridComponent },
+            { type: core.Injector },
+            { type: ngrid.PblNgridPluginController }
+        ]; };
         PblNgridTargetEventsPluginDirective.decorators = [
             { type: core.Directive, args: [{
                         // tslint:disable-next-line:directive-selector
@@ -1400,6 +1410,11 @@
                 }
             }
         };
+        PblNgridCellEditDirective.ctorParameters = function () { return [
+            { type: ngrid.PblNgridComponent },
+            { type: core.Injector },
+            { type: ngrid.PblNgridPluginController }
+        ]; };
         PblNgridCellEditDirective.decorators = [
             { type: core.Directive, args: [{
                         // tslint:disable-next-line:directive-selector
@@ -1507,5 +1522,5 @@
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-}));
+})));
 //# sourceMappingURL=pebula-ngrid-target-events.umd.js.map
