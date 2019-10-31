@@ -13628,7 +13628,7 @@ let PblCdkVirtualScrollViewportComponent = class PblCdkVirtualScrollViewportComp
             this.scrollHeight = this.elementRef.nativeElement.scrollHeight; //size;
             this.updateFiller();
             // We must trigger a change detection cycle because the filler div element is updated through bindings
-            this.cdr.detectChanges();
+            this.cdr.markForCheck();
         }));
     }
     /**

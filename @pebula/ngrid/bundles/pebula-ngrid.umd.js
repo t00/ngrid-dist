@@ -17290,7 +17290,7 @@
                 _this.scrollHeight = _this.elementRef.nativeElement.scrollHeight; //size;
                 _this.updateFiller();
                 // We must trigger a change detection cycle because the filler div element is updated through bindings
-                _this.cdr.detectChanges();
+                _this.cdr.markForCheck();
             }));
         };
         /**
