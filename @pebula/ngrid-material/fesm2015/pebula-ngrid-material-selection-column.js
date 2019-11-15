@@ -157,7 +157,11 @@ let PblNgridCheckboxComponent = class PblNgridCheckboxComponent {
              * @return {?}
              */
             () => {
-                const { length } = this.getCollection();
+                const { length } = this.getCollection().filter((/**
+                 * @param {?} data
+                 * @return {?}
+                 */
+                data => !this._isCheckboxDisabled(data)));
                 this.allSelected = !this.selection.isEmpty() && this.selection.selected.length === length;
                 this.length = this.selection.selected.length;
                 this.cdr.markForCheck();

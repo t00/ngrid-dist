@@ -398,7 +398,11 @@
                  * @return {?}
                  */
                 function () {
-                    var length = _this.getCollection().length;
+                    var length = _this.getCollection().filter((/**
+                     * @param {?} data
+                     * @return {?}
+                     */
+                    function (data) { return !_this._isCheckboxDisabled(data); })).length;
                     _this.allSelected = !_this.selection.isEmpty() && _this.selection.selected.length === length;
                     _this.length = _this.selection.selected.length;
                     _this.cdr.markForCheck();
