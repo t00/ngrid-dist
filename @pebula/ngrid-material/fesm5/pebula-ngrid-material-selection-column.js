@@ -203,20 +203,42 @@ var PblNgridCheckboxComponent = /** @class */ (function () {
              * @return {?}
              */
             function () {
-                var length = _this.getCollection().filter((/**
-                 * @param {?} data
-                 * @return {?}
-                 */
-                function (data) { return !_this._isCheckboxDisabled(data); })).length;
-                _this.allSelected = !_this.selection.isEmpty() && _this.selection.selected.length === length;
-                _this.length = _this.selection.selected.length;
-                _this.cdr.markForCheck();
-                _this.cdr.detectChanges();
+                _this.handleSelectionChanged();
+            }));
+            /** @type {?} */
+            var changeSource = this.bulkSelectMode === 'view' ? this.table.ds.onRenderedDataChanged : this.table.ds.onSourceChanged;
+            changeSource
+                .pipe(UnRx(this, this.table))
+                .subscribe((/**
+             * @return {?}
+             */
+            function () {
+                _this.handleSelectionChanged();
             }));
         }
         else {
             this.length = 0;
         }
+    };
+    /**
+     * @private
+     * @return {?}
+     */
+    PblNgridCheckboxComponent.prototype.handleSelectionChanged = /**
+     * @private
+     * @return {?}
+     */
+    function () {
+        var _this = this;
+        var length = this.getCollection().filter((/**
+         * @param {?} data
+         * @return {?}
+         */
+        function (data) { return !_this._isCheckboxDisabled(data); })).length;
+        this.allSelected = !this.selection.isEmpty() && this.selection.selected.length === length;
+        this.length = this.selection.selected.length;
+        this.cdr.markForCheck();
+        this.cdr.detectChanges();
     };
     PblNgridCheckboxComponent.ctorParameters = function () { return [
         { type: PblNgridComponent },

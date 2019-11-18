@@ -43,4 +43,5 @@ export declare class PblNgridCheckboxComponent implements AfterViewInit {
     rowItemChange(row: any): void;
     private getCollection;
     private setupSelection;
+    private handleSelectionChanged;
 }
