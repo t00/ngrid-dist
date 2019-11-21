@@ -2245,7 +2245,7 @@
             function (value) {
                 if (value) {
                     var col = value.col, table = value.table;
-                    if (col && col instanceof ngrid.PblColumn) {
+                    if (ngrid.isPblColumn(col)) {
                         this.column = col;
                         this.table = table;
                         return;

@@ -226,6 +226,45 @@
                 _this.onSort(s, origin);
                 origin = 'click';
             }));
+            /** @type {?} */
+            var handleDataSourceSortChange = (/**
+             * @param {?} sortChange
+             * @return {?}
+             */
+            function (sortChange) {
+                var column = sortChange.column;
+                /** @type {?} */
+                var order = sortChange.sort ? sortChange.sort.order : undefined;
+                if (_this.sort && column) {
+                    if (_this.sort.active === column.id && _this.sort.direction === (order || '')) {
+                        return;
+                    }
+                    /** @type {?} */
+                    var sortable = (/** @type {?} */ (_this.sort.sortables.get(column.id)));
+                    if (sortable) {
+                        origin = 'ds';
+                        _this.sort.active = undefined;
+                        sortable.start = order || 'asc';
+                        sortable._handleClick();
+                    }
+                }
+                else if (_this.sort.active) { // clear mode (hit from code, not click).
+                    // clear mode (hit from code, not click).
+                    /** @type {?} */
+                    var sortable = (/** @type {?} */ (_this.sort.sortables.get(_this.sort.active)));
+                    if (sortable) {
+                        if (!sortable.disableClear) {
+                            /** @type {?} */
+                            var nextSortDir = void 0;
+                            while (nextSortDir = _this.sort.getNextSortDirection(sortable)) {
+                                _this.sort.direction = nextSortDir;
+                            }
+                        }
+                        origin = 'ds';
+                        sortable._handleClick();
+                    }
+                }
+            });
             pluginCtrl.events
                 .subscribe((/**
              * @param {?} e
@@ -233,9 +272,17 @@
              */
             function (e) {
                 if (e.kind === 'onInvalidateHeaders') {
-                    if (table.ds && !table.ds.sort.column) {
-                        if (_this.sort && _this.sort.active) {
+                    /** @type {?} */
+                    var hasActiveSort = _this.sort && _this.sort.active;
+                    if (table.ds && table.ds.sort) {
+                        if (!table.ds.sort.column && hasActiveSort) {
                             _this.onSort({ active: _this.sort.active, direction: _this.sort.direction || 'asc' }, origin);
+                        }
+                        else if (table.ds.sort.column && !hasActiveSort) {
+                            setTimeout((/**
+                             * @return {?}
+                             */
+                            function () { return handleDataSourceSortChange(table.ds.sort); }));
                         }
                     }
                 }
@@ -250,39 +297,7 @@
                      * @param {?} event
                      * @return {?}
                      */
-                    function (event) {
-                        if (_this.sort && event.column) {
-                            /** @type {?} */
-                            var _sort = event.sort || {};
-                            if (_this.sort.active === event.column.id && _this.sort.direction === (_sort.order || '')) {
-                                return;
-                            }
-                            /** @type {?} */
-                            var sortable = (/** @type {?} */ (_this.sort.sortables.get(event.column.id)));
-                            if (sortable) {
-                                origin = 'ds';
-                                _this.sort.active = undefined;
-                                sortable.start = _sort.order || 'asc';
-                                sortable._handleClick();
-                            }
-                        }
-                        else if (_this.sort.active) { // clear mode (hit from code, not click).
-                            // clear mode (hit from code, not click).
-                            /** @type {?} */
-                            var sortable = (/** @type {?} */ (_this.sort.sortables.get(_this.sort.active)));
-                            if (sortable) {
-                                if (!sortable.disableClear) {
-                                    /** @type {?} */
-                                    var nextSortDir = void 0;
-                                    while (nextSortDir = _this.sort.getNextSortDirection(sortable)) {
-                                        _this.sort.direction = nextSortDir;
-                                    }
-                                }
-                                origin = 'ds';
-                                sortable._handleClick();
-                            }
-                        }
-                    }));
+                    function (event) { handleDataSourceSortChange(event); }));
                 }
             }));
         }

@@ -35,6 +35,45 @@ let PblNgridMatSortDirective = class PblNgridMatSortDirective {
             this.onSort(s, origin);
             origin = 'click';
         }));
+        /** @type {?} */
+        const handleDataSourceSortChange = (/**
+         * @param {?} sortChange
+         * @return {?}
+         */
+        (sortChange) => {
+            const { column } = sortChange;
+            /** @type {?} */
+            const order = sortChange.sort ? sortChange.sort.order : undefined;
+            if (this.sort && column) {
+                if (this.sort.active === column.id && this.sort.direction === (order || '')) {
+                    return;
+                }
+                /** @type {?} */
+                const sortable = (/** @type {?} */ (this.sort.sortables.get(column.id)));
+                if (sortable) {
+                    origin = 'ds';
+                    this.sort.active = undefined;
+                    sortable.start = order || 'asc';
+                    sortable._handleClick();
+                }
+            }
+            else if (this.sort.active) { // clear mode (hit from code, not click).
+                // clear mode (hit from code, not click).
+                /** @type {?} */
+                const sortable = (/** @type {?} */ (this.sort.sortables.get(this.sort.active)));
+                if (sortable) {
+                    if (!sortable.disableClear) {
+                        /** @type {?} */
+                        let nextSortDir;
+                        while (nextSortDir = this.sort.getNextSortDirection(sortable)) {
+                            this.sort.direction = nextSortDir;
+                        }
+                    }
+                    origin = 'ds';
+                    sortable._handleClick();
+                }
+            }
+        });
         pluginCtrl.events
             .subscribe((/**
          * @param {?} e
@@ -42,9 +81,17 @@ let PblNgridMatSortDirective = class PblNgridMatSortDirective {
          */
         e => {
             if (e.kind === 'onInvalidateHeaders') {
-                if (table.ds && !table.ds.sort.column) {
-                    if (this.sort && this.sort.active) {
+                /** @type {?} */
+                const hasActiveSort = this.sort && this.sort.active;
+                if (table.ds && table.ds.sort) {
+                    if (!table.ds.sort.column && hasActiveSort) {
                         this.onSort({ active: this.sort.active, direction: this.sort.direction || 'asc' }, origin);
+                    }
+                    else if (table.ds.sort.column && !hasActiveSort) {
+                        setTimeout((/**
+                         * @return {?}
+                         */
+                        () => handleDataSourceSortChange(table.ds.sort)));
                     }
                 }
             }
@@ -59,39 +106,7 @@ let PblNgridMatSortDirective = class PblNgridMatSortDirective {
                  * @param {?} event
                  * @return {?}
                  */
-                event => {
-                    if (this.sort && event.column) {
-                        /** @type {?} */
-                        const _sort = event.sort || {};
-                        if (this.sort.active === event.column.id && this.sort.direction === (_sort.order || '')) {
-                            return;
-                        }
-                        /** @type {?} */
-                        const sortable = (/** @type {?} */ (this.sort.sortables.get(event.column.id)));
-                        if (sortable) {
-                            origin = 'ds';
-                            this.sort.active = undefined;
-                            sortable.start = _sort.order || 'asc';
-                            sortable._handleClick();
-                        }
-                    }
-                    else if (this.sort.active) { // clear mode (hit from code, not click).
-                        // clear mode (hit from code, not click).
-                        /** @type {?} */
-                        const sortable = (/** @type {?} */ (this.sort.sortables.get(this.sort.active)));
-                        if (sortable) {
-                            if (!sortable.disableClear) {
-                                /** @type {?} */
-                                let nextSortDir;
-                                while (nextSortDir = this.sort.getNextSortDirection(sortable)) {
-                                    this.sort.direction = nextSortDir;
-                                }
-                            }
-                            origin = 'ds';
-                            sortable._handleClick();
-                        }
-                    }
-                }));
+                event => { handleDataSourceSortChange(event); }));
             }
         }));
     }

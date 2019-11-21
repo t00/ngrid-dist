@@ -222,10 +222,7 @@ export declare class PblNgridComponent<T = any> implements AfterContentInit, Aft
      * Updates the column sizes for all columns in the table based on the column definition metadata for each column.
      * The final width represent a static width, it is the value as set in the definition (except column without width, where the calculated global width is set).
      */
-    resetColumnsWidth(options?: {
-        tableMarkForCheck?: boolean;
-        metaMarkForCheck?: boolean;
-    }): void;
+    resetColumnsWidth(): void;
     /**
      * Update the size of all group columns in the table based on the size of their visible children (not hidden).
      * @param dynamicWidthLogic - Optional logic container, if not set a new one is created.

@@ -2,7 +2,7 @@ import { PblNgridColumnDef } from '../directives';
 import { PblColumnGroupDefinition } from './types';
 import { PblMetaColumn } from './meta-column';
 import { PblColumn } from './column';
-export declare function isPblColumnGroup(def: PblColumnGroupDefinition): def is PblColumnGroup;
+export declare function isPblColumnGroup(def: any): def is PblColumnGroup;
 export declare class PblColumnGroupStore {
     readonly all: PblColumnGroup[];
     private store;

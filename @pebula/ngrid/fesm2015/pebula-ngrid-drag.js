@@ -7,7 +7,7 @@ import { __decorate, __metadata } from 'tslib';
 import { DOCUMENT, CommonModule } from '@angular/common';
 import { Directionality } from '@angular/cdk/bidi';
 import { ViewportRuler } from '@angular/cdk/scrolling';
-import { PblNgridComponent, PblNgridPluginController, TablePlugin, PblColumn, PblColumnGroup, PblNgridMultiTemplateRegistry, PblNgridRegistryService, provideCommon, PblNgridModule } from '@pebula/ngrid';
+import { PblNgridComponent, PblNgridPluginController, TablePlugin, PblColumn, PblColumnGroup, isPblColumn, PblNgridMultiTemplateRegistry, PblNgridRegistryService, provideCommon, PblNgridModule } from '@pebula/ngrid';
 import { normalizePassiveListenerOptions } from '@angular/cdk/platform';
 
 /**
@@ -1736,7 +1736,7 @@ let PblNgridDragResizeComponent = class PblNgridDragResizeComponent {
     set context(value) {
         if (value) {
             const { col, table } = value;
-            if (col && col instanceof PblColumn) {
+            if (isPblColumn(col)) {
                 this.column = col;
                 this.table = table;
                 return;

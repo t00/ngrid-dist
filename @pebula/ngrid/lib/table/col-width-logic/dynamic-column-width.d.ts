@@ -23,7 +23,7 @@ export interface BoxModelSpaceStrategy {
  * > Note that an instance of `DynamicColumnWidthLogic` represents a one-time pass for all columns, for every run a new instance is required.
  */
 export declare class DynamicColumnWidthLogic {
-    private strategy;
+    readonly strategy: BoxModelSpaceStrategy;
     /**
      * When true, it indicates that one (or more) columns has changed the max width lock state.
      * @readonly
@@ -62,4 +62,11 @@ export declare class DynamicColumnWidthLogic {
      */
     addGroup(columnInfos: PblColumnSizeInfo[]): number;
 }
+/**
+* Returns a breakout of the width of the column, breaking it into the width of the content and the rest of the width
+*/
+export declare function widthBreakout(strategy: BoxModelSpaceStrategy, columnInfo: PblColumnSizeInfo): {
+    content: number;
+    nonContent: number;
+};
 export declare const DYNAMIC_PADDING_BOX_MODEL_SPACE_STRATEGY: BoxModelSpaceStrategy;

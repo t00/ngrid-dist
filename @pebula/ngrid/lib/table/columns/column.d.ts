@@ -162,7 +162,7 @@ export declare class PblColumn implements PblColumnDefinition {
     attach(columnDef: PblNgridColumnDef<PblColumn>): void;
     detach(): void;
     setDefaultWidth(defaultWidth: string): void;
-    updateWidth(markForCheck: boolean, width?: string): void;
+    updateWidth(width?: string): void;
     /**
      * Get the value this column points to in the provided row
      */

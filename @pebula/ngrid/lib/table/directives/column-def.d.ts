@@ -1,17 +1,22 @@
-import { KeyValueDiffers, KeyValueDiffer, OnDestroy, DoCheck } from '@angular/core';
+import { OnDestroy, EventEmitter } from '@angular/core';
 import { CdkColumnDef } from '@angular/cdk/table';
 import { COLUMN } from '../columns';
 import { PblNgridComponent } from '../table.component';
 import { PblNgridExtensionApi } from '../../ext/table-ext-api';
+export declare type UpdateWidthReason = 'attach' | 'update' | 'resize';
+export interface WidthChangeEvent {
+    reason: UpdateWidthReason;
+}
 /**
- * Column definition for the mat-table.
- * Defines a set of cells available for a table column.
+ * Represents a runtime column definition for a user-defined column definitions.
+ *
+ * User defined column definitions are `PblColumn`, `PblMetaColumn`, `PblColumnGroup` etc...
+ * They represent static column definitions and `PblNgridColumnDef` is the runtime instance of them.
+ *
  */
-export declare class PblNgridColumnDef<T extends COLUMN = COLUMN> extends CdkColumnDef implements DoCheck, OnDestroy {
-    protected readonly _differs: KeyValueDiffers;
+export declare class PblNgridColumnDef<T extends COLUMN = COLUMN> extends CdkColumnDef implements OnDestroy {
     protected extApi: PblNgridExtensionApi<any>;
     column: T;
-    readonly isDirty: boolean;
     /**
      * The complete width definition for the column.
      * There are 3 width definitions: MIN-WIDTH, WIDTH and MAX-WIDTH.
@@ -26,10 +31,11 @@ export declare class PblNgridColumnDef<T extends COLUMN = COLUMN> extends CdkCol
     readonly netWidth: number;
     isDragging: boolean;
     table: PblNgridComponent<any>;
-    protected _colDiffer: KeyValueDiffer<any, any>;
+    /**
+     * An event emitted when width of this column has changed.
+     */
+    widthChange: EventEmitter<WidthChangeEvent>;
     private _column;
-    private _isDirty;
-    private _markedForCheck;
     /**
      * The complete width definition for the column.
      * There are 3 width definitions: MIN-WIDTH, WIDTH and MAX-WIDTH.
@@ -42,27 +48,28 @@ export declare class PblNgridColumnDef<T extends COLUMN = COLUMN> extends CdkCol
      * The net width is the absolute width of the column, without padding, border etc...
      */
     private _netWidth;
-    constructor(_differs: KeyValueDiffers, extApi: PblNgridExtensionApi<any>);
+    private widthBreakout;
+    constructor(extApi: PblNgridExtensionApi<any>);
     /**
-     * Marks this column for a lazy change detection check.
-     * Lazy means it will run the check only when the diff is requested (i.e. querying the `hasChanged` property).
-     * This allow aggregation of changes between CD cycles, i.e. calling `markForCheck()` multiple times within the same CD cycle does not hit performance.
+     * Update the "widths" for this column and when width has changed.
      *
-     * Once marked for check, `pblNgridColumnDef` handles it's dirty (`isDirty`) state automatically, when `isDirty` is true it will remain true until the
-     * CD cycle ends, i.e. until `ngDoCheck()` hits. This means that only children of `pblNgridColumnDef` can relay on `isDirty`, all children will run their
-     * `ngDoCheck()` before `ngDoCheck()` of `pblNgridColumnDef`.
+     * The "widths" are the 3 values representing a width of a cell: [minWidth, width, maxWidth],
+     * this method is given the width and will calculate the minWidth and maxWidth based on the column definitions.
      *
-     * This is a how we notify all cell directives about changes in a column. It is done through angular CD logic and does not require manual
-     * CD kicks and special channels between pblNgridColumnDef and it's children.
-     */
-    markForCheck(): void;
-    /**
-     * Update the width definitions for this column. [minWidth, width, maxWidth]
-     * If an element is provided it will also apply the widths to the element.
+     * If at least one value of "widths" has changed, fires the `widthChange` event with the `reason` provided.
+     *
+     * The reason can be used to optionally update the relevant cells, based on the source (reason) of the update.
+     * - attach: This runtime column definition instance was attached to a static column definition instance.
+     * - update: The width value was updated in the static column definition instance , which triggered a width update to the runtime column definition instance
+     * - resize: A resize event to the header PblColumn cell was triggered, the width of the static column definition is not updated, only the runtime value is.
+     *
+     * Note that this updates the width of the column-def instance, not the column definitions width itself.
+     * Only when `reason === 'update'` it means that the column definition was updated and triggered this update
+     *
      * @param width The new width
-     * @param element Optional, an element to apply the width to, if not set will only update the width definitions.
+     * @param reason The reason for this change
      */
-    updateWidth(width: string, element?: HTMLElement): void;
+    updateWidth(width: string, reason: UpdateWidthReason): void;
     /**
      * Apply the current width definitions (minWidth, width, maxWidth) onto the element.
      */
@@ -73,8 +80,6 @@ export declare class PblNgridColumnDef<T extends COLUMN = COLUMN> extends CdkCol
      * This query is not cached - cache in implementation.
      */
     queryCellElements(...filter: Array<'table' | 'header' | 'headerGroup' | 'footer' | 'footerGroup'>): HTMLElement[];
-    /** @internal */
-    ngDoCheck(): void;
     /** @internal */
     ngOnDestroy(): void;
     onResize(): void;

@@ -2,7 +2,7 @@ import { TemplateRef } from '@angular/core';
 import { PblNgridColumnDef } from '../directives';
 import { PblNgridMetaCellContext } from '../context/types';
 import { PblMetaColumnDefinition, PblColumnTypeDefinition } from './types';
-export declare function isPblMetaColumn(def: PblMetaColumnDefinition): def is PblMetaColumn;
+export declare function isPblMetaColumn(def: any): def is PblMetaColumn;
 export declare class PblMetaColumn implements PblMetaColumnDefinition {
     /**
     * A Unique ID for the column.

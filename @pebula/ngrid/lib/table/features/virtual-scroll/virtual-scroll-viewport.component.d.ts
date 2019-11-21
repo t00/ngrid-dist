@@ -28,7 +28,6 @@ export declare class PblCdkVirtualScrollViewportComponent extends CdkVirtualScro
      * Note that when not enabled (i.e `NoVirtualScrollStrategy` is used) there are no emissions.
      */
     readonly offsetChange: Observable<number>;
-    minWidth: number;
     stickyRowHeaderContainer: HTMLElement;
     stickyRowFooterContainer: HTMLElement;
     /**
@@ -81,6 +80,7 @@ export declare class PblCdkVirtualScrollViewportComponent extends CdkVirtualScro
     readonly outerWidth: number;
     readonly innerHeight: number;
     readonly outerHeight: number;
+    readonly scrollWidth: number;
     /** A string representing the `style.width` property value to be used for the spacer element. */
     _totalContentWidth: string;
     /** A string representing the `style.height` property value to be used for the spacer element. */
@@ -91,6 +91,7 @@ export declare class PblCdkVirtualScrollViewportComponent extends CdkVirtualScro
    * @deprecated
    */
     _totalContentSizeTransform: string;
+    readonly _minWidth$: Observable<number>;
     private offsetChange$;
     private offset;
     private isCDPending;

@@ -1318,7 +1318,7 @@
             if (activeColumn) {
                 switch (key) {
                     case 'width':
-                        activeColumn.updateWidth(true, (/** @type {?} */ (stateValue)));
+                        activeColumn.updateWidth((/** @type {?} */ (stateValue)));
                         break;
                 }
             }

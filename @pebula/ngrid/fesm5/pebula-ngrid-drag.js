@@ -7,7 +7,7 @@ import { coerceElement, coerceBooleanProperty } from '@angular/cdk/coercion';
 import { DOCUMENT, CommonModule } from '@angular/common';
 import { Directionality } from '@angular/cdk/bidi';
 import { ViewportRuler } from '@angular/cdk/scrolling';
-import { PblNgridComponent, PblNgridPluginController, TablePlugin, PblColumn, PblColumnGroup, PblNgridRegistryService, PblNgridMultiTemplateRegistry, provideCommon, PblNgridModule } from '@pebula/ngrid';
+import { PblNgridComponent, PblNgridPluginController, TablePlugin, PblColumn, PblColumnGroup, isPblColumn, PblNgridRegistryService, PblNgridMultiTemplateRegistry, provideCommon, PblNgridModule } from '@pebula/ngrid';
 import { normalizePassiveListenerOptions } from '@angular/cdk/platform';
 
 /**
@@ -2054,7 +2054,7 @@ var PblNgridDragResizeComponent = /** @class */ (function () {
         function (value) {
             if (value) {
                 var col = value.col, table = value.table;
-                if (col && col instanceof PblColumn) {
+                if (isPblColumn(col)) {
                     this.column = col;
                     this.table = table;
                     return;

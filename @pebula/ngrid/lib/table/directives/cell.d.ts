@@ -13,7 +13,7 @@ import { PblNgridDataHeaderExtensionContext, PblNgridMultiComponentRegistry } fr
  * These extensions add features to the cells either as a template instance or as a component instance.
  * Examples: Sorting behavior, drag&drop/resize handlers, menus etc...
  */
-export declare class PblNgridHeaderCellComponent<T extends COLUMN = COLUMN> extends CdkHeaderCell implements DoCheck, OnInit, AfterViewInit {
+export declare class PblNgridHeaderCellComponent<T extends COLUMN = COLUMN> extends CdkHeaderCell implements OnInit, AfterViewInit {
     readonly columnDef: PblNgridColumnDef<T>;
     readonly table: PblNgridComponent<any>;
     readonly elementRef: ElementRef;
@@ -24,7 +24,6 @@ export declare class PblNgridHeaderCellComponent<T extends COLUMN = COLUMN> exte
     constructor(columnDef: PblNgridColumnDef<T>, table: PblNgridComponent<any>, elementRef: ElementRef, zone: NgZone);
     ngOnInit(): void;
     ngAfterViewInit(): void;
-    ngDoCheck(): void;
     protected runHeaderExtensions(context: PblNgridDataHeaderExtensionContext, view: EmbeddedViewRef<PblNgridMetaCellContext<any, PblColumn>>): void;
     protected createComponent(ext: PblNgridMultiComponentRegistry<any, "dataHeaderExtensions">, context: PblNgridDataHeaderExtensionContext, rootNodes: any[]): any[];
 }
@@ -41,15 +40,14 @@ export declare class PblNgridCellDirective extends CdkCell implements DoCheck {
     private el;
     private focused;
     private selected;
-    constructor(colDef: PblNgridColumnDef, elementRef: ElementRef);
+    constructor(colDef: PblNgridColumnDef<PblColumn>, elementRef: ElementRef);
     ngDoCheck(): void;
 }
-export declare class PblNgridFooterCellDirective extends CdkFooterCell implements DoCheck, OnInit {
+export declare class PblNgridFooterCellDirective extends CdkFooterCell implements OnInit {
     private columnDef;
     table: PblNgridComponent;
     private el;
     cellCtx: MetaCellContext;
     constructor(columnDef: PblNgridColumnDef<PblMetaColumn | PblColumnGroup>, table: PblNgridComponent, elementRef: ElementRef);
-    ngDoCheck(): void;
     ngOnInit(): void;
 }

@@ -3194,22 +3194,18 @@
      * @param {?} rowWidth
      * @param {?} tableColumns
      * @param {?} metaColumns
-     * @param {?=} options
      * @return {?}
      */
-    function resetColumnWidths(rowWidth, tableColumns, metaColumns, options) {
+    function resetColumnWidths(rowWidth, tableColumns, metaColumns) {
         var e_3, _a, e_4, _b, e_5, _c;
-        if (options === void 0) { options = {}; }
         var _d = rowWidth.defaultColumnWidth, pct = _d.pct, px = _d.px;
         /** @type {?} */
         var defaultWidth = "calc(" + pct + "% - " + px + "px)";
-        /** @type {?} */
-        var mark = !!options.tableMarkForCheck;
         try {
             for (var tableColumns_1 = __values(tableColumns), tableColumns_1_1 = tableColumns_1.next(); !tableColumns_1_1.done; tableColumns_1_1 = tableColumns_1.next()) {
                 var c = tableColumns_1_1.value;
                 c.setDefaultWidth(defaultWidth);
-                c.updateWidth(mark);
+                c.updateWidth();
             }
         }
         catch (e_3_1) { e_3 = { error: e_3_1 }; }
@@ -3219,7 +3215,6 @@
             }
             finally { if (e_3) throw e_3.error; }
         }
-        mark = !!options.metaMarkForCheck;
         try {
             for (var metaColumns_1 = __values(metaColumns), metaColumns_1_1 = metaColumns_1.next(); !metaColumns_1_1.done; metaColumns_1_1 = metaColumns_1.next()) {
                 var m = metaColumns_1_1.value;
@@ -3228,9 +3223,6 @@
                         var c = _f.value;
                         if (c) {
                             c.updateWidth('');
-                            if (mark) {
-                                c.columnDef.markForCheck();
-                            }
                         }
                     }
                 }
@@ -3588,7 +3580,7 @@
      * @return {?}
      */
     function isPblMetaColumn(def) {
-        return def instanceof PblMetaColumn || def[PBL_NGRID_META_COLUMN_MARK] === true;
+        return def instanceof PblMetaColumn || (def && def[PBL_NGRID_META_COLUMN_MARK] === true);
     }
     var PblMetaColumn = /** @class */ (function () {
         function PblMetaColumn(def) {
@@ -3695,7 +3687,7 @@
         function (columnDef) {
             this.detach();
             this._columnDef = columnDef;
-            this.columnDef.updateWidth(this.width || this.defaultWidth);
+            this.columnDef.updateWidth(this.width || this.defaultWidth, 'attach');
         };
         /**
          * @return {?}
@@ -3717,7 +3709,7 @@
         function (fallbackDefault) {
             this.defaultWidth = fallbackDefault || '';
             if (this.columnDef) {
-                this.columnDef.updateWidth(this.width || fallbackDefault);
+                this.columnDef.updateWidth(this.width || fallbackDefault, 'update');
             }
         };
         return PblMetaColumn;
@@ -3822,7 +3814,7 @@
      * @return {?}
      */
     function isPblColumnGroup(def) {
-        return def instanceof PblColumnGroup || def[PBL_NGRID_COLUMN_GROUP_MARK] === true;
+        return def instanceof PblColumnGroup || (def && def[PBL_NGRID_COLUMN_GROUP_MARK] === true);
     }
     /**
      * @param {?} value
@@ -4183,7 +4175,7 @@
      * @return {?}
      */
     function isPblColumn(def) {
-        return def instanceof PblColumn || def[PBL_NGRID_COLUMN_MARK] === true;
+        return def instanceof PblColumn || (def && def[PBL_NGRID_COLUMN_MARK] === true);
     }
     var PblColumn = /** @class */ (function () {
         function PblColumn(def, groupStore) {
@@ -4364,7 +4356,7 @@
             this.detach();
             this._columnDef = columnDef;
             if (this.defaultWidth) {
-                this.columnDef.updateWidth(this.width || this.defaultWidth);
+                this.columnDef.updateWidth(this.width || this.defaultWidth, 'attach');
             }
         };
         /**
@@ -4388,25 +4380,20 @@
             this.defaultWidth = defaultWidth;
         };
         /**
-         * @param {?} markForCheck
          * @param {?=} width
          * @return {?}
          */
         PblColumn.prototype.updateWidth = /**
-         * @param {?} markForCheck
          * @param {?=} width
          * @return {?}
          */
-        function (markForCheck, width) {
+        function (width) {
             if (width) {
                 this.width = width;
             }
             var columnDef = this.columnDef;
             if (columnDef) {
-                columnDef.updateWidth(this.width || this.defaultWidth || '');
-                if (markForCheck) {
-                    columnDef.markForCheck();
-                }
+                columnDef.updateWidth(this.width || this.defaultWidth || '', 'update');
             }
         };
         /**
@@ -7024,7 +7011,7 @@
         if (cellDefs) {
             /** @type {?} */
             var type = void 0;
-            if (colDef instanceof PblColumn) {
+            if (isPblColumn(colDef)) {
                 switch (kind) {
                     case 'headerCell':
                         if (colDef.headerType) {
@@ -9114,12 +9101,7 @@
          * @return {?}
          */
         function (columnInfo) {
-            /** @type {?} */
-            var nonContent = this.strategy.cell(columnInfo);
-            return {
-                content: columnInfo.width - nonContent,
-                nonContent: nonContent,
-            };
+            return widthBreakout(this.strategy, columnInfo);
         };
         /**
          * Add a column to the calculation.
@@ -9249,12 +9231,23 @@
          * @private
          */
         DynamicColumnWidthLogic.prototype._minimumRowWidth;
-        /**
-         * @type {?}
-         * @private
-         */
+        /** @type {?} */
         DynamicColumnWidthLogic.prototype.strategy;
         /* Skipping unhandled member: ;*/
+    }
+    /**
+     * Returns a breakout of the width of the column, breaking it into the width of the content and the rest of the width
+     * @param {?} strategy
+     * @param {?} columnInfo
+     * @return {?}
+     */
+    function widthBreakout(strategy, columnInfo) {
+        /** @type {?} */
+        var nonContent = strategy.cell(columnInfo);
+        return {
+            content: columnInfo.width - nonContent,
+            nonContent: nonContent,
+        };
     }
     /** @type {?} */
     var DYNAMIC_PADDING_BOX_MODEL_SPACE_STRATEGY = {
@@ -9518,9 +9511,9 @@
          * @return {?}
          */
         function (column, width) {
-            column.updateWidth(true, width);
-            this.table.resetColumnsWidth();
-            this.table.resizeColumns();
+            column.updateWidth(width);
+            // this.table.resetColumnsWidth();
+            // this.table.resizeColumns();
         };
         /**
          * Resize the column to best fit it's content.
@@ -9579,7 +9572,7 @@
                     var column = cols_1_1.value;
                     /** @type {?} */
                     var size = this.findColumnAutoSize(column);
-                    column.updateWidth(true, size + "px");
+                    column.updateWidth(size + "px");
                 }
             }
             catch (e_1_1) { e_1 = { error: e_1_1 }; }
@@ -9589,8 +9582,8 @@
                 }
                 finally { if (e_1) throw e_1.error; }
             }
-            this.table.resetColumnsWidth();
-            this.table.resizeColumns();
+            // this.table.resetColumnsWidth();
+            // this.table.resizeColumns();
         };
         /**
          * For each visible column in the table, resize the width to a proportional width relative to the total width provided.
@@ -9634,7 +9627,7 @@
                 /** @type {?} */
                 var widthBreakout = wLogic.widthBreakout(column.sizeInfo);
                 /** @type {?} */
-                var instructions = columnBehavior(column) || options;
+                var instructions = __assign({}, (columnBehavior(column) || {}), options);
                 overflowTotalWidth += widthBreakout.content;
                 totalWidth -= widthBreakout.nonContent;
                 if (instructions.keepMinWidth && column.minWidth) {
@@ -9663,8 +9656,6 @@
                 }
                 finally { if (e_2) throw e_2.error; }
             }
-            /** @type {?} */
-            var sum = [];
             for (var i = 0; i < visibleColumns.length; i++) {
                 /** @type {?} */
                 var widthBreakout = widthBreakouts[i];
@@ -9674,10 +9665,10 @@
                 var column = visibleColumns[i];
                 /** @type {?} */
                 var r = widthBreakout.content / overflowTotalWidth;
-                if (!instructions.keepMinWidth) {
+                if (!instructions.keepMinWidth || !column.minWidth) {
                     column.minWidth = undefined;
                 }
-                if (!instructions.keepMaxWidth) {
+                if (!instructions.keepMaxWidth || !column.maxWidth) {
                     column.maxWidth = undefined;
                     column.checkMaxWidthLock(column.sizeInfo.width); // if its locked, we need to release...
                 }
@@ -9695,13 +9686,12 @@
                     width = 100 * r + "%";
                 } // else (3) -> the update is skipped and it will run through resetColumnsWidth
                 if (width) {
-                    // We're not updating the width width markForCheck set to true because it will be done right after in `this.table.resetColumnsWidth()`
-                    column.updateWidth(false, width);
+                    column.updateWidth(width);
                 }
             }
             // we now reset the column widths, this will calculate a new `defaultWidth` and set it in all columns but the relevant ones are column from (3)
-            // It will also mark all columnDef's for check
-            this.table.resetColumnsWidth({ tableMarkForCheck: true });
+            // It will also mark all columnDefs for check
+            this.table.resetColumnsWidth();
             this.table.resizeColumns();
         };
         // tslint:disable-line:unified-signatures
@@ -9720,7 +9710,7 @@
          * @return {?}
          */
         function (column, anchor, skipRedraw) {
-            if (anchor instanceof PblColumn) {
+            if (isPblColumn(anchor)) {
                 /** @type {?} */
                 var result = column === anchor ? false : this.store.moveColumn(column, anchor);
                 if (result && skipRedraw !== true) {
@@ -11284,17 +11274,15 @@
         /**
          * Updates the column sizes for all columns in the table based on the column definition metadata for each column.
          * The final width represent a static width, it is the value as set in the definition (except column without width, where the calculated global width is set).
-         * @param {?=} options
          * @return {?}
          */
         PblNgridComponent.prototype.resetColumnsWidth = /**
          * Updates the column sizes for all columns in the table based on the column definition metadata for each column.
          * The final width represent a static width, it is the value as set in the definition (except column without width, where the calculated global width is set).
-         * @param {?=} options
          * @return {?}
          */
-        function (options) {
-            resetColumnWidths(this._store.getStaticWidth(), this._store.columns, this._store.metaColumns, options);
+        function () {
+            resetColumnWidths(this._store.getStaticWidth(), this._store.columns, this._store.metaColumns);
         };
         /**
          * Update the size of all group columns in the table based on the size of their visible children (not hidden).
@@ -11339,9 +11327,6 @@
                 else {
                     g.minWidth = undefined;
                     g.updateWidth("0px");
-                }
-                if (g.columnDef) {
-                    g.columnDef.markForCheck();
                 }
             };
             var this_2 = this;
@@ -11397,7 +11382,7 @@
             }
             // if the max lock state has changed we need to update re-calculate the static width's again.
             if (rowWidth.maxWidthLockChanged) {
-                resetColumnWidths(this._store.getStaticWidth(), this._store.columns, this._store.metaColumns, { tableMarkForCheck: true });
+                resetColumnWidths(this._store.getStaticWidth(), this._store.columns, this._store.metaColumns);
                 this.resizeColumns(columns);
                 return;
             }
@@ -11689,7 +11674,7 @@
             if (this._viewport) {
                 this._viewport.checkViewportSize();
             }
-            this.resetColumnsWidth();
+            // this.resetColumnsWidth();
             this.resizeColumns();
         };
         /**
@@ -11929,7 +11914,7 @@
             try {
                 for (var columns_2 = __values(columns), columns_2_1 = columns_2.next(); !columns_2_1.done; columns_2_1 = columns_2.next()) {
                     var col = columns_2_1.value;
-                    if (col instanceof PblColumn) {
+                    if (isPblColumn(col)) {
                         /** @type {?} */
                         var headerCellDef = findCellDef(this.registry, col, 'headerCell', true) || defaultHeaderCellTemplate;
                         /** @type {?} */
@@ -12038,7 +12023,7 @@
         PblNgridComponent.decorators = [
             { type: core.Component, args: [{
                         selector: 'pbl-ngrid',
-                        template: "<!-- TABLE HEADER ROW DEF -->\n<cdk-header-row *cdkHeaderRowDef=\"columnApi.visibleColumnIds; sticky: columnRowDef.header?.type === 'sticky'\"\n                [pblMetaRow]=\"columnRowDef.header\"\n                data-rowtype=\"header\"\n                class=\"pbl-ngrid-header-row pbl-ngrid-header-row-main\"\n                [class.pbl-ngrid-row-visually-hidden]=\"!showHeader\"></cdk-header-row>\n\n<!-- MULTI-HEADER ROW DEF & MULTI-HEADER GROUP ROW DEFINITION TEMPLATES -->\n<ng-container *ngFor=\"let row of metaColumnIds.header;\">\n  <cdk-header-row *cdkHeaderRowDef=\"row.keys; sticky: row.rowDef.type === 'sticky'\"\n                  [pblMetaRow]=\"row.rowDef\"\n                  data-rowtype=\"meta-header\" class=\"pbl-ngrid-header-row\"\n                  [class.pbl-meta-group-row]=\"row.isGroup\"></cdk-header-row>\n</ng-container>\n\n<!-- TABLE FOOTER ROW DEF -->\n<cdk-footer-row *cdkFooterRowDef=\"columnApi.visibleColumnIds; sticky: columnRowDef.footer?.type === 'sticky'\"\n                [pblMetaRow]=\"columnRowDef.footer\"\n                data-rowtype=\"footer\"\n                class=\"pbl-ngrid-footer-row\"\n                [class.pbl-ngrid-row-hidden]=\"!showFooter\"></cdk-footer-row> <!-- TABLE FOOTER ROW DEF -->\n<!-- MULTI-FOOTER ROW DEF -->\n<ng-container *ngFor=\"let row of metaColumnIds.footer\">   <!-- MULTI-FOOTER ROW DEF -->\n  <cdk-footer-row *cdkFooterRowDef=\"row.keys; sticky: row.rowDef.type === 'sticky'\"\n                  [pblMetaRow]=\"row.rowDef\"\n                  data-rowtype=\"meta-footer\" class=\"pbl-ngrid-footer-row\"\n                  [class.pbl-meta-group-row]=\"row.isGroup\"></cdk-footer-row>\n</ng-container>\n\n<div class=\"pbl-ngrid-container\">\n  <ng-container #beforeTable></ng-container>\n  <div pbl-ngrid-fixed-meta-row-container=\"header\"></div>\n  <pbl-cdk-virtual-scroll-viewport class=\"pbl-ngrid-scroll-container\" [minWidth]=\"_cdkTable?.minWidth\"\n                                   [stickyRowHeaderContainer]=\"stickyRowHeaderContainer\" [stickyRowFooterContainer]=\"stickyRowFooterContainer\">\n    <pbl-cdk-table tabindex=\"-1\">\n      <!-- Row templates. The columns used are set at the row template level -->\n\n      <!-- MULTI-HEADER/FOOTER CELL DEF -->\n      <ng-container *ngFor=\"let meta of metaColumns\">\n        <ng-container *ngIf=\"(meta.header || meta.headerGroup) as c\" [pblNgridColumnDef]=\"c\">\n          <pbl-ngrid-header-cell #hCell=\"ngridHeaderCell\" *cdkHeaderCellDef>\n            <ng-container *ngTemplateOutlet=\"c.template; context: hCell.cellCtx\"></ng-container>\n          </pbl-ngrid-header-cell>\n        </ng-container>\n        <ng-container *ngIf=\"meta.footer as c\" [pblNgridColumnDef]=\"c\">\n          <pbl-ngrid-footer-cell #fCell=\"ngridFooterCell\" *cdkFooterCellDef>\n            <ng-container *ngTemplateOutlet=\"c.template; context: fCell.cellCtx\"></ng-container>\n          </pbl-ngrid-footer-cell>\n        </ng-container>\n      </ng-container>\n      <!-- MULTI-HEADER/FOOTER CELL DEF -->\n\n       <!-- HEADER-RECORD-FOOTER CELL DEF -->\n      <ng-container *ngFor=\"let c of columnApi.visibleColumns;\" [pblNgridColumnDef]=\"c\">\n        <!-- TABLE HEADER CELL DEF -->\n        <pbl-ngrid-header-cell #hCell=\"ngridHeaderCell\" *cdkHeaderCellDef=\"let row\" [observeSize]=\"c\"></pbl-ngrid-header-cell>\n        <!-- RECORD CELL DEF -->\n        <pbl-ngrid-cell #cell=\"pblNgridCell\" *cdkCellDef=\"let row; pblRowContext as pblRowContext\"\n                        [rowCtx]=\"pblRowContext\" [attr.tabindex]=\"cellFocus\" [attr.id]=\"c.id\">\n          <ng-container *ngTemplateOutlet=\"cell.cellCtx?.editing ? c.editorTpl : c.cellTpl; context: cell.cellCtx\"></ng-container>\n        </pbl-ngrid-cell>\n\n        <!-- TABLE FOOTER CELL DEF -->\n        <pbl-ngrid-footer-cell #fCell=\"ngridFooterCell\" *cdkFooterCellDef>\n          <ng-container *ngTemplateOutlet=\"c.footerCellTpl; context: fCell.cellCtx\"></ng-container>\n        </pbl-ngrid-footer-cell>\n      </ng-container>\n      <!-- HEADER-RECORD-FOOTER CELL DEF -->\n\n      <!-- TABLE RECORD ROW DEFINITION TEMPLATES -->\n      <pbl-ngrid-row *cdkRowDef=\"let row; columns: columnApi.visibleColumnIds;\" [row]=\"row\"></pbl-ngrid-row>\n      <!-- TABLE RECORD ROW DEFINITION TEMPLATES -->\n    </pbl-cdk-table>\n  </pbl-cdk-virtual-scroll-viewport>\n  <div pbl-ngrid-fixed-meta-row-container=\"footer\"></div>\n  <ng-container #beforeContent>\n    <!-- This dummy row is used to extract an initial row height -->\n    <pbl-ngrid-row row style=\"display: none\"></pbl-ngrid-row>\n  </ng-container>\n  <ng-content></ng-content>\n  <ng-container #afterContent></ng-container>\n\n  <!-- Placeholder for header/footer scroll containers that will get populated with header/meta roles when the following conditions are met:\n       - Virtual scrolling is enabled\n       - Rows are rendered in the viewport\n       - Container is scrolling\n\n       The placeholder is fixed so the browsers does not use sticky positioning while scrolling, which takes the rows out of view while scrolling.\n       While scrolling the rows are moved into this placeholder and when scrolling ends they return to their original positioning.\n\n       The actual rows are added into the internal div, within the placeholder.\n       The top container get the proper width and the internal header gets the scroll offset (horizontal) that matches the current offset.\n       This has an effect only when scrolling with the wheel within a long scrolling session.\n\n       Implementation is in the virtual scroll viewport (more precisely in `PblVirtualScrollForOf`)\n  -->\n  <div #stickyRowHeaderContainer class=\"pbl-ngrid-sticky-row-scroll-container\"><div [style.minWidth.px]=\"_cdkTable?.minWidth\"></div></div> <!-- HEADERS -->\n  <div #stickyRowFooterContainer class=\"pbl-ngrid-sticky-row-scroll-container\"><div [style.minWidth.px]=\"_cdkTable?.minWidth\"></div></div> <!-- FOOTERS -->\n</div>\n\n<ng-template #fbTableCell let-value=\"value\"><div>{{value}}</div></ng-template>\n<ng-template #fbHeaderCell let-column=\"col\"><div>{{column.label}}</div></ng-template>\n<ng-template #fbFooterCell let-column=\"col\"><div>{{column.label}}</div></ng-template>\n",
+                        template: "<!-- TABLE HEADER ROW DEF -->\n<cdk-header-row *cdkHeaderRowDef=\"columnApi.visibleColumnIds; sticky: columnRowDef.header?.type === 'sticky'\"\n                [pblMetaRow]=\"columnRowDef.header\"\n                data-rowtype=\"header\"\n                class=\"pbl-ngrid-header-row pbl-ngrid-header-row-main\"\n                [class.pbl-ngrid-row-visually-hidden]=\"!showHeader\"></cdk-header-row>\n\n<!-- MULTI-HEADER ROW DEF & MULTI-HEADER GROUP ROW DEFINITION TEMPLATES -->\n<ng-container *ngFor=\"let row of metaColumnIds.header;\">\n  <cdk-header-row *cdkHeaderRowDef=\"row.keys; sticky: row.rowDef.type === 'sticky'\"\n                  [pblMetaRow]=\"row.rowDef\"\n                  data-rowtype=\"meta-header\" class=\"pbl-ngrid-header-row\"\n                  [class.pbl-meta-group-row]=\"row.isGroup\"></cdk-header-row>\n</ng-container>\n\n<!-- TABLE FOOTER ROW DEF -->\n<cdk-footer-row *cdkFooterRowDef=\"columnApi.visibleColumnIds; sticky: columnRowDef.footer?.type === 'sticky'\"\n                [pblMetaRow]=\"columnRowDef.footer\"\n                data-rowtype=\"footer\"\n                class=\"pbl-ngrid-footer-row\"\n                [class.pbl-ngrid-row-hidden]=\"!showFooter\"></cdk-footer-row> <!-- TABLE FOOTER ROW DEF -->\n<!-- MULTI-FOOTER ROW DEF -->\n<ng-container *ngFor=\"let row of metaColumnIds.footer\">   <!-- MULTI-FOOTER ROW DEF -->\n  <cdk-footer-row *cdkFooterRowDef=\"row.keys; sticky: row.rowDef.type === 'sticky'\"\n                  [pblMetaRow]=\"row.rowDef\"\n                  data-rowtype=\"meta-footer\" class=\"pbl-ngrid-footer-row\"\n                  [class.pbl-meta-group-row]=\"row.isGroup\"></cdk-footer-row>\n</ng-container>\n\n<div class=\"pbl-ngrid-container\">\n  <ng-container #beforeTable></ng-container>\n  <div pbl-ngrid-fixed-meta-row-container=\"header\"></div>\n  <pbl-cdk-virtual-scroll-viewport class=\"pbl-ngrid-scroll-container\"\n                                   [stickyRowHeaderContainer]=\"stickyRowHeaderContainer\" [stickyRowFooterContainer]=\"stickyRowFooterContainer\">\n    <pbl-cdk-table tabindex=\"-1\">\n      <!-- Row templates. The columns used are set at the row template level -->\n\n      <!-- MULTI-HEADER/FOOTER CELL DEF -->\n      <ng-container *ngFor=\"let meta of metaColumns\">\n        <ng-container *ngIf=\"(meta.header || meta.headerGroup) as c\" [pblNgridColumnDef]=\"c\">\n          <pbl-ngrid-header-cell #hCell=\"ngridHeaderCell\" *cdkHeaderCellDef>\n            <ng-container *ngTemplateOutlet=\"c.template; context: hCell.cellCtx\"></ng-container>\n          </pbl-ngrid-header-cell>\n        </ng-container>\n        <ng-container *ngIf=\"meta.footer as c\" [pblNgridColumnDef]=\"c\">\n          <pbl-ngrid-footer-cell #fCell=\"ngridFooterCell\" *cdkFooterCellDef>\n            <ng-container *ngTemplateOutlet=\"c.template; context: fCell.cellCtx\"></ng-container>\n          </pbl-ngrid-footer-cell>\n        </ng-container>\n      </ng-container>\n      <!-- MULTI-HEADER/FOOTER CELL DEF -->\n\n       <!-- HEADER-RECORD-FOOTER CELL DEF -->\n      <ng-container *ngFor=\"let c of columnApi.visibleColumns;\" [pblNgridColumnDef]=\"c\">\n        <!-- TABLE HEADER CELL DEF -->\n        <pbl-ngrid-header-cell *cdkHeaderCellDef=\"let row\" [observeSize]=\"c\"></pbl-ngrid-header-cell>\n        <!-- RECORD CELL DEF -->\n        <pbl-ngrid-cell #cell=\"pblNgridCell\" *cdkCellDef=\"let row; pblRowContext as pblRowContext\"\n                        [rowCtx]=\"pblRowContext\" [attr.tabindex]=\"cellFocus\" [attr.id]=\"c.id\">\n          <ng-container *ngTemplateOutlet=\"cell.cellCtx?.editing ? c.editorTpl : c.cellTpl; context: cell.cellCtx\"></ng-container>\n        </pbl-ngrid-cell>\n\n        <!-- TABLE FOOTER CELL DEF -->\n        <pbl-ngrid-footer-cell #fCell=\"ngridFooterCell\" *cdkFooterCellDef>\n          <ng-container *ngTemplateOutlet=\"c.footerCellTpl; context: fCell.cellCtx\"></ng-container>\n        </pbl-ngrid-footer-cell>\n      </ng-container>\n      <!-- HEADER-RECORD-FOOTER CELL DEF -->\n\n      <!-- TABLE RECORD ROW DEFINITION TEMPLATES -->\n      <pbl-ngrid-row *cdkRowDef=\"let row; columns: columnApi.visibleColumnIds;\" [row]=\"row\"></pbl-ngrid-row>\n      <!-- TABLE RECORD ROW DEFINITION TEMPLATES -->\n    </pbl-cdk-table>\n  </pbl-cdk-virtual-scroll-viewport>\n  <div pbl-ngrid-fixed-meta-row-container=\"footer\"></div>\n  <ng-container #beforeContent>\n    <!-- This dummy row is used to extract an initial row height -->\n    <pbl-ngrid-row row style=\"display: none\"></pbl-ngrid-row>\n  </ng-container>\n  <ng-content></ng-content>\n  <ng-container #afterContent></ng-container>\n\n  <!-- Placeholder for header/footer scroll containers that will get populated with header/meta roles when the following conditions are met:\n       - Virtual scrolling is enabled\n       - Rows are rendered in the viewport\n       - Container is scrolling\n\n       The placeholder is fixed so the browsers does not use sticky positioning while scrolling, which takes the rows out of view while scrolling.\n       While scrolling the rows are moved into this placeholder and when scrolling ends they return to their original positioning.\n\n       The actual rows are added into the internal div, within the placeholder.\n       The top container get the proper width and the internal header gets the scroll offset (horizontal) that matches the current offset.\n       This has an effect only when scrolling with the wheel within a long scrolling session.\n\n       Implementation is in the virtual scroll viewport (more precisely in `PblVirtualScrollForOf`)\n  -->\n  <div #stickyRowHeaderContainer class=\"pbl-ngrid-sticky-row-scroll-container\"><div [style.minWidth.px]=\"_cdkTable?.minWidth\"></div></div> <!-- HEADERS -->\n  <div #stickyRowFooterContainer class=\"pbl-ngrid-sticky-row-scroll-container\"><div [style.minWidth.px]=\"_cdkTable?.minWidth\"></div></div> <!-- FOOTERS -->\n</div>\n\n<ng-template #fbTableCell let-value=\"value\"><div>{{value}}</div></ng-template>\n<ng-template #fbHeaderCell let-column=\"col\"><div>{{column.label}}</div></ng-template>\n<ng-template #fbFooterCell let-column=\"col\"><div>{{column.label}}</div></ng-template>\n",
                         providers: [
                             PblNgridRegistryService,
                             {
@@ -13416,27 +13401,40 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
-    /* TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO
-
-      PblNgridColumnDef use's the default object KeyValueDiffer provides with angular.
-      This differ will perform the diff on the entire object which IS NOT REQUIRED!
-      We need to create a custom differ that does the diff on selected properties only.
-    */
     /**
-     * Column definition for the mat-table.
-     * Defines a set of cells available for a table column.
+     * @record
+     */
+    function WidthChangeEvent() { }
+    if (false) {
+        /** @type {?} */
+        WidthChangeEvent.prototype.reason;
+    }
+    /**
+     * Represents a runtime column definition for a user-defined column definitions.
+     *
+     * User defined column definitions are `PblColumn`, `PblMetaColumn`, `PblColumnGroup` etc...
+     * They represent static column definitions and `PblNgridColumnDef` is the runtime instance of them.
+     *
      * @template T
      */
     var PblNgridColumnDef = /** @class */ (function (_super) {
         __extends(PblNgridColumnDef, _super);
-        function PblNgridColumnDef(_differs, extApi) {
+        function PblNgridColumnDef(extApi) {
             var _this = _super.call(this) || this;
-            _this._differs = _differs;
             _this.extApi = extApi;
             _this.isDragging = false;
-            _this._isDirty = false;
-            _this._markedForCheck = false;
+            /**
+             * An event emitted when width of this column has changed.
+             */
+            _this.widthChange = new core.EventEmitter();
             _this.table = extApi.table;
+            /** @type {?} */
+            var s = extApi.dynamicColumnWidthFactory().strategy;
+            _this.widthBreakout = (/**
+             * @param {?} c
+             * @return {?}
+             */
+            function (c) { return widthBreakout(s, c); });
             return _this;
         }
         Object.defineProperty(PblNgridColumnDef.prototype, "column", {
@@ -13453,20 +13451,6 @@
             configurable: true
         });
         ;
-        Object.defineProperty(PblNgridColumnDef.prototype, "isDirty", {
-            get: /**
-             * @return {?}
-             */
-            function () {
-                if (this._markedForCheck && !this._isDirty) {
-                    this._markedForCheck = false;
-                    this._isDirty = !!this._colDiffer.diff(this._column);
-                }
-                return this._isDirty;
-            },
-            enumerable: true,
-            configurable: true
-        });
         Object.defineProperty(PblNgridColumnDef.prototype, "widths", {
             /**
              * The complete width definition for the column.
@@ -13500,72 +13484,66 @@
             configurable: true
         });
         /**
-         * Marks this column for a lazy change detection check.
-         * Lazy means it will run the check only when the diff is requested (i.e. querying the `hasChanged` property).
-         * This allow aggregation of changes between CD cycles, i.e. calling `markForCheck()` multiple times within the same CD cycle does not hit performance.
+         * Update the "widths" for this column and when width has changed.
          *
-         * Once marked for check, `pblNgridColumnDef` handles it's dirty (`isDirty`) state automatically, when `isDirty` is true it will remain true until the
-         * CD cycle ends, i.e. until `ngDoCheck()` hits. This means that only children of `pblNgridColumnDef` can relay on `isDirty`, all children will run their
-         * `ngDoCheck()` before `ngDoCheck()` of `pblNgridColumnDef`.
+         * The "widths" are the 3 values representing a width of a cell: [minWidth, width, maxWidth],
+         * this method is given the width and will calculate the minWidth and maxWidth based on the column definitions.
          *
-         * This is a how we notify all cell directives about changes in a column. It is done through angular CD logic and does not require manual
-         * CD kicks and special channels between pblNgridColumnDef and it's children.
-         */
-        /**
-         * Marks this column for a lazy change detection check.
-         * Lazy means it will run the check only when the diff is requested (i.e. querying the `hasChanged` property).
-         * This allow aggregation of changes between CD cycles, i.e. calling `markForCheck()` multiple times within the same CD cycle does not hit performance.
+         * If at least one value of "widths" has changed, fires the `widthChange` event with the `reason` provided.
          *
-         * Once marked for check, `pblNgridColumnDef` handles it's dirty (`isDirty`) state automatically, when `isDirty` is true it will remain true until the
-         * CD cycle ends, i.e. until `ngDoCheck()` hits. This means that only children of `pblNgridColumnDef` can relay on `isDirty`, all children will run their
-         * `ngDoCheck()` before `ngDoCheck()` of `pblNgridColumnDef`.
+         * The reason can be used to optionally update the relevant cells, based on the source (reason) of the update.
+         * - attach: This runtime column definition instance was attached to a static column definition instance.
+         * - update: The width value was updated in the static column definition instance , which triggered a width update to the runtime column definition instance
+         * - resize: A resize event to the header PblColumn cell was triggered, the width of the static column definition is not updated, only the runtime value is.
          *
-         * This is a how we notify all cell directives about changes in a column. It is done through angular CD logic and does not require manual
-         * CD kicks and special channels between pblNgridColumnDef and it's children.
-         * @return {?}
-         */
-        PblNgridColumnDef.prototype.markForCheck = /**
-         * Marks this column for a lazy change detection check.
-         * Lazy means it will run the check only when the diff is requested (i.e. querying the `hasChanged` property).
-         * This allow aggregation of changes between CD cycles, i.e. calling `markForCheck()` multiple times within the same CD cycle does not hit performance.
+         * Note that this updates the width of the column-def instance, not the column definitions width itself.
+         * Only when `reason === 'update'` it means that the column definition was updated and triggered this update
          *
-         * Once marked for check, `pblNgridColumnDef` handles it's dirty (`isDirty`) state automatically, when `isDirty` is true it will remain true until the
-         * CD cycle ends, i.e. until `ngDoCheck()` hits. This means that only children of `pblNgridColumnDef` can relay on `isDirty`, all children will run their
-         * `ngDoCheck()` before `ngDoCheck()` of `pblNgridColumnDef`.
-         *
-         * This is a how we notify all cell directives about changes in a column. It is done through angular CD logic and does not require manual
-         * CD kicks and special channels between pblNgridColumnDef and it's children.
-         * @return {?}
-         */
-        function () {
-            if (!this._colDiffer) {
-                this._colDiffer = this._differs.find({}).create();
-                this._colDiffer.diff({});
-            }
-            this._markedForCheck = true;
-        };
-        /**
-         * Update the width definitions for this column. [minWidth, width, maxWidth]
-         * If an element is provided it will also apply the widths to the element.
          * @param width The new width
-         * @param element Optional, an element to apply the width to, if not set will only update the width definitions.
+         * @param reason The reason for this change
          */
         /**
-         * Update the width definitions for this column. [minWidth, width, maxWidth]
-         * If an element is provided it will also apply the widths to the element.
+         * Update the "widths" for this column and when width has changed.
+         *
+         * The "widths" are the 3 values representing a width of a cell: [minWidth, width, maxWidth],
+         * this method is given the width and will calculate the minWidth and maxWidth based on the column definitions.
+         *
+         * If at least one value of "widths" has changed, fires the `widthChange` event with the `reason` provided.
+         *
+         * The reason can be used to optionally update the relevant cells, based on the source (reason) of the update.
+         * - attach: This runtime column definition instance was attached to a static column definition instance.
+         * - update: The width value was updated in the static column definition instance , which triggered a width update to the runtime column definition instance
+         * - resize: A resize event to the header PblColumn cell was triggered, the width of the static column definition is not updated, only the runtime value is.
+         *
+         * Note that this updates the width of the column-def instance, not the column definitions width itself.
+         * Only when `reason === 'update'` it means that the column definition was updated and triggered this update
+         *
          * @param {?} width The new width
-         * @param {?=} element Optional, an element to apply the width to, if not set will only update the width definitions.
+         * @param {?} reason The reason for this change
          * @return {?}
          */
         PblNgridColumnDef.prototype.updateWidth = /**
-         * Update the width definitions for this column. [minWidth, width, maxWidth]
-         * If an element is provided it will also apply the widths to the element.
+         * Update the "widths" for this column and when width has changed.
+         *
+         * The "widths" are the 3 values representing a width of a cell: [minWidth, width, maxWidth],
+         * this method is given the width and will calculate the minWidth and maxWidth based on the column definitions.
+         *
+         * If at least one value of "widths" has changed, fires the `widthChange` event with the `reason` provided.
+         *
+         * The reason can be used to optionally update the relevant cells, based on the source (reason) of the update.
+         * - attach: This runtime column definition instance was attached to a static column definition instance.
+         * - update: The width value was updated in the static column definition instance , which triggered a width update to the runtime column definition instance
+         * - resize: A resize event to the header PblColumn cell was triggered, the width of the static column definition is not updated, only the runtime value is.
+         *
+         * Note that this updates the width of the column-def instance, not the column definitions width itself.
+         * Only when `reason === 'update'` it means that the column definition was updated and triggered this update
+         *
          * @param {?} width The new width
-         * @param {?=} element Optional, an element to apply the width to, if not set will only update the width definitions.
+         * @param {?} reason The reason for this change
          * @return {?}
          */
-        function (width, element) {
-            var isFixedWidth = this._column.isFixedWidth;
+        function (width, reason) {
+            var _a = this._column, isFixedWidth = _a.isFixedWidth, parsedWidth = _a.parsedWidth;
             /*  Setting the minimum width is based on the input.
                     If the original width is pixel fixed we will take the maximum between it and the min width.
                     If not, we will the take minWidth.
@@ -13577,20 +13555,27 @@
                 : this._column.minWidth;
             /** @type {?} */
             var minWidth = minWidthPx && minWidthPx + "px";
-            if (!minWidth) {
-                /** @type {?} */
-                var parsed = parseStyleWidth(width);
-                if (parsed && parsed.type === '%') {
-                    minWidth = width;
-                }
+            if (!minWidth && parsedWidth && parsedWidth.type === '%') {
+                minWidth = width;
             }
             /** @type {?} */
             var maxWidth = isFixedWidth
                 ? Math.min(this._column.parsedWidth.value, this._column.maxWidth || this._column.parsedWidth.value)
                 : this._column.maxWidth;
+            /** @type {?} */
+            var prev = this._widths || [];
             this._widths = [minWidth || '', width, maxWidth ? maxWidth + "px" : width];
-            if (element) {
-                this.applyWidth(element);
+            // a previous 'resize' event will be followed by another 'resize' event with the same width, so fire....
+            if (reason === 'resize') {
+                this.widthChange.emit({ reason: reason });
+            }
+            else {
+                for (var i = 0; i < 3; i++) {
+                    if (prev[i] !== this._widths[i]) {
+                        this.widthChange.emit({ reason: reason });
+                        break;
+                    }
+                }
             }
         };
         /**
@@ -13606,9 +13591,7 @@
          * @param {?} element
          * @return {?}
          */
-        function (element) {
-            setWidth(element, this.widths);
-        };
+        function (element) { setWidth(element, this.widths); };
         /**
          * Query for cell elements related to this column definition.
          *
@@ -13680,25 +13663,14 @@
          * \@internal
          * @return {?}
          */
-        PblNgridColumnDef.prototype.ngDoCheck = /**
-         * \@internal
-         * @return {?}
-         */
-        function () {
-            if (this._isDirty) {
-                this._isDirty = false;
-            }
-        };
-        /** @internal */
-        /**
-         * \@internal
-         * @return {?}
-         */
         PblNgridColumnDef.prototype.ngOnDestroy = /**
          * \@internal
          * @return {?}
          */
-        function () { this.detach(); };
+        function () {
+            this.detach();
+            this.widthChange.complete();
+        };
         /**
          * @return {?}
          */
@@ -13709,15 +13681,11 @@
             if (isPblColumn(this.column)) {
                 /** @type {?} */
                 var prevNetWidth = this._netWidth;
-                this._netWidth = this.extApi.dynamicColumnWidthFactory().widthBreakout(this.column.sizeInfo).content;
-                if (prevNetWidth && prevNetWidth !== this._netWidth) {
+                this._netWidth = this.widthBreakout(this.column.sizeInfo).content;
+                if (prevNetWidth !== this._netWidth) {
                     /** @type {?} */
                     var width = this._netWidth + "px";
-                    this._widths = [
-                        this.widths[0] || width,
-                        width,
-                        width,
-                    ];
+                    this.updateWidth(width, 'resize');
                 }
             }
         };
@@ -13764,9 +13732,6 @@
                         this.updatePin(column.pin);
                     }
                 }
-                if (this._colDiffer) {
-                    this.markForCheck();
-                }
             }
         };
         /**
@@ -13794,11 +13759,11 @@
         ];
         /** @nocollapse */
         PblNgridColumnDef.ctorParameters = function () { return [
-            { type: core.KeyValueDiffers },
             { type: undefined, decorators: [{ type: core.Inject, args: [EXT_API_TOKEN,] }] }
         ]; };
         PblNgridColumnDef.propDecorators = {
-            column: [{ type: core.Input, args: ['pblNgridColumnDef',] }]
+            column: [{ type: core.Input, args: ['pblNgridColumnDef',] }],
+            widthChange: [{ type: core.Output, args: ['pblNgridColumnDefWidthChange',] }]
         };
         return PblNgridColumnDef;
     }(table.CdkColumnDef));
@@ -13808,25 +13773,15 @@
         /** @type {?} */
         PblNgridColumnDef.prototype.table;
         /**
+         * An event emitted when width of this column has changed.
          * @type {?}
-         * @protected
          */
-        PblNgridColumnDef.prototype._colDiffer;
+        PblNgridColumnDef.prototype.widthChange;
         /**
          * @type {?}
          * @private
          */
         PblNgridColumnDef.prototype._column;
-        /**
-         * @type {?}
-         * @private
-         */
-        PblNgridColumnDef.prototype._isDirty;
-        /**
-         * @type {?}
-         * @private
-         */
-        PblNgridColumnDef.prototype._markedForCheck;
         /**
          * The complete width definition for the column.
          * There are 3 width definitions: MIN-WIDTH, WIDTH and MAX-WIDTH.
@@ -13845,9 +13800,9 @@
         PblNgridColumnDef.prototype._netWidth;
         /**
          * @type {?}
-         * @protected
+         * @private
          */
-        PblNgridColumnDef.prototype._differs;
+        PblNgridColumnDef.prototype.widthBreakout;
         /**
          * @type {?}
          * @protected
@@ -13874,6 +13829,9 @@
         // This will cause an overflow unless we apply the border-box model
         if (widths[0] && widths[0].endsWith('%')) {
             el.style.boxSizing = 'border-box';
+        }
+        else {
+            el.style.boxSizing = 'content-box';
         }
     }
 
@@ -13947,7 +13905,22 @@
             var column = columnDef.column;
             /** @type {?} */
             var el = _this.el = elementRef.nativeElement;
-            if (column instanceof PblColumnGroup) {
+            /*  Apply width changes to this header cell
+                We don't update resize events to any of the possible columns because
+                - PblColumn headers NEVER change their size, they always reflect the user's definitions
+                - PblMetaColumn and PblColumnGroup headers are auto-adjusted by `PblNgridComponent.syncColumnGroupsSize` */
+            columnDef.widthChange
+                .pipe(operators.filter((/**
+             * @param {?} event
+             * @return {?}
+             */
+            function (event) { return event.reason !== 'resize'; })), utils$1.UnRx(_this))
+                .subscribe((/**
+             * @param {?} event
+             * @return {?}
+             */
+            function (event) { return _this.columnDef.applyWidth(_this.el); }));
+            if (isPblColumnGroup(column)) {
                 el.classList.add(HEADER_GROUP_CSS);
                 if (column.placeholder) {
                     el.classList.add(HEADER_GROUP_PLACE_HOLDER_CSS);
@@ -13964,8 +13937,9 @@
         function () {
             /** @type {?} */
             var col = this.columnDef.column;
-            if (col instanceof PblColumn) {
-                this.cellCtx = PblNgridDataHeaderExtensionContext.createDateHeaderCtx((/** @type {?} */ (this)), this.vcRef.injector);
+            if (isPblColumn(col)) {
+                this.cellCtx = PblNgridDataHeaderExtensionContext
+                    .createDateHeaderCtx((/** @type {?} */ (this)), this.vcRef.injector);
             }
             else {
                 this.cellCtx = MetaCellContext.create(col, this.table);
@@ -13984,7 +13958,7 @@
             var vcRef = this.vcRef;
             /** @type {?} */
             var view;
-            if (col instanceof PblColumn) {
+            if (isPblColumn(col)) {
                 /** @type {?} */
                 var context_1 = (/** @type {?} */ (this.cellCtx));
                 view = vcRef.createEmbeddedView(col.headerCellTpl, context_1);
@@ -14009,21 +13983,6 @@
             view.detectChanges();
             this.columnDef.applyWidth(this.el);
             initCellElement(this.el, col);
-        };
-        // TODO: smart diff handling... handle all diffs, not just width, and change only when required.
-        // TODO: smart diff handling... handle all diffs, not just width, and change only when required.
-        /**
-         * @return {?}
-         */
-        PblNgridHeaderCellComponent.prototype.ngDoCheck = 
-        // TODO: smart diff handling... handle all diffs, not just width, and change only when required.
-        /**
-         * @return {?}
-         */
-        function () {
-            if (this.columnDef.isDirty) {
-                this.columnDef.applyWidth(this.el);
-            }
         };
         /**
          * @protected
@@ -14132,6 +14091,12 @@
             }
             return rootNodes;
         };
+        PblNgridHeaderCellComponent.ctorParameters = function () { return [
+            { type: PblNgridColumnDef },
+            { type: PblNgridComponent },
+            { type: core.ElementRef },
+            { type: core.NgZone }
+        ]; };
         PblNgridHeaderCellComponent.decorators = [
             { type: core.Component, args: [{
                         selector: 'pbl-ngrid-header-cell',
@@ -14155,6 +14120,22 @@
         PblNgridHeaderCellComponent.propDecorators = {
             vcRef: [{ type: core.ViewChild, args: ['vcRef', { read: core.ViewContainerRef, static: true },] }]
         };
+        /**
+         * Header cell component.
+         * The header cell component will render the header cell template and add the proper classes and role.
+         *
+         * It is also responsible for creating and managing the any `dataHeaderExtensions` registered in the registry.
+         * These extensions add features to the cells either as a template instance or as a component instance.
+         * Examples: Sorting behavior, drag&drop/resize handlers, menus etc...
+         * @template T
+         */
+        PblNgridHeaderCellComponent = __decorate([
+            utils$1.UnRx(),
+            __metadata("design:paramtypes", [PblNgridColumnDef,
+                PblNgridComponent,
+                core.ElementRef,
+                core.NgZone])
+        ], PblNgridHeaderCellComponent);
         return PblNgridHeaderCellComponent;
     }(table.CdkHeaderCell));
     if (false) {
@@ -14193,7 +14174,20 @@
             _this.el = elementRef.nativeElement;
             colDef.applyWidth(_this.el);
             initCellElement(_this.el, colDef.column);
-            initDataCellElement(_this.el, (/** @type {?} */ (colDef.column)));
+            initDataCellElement(_this.el, colDef.column);
+            /*  Apply width changes to this data cell
+                We don't update "update" events because they are followed by a resize event which will update the absolute value (px) */
+            colDef.widthChange
+                .pipe(operators.filter((/**
+             * @param {?} event
+             * @return {?}
+             */
+            function (event) { return event.reason !== 'update'; })), utils$1.UnRx(_this))
+                .subscribe((/**
+             * @param {?} event
+             * @return {?}
+             */
+            function (event) { return _this.colDef.applyWidth(_this.el); }));
             return _this;
         }
         Object.defineProperty(PblNgridCellDirective.prototype, "rowCtx", {
@@ -14210,20 +14204,13 @@
             enumerable: true,
             configurable: true
         });
-        // TODO: smart diff handling... handle all diffs, not just width, and change only when required.
-        // TODO: smart diff handling... handle all diffs, not just width, and change only when required.
         /**
          * @return {?}
          */
-        PblNgridCellDirective.prototype.ngDoCheck = 
-        // TODO: smart diff handling... handle all diffs, not just width, and change only when required.
-        /**
+        PblNgridCellDirective.prototype.ngDoCheck = /**
          * @return {?}
          */
         function () {
-            if (this.colDef.isDirty) {
-                this.colDef.applyWidth(this.el);
-            }
             if (this._rowCtx) {
                 /** @type {?} */
                 var cellContext = this.cellCtx = this._rowCtx.cell(this.colIndex);
@@ -14245,6 +14232,10 @@
                 }
             }
         };
+        PblNgridCellDirective.ctorParameters = function () { return [
+            { type: PblNgridColumnDef },
+            { type: core.ElementRef }
+        ]; };
         PblNgridCellDirective.decorators = [
             { type: core.Directive, args: [{
                         selector: 'pbl-ngrid-cell',
@@ -14263,6 +14254,13 @@
         PblNgridCellDirective.propDecorators = {
             rowCtx: [{ type: core.Input }]
         };
+        /**
+         * Cell template container that adds the right classes and role.
+         */
+        PblNgridCellDirective = __decorate([
+            utils$1.UnRx(),
+            __metadata("design:paramtypes", [PblNgridColumnDef, core.ElementRef])
+        ], PblNgridCellDirective);
         return PblNgridCellDirective;
     }(table.CdkCell));
     if (false) {
@@ -14311,23 +14309,17 @@
             var column = columnDef.column;
             columnDef.applyWidth(_this.el);
             initCellElement(_this.el, column);
+            // update widths for meta rows only, main footer never updates
+            if (!isPblColumn(column)) {
+                columnDef.widthChange
+                    .pipe(utils$1.UnRx(_this))
+                    .subscribe((/**
+                 * @return {?}
+                 */
+                function () { return _this.columnDef.applyWidth(_this.el); }));
+            }
             return _this;
         }
-        // TODO: smart diff handling... handle all diffs, not just width, and change only when required.
-        // TODO: smart diff handling... handle all diffs, not just width, and change only when required.
-        /**
-         * @return {?}
-         */
-        PblNgridFooterCellDirective.prototype.ngDoCheck = 
-        // TODO: smart diff handling... handle all diffs, not just width, and change only when required.
-        /**
-         * @return {?}
-         */
-        function () {
-            if (this.columnDef.isDirty) {
-                this.columnDef.applyWidth(this.el);
-            }
-        };
         /**
          * @return {?}
          */
@@ -14337,6 +14329,11 @@
         function () {
             this.cellCtx = MetaCellContext.create(this.columnDef.column, this.table);
         };
+        PblNgridFooterCellDirective.ctorParameters = function () { return [
+            { type: PblNgridColumnDef },
+            { type: PblNgridComponent },
+            { type: core.ElementRef }
+        ]; };
         PblNgridFooterCellDirective.decorators = [
             { type: core.Directive, args: [{
                         selector: 'pbl-ngrid-footer-cell',
@@ -14353,6 +14350,10 @@
             { type: PblNgridComponent },
             { type: core.ElementRef }
         ]; };
+        PblNgridFooterCellDirective = __decorate([
+            utils$1.UnRx(),
+            __metadata("design:paramtypes", [PblNgridColumnDef, PblNgridComponent, core.ElementRef])
+        ], PblNgridFooterCellDirective);
         return PblNgridFooterCellDirective;
     }(table.CdkFooterCell));
     if (false) {
@@ -17126,7 +17127,6 @@
              * @deprecated
              */
             _this._totalContentSizeTransform = '';
-            /// COMPATIBILITY 8.1.2- <-> 8.1.3+
             _this.offsetChange$ = new rxjs.Subject();
             _this._isScrolling = false;
             if (config.has('virtualScroll')) {
@@ -17145,6 +17145,21 @@
             }
             pluginCtrl.extApi.setViewport(_this);
             _this.offsetChange = _this.offsetChange$.asObservable();
+            _this._minWidth$ = pluginCtrl.events
+                .pipe(operators.filter((/**
+             * @param {?} event
+             * @return {?}
+             */
+            function (event) { return event.kind === 'onResizeRow'; })), operators.map((/**
+             * @param {?} e
+             * @return {?}
+             */
+            function (e) { return _this.table.columnApi.visibleColumns.reduce((/**
+             * @param {?} p
+             * @param {?} c
+             * @return {?}
+             */
+            function (p, c) { return p + c.sizeInfo.width; }), 0); })), utils$1.UnRx(_this));
             return _this;
         }
         Object.defineProperty(PblCdkVirtualScrollViewportComponent.prototype, "isScrolling", {
@@ -17205,6 +17220,16 @@
              */
             function () {
                 return this.elementRef.nativeElement.getBoundingClientRect().height;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(PblCdkVirtualScrollViewportComponent.prototype, "scrollWidth", {
+            get: /**
+             * @return {?}
+             */
+            function () {
+                return this.elementRef.nativeElement.scrollWidth;
             },
             enumerable: true,
             configurable: true
@@ -17521,7 +17546,7 @@
         PblCdkVirtualScrollViewportComponent.decorators = [
             { type: core.Component, args: [{
                         selector: 'pbl-cdk-virtual-scroll-viewport',
-                        template: "<p class=\"cdk-virtual-scroll-inner-width\"></p>\n<ng-content select=\".cdk-virtual-scroll-before-content-wrapper\"></ng-content>\n<!--\n  Wrap the rendered content in an element that will be used to offset it based on the scroll\n  position.\n-->\n<div #contentWrapper [class.cdk-virtual-scroll-content-wrapper]=\"enabled\" style=\"width: 100%\" [style.minWidth.px]=\"minWidth\">\n  <ng-content></ng-content>\n</div>\n\n<!--\n  Spacer used to force the scrolling container to the correct size for the *total* number of items\n  so that the scrollbar captures the size of the entire data set.\n-->\n<div *ngIf=\"enabled\" class=\"cdk-virtual-scroll-spacer\"\n     [style.width]=\"_totalContentWidth\" [style.height]=\"_totalContentHeight\"\n     [style.transform]=\"_totalContentSizeTransform\"></div>\n<div *ngIf=\"pblFillerHeight && enabled\"\n    class=\"pbl-ngrid-space-fill\"\n    [style.minWidth.px]=\"minWidth\"\n    [style.top.px]=\"ngeRenderedContentSize\"\n    [style.height]=\"pblFillerHeight\"></div>\n",
+                        template: "<p class=\"cdk-virtual-scroll-inner-width\"></p>\n<ng-content select=\".cdk-virtual-scroll-before-content-wrapper\"></ng-content>\n<!--\n  Wrap the rendered content in an element that will be used to offset it based on the scroll\n  position.\n-->\n<div #contentWrapper [class.cdk-virtual-scroll-content-wrapper]=\"enabled\" style=\"width: 100%\" [style.minWidth.px]=\"_minWidth$ | async\">\n  <ng-content></ng-content>\n</div>\n\n<!--\n  Spacer used to force the scrolling container to the correct size for the *total* number of items\n  so that the scrollbar captures the size of the entire data set.\n-->\n<div *ngIf=\"enabled\" class=\"cdk-virtual-scroll-spacer\"\n     [style.width]=\"_totalContentWidth\" [style.height]=\"_totalContentHeight\"\n     [style.transform]=\"_totalContentSizeTransform\"></div>\n<div *ngIf=\"pblFillerHeight && enabled\"\n    class=\"pbl-ngrid-space-fill\"\n    [style.minWidth.px]=\"_minWidth$ | async\"\n    [style.top.px]=\"ngeRenderedContentSize\"\n    [style.height]=\"pblFillerHeight\"></div>\n",
                         host: {
                             // tslint:disable-line:use-host-property-decorator
                             class: 'cdk-virtual-scroll-viewport',
@@ -17547,7 +17572,6 @@
             { type: PblNgridComponent }
         ]; };
         PblCdkVirtualScrollViewportComponent.propDecorators = {
-            minWidth: [{ type: core.Input }],
             stickyRowHeaderContainer: [{ type: core.Input }],
             stickyRowFooterContainer: [{ type: core.Input }],
             scrolling: [{ type: core.Output }],
@@ -17576,8 +17600,6 @@
          * @type {?}
          */
         PblCdkVirtualScrollViewportComponent.prototype.offsetChange;
-        /** @type {?} */
-        PblCdkVirtualScrollViewportComponent.prototype.minWidth;
         /** @type {?} */
         PblCdkVirtualScrollViewportComponent.prototype.stickyRowHeaderContainer;
         /** @type {?} */
@@ -17649,6 +17671,8 @@
          * @type {?}
          */
         PblCdkVirtualScrollViewportComponent.prototype._totalContentSizeTransform;
+        /** @type {?} */
+        PblCdkVirtualScrollViewportComponent.prototype._minWidth$;
         /**
          * @type {?}
          * @private
@@ -18017,13 +18041,13 @@
     exports.applySort = applySort;
     exports.columnFactory = columnFactory;
     exports.createDS = createDS;
+    exports.isPblColumn = isPblColumn;
+    exports.isPblColumnGroup = isPblColumnGroup;
+    exports.isPblMetaColumn = isPblMetaColumn;
     exports.provideCommon = provideCommon;
     exports.utils = utils;
     exports.ɵa = PblNgridHeaderExtensionRefDirective;
     exports.ɵb = PblNgridPaginatorRefDirective;
-    exports.ɵba = PblNgridScrolling;
-    exports.ɵbb = PblNgridPluginContext;
-    exports.ɵbc = COMMON_TABLE_TEMPLATE_INIT;
     exports.ɵc = PblNgridOuterSectionDirective;
     exports.ɵd = PblNgridHeaderCellComponent;
     exports.ɵe = PblNgridCellDirective;
@@ -18035,19 +18059,19 @@
     exports.ɵk = PblNgridMetaRowContainerComponent;
     exports.ɵl = PblMetaRowDirective;
     exports.ɵm = PblNgridMetaRowService;
-    exports.ɵn = isPblMetaColumn;
-    exports.ɵo = isPblColumn;
-    exports.ɵp = isPblColumnGroup;
-    exports.ɵq = PblColumnGroupStore;
-    exports.ɵr = ColumnSizeInfo;
-    exports.ɵs = MetaCellContext;
-    exports.ɵt = PblCdkTableComponent;
-    exports.ɵu = internalApiFactory;
-    exports.ɵv = pluginControllerFactory;
-    exports.ɵw = metaRowServiceFactory;
-    exports.ɵx = PblColumnSizeObserver;
-    exports.ɵy = PblCdkVirtualScrollViewportComponent;
-    exports.ɵz = PblCdkVirtualScrollDirective;
+    exports.ɵn = PblColumnGroupStore;
+    exports.ɵo = ColumnSizeInfo;
+    exports.ɵp = MetaCellContext;
+    exports.ɵq = PblCdkTableComponent;
+    exports.ɵr = internalApiFactory;
+    exports.ɵs = pluginControllerFactory;
+    exports.ɵt = metaRowServiceFactory;
+    exports.ɵu = PblColumnSizeObserver;
+    exports.ɵv = PblCdkVirtualScrollViewportComponent;
+    exports.ɵw = PblCdkVirtualScrollDirective;
+    exports.ɵx = PblNgridScrolling;
+    exports.ɵy = PblNgridPluginContext;
+    exports.ɵz = COMMON_TABLE_TEMPLATE_INIT;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
