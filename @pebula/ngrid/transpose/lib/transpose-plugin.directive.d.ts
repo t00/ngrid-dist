@@ -1,6 +1,6 @@
 import { OnDestroy } from '@angular/core';
 import { PblNgridConfigService, PblColumnDefinition, PblNgridComponent, PblNgridPluginController } from '@pebula/ngrid';
-declare module '@pebula/ngrid/lib/table/services/config' {
+declare module '@pebula/ngrid/lib/grid/services/config' {
     interface PblNgridConfig {
         transposePlugin?: {
             header?: Partial<PblColumnDefinition>;
@@ -17,23 +17,23 @@ declare module '@pebula/ngrid/lib/ext/types' {
 /**
  * Transpose plugin.
  *
- * This plugin will swaps around the rows and columns of the table.
+ * This plugin will swaps around the rows and columns of the grid.
  *
- * A **regular table** (not transposed) represents rows horizontally:
+ * A **regular grid** (not transposed) represents rows horizontally:
  *
  * - Each horizontal row represents an item in the collection.
  * - Each vertical column represents the same property of all rows in the collection.
  *
- * A **transposed** table represents row vertically:
+ * A **transposed** grid represents row vertically:
  *
  * - Each horizontal row represents the same property of all rows in the collection.
  * - Each vertical row represents an item in the collection.
  *
- * > Note that transposing a table might not play nice with other plugins and/or features.
+ * > Note that transposing a grid might not play nice with other plugins and/or features.
  * For example, using pagination with transpose make no sense.
  */
 export declare class PblNgridTransposePluginDirective implements OnDestroy {
-    private table;
+    private grid;
     private pluginCtrl;
     transpose: boolean;
     /**
@@ -52,8 +52,8 @@ export declare class PblNgridTransposePluginDirective implements OnDestroy {
      * When set, the new column values will merge into the default definitions, overriding existing properties
      * set on the default column settings.
      *
-     * > The header column behave like any other column and you can also provide define it in the `column` property on the table.
-     * When using this approach the column defined on the table is used as is (no merging). Just make sure you use the right `prop` value for it.
+     * > The header column behave like any other column and you can also provide define it in the `column` property on the grid.
+     * When using this approach the column defined on the grid is used as is (no merging). Just make sure you use the right `prop` value for it.
      * e.g. if `header` is not set here its `__transpose__` otherwise, the actual `prop` value.
      */
     header: Partial<PblColumnDefinition>;
@@ -71,11 +71,11 @@ export declare class PblNgridTransposePluginDirective implements OnDestroy {
     matchTemplates: boolean;
     private enabled;
     private _header;
-    private tableState;
+    private gridState;
     private columns;
     private selfColumn;
     private _removePlugin;
-    constructor(table: PblNgridComponent<any>, pluginCtrl: PblNgridPluginController, config: PblNgridConfigService);
+    constructor(grid: PblNgridComponent<any>, pluginCtrl: PblNgridPluginController, config: PblNgridConfigService);
     ngOnDestroy(): void;
     disable(updateTable: boolean): void;
     enable(refreshDataSource?: boolean): void;

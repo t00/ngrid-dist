@@ -9,21 +9,21 @@ declare module '@pebula/ngrid/lib/ext/types' {
 export declare const PLUGIN_KEY: 'detailRow';
 export declare const ROW_WHEN_TRUE: () => boolean;
 export declare const ROW_WHEN_FALSE: () => boolean;
-export declare function toggleDetailRow<T = any>(table: PblNgridComponent<T>, row: T, forceState?: boolean): boolean | void;
+export declare function toggleDetailRow<T = any>(grid: PblNgridComponent<T>, row: T, forceState?: boolean): boolean | void;
 export interface PblDetailsRowToggleEvent<T = any> {
     row: T;
     expended: boolean;
     toggle(): void;
 }
 export declare class PblNgridDetailRowPluginDirective<T> implements OnDestroy {
-    private table;
+    private grid;
     private injector;
     /**
      * Detail row control (none / all rows / selective rows)
      *
      * A detail row is an additional row added below a row rendered with the context of the row above it.
      *
-     * You can enable/disable detail row for the entire table by setting `detailRow` to true/false respectively.
+     * You can enable/disable detail row for the entire grid by setting `detailRow` to true/false respectively.
      * To control detail row per row, provide a predicate.
      */
     detailRow: ((index: number, rowData: T) => boolean) | boolean;
@@ -76,7 +76,7 @@ export declare class PblNgridDetailRowPluginDirective<T> implements OnDestroy {
     private _detailRowDef;
     private _defaultParentRef;
     private _removePlugin;
-    constructor(table: PblNgridComponent<any>, pluginCtrl: PblNgridPluginController<T>, injector: Injector);
+    constructor(grid: PblNgridComponent<any>, pluginCtrl: PblNgridPluginController<T>, injector: Injector);
     addDetailRow(detailRow: PblNgridDetailRowComponent): void;
     removeDetailRow(detailRow: PblNgridDetailRowComponent): void;
     toggleDetailRow(row: any, forceState?: boolean): boolean | void;
@@ -86,7 +86,7 @@ export declare class PblNgridDetailRowPluginDirective<T> implements OnDestroy {
     private setupDetailRowParent;
     private resetTableRowDefs;
     /**
-     * Update the table with detail row infor.
+     * Update the grid with detail row infor.
      * Instead of calling for a change detection cycle we can assign the new predicates directly to the cdkRowDef instances.
      */
     private updateTable;

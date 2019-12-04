@@ -6,6 +6,6 @@ export declare class PblNgridCellEditDirective<T> {
     private _click;
     private _dblClick;
     private targetEventsPlugin;
-    constructor(table: PblNgridComponent<any>, injector: Injector, pluginCtrl: PblNgridPluginController);
+    constructor(grid: PblNgridComponent<any>, injector: Injector, pluginCtrl: PblNgridPluginController);
     private update;
 }

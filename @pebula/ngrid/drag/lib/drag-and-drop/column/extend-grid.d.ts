@@ -1,4 +1,4 @@
-declare module '@pebula/ngrid/lib/table/columns/column' {
+declare module '@pebula/ngrid/lib/grid/columns/column' {
     interface PblColumn {
         reorder: boolean;
         /**
@@ -16,7 +16,7 @@ declare module '@pebula/ngrid/lib/table/columns/column' {
         checkGroupLockConstraint(column: PblColumn): boolean;
     }
 }
-declare module '@pebula/ngrid/lib/table/columns/group-column' {
+declare module '@pebula/ngrid/lib/grid/columns/group-column' {
     interface PblColumnGroup {
         /**
          * Lock column in the group, preventing the group from splitting.
@@ -25,7 +25,7 @@ declare module '@pebula/ngrid/lib/table/columns/group-column' {
         lockColumns?: boolean;
     }
 }
-declare module '@pebula/ngrid/lib/table/columns/types' {
+declare module '@pebula/ngrid/lib/grid/columns/types' {
     interface PblColumnDefinition {
         reorder?: boolean;
         /**

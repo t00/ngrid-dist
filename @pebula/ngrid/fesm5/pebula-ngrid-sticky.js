@@ -1,7 +1,7 @@
 import { __values, __read, __decorate, __metadata } from 'tslib';
 import { filter, first } from 'rxjs/operators';
 import { IterableDiffers, Directive, Input, NgModule, Optional, SkipSelf } from '@angular/core';
-import { PblNgridComponent, PblNgridPluginController, TablePlugin, PblNgridModule, PblNgridConfigService } from '@pebula/ngrid';
+import { PblNgridComponent, PblNgridPluginController, NgridPlugin, PblNgridModule, PblNgridConfigService } from '@pebula/ngrid';
 import { CommonModule } from '@angular/common';
 import { CdkTableModule } from '@angular/cdk/table';
 
@@ -12,29 +12,29 @@ import { CdkTableModule } from '@angular/cdk/table';
 /** @type {?} */
 var PLUGIN_KEY = 'sticky';
 /**
- * @param {?} table
+ * @param {?} grid
  * @param {?} type
  * @param {?} valueOrBulk
  * @param {?=} state
  * @return {?}
  */
-function setStickyRow(table, type, valueOrBulk, state) {
+function setStickyRow(grid, type, valueOrBulk, state) {
     var e_1, _a;
     /** @type {?} */
     var isHeader = type === 'header';
     /** @type {?} */
-    var queryList = isHeader ? table._headerRowDefs : table._footerRowDefs;
+    var queryList = isHeader ? grid._headerRowDefs : grid._footerRowDefs;
     /** @type {?} */
     var bulk = Array.isArray(valueOrBulk) ? valueOrBulk : [[valueOrBulk, state]];
     /** @type {?} */
-    var addOneIfMainExists = (isHeader && table.showHeader) || (!isHeader && table.showFooter) ? 1 : 0;
+    var addOneIfMainExists = (isHeader && grid.showHeader) || (!isHeader && grid.showFooter) ? 1 : 0;
     /** @type {?} */
     var changed;
     try {
         for (var bulk_1 = __values(bulk), bulk_1_1 = bulk_1.next(); !bulk_1_1.done; bulk_1_1 = bulk_1.next()) {
             var _b = __read(bulk_1_1.value, 2), value = _b[0], state_1 = _b[1];
-            // the index from the user is 0 based or the table header/footer row.
-            // we store them both, so we need to convert... our first is always the table header/footer and then we have the same order as the user's.
+            // the index from the user is 0 based or the grid header/footer row.
+            // we store them both, so we need to convert... our first is always the grid header/footer and then we have the same order as the user's.
             /** @type {?} */
             var idx = value === 'table' ? 0 : value + addOneIfMainExists;
             if (!isHeader) {
@@ -62,21 +62,21 @@ function setStickyRow(table, type, valueOrBulk, state) {
     }
     if (changed) {
         if (isHeader) {
-            table._cdkTable.updateStickyHeaderRowStyles();
+            grid._cdkTable.updateStickyHeaderRowStyles();
         }
         else {
-            table._cdkTable.updateStickyFooterRowStyles();
+            grid._cdkTable.updateStickyFooterRowStyles();
         }
     }
 }
 /**
- * @param {?} table
+ * @param {?} grid
  * @param {?} type
  * @param {?} valueOrBulk
  * @param {?=} state
  * @return {?}
  */
-function setStickyColumns(table, type, valueOrBulk, state) {
+function setStickyColumns(grid, type, valueOrBulk, state) {
     var e_2, _a;
     /** @type {?} */
     var bulk = Array.isArray(valueOrBulk) ? valueOrBulk : [[valueOrBulk, state]];
@@ -84,14 +84,14 @@ function setStickyColumns(table, type, valueOrBulk, state) {
     var changed;
     var _loop_1 = function (columnId, state_2) {
         if (typeof columnId === 'string') {
-            columnId = table.columnApi.visibleColumns.findIndex((/**
+            columnId = grid.columnApi.visibleColumns.findIndex((/**
              * @param {?} c
              * @return {?}
              */
             function (c) { return c.orgProp === columnId; }));
         }
         /** @type {?} */
-        var c = table.columnApi.visibleColumns[columnId];
+        var c = grid.columnApi.visibleColumns[columnId];
         if (c) {
             changed = true;
             c.pin = state_2 ? type : undefined;
@@ -119,13 +119,13 @@ function setStickyColumns(table, type, valueOrBulk, state) {
         finally { if (e_2) throw e_2.error; }
     }
     if (changed) {
-        table._cdkTable.updateStickyColumnStyles();
+        grid._cdkTable.updateStickyColumnStyles();
     }
 }
 var PblNgridStickyPluginDirective = /** @class */ (function () {
-    function PblNgridStickyPluginDirective(table, _differs, pluginCtrl) {
+    function PblNgridStickyPluginDirective(grid, _differs, pluginCtrl) {
         var _this = this;
-        this.table = table;
+        this.grid = grid;
         this._differs = _differs;
         this.pluginCtrl = pluginCtrl;
         this._columnCache = { start: [], end: [] };
@@ -140,9 +140,9 @@ var PblNgridStickyPluginDirective = /** @class */ (function () {
          * @return {?}
          */
         function () {
-            _this.table._cdkTable.updateStickyHeaderRowStyles();
-            _this.table._cdkTable.updateStickyColumnStyles();
-            _this.table._cdkTable.updateStickyFooterRowStyles();
+            _this.grid._cdkTable.updateStickyHeaderRowStyles();
+            _this.grid._cdkTable.updateStickyColumnStyles();
+            _this.grid._cdkTable.updateStickyFooterRowStyles();
         }));
         pluginCtrl.events
             .pipe(filter((/**
@@ -154,11 +154,11 @@ var PblNgridStickyPluginDirective = /** @class */ (function () {
          * @return {?}
          */
         function () {
-            if (_this._startDiffer && _this.table.isInit) {
+            if (_this._startDiffer && _this.grid.isInit) {
                 _this._startDiffer.diff([]);
                 _this.applyColumnDiff('start', _this._columnCache.start, _this._startDiffer);
             }
-            if (_this._endDiffer && _this.table.isInit) {
+            if (_this._endDiffer && _this.grid.isInit) {
                 _this._endDiffer.diff([]);
                 _this.applyColumnDiff('end', _this._columnCache.end, _this._endDiffer);
             }
@@ -168,7 +168,7 @@ var PblNgridStickyPluginDirective = /** @class */ (function () {
         /**
          * Set the header rows you want to apply sticky positioning to.
          * Valid values are:
-         *   - `table` - Literal string `table` that will set the table's main header row.
+         *   - `grid` - Literal string `grid` that will set the grid's main header row.
          *   - number  - The index of the row, for multi-header row. The index refers to the order you defined the header/headerGroup rows (base 0);
          *
          * For performance considerations only new values will trigger a change (i.e. the array should be treated as immutable).
@@ -177,7 +177,7 @@ var PblNgridStickyPluginDirective = /** @class */ (function () {
         set: /**
          * Set the header rows you want to apply sticky positioning to.
          * Valid values are:
-         *   - `table` - Literal string `table` that will set the table's main header row.
+         *   - `grid` - Literal string `grid` that will set the grid's main header row.
          *   - number  - The index of the row, for multi-header row. The index refers to the order you defined the header/headerGroup rows (base 0);
          *
          * For performance considerations only new values will trigger a change (i.e. the array should be treated as immutable).
@@ -198,7 +198,7 @@ var PblNgridStickyPluginDirective = /** @class */ (function () {
         /**
          * Set the footer rows you want to apply sticky positioning to.
          * Valid values are:
-         *   - `table` - Literal string `table` that will set the table's main footer row.
+         *   - `grid` - Literal string `grid` that will set the grid's main footer row.
          *   - number  - The index of the row, for multi-footer row. The index refers to the order you defined the footer rows (base 0);
          *
          * For performance considerations only new values will trigger a change (i.e. the array should be treated as immutable).
@@ -207,7 +207,7 @@ var PblNgridStickyPluginDirective = /** @class */ (function () {
         set: /**
          * Set the footer rows you want to apply sticky positioning to.
          * Valid values are:
-         *   - `table` - Literal string `table` that will set the table's main footer row.
+         *   - `grid` - Literal string `grid` that will set the grid's main footer row.
          *   - number  - The index of the row, for multi-footer row. The index refers to the order you defined the footer rows (base 0);
          *
          * For performance considerations only new values will trigger a change (i.e. the array should be treated as immutable).
@@ -228,7 +228,7 @@ var PblNgridStickyPluginDirective = /** @class */ (function () {
         /**
        * Set the header rows you want to apply sticky positioning to.
        * Valid values are:
-       *   - `table` - Literal string `table` that will set the table's main header row.
+       *   - `grid` - Literal string `grid` that will set the grid's main header row.
        *   - number  - The index of the row, for multi-header row. The index refers to the order you defined the header/headerGroup rows (base 0);
        *
        * For performance considerations only new values will trigger a change (i.e. the array should be treated as immutable).
@@ -237,7 +237,7 @@ var PblNgridStickyPluginDirective = /** @class */ (function () {
         set: /**
          * Set the header rows you want to apply sticky positioning to.
          * Valid values are:
-         *   - `table` - Literal string `table` that will set the table's main header row.
+         *   - `grid` - Literal string `grid` that will set the grid's main header row.
          *   - number  - The index of the row, for multi-header row. The index refers to the order you defined the header/headerGroup rows (base 0);
          *
          * For performance considerations only new values will trigger a change (i.e. the array should be treated as immutable).
@@ -258,7 +258,7 @@ var PblNgridStickyPluginDirective = /** @class */ (function () {
         /**
          * Set the footer rows you want to apply sticky positioning to.
          * Valid values are:
-         *   - `table` - Literal string `table` that will set the table's main footer row.
+         *   - `grid` - Literal string `grid` that will set the grid's main footer row.
          *   - number  - The index of the row, for multi-footer row. The index refers to the order you defined the footer rows (base 0);
          *
          * For performance considerations only new values will trigger a change (i.e. the array should be treated as immutable).
@@ -267,7 +267,7 @@ var PblNgridStickyPluginDirective = /** @class */ (function () {
         set: /**
          * Set the footer rows you want to apply sticky positioning to.
          * Valid values are:
-         *   - `table` - Literal string `table` that will set the table's main footer row.
+         *   - `grid` - Literal string `grid` that will set the grid's main footer row.
          *   - number  - The index of the row, for multi-footer row. The index refers to the order you defined the footer rows (base 0);
          *
          * For performance considerations only new values will trigger a change (i.e. the array should be treated as immutable).
@@ -291,7 +291,7 @@ var PblNgridStickyPluginDirective = /** @class */ (function () {
      * @return {?}
      */
     function () {
-        this._removePlugin(this.table);
+        this._removePlugin(this.grid);
     };
     /**
      * @protected
@@ -309,7 +309,7 @@ var PblNgridStickyPluginDirective = /** @class */ (function () {
      */
     function (type, value, differ) {
         var _this = this;
-        if (!this.table.isInit) {
+        if (!this.grid.isInit) {
             /** @type {?} */
             var unsub_1 = this.pluginCtrl.events.subscribe((/**
              * @param {?} event
@@ -343,7 +343,7 @@ var PblNgridStickyPluginDirective = /** @class */ (function () {
             }
         }));
         if (bulk.length > 0) {
-            setStickyColumns(this.table, type, bulk);
+            setStickyColumns(this.grid, type, bulk);
         }
     };
     /**
@@ -362,7 +362,7 @@ var PblNgridStickyPluginDirective = /** @class */ (function () {
      */
     function (type, value, differ) {
         var _this = this;
-        if (!this.table.isInit) {
+        if (!this.grid.isInit) {
             /** @type {?} */
             var unsub_2 = this.pluginCtrl.events.subscribe((/**
              * @param {?} event
@@ -395,7 +395,7 @@ var PblNgridStickyPluginDirective = /** @class */ (function () {
             }
         }));
         if (bulk.length > 0) {
-            setStickyRow(this.table, type, bulk);
+            setStickyRow(this.grid, type, bulk);
         }
     };
     PblNgridStickyPluginDirective.ctorParameters = function () { return [
@@ -419,7 +419,7 @@ var PblNgridStickyPluginDirective = /** @class */ (function () {
         stickyFooter: [{ type: Input }]
     };
     PblNgridStickyPluginDirective = __decorate([
-        TablePlugin({ id: PLUGIN_KEY }),
+        NgridPlugin({ id: PLUGIN_KEY }),
         __metadata("design:paramtypes", [PblNgridComponent,
             IterableDiffers,
             PblNgridPluginController])
@@ -461,7 +461,7 @@ if (false) {
      * @type {?}
      * @protected
      */
-    PblNgridStickyPluginDirective.prototype.table;
+    PblNgridStickyPluginDirective.prototype.grid;
     /**
      * @type {?}
      * @protected

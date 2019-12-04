@@ -54,7 +54,7 @@ export declare class PblNgridColumnReorderPluginDirective<T = any> extends CdkDr
 export declare class PblNgridColumnDragDirective<T = any> extends CdkDrag<T> implements AfterViewInit, CdkLazyDrag<T, PblNgridColumnReorderPluginDirective<T>, PblNgridColumnDragDirective<T>> {
     rootElementSelector: string;
     column: PblColumn;
-    context: Pick<PblNgridCellContext<T>, 'col' | 'table'> & Partial<Pick<PblNgridCellContext<T>, 'row' | 'value'>>;
+    context: Pick<PblNgridCellContext<T>, 'col' | 'grid'> & Partial<Pick<PblNgridCellContext<T>, 'row' | 'value'>>;
     private _context;
     private pluginCtrl;
     private cache;

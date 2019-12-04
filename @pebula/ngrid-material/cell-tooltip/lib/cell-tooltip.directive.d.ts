@@ -2,7 +2,7 @@ import { Injector, OnDestroy } from '@angular/core';
 import { TooltipPosition } from '@angular/material/tooltip';
 import { PblNgridComponent, PblNgridPluginController } from '@pebula/ngrid';
 import { PblNgridCellEvent } from '@pebula/ngrid/target-events';
-declare module '@pebula/ngrid/lib/table/services/config' {
+declare module '@pebula/ngrid/lib/grid/services/config' {
     interface PblNgridConfig {
         cellTooltip?: CellTooltipOptions & {
             /** When set to true will apply the default cell tooltip to ALL tables */

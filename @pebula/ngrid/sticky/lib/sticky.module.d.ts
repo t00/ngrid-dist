@@ -1,5 +1,5 @@
 import { PblNgridConfigService } from '@pebula/ngrid';
-declare module '@pebula/ngrid/lib/table/services/config' {
+declare module '@pebula/ngrid/lib/grid/services/config' {
     interface PblNgridConfig {
         stickyPlugin?: {
             headers?: Array<'table' | number>;

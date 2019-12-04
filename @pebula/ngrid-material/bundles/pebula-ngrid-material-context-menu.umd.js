@@ -210,7 +210,7 @@
     var PblNgridMatHeaderContextMenuPlugin = /** @class */ (function () {
         function PblNgridMatHeaderContextMenuPlugin(overlayPanelFactory, pluginCtrl) {
             this.pluginCtrl = pluginCtrl;
-            this.overlayPanel = overlayPanelFactory.create(pluginCtrl.extApi.table);
+            this.overlayPanel = overlayPanelFactory.create(pluginCtrl.extApi.grid);
         }
         PblNgridMatHeaderContextMenuPlugin.ctorParameters = function () { return [
             { type: overlayPanel.PblNgridOverlayPanelFactory },
@@ -229,7 +229,7 @@
             config: [{ type: core.Input }]
         };
         PblNgridMatHeaderContextMenuPlugin = __decorate([
-            ngrid.TablePlugin({ id: PLUGIN_KEY }),
+            ngrid.NgridPlugin({ id: PLUGIN_KEY }),
             __metadata("design:paramtypes", [overlayPanel.PblNgridOverlayPanelFactory,
                 ngrid.PblNgridPluginController])
         ], PblNgridMatHeaderContextMenuPlugin);
@@ -377,7 +377,7 @@
             this.vcRef = vcRef;
             this.currentFilter = '';
             this.column = ref.data.col;
-            this.grid = ref.data.table;
+            this.grid = ref.data.grid;
             if (this.grid.ds.sort.column === this.column) {
                 this.currentSort = this.grid.ds.sort.sort.order;
             }

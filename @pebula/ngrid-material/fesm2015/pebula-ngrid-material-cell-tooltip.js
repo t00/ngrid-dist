@@ -2,7 +2,7 @@ import { ViewContainerRef, NgZone, ElementRef, Injector, Directive, Input, NgMod
 import { CommonModule } from '@angular/common';
 import { Overlay, OverlayModule } from '@angular/cdk/overlay';
 import { MAT_TOOLTIP_SCROLL_STRATEGY, MAT_TOOLTIP_DEFAULT_OPTIONS, MatTooltip, MatTooltipModule } from '@angular/material/tooltip';
-import { PblNgridConfigService, PblNgridPluginController, PblNgridComponent, TablePlugin, PblNgridModule } from '@pebula/ngrid';
+import { PblNgridConfigService, PblNgridPluginController, PblNgridComponent, NgridPlugin, PblNgridModule } from '@pebula/ngrid';
 import { PblNgridTargetEventsModule } from '@pebula/ngrid/target-events';
 import { __decorate, __metadata } from 'tslib';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
@@ -249,7 +249,7 @@ PblNgridCellTooltipDirective.propDecorators = {
  * @template T
  */
 PblNgridCellTooltipDirective = PblNgridCellTooltipDirective_1 = __decorate([
-    TablePlugin({ id: PLUGIN_KEY, factory: 'create' }),
+    NgridPlugin({ id: PLUGIN_KEY, factory: 'create' }),
     UnRx(),
     __metadata("design:paramtypes", [PblNgridComponent, Injector, PblNgridPluginController])
 ], PblNgridCellTooltipDirective);

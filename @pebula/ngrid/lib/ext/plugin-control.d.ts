@@ -1,12 +1,12 @@
 import { Observable } from 'rxjs';
 import { Injector } from '@angular/core';
-import { PblNgridComponent } from '../table/table.component';
+import { PblNgridComponent } from '../grid/ngrid.component';
 import { PblNgridPluginExtension, PblNgridPluginExtensionFactories, PblNgridEvents } from './types';
-import { PblNgridExtensionApi } from './table-ext-api';
+import { PblNgridExtensionApi } from './grid-ext-api';
 /** @internal */
 export declare class PblNgridPluginContext<T = any> {
     static create<T = any>(table: PblNgridComponent<any>, injector: Injector, extApi: PblNgridExtensionApi): PblNgridPluginContext<T>;
-    table: PblNgridComponent<any>;
+    grid: PblNgridComponent<any>;
     injector: Injector;
     extApi: PblNgridExtensionApi;
     controller: PblNgridPluginController<T>;

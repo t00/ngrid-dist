@@ -324,14 +324,14 @@
     function () { return false; });
     /**
      * @template T
-     * @param {?} table
+     * @param {?} grid
      * @param {?} row
      * @param {?=} forceState
      * @return {?}
      */
-    function toggleDetailRow(table, row, forceState) {
+    function toggleDetailRow(grid, row, forceState) {
         /** @type {?} */
-        var controller = ngrid.PblNgridPluginController.find(table);
+        var controller = ngrid.PblNgridPluginController.find(grid);
         if (controller) {
             /** @type {?} */
             var plugin = controller.getPlugin(PLUGIN_KEY);
@@ -359,9 +359,9 @@
      * @template T
      */
     var PblNgridDetailRowPluginDirective = /** @class */ (function () {
-        function PblNgridDetailRowPluginDirective(table, pluginCtrl, injector) {
+        function PblNgridDetailRowPluginDirective(grid, pluginCtrl, injector) {
             var _this = this;
-            this.table = table;
+            this.grid = grid;
             this.injector = injector;
             /**
              * Set the behavior when the row's context is changed while the detail row is opened (another row is displayed in place of the current row).
@@ -416,7 +416,7 @@
                     if (!pluginCtrl.hasPlugin('targetEvents')) {
                         pluginCtrl.createPlugin('targetEvents');
                     }
-                    table.registry.changes
+                    grid.registry.changes
                         .subscribe((/**
                      * @param {?} changes
                      * @return {?}
@@ -429,11 +429,11 @@
                                 switch (c.type) {
                                     case 'detailRowParent':
                                         if (c.op === 'remove') {
-                                            table._cdkTable.removeRowDef(c.value);
+                                            grid._cdkTable.removeRowDef(c.value);
                                             _this._detailRowDef = undefined;
                                         }
                                         _this.setupDetailRowParent();
-                                        // table._cdkTable.syncRows('data');
+                                        // grid._cdkTable.syncRows('data');
                                         break;
                                 }
                             }
@@ -446,7 +446,7 @@
                             finally { if (e_1) throw e_1.error; }
                         }
                     }));
-                    // if we start with an initial value, then update the table cause we didn't do that
+                    // if we start with an initial value, then update the grid cause we didn't do that
                     // when it was set (we cant cause we're not init)
                     // otherwise just setup the parent.
                     if (_this._detailRow) {
@@ -464,7 +464,7 @@
              *
              * A detail row is an additional row added below a row rendered with the context of the row above it.
              *
-             * You can enable/disable detail row for the entire table by setting `detailRow` to true/false respectively.
+             * You can enable/disable detail row for the entire grid by setting `detailRow` to true/false respectively.
              * To control detail row per row, provide a predicate.
              */
             get: /**
@@ -472,7 +472,7 @@
              *
              * A detail row is an additional row added below a row rendered with the context of the row above it.
              *
-             * You can enable/disable detail row for the entire table by setting `detailRow` to true/false respectively.
+             * You can enable/disable detail row for the entire grid by setting `detailRow` to true/false respectively.
              * To control detail row per row, provide a predicate.
              * @return {?}
              */
@@ -484,7 +484,7 @@
             function (value) {
                 if (this._detailRow !== value) {
                     /** @type {?} */
-                    var table = this.table;
+                    var grid = this.grid;
                     if (typeof value === 'function') {
                         this._isSimpleRow = (/**
                          * @param {?} index
@@ -500,7 +500,7 @@
                         this._isSimpleRow = value ? ROW_WHEN_FALSE : ROW_WHEN_TRUE;
                     }
                     this._detailRow = value;
-                    if (table.isInit) {
+                    if (grid.isInit) {
                         this.updateTable();
                     }
                 }
@@ -584,7 +584,7 @@
             if (this._defaultParentRef) {
                 this._defaultParentRef.destroy();
             }
-            this._removePlugin(this.table);
+            this._removePlugin(this.grid);
         };
         /** @internal */
         /**
@@ -623,22 +623,22 @@
         function () {
             var _this = this;
             /** @type {?} */
-            var table = this.table;
+            var grid = this.grid;
             /** @type {?} */
-            var cdkTable = table._cdkTable;
+            var cdkTable = grid._cdkTable;
             if (this._detailRowDef) {
                 cdkTable.removeRowDef(this._detailRowDef);
                 this._detailRowDef = undefined;
             }
             if (this.detailRow) {
                 /** @type {?} */
-                var detailRow = table.registry.getSingle('detailRowParent');
+                var detailRow = grid.registry.getSingle('detailRowParent');
                 if (detailRow) {
                     this._detailRowDef = detailRow = detailRow.clone();
                     Object.defineProperty(detailRow, 'columns', { enumerable: true, get: (/**
                          * @return {?}
                          */
-                        function () { return table.columnApi.visibleColumnIds; }) });
+                        function () { return grid.columnApi.visibleColumnIds; }) });
                     Object.defineProperty(detailRow, 'when', { enumerable: true, get: (/**
                          * @return {?}
                          */
@@ -649,7 +649,7 @@
                             function () { return true; }), firstChange: true, currentValue: detailRow.columns, previousValue: null } });
                 }
                 else if (!this._defaultParentRef) {
-                    // TODO: move to module? set in root registry? put elsewhere to avoid table sync (see event of registry change)...
+                    // TODO: move to module? set in root registry? put elsewhere to avoid grid sync (see event of registry change)...
                     this._defaultParentRef = this.injector.get(core.ComponentFactoryResolver)
                         .resolveComponentFactory(PblNgridDefaultDetailRowParentComponent)
                         .create(this.injector);
@@ -669,42 +669,42 @@
          */
         function () {
             /** @type {?} */
-            var table = this.table;
+            var grid = this.grid;
             if (this._detailRowDef) {
                 this._detailRow === false
-                    ? table._cdkTable.removeRowDef(this._detailRowDef)
-                    : table._cdkTable.addRowDef(this._detailRowDef);
+                    ? grid._cdkTable.removeRowDef(this._detailRowDef)
+                    : grid._cdkTable.addRowDef(this._detailRowDef);
             }
         };
         /**
-         * Update the table with detail row infor.
+         * Update the grid with detail row infor.
          * Instead of calling for a change detection cycle we can assign the new predicates directly to the cdkRowDef instances.
          */
         /**
-         * Update the table with detail row infor.
+         * Update the grid with detail row infor.
          * Instead of calling for a change detection cycle we can assign the new predicates directly to the cdkRowDef instances.
          * @private
          * @return {?}
          */
         PblNgridDetailRowPluginDirective.prototype.updateTable = /**
-         * Update the table with detail row infor.
+         * Update the grid with detail row infor.
          * Instead of calling for a change detection cycle we can assign the new predicates directly to the cdkRowDef instances.
          * @private
          * @return {?}
          */
         function () {
-            this.table._tableRowDef.when = this._isSimpleRow;
+            this.grid._tableRowDef.when = this._isSimpleRow;
             this.setupDetailRowParent();
             // Once we changed the `when` predicate on the `CdkRowDef` we must:
             //   1. Update the row cache (property `rowDefs`) to reflect the new change
-            this.table._cdkTable.updateRowDefCache();
+            this.grid._cdkTable.updateRowDefCache();
             //   2. re-render all rows.
             // The logic for re-rendering all rows is handled in `CdkTable._forceRenderDataRows()` which is a private method.
             // This is a workaround, assigning to `multiTemplateDataRows` will invoke the setter which
             // also calls `CdkTable._forceRenderDataRows()`
             // TODO: This is risky, the setter logic might change.
             // for example, if material will chack for change in `multiTemplateDataRows` setter from previous value...
-            this.table._cdkTable.multiTemplateDataRows = !!this._detailRow;
+            this.grid._cdkTable.multiTemplateDataRows = !!this._detailRow;
         };
         PblNgridDetailRowPluginDirective.ctorParameters = function () { return [
             { type: ngrid.PblNgridComponent },
@@ -732,7 +732,7 @@
          * @template T
          */
         PblNgridDetailRowPluginDirective = __decorate([
-            ngrid.TablePlugin({ id: PLUGIN_KEY }),
+            ngrid.NgridPlugin({ id: PLUGIN_KEY }),
             utils.UnRx(),
             __metadata("design:paramtypes", [ngrid.PblNgridComponent, ngrid.PblNgridPluginController, core.Injector])
         ], PblNgridDetailRowPluginDirective);
@@ -831,7 +831,7 @@
          * @type {?}
          * @private
          */
-        PblNgridDetailRowPluginDirective.prototype.table;
+        PblNgridDetailRowPluginDirective.prototype.grid;
         /**
          * @type {?}
          * @private
@@ -889,7 +889,7 @@
         function () {
             var _this = this;
             /** @type {?} */
-            var controller = ngrid.PblNgridPluginController.find(this.extApi.table);
+            var controller = ngrid.PblNgridPluginController.find(this.extApi.grid);
             this.plugin = controller.getPlugin(PLUGIN_KEY); // TODO: THROW IF NO PLUGIN...
             this.plugin.addDetailRow(this);
             /** @type {?} */
@@ -1034,7 +1034,7 @@
             this.vcRef.clear();
             if (this.context.$implicit) {
                 /** @type {?} */
-                var detailRowDef = this.context.table.registry.getSingle('detailRow');
+                var detailRowDef = this.context.grid.registry.getSingle('detailRow');
                 if (detailRowDef) {
                     this.vcRef.createEmbeddedView(detailRowDef.tRef, this.context);
                 }

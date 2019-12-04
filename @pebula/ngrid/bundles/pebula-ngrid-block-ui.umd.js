@@ -240,12 +240,12 @@
      * @template T
      */
     var PblNgridBlockUiPluginDirective = /** @class */ (function () {
-        function PblNgridBlockUiPluginDirective(table, pluginCtrl) {
+        function PblNgridBlockUiPluginDirective(grid, pluginCtrl) {
             var _this = this;
-            this.table = table;
+            this.grid = grid;
             this._blockInProgress = false;
             this._removePlugin = pluginCtrl.setPlugin(PLUGIN_KEY, this);
-            table.registry.changes.subscribe((/**
+            grid.registry.changes.subscribe((/**
              * @param {?} changes
              * @return {?}
              */
@@ -403,7 +403,7 @@
          * @return {?}
          */
         function () {
-            this._removePlugin(this.table);
+            this._removePlugin(this.grid);
         };
         /**
          * @private
@@ -419,15 +419,15 @@
             if (state) {
                 if (!this._blockerEmbeddedVRef) {
                     /** @type {?} */
-                    var blockerTemplate = this.table.registry.getSingle('blocker');
+                    var blockerTemplate = this.grid.registry.getSingle('blocker');
                     if (blockerTemplate) {
-                        this._blockerEmbeddedVRef = this.table.createView('afterContent', blockerTemplate.tRef, { $implicit: this.table });
+                        this._blockerEmbeddedVRef = this.grid.createView('afterContent', blockerTemplate.tRef, { $implicit: this.grid });
                         this._blockerEmbeddedVRef.detectChanges();
                     }
                 }
             }
             else if (this._blockerEmbeddedVRef) {
-                this.table.removeView(this._blockerEmbeddedVRef, 'afterContent');
+                this.grid.removeView(this._blockerEmbeddedVRef, 'afterContent');
                 this._blockerEmbeddedVRef = undefined;
             }
         };
@@ -450,7 +450,7 @@
          * @template T
          */
         PblNgridBlockUiPluginDirective = __decorate([
-            ngrid.TablePlugin({ id: PLUGIN_KEY }),
+            ngrid.NgridPlugin({ id: PLUGIN_KEY }),
             utils.UnRx(),
             __metadata("design:paramtypes", [ngrid.PblNgridComponent, ngrid.PblNgridPluginController])
         ], PblNgridBlockUiPluginDirective);
@@ -481,7 +481,7 @@
          * @type {?}
          * @private
          */
-        PblNgridBlockUiPluginDirective.prototype.table;
+        PblNgridBlockUiPluginDirective.prototype.grid;
     }
 
     /**

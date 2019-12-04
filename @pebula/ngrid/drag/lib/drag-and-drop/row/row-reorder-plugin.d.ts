@@ -12,12 +12,12 @@ declare module '@pebula/ngrid/lib/ext/types' {
     }
 }
 export declare class PblNgridRowReorderPluginDirective<T = any> extends CdkDropList<T> implements OnDestroy, CdkLazyDropList<T, PblNgridRowReorderPluginDirective<T>> {
-    table: PblNgridComponent<T>;
+    grid: PblNgridComponent<T>;
     id: string;
     rowReorder: boolean;
     private _rowReorder;
     private _removePlugin;
-    constructor(table: PblNgridComponent<T>, pluginCtrl: PblNgridPluginController, element: ElementRef<HTMLElement>, dragDrop: DragDrop, changeDetectorRef: ChangeDetectorRef, dir?: Directionality, group?: CdkDropListGroup<CdkDropList>, dragDropRegistry?: DragDropRegistry<any, any>, // for v7 compat
+    constructor(grid: PblNgridComponent<T>, pluginCtrl: PblNgridPluginController, element: ElementRef<HTMLElement>, dragDrop: DragDrop, changeDetectorRef: ChangeDetectorRef, dir?: Directionality, group?: CdkDropListGroup<CdkDropList>, dragDropRegistry?: DragDropRegistry<any, any>, // for v7 compat
     _document?: any);
     /**
      * Selector that will be used to determine the direct container element, starting from
@@ -37,7 +37,7 @@ export declare class PblNgridRowReorderPluginDirective<T = any> extends CdkDropL
 }
 export declare class PblNgridRowDragDirective<T = any> extends CdkDrag<T> implements CdkLazyDrag<T, PblNgridRowReorderPluginDirective<T>> {
     rootElementSelector: string;
-    context: Pick<PblNgridCellContext<T>, 'col' | 'table'> & Partial<Pick<PblNgridCellContext<T>, 'row' | 'value'>>;
+    context: Pick<PblNgridCellContext<T>, 'col' | 'grid'> & Partial<Pick<PblNgridCellContext<T>, 'row' | 'value'>>;
     /**
      * Reference to the last dragged context.
      *
@@ -45,7 +45,7 @@ export declare class PblNgridRowDragDirective<T = any> extends CdkDrag<T> implem
      * The `context` property holds the current context which is shared and updated on scroll so if a user start a drag and then scrolled
      * the context will point to the row in view and not the original cell.
      */
-    readonly draggedContext: Pick<PblNgridCellContext<T>, 'col' | 'table'> & Partial<Pick<PblNgridCellContext<T>, 'row' | 'value'>>;
+    readonly draggedContext: Pick<PblNgridCellContext<T>, 'col' | 'grid'> & Partial<Pick<PblNgridCellContext<T>, 'row' | 'value'>>;
     private _context;
     private _draggedContext;
     private pluginCtrl;
