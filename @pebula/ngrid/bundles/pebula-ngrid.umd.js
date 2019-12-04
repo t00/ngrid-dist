@@ -11729,7 +11729,7 @@
             //        which will require a resize handling because it's initial size is 0
             //        To workaround this, we only skip elements not yet added to the DOM, which means they will not trigger a resize event.
             /** @type {?} */
-            var skipValue = document.contains(this.elRef.nativeElement) ? 1 : 0;
+            var skipValue = document.body.contains(this.elRef.nativeElement) ? 1 : 0;
             ro$
                 .pipe(operators.skip(skipValue), operators.debounceTime(0, rxjs.animationFrameScheduler), utils$1.UnRx(this))
                 .subscribe((/**

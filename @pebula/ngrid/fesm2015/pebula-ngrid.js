@@ -9019,7 +9019,7 @@ class PblNgridComponent {
         //        which will require a resize handling because it's initial size is 0
         //        To workaround this, we only skip elements not yet added to the DOM, which means they will not trigger a resize event.
         /** @type {?} */
-        let skipValue = document.contains(this.elRef.nativeElement) ? 1 : 0;
+        let skipValue = document.body.contains(this.elRef.nativeElement) ? 1 : 0;
         ro$
             .pipe(skip(skipValue), debounceTime(0, animationFrameScheduler), UnRx(this))
             .subscribe((/**
