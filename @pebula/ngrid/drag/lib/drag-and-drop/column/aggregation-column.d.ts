@@ -5,11 +5,11 @@ import { PblNgridComponent, PblNgridPluginController, PblColumn } from '@pebula/
 import { CdkLazyDropList } from '../core/lazy-drag-drop';
 import { PblDropListRef } from '../core/drop-list-ref';
 export declare class PblNgridAggregationContainerDirective<T = any> extends CdkDropList<T> implements OnDestroy, CdkLazyDropList<T> {
-    grid: PblNgridComponent<T>;
+    table: PblNgridComponent<T>;
     id: string;
     orientation: 'horizontal' | 'vertical';
     pending: PblColumn;
-    constructor(grid: PblNgridComponent<T>, pluginCtrl: PblNgridPluginController, element: ElementRef<HTMLElement>, dragDrop: DragDrop, changeDetectorRef: ChangeDetectorRef, dir?: Directionality, group?: CdkDropListGroup<CdkDropList>, dragDropRegistry?: DragDropRegistry<any, any>, // for v7 compat
+    constructor(table: PblNgridComponent<T>, pluginCtrl: PblNgridPluginController, element: ElementRef<HTMLElement>, dragDrop: DragDrop, changeDetectorRef: ChangeDetectorRef, dir?: Directionality, group?: CdkDropListGroup<CdkDropList>, dragDropRegistry?: DragDropRegistry<any, any>, // for v7 compat
     _document?: any);
     /**
      * Selector that will be used to determine the direct container element, starting from

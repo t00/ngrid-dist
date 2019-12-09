@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, ChangeDetectionStrategy, ViewEncapsulation, Optional, Input, ViewChild, ComponentFactoryResolver, Injector, Directive, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { PblNgridComponent, PblNgridHeaderCellDefDirective, PblNgridCellDefDirective, PblNgridFooterCellDefDirective, PblNgridPluginController, NgridPlugin, PblNgridModule } from '@pebula/ngrid';
+import { PblNgridComponent, PblNgridHeaderCellDefDirective, PblNgridCellDefDirective, PblNgridFooterCellDefDirective, PblNgridPluginController, TablePlugin, PblNgridModule } from '@pebula/ngrid';
 import { __spread, __decorate, __metadata } from 'tslib';
 import { UnRx } from '@pebula/utils';
 import '@angular/cdk/collections';
@@ -489,7 +489,7 @@ var PblNgridMatCheckboxSelectionDirective = /** @class */ (function () {
         matCheckboxSelectionColor: [{ type: Input }]
     };
     PblNgridMatCheckboxSelectionDirective = __decorate([
-        NgridPlugin({ id: PLUGIN_KEY }),
+        TablePlugin({ id: PLUGIN_KEY }),
         UnRx(),
         __metadata("design:paramtypes", [PblNgridComponent,
             ComponentFactoryResolver,

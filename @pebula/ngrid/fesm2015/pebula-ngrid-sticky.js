@@ -1,7 +1,7 @@
 import { __decorate, __metadata } from 'tslib';
 import { filter, first } from 'rxjs/operators';
 import { IterableDiffers, Directive, Input, NgModule, Optional, SkipSelf } from '@angular/core';
-import { PblNgridComponent, PblNgridPluginController, NgridPlugin, PblNgridModule, PblNgridConfigService } from '@pebula/ngrid';
+import { PblNgridComponent, PblNgridPluginController, TablePlugin, PblNgridModule, PblNgridConfigService } from '@pebula/ngrid';
 import { CommonModule } from '@angular/common';
 import { CdkTableModule } from '@angular/cdk/table';
 
@@ -12,26 +12,26 @@ import { CdkTableModule } from '@angular/cdk/table';
 /** @type {?} */
 const PLUGIN_KEY = 'sticky';
 /**
- * @param {?} grid
+ * @param {?} table
  * @param {?} type
  * @param {?} valueOrBulk
  * @param {?=} state
  * @return {?}
  */
-function setStickyRow(grid, type, valueOrBulk, state) {
+function setStickyRow(table, type, valueOrBulk, state) {
     /** @type {?} */
     const isHeader = type === 'header';
     /** @type {?} */
-    const queryList = isHeader ? grid._headerRowDefs : grid._footerRowDefs;
+    const queryList = isHeader ? table._headerRowDefs : table._footerRowDefs;
     /** @type {?} */
     const bulk = Array.isArray(valueOrBulk) ? valueOrBulk : [[valueOrBulk, state]];
     /** @type {?} */
-    const addOneIfMainExists = (isHeader && grid.showHeader) || (!isHeader && grid.showFooter) ? 1 : 0;
+    const addOneIfMainExists = (isHeader && table.showHeader) || (!isHeader && table.showFooter) ? 1 : 0;
     /** @type {?} */
     let changed;
     for (const [value, state] of bulk) {
-        // the index from the user is 0 based or the grid header/footer row.
-        // we store them both, so we need to convert... our first is always the grid header/footer and then we have the same order as the user's.
+        // the index from the user is 0 based or the table header/footer row.
+        // we store them both, so we need to convert... our first is always the table header/footer and then we have the same order as the user's.
         /** @type {?} */
         let idx = value === 'table' ? 0 : value + addOneIfMainExists;
         if (!isHeader) {
@@ -51,35 +51,35 @@ function setStickyRow(grid, type, valueOrBulk, state) {
     }
     if (changed) {
         if (isHeader) {
-            grid._cdkTable.updateStickyHeaderRowStyles();
+            table._cdkTable.updateStickyHeaderRowStyles();
         }
         else {
-            grid._cdkTable.updateStickyFooterRowStyles();
+            table._cdkTable.updateStickyFooterRowStyles();
         }
     }
 }
 /**
- * @param {?} grid
+ * @param {?} table
  * @param {?} type
  * @param {?} valueOrBulk
  * @param {?=} state
  * @return {?}
  */
-function setStickyColumns(grid, type, valueOrBulk, state) {
+function setStickyColumns(table, type, valueOrBulk, state) {
     /** @type {?} */
     const bulk = Array.isArray(valueOrBulk) ? valueOrBulk : [[valueOrBulk, state]];
     /** @type {?} */
     let changed;
     for (let [columnId, state] of bulk) {
         if (typeof columnId === 'string') {
-            columnId = grid.columnApi.visibleColumns.findIndex((/**
+            columnId = table.columnApi.visibleColumns.findIndex((/**
              * @param {?} c
              * @return {?}
              */
             c => c.orgProp === columnId));
         }
         /** @type {?} */
-        const c = grid.columnApi.visibleColumns[columnId];
+        const c = table.columnApi.visibleColumns[columnId];
         if (c) {
             changed = true;
             c.pin = state ? type : undefined;
@@ -94,17 +94,17 @@ function setStickyColumns(grid, type, valueOrBulk, state) {
         }
     }
     if (changed) {
-        grid._cdkTable.updateStickyColumnStyles();
+        table._cdkTable.updateStickyColumnStyles();
     }
 }
 let PblNgridStickyPluginDirective = class PblNgridStickyPluginDirective {
     /**
-     * @param {?} grid
+     * @param {?} table
      * @param {?} _differs
      * @param {?} pluginCtrl
      */
-    constructor(grid, _differs, pluginCtrl) {
-        this.grid = grid;
+    constructor(table, _differs, pluginCtrl) {
+        this.table = table;
         this._differs = _differs;
         this.pluginCtrl = pluginCtrl;
         this._columnCache = { start: [], end: [] };
@@ -119,9 +119,9 @@ let PblNgridStickyPluginDirective = class PblNgridStickyPluginDirective {
          * @return {?}
          */
         () => {
-            this.grid._cdkTable.updateStickyHeaderRowStyles();
-            this.grid._cdkTable.updateStickyColumnStyles();
-            this.grid._cdkTable.updateStickyFooterRowStyles();
+            this.table._cdkTable.updateStickyHeaderRowStyles();
+            this.table._cdkTable.updateStickyColumnStyles();
+            this.table._cdkTable.updateStickyFooterRowStyles();
         }));
         pluginCtrl.events
             .pipe(filter((/**
@@ -133,11 +133,11 @@ let PblNgridStickyPluginDirective = class PblNgridStickyPluginDirective {
          * @return {?}
          */
         () => {
-            if (this._startDiffer && this.grid.isInit) {
+            if (this._startDiffer && this.table.isInit) {
                 this._startDiffer.diff([]);
                 this.applyColumnDiff('start', this._columnCache.start, this._startDiffer);
             }
-            if (this._endDiffer && this.grid.isInit) {
+            if (this._endDiffer && this.table.isInit) {
                 this._endDiffer.diff([]);
                 this.applyColumnDiff('end', this._columnCache.end, this._endDiffer);
             }
@@ -146,7 +146,7 @@ let PblNgridStickyPluginDirective = class PblNgridStickyPluginDirective {
     /**
      * Set the header rows you want to apply sticky positioning to.
      * Valid values are:
-     *   - `grid` - Literal string `grid` that will set the grid's main header row.
+     *   - `table` - Literal string `table` that will set the table's main header row.
      *   - number  - The index of the row, for multi-header row. The index refers to the order you defined the header/headerGroup rows (base 0);
      *
      * For performance considerations only new values will trigger a change (i.e. the array should be treated as immutable).
@@ -163,7 +163,7 @@ let PblNgridStickyPluginDirective = class PblNgridStickyPluginDirective {
     /**
      * Set the footer rows you want to apply sticky positioning to.
      * Valid values are:
-     *   - `grid` - Literal string `grid` that will set the grid's main footer row.
+     *   - `table` - Literal string `table` that will set the table's main footer row.
      *   - number  - The index of the row, for multi-footer row. The index refers to the order you defined the footer rows (base 0);
      *
      * For performance considerations only new values will trigger a change (i.e. the array should be treated as immutable).
@@ -180,7 +180,7 @@ let PblNgridStickyPluginDirective = class PblNgridStickyPluginDirective {
     /**
      * Set the header rows you want to apply sticky positioning to.
      * Valid values are:
-     *   - `grid` - Literal string `grid` that will set the grid's main header row.
+     *   - `table` - Literal string `table` that will set the table's main header row.
      *   - number  - The index of the row, for multi-header row. The index refers to the order you defined the header/headerGroup rows (base 0);
      *
      * For performance considerations only new values will trigger a change (i.e. the array should be treated as immutable).
@@ -197,7 +197,7 @@ let PblNgridStickyPluginDirective = class PblNgridStickyPluginDirective {
     /**
      * Set the footer rows you want to apply sticky positioning to.
      * Valid values are:
-     *   - `grid` - Literal string `grid` that will set the grid's main footer row.
+     *   - `table` - Literal string `table` that will set the table's main footer row.
      *   - number  - The index of the row, for multi-footer row. The index refers to the order you defined the footer rows (base 0);
      *
      * For performance considerations only new values will trigger a change (i.e. the array should be treated as immutable).
@@ -215,7 +215,7 @@ let PblNgridStickyPluginDirective = class PblNgridStickyPluginDirective {
      * @return {?}
      */
     ngOnDestroy() {
-        this._removePlugin(this.grid);
+        this._removePlugin(this.table);
     }
     /**
      * @protected
@@ -225,7 +225,7 @@ let PblNgridStickyPluginDirective = class PblNgridStickyPluginDirective {
      * @return {?}
      */
     applyColumnDiff(type, value, differ) {
-        if (!this.grid.isInit) {
+        if (!this.table.isInit) {
             /** @type {?} */
             const unsub = this.pluginCtrl.events.subscribe((/**
              * @param {?} event
@@ -259,7 +259,7 @@ let PblNgridStickyPluginDirective = class PblNgridStickyPluginDirective {
             }
         }));
         if (bulk.length > 0) {
-            setStickyColumns(this.grid, type, bulk);
+            setStickyColumns(this.table, type, bulk);
         }
     }
     /**
@@ -270,7 +270,7 @@ let PblNgridStickyPluginDirective = class PblNgridStickyPluginDirective {
      * @return {?}
      */
     applyRowDiff(type, value, differ) {
-        if (!this.grid.isInit) {
+        if (!this.table.isInit) {
             /** @type {?} */
             const unsub = this.pluginCtrl.events.subscribe((/**
              * @param {?} event
@@ -303,7 +303,7 @@ let PblNgridStickyPluginDirective = class PblNgridStickyPluginDirective {
             }
         }));
         if (bulk.length > 0) {
-            setStickyRow(this.grid, type, bulk);
+            setStickyRow(this.table, type, bulk);
         }
     }
 };
@@ -328,7 +328,7 @@ PblNgridStickyPluginDirective.propDecorators = {
     stickyFooter: [{ type: Input }]
 };
 PblNgridStickyPluginDirective = __decorate([
-    NgridPlugin({ id: PLUGIN_KEY }),
+    TablePlugin({ id: PLUGIN_KEY }),
     __metadata("design:paramtypes", [PblNgridComponent,
         IterableDiffers,
         PblNgridPluginController])
@@ -368,7 +368,7 @@ if (false) {
      * @type {?}
      * @protected
      */
-    PblNgridStickyPluginDirective.prototype.grid;
+    PblNgridStickyPluginDirective.prototype.table;
     /**
      * @type {?}
      * @protected

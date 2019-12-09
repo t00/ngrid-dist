@@ -4,7 +4,7 @@ import { Overlay } from '@angular/cdk/overlay';
 import { PblNgridComponent, PblNgridMultiTemplateRegistry } from '@pebula/ngrid';
 import { PblNgridOverlayPanelComponentExtension } from './component-registry-extension';
 import { PblNgridOverlayPanelRef } from './overlay-panel-ref';
-declare module '@pebula/ngrid/lib/grid/services/grid-registry.service' {
+declare module '@pebula/ngrid/lib/table/services/table-registry.service' {
     interface PblNgridMultiRegistryMap {
         overlayPanels?: PblNgridMultiTemplateRegistry<any, 'overlayPanels'> | PblNgridOverlayPanelComponentExtension<any>;
     }

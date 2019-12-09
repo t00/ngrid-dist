@@ -3,7 +3,7 @@ import { filter, first } from 'rxjs/operators';
 import { Injectable, Inject, ɵɵdefineInjectable, ɵɵinject, Injector, Directive, Input, NgModule, Optional, SkipSelf } from '@angular/core';
 import { DOCUMENT, CommonModule } from '@angular/common';
 import { UnRx } from '@pebula/utils';
-import { PblNgridConfigService, PblNgridPluginController, PblNgridComponent, NgridPlugin, PblNgridModule } from '@pebula/ngrid';
+import { PblNgridConfigService, PblNgridPluginController, PblNgridComponent, TablePlugin, PblNgridModule } from '@pebula/ngrid';
 import { PblNgridTargetEventsModule } from '@pebula/ngrid/target-events';
 
 /**
@@ -383,7 +383,7 @@ var PblNgridClipboardPlugin = /** @class */ (function () {
         clpRowSep: [{ type: Input }]
     };
     PblNgridClipboardPlugin = PblNgridClipboardPlugin_1 = __decorate([
-        NgridPlugin({ id: PLUGIN_KEY, factory: 'create' }),
+        TablePlugin({ id: PLUGIN_KEY, factory: 'create' }),
         UnRx(),
         __metadata("design:paramtypes", [PblNgridComponent, Injector, PblNgridPluginController])
     ], PblNgridClipboardPlugin);

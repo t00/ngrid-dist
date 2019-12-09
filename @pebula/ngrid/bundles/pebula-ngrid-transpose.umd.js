@@ -210,16 +210,16 @@
     /** @type {?} */
     var VIRTUAL_REFRESH = {};
     var TransposeTableSession = /** @class */ (function () {
-        function TransposeTableSession(grid, pluginCtrl, updateColumns, sourceFactoryWrapper) {
-            this.grid = grid;
+        function TransposeTableSession(table, pluginCtrl, updateColumns, sourceFactoryWrapper) {
+            this.table = table;
             this.pluginCtrl = pluginCtrl;
             this.updateColumns = updateColumns;
             this.sourceFactoryWrapper = sourceFactoryWrapper;
             this.init();
-            if (grid.columns && grid.columnApi.visibleColumns.length > 0) {
+            if (table.columns && table.columnApi.visibleColumns.length > 0) {
                 this.onInvalidateHeaders();
             }
-            this.onDataSource(this.grid.ds);
+            this.onDataSource(this.table.ds);
         }
         /**
          * @param {?} updateTable
@@ -232,12 +232,12 @@
         function (updateTable) {
             if (!this.destroyed) {
                 this.destroyed = true;
-                utils.UnRx.kill(this, this.grid);
-                this.grid.showHeader = this.headerRow;
-                this.grid.columns = this.columnsInput;
+                utils.UnRx.kill(this, this.table);
+                this.table.showHeader = this.headerRow;
+                this.table.columns = this.columnsInput;
                 if (updateTable) {
-                    this.grid.invalidateColumns();
-                    this.grid.ds.refresh(VIRTUAL_REFRESH);
+                    this.table.invalidateColumns();
+                    this.table.ds.refresh(VIRTUAL_REFRESH);
                 }
             }
         };
@@ -251,17 +251,17 @@
          */
         function () {
             var _this = this;
-            this.headerRow = this.grid.showHeader;
-            this.grid.showHeader = false;
+            this.headerRow = this.table.showHeader;
+            this.table.showHeader = false;
             this.pluginCtrl.events
-                .pipe(utils.UnRx(this, this.grid))
+                .pipe(utils.UnRx(this, this.table))
                 .subscribe((/**
              * @param {?} e
              * @return {?}
              */
             function (e) { return e.kind === 'onInvalidateHeaders' && _this.onInvalidateHeaders(); }));
             this.pluginCtrl.events
-                .pipe(utils.UnRx(this, this.grid))
+                .pipe(utils.UnRx(this, this.table))
                 .subscribe((/**
              * @param {?} e
              * @return {?}
@@ -277,9 +277,9 @@
          * @return {?}
          */
         function () {
-            if (!this.grid.columns[LOCAL_COLUMN_DEF]) {
-                this.columnsInput = this.grid.columns;
-                this.storeColumns = this.grid.columnApi.visibleColumns;
+            if (!this.table.columns[LOCAL_COLUMN_DEF]) {
+                this.columnsInput = this.table.columns;
+                this.storeColumns = this.table.columnApi.visibleColumns;
                 this.updateColumns();
             }
         };
@@ -370,7 +370,7 @@
          * @type {?}
          * @private
          */
-        TransposeTableSession.prototype.grid;
+        TransposeTableSession.prototype.table;
         /**
          * @type {?}
          * @private
@@ -430,24 +430,24 @@
     /**
      * Transpose plugin.
      *
-     * This plugin will swaps around the rows and columns of the grid.
+     * This plugin will swaps around the rows and columns of the table.
      *
-     * A **regular grid** (not transposed) represents rows horizontally:
+     * A **regular table** (not transposed) represents rows horizontally:
      *
      * - Each horizontal row represents an item in the collection.
      * - Each vertical column represents the same property of all rows in the collection.
      *
-     * A **transposed** grid represents row vertically:
+     * A **transposed** table represents row vertically:
      *
      * - Each horizontal row represents the same property of all rows in the collection.
      * - Each vertical row represents an item in the collection.
      *
-     * > Note that transposing a grid might not play nice with other plugins and/or features.
+     * > Note that transposing a table might not play nice with other plugins and/or features.
      * For example, using pagination with transpose make no sense.
      */
     var PblNgridTransposePluginDirective = /** @class */ (function () {
-        function PblNgridTransposePluginDirective(grid, pluginCtrl, config) {
-            this.grid = grid;
+        function PblNgridTransposePluginDirective(table, pluginCtrl, config) {
+            this.table = table;
             this.pluginCtrl = pluginCtrl;
             this._header = DEFAULT_HEADER_COLUMN;
             this._removePlugin = pluginCtrl.setPlugin(PLUGIN_KEY, this);
@@ -503,8 +503,8 @@
              * When set, the new column values will merge into the default definitions, overriding existing properties
              * set on the default column settings.
              *
-             * > The header column behave like any other column and you can also provide define it in the `column` property on the grid.
-             * When using this approach the column defined on the grid is used as is (no merging). Just make sure you use the right `prop` value for it.
+             * > The header column behave like any other column and you can also provide define it in the `column` property on the table.
+             * When using this approach the column defined on the table is used as is (no merging). Just make sure you use the right `prop` value for it.
              * e.g. if `header` is not set here its `__transpose__` otherwise, the actual `prop` value.
              */
             set: /**
@@ -523,8 +523,8 @@
              * When set, the new column values will merge into the default definitions, overriding existing properties
              * set on the default column settings.
              *
-             * > The header column behave like any other column and you can also provide define it in the `column` property on the grid.
-             * When using this approach the column defined on the grid is used as is (no merging). Just make sure you use the right `prop` value for it.
+             * > The header column behave like any other column and you can also provide define it in the `column` property on the table.
+             * When using this approach the column defined on the table is used as is (no merging). Just make sure you use the right `prop` value for it.
              * e.g. if `header` is not set here its `__transpose__` otherwise, the actual `prop` value.
              * @param {?} value
              * @return {?}
@@ -542,7 +542,7 @@
          * @return {?}
          */
         function () {
-            this._removePlugin(this.grid);
+            this._removePlugin(this.table);
             this.disable(false);
         };
         /**
@@ -554,9 +554,9 @@
          * @return {?}
          */
         function (updateTable) {
-            if (this.gridState) {
-                var tableState = this.gridState;
-                this.columns = this.selfColumn = this.gridState = this.columns = this.selfColumn = undefined;
+            if (this.tableState) {
+                var tableState = this.tableState;
+                this.columns = this.selfColumn = this.tableState = this.columns = this.selfColumn = undefined;
                 tableState.destroy(updateTable);
             }
         };
@@ -571,7 +571,7 @@
         function (refreshDataSource) {
             var _this = this;
             if (refreshDataSource === void 0) { refreshDataSource = false; }
-            if (this.gridState) {
+            if (this.tableState) {
                 this.disable(false);
             }
             /** @type {?} */
@@ -583,15 +583,15 @@
                 var _a, e_1, _b, e_2, _c;
                 if (results) {
                     /** @type {?} */
-                    var local = _this.grid.columns = (_a = ngrid.columnFactory()
+                    var local = _this.table.columns = (_a = ngrid.columnFactory()
                         .default(_this.defaultCol || {})).table.apply(_a, __spread([_this.selfColumn], results.map(createTransformedColumn))).build();
                     /** @type {?} */
-                    var prev = _this.gridState.columnsInput;
+                    var prev = _this.tableState.columnsInput;
                     local.header = prev.header;
                     local.headerGroup = prev.headerGroup;
                     local.footer = prev.footer;
                     local[LOCAL_COLUMN_DEF] = true;
-                    _this.grid.invalidateColumns();
+                    _this.table.invalidateColumns();
                     /** @type {?} */
                     var matchTemplates = coercion.coerceBooleanProperty(_this.matchTemplates);
                     var prop = _this._header.prop;
@@ -622,7 +622,7 @@
                     /** @type {?} */
                     var currentColumn_1;
                     try {
-                        for (var _d = __values(_this.grid.columnApi.visibleColumns), _e = _d.next(); !_e.done; _e = _d.next()) {
+                        for (var _d = __values(_this.table.columnApi.visibleColumns), _e = _d.next(); !_e.done; _e = _d.next()) {
                             var c = _e.value;
                             if (c.orgProp === prop) {
                                 c.getValue = (/**
@@ -673,16 +673,16 @@
                 }
                 return results;
             });
-            this.gridState = new TransposeTableSession(this.grid, this.pluginCtrl, (/**
+            this.tableState = new TransposeTableSession(this.table, this.pluginCtrl, (/**
              * @return {?}
              */
-            function () { return _this.updateColumns(_this.grid.columnApi.visibleColumns); }), sourceFactoryWrapper);
+            function () { return _this.updateColumns(_this.table.columnApi.visibleColumns); }), sourceFactoryWrapper);
             if (refreshDataSource) {
                 this.pluginCtrl.extApi.contextApi.clear();
-                this.grid.ds.refresh();
+                this.table.ds.refresh();
             }
-            else if (this.grid.ds.length > 0) {
-                this.grid.ds.refresh(VIRTUAL_REFRESH);
+            else if (this.table.ds.length > 0) {
+                this.table.ds.refresh(VIRTUAL_REFRESH);
             }
         };
         /**
@@ -745,23 +745,23 @@
         /**
          * Transpose plugin.
          *
-         * This plugin will swaps around the rows and columns of the grid.
+         * This plugin will swaps around the rows and columns of the table.
          *
-         * A **regular grid** (not transposed) represents rows horizontally:
+         * A **regular table** (not transposed) represents rows horizontally:
          *
          * - Each horizontal row represents an item in the collection.
          * - Each vertical column represents the same property of all rows in the collection.
          *
-         * A **transposed** grid represents row vertically:
+         * A **transposed** table represents row vertically:
          *
          * - Each horizontal row represents the same property of all rows in the collection.
          * - Each vertical row represents an item in the collection.
          *
-         * > Note that transposing a grid might not play nice with other plugins and/or features.
+         * > Note that transposing a table might not play nice with other plugins and/or features.
          * For example, using pagination with transpose make no sense.
          */
         PblNgridTransposePluginDirective = __decorate([
-            ngrid.NgridPlugin({ id: PLUGIN_KEY }),
+            ngrid.TablePlugin({ id: PLUGIN_KEY }),
             utils.UnRx(),
             __metadata("design:paramtypes", [ngrid.PblNgridComponent, ngrid.PblNgridPluginController, ngrid.PblNgridConfigService])
         ], PblNgridTransposePluginDirective);
@@ -796,7 +796,7 @@
          * @type {?}
          * @private
          */
-        PblNgridTransposePluginDirective.prototype.gridState;
+        PblNgridTransposePluginDirective.prototype.tableState;
         /**
          * @type {?}
          * @private
@@ -816,7 +816,7 @@
          * @type {?}
          * @private
          */
-        PblNgridTransposePluginDirective.prototype.grid;
+        PblNgridTransposePluginDirective.prototype.table;
         /**
          * @type {?}
          * @private

@@ -684,7 +684,7 @@
             matCheckboxSelectionColor: [{ type: core.Input }]
         };
         PblNgridMatCheckboxSelectionDirective = __decorate([
-            ngrid.NgridPlugin({ id: PLUGIN_KEY }),
+            ngrid.TablePlugin({ id: PLUGIN_KEY }),
             utils.UnRx(),
             __metadata("design:paramtypes", [ngrid.PblNgridComponent,
                 core.ComponentFactoryResolver,

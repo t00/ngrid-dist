@@ -7,7 +7,7 @@ import { __decorate, __metadata } from 'tslib';
 import { DOCUMENT, CommonModule } from '@angular/common';
 import { Directionality } from '@angular/cdk/bidi';
 import { ViewportRuler } from '@angular/cdk/scrolling';
-import { PblNgridComponent, PblNgridPluginController, NgridPlugin, PblColumn, PblColumnGroup, isPblColumn, PblNgridMultiTemplateRegistry, PblNgridRegistryService, provideCommon, PblNgridModule } from '@pebula/ngrid';
+import { PblNgridComponent, PblNgridPluginController, TablePlugin, PblColumn, PblColumnGroup, isPblColumn, PblNgridMultiTemplateRegistry, PblNgridRegistryService, provideCommon, PblNgridModule } from '@pebula/ngrid';
 import { normalizePassiveListenerOptions } from '@angular/cdk/platform';
 
 /**
@@ -456,7 +456,7 @@ let PblNgridRowReorderPluginDirective = PblNgridRowReorderPluginDirective_1 = /*
  */
 class PblNgridRowReorderPluginDirective extends CdkDropList {
     /**
-     * @param {?} grid
+     * @param {?} table
      * @param {?} pluginCtrl
      * @param {?} element
      * @param {?} dragDrop
@@ -466,10 +466,10 @@ class PblNgridRowReorderPluginDirective extends CdkDropList {
      * @param {?=} dragDropRegistry
      * @param {?=} _document
      */
-    constructor(grid, pluginCtrl, element, dragDrop, changeDetectorRef, dir, group, dragDropRegistry, // for v7 compat
+    constructor(table, pluginCtrl, element, dragDrop, changeDetectorRef, dir, group, dragDropRegistry, // for v7 compat
     _document) {
         super(...cdkDropList(element, dragDrop, changeDetectorRef, dir, group, dragDropRegistry, _document));
-        this.grid = grid;
+        this.table = table;
         this.id = `pbl-ngrid-row-reorder-list-${_uniqueIdCounter++}`;
         this._rowReorder = false;
         /* CdkLazyDropList start */
@@ -491,12 +491,12 @@ class PblNgridRowReorderPluginDirective extends CdkDropList {
             /** @type {?} */
             const item = (/** @type {?} */ (event.item));
             /** @type {?} */
-            const previousIndex = grid.ds.source.indexOf(item.draggedContext.row);
+            const previousIndex = table.ds.source.indexOf(item.draggedContext.row);
             /** @type {?} */
-            const currentIndex = event.currentIndex + grid.ds.renderStart;
-            this.grid.contextApi.clear();
-            this.grid.ds.moveItem(previousIndex, currentIndex, true);
-            this.grid._cdkTable.syncRows('data');
+            const currentIndex = event.currentIndex + table.ds.renderStart;
+            this.table.contextApi.clear();
+            this.table.ds.moveItem(previousIndex, currentIndex, true);
+            this.table._cdkTable.syncRows('data');
         }));
     }
     /**
@@ -541,7 +541,7 @@ class PblNgridRowReorderPluginDirective extends CdkDropList {
      */
     ngOnDestroy() {
         super.ngOnDestroy();
-        this._removePlugin(this.grid);
+        this._removePlugin(this.table);
     }
 };
 PblNgridRowReorderPluginDirective.ctorParameters = () => [
@@ -568,7 +568,7 @@ PblNgridRowReorderPluginDirective.decorators = [
                     '[id]': 'id',
                     '[class.cdk-drop-list-dragging]': '_dropListRef.isDragging()',
                     '[class.cdk-drop-list-receiving]': '_dropListRef.isReceiving()',
-                    '[class.pbl-row-reorder]': 'rowReorder && !this.grid.ds?.sort.sort?.order && !this.grid.ds?.filter?.filter',
+                    '[class.pbl-row-reorder]': 'rowReorder && !this.table.ds?.sort.sort?.order && !this.table.ds?.filter?.filter',
                 },
                 providers: [
                     { provide: CdkDropListGroup, useValue: ɵ0 },
@@ -595,7 +595,7 @@ PblNgridRowReorderPluginDirective.propDecorators = {
  * @template T
  */
 PblNgridRowReorderPluginDirective = PblNgridRowReorderPluginDirective_1 = __decorate([
-    NgridPlugin({ id: PLUGIN_KEY }),
+    TablePlugin({ id: PLUGIN_KEY }),
     __metadata("design:paramtypes", [PblNgridComponent,
         PblNgridPluginController,
         ElementRef,
@@ -631,7 +631,7 @@ if (false) {
     /** @type {?} */
     PblNgridRowReorderPluginDirective.prototype._draggablesSet;
     /** @type {?} */
-    PblNgridRowReorderPluginDirective.prototype.grid;
+    PblNgridRowReorderPluginDirective.prototype.table;
     /* Skipping unhandled member: ;*/
 }
 /**
@@ -674,8 +674,8 @@ class PblNgridRowDragDirective extends CdkDrag {
          * @return {?}
          */
         (event) => {
-            const { col, row, grid, value } = this._context;
-            this._draggedContext = { col, row, grid, value };
+            const { col, row, table, value } = this._context;
+            this._draggedContext = { col, row, table, value };
         }));
     }
     /**
@@ -691,7 +691,7 @@ class PblNgridRowDragDirective extends CdkDrag {
     set context(value) {
         this._context = value;
         /** @type {?} */
-        const pluginCtrl = this.pluginCtrl = value && PblNgridPluginController.find(value.grid);
+        const pluginCtrl = this.pluginCtrl = value && PblNgridPluginController.find(value.table);
         /** @type {?} */
         const plugin = pluginCtrl && pluginCtrl.getPlugin(PLUGIN_KEY);
         this.cdkDropList = plugin || undefined;
@@ -1256,7 +1256,7 @@ PblNgridColumnReorderPluginDirective.propDecorators = {
  * @template T
  */
 PblNgridColumnReorderPluginDirective = PblNgridColumnReorderPluginDirective_1 = __decorate([
-    NgridPlugin({ id: PLUGIN_KEY$1, runOnce: extendGrid }),
+    TablePlugin({ id: PLUGIN_KEY$1, runOnce: extendGrid }),
     __metadata("design:paramtypes", [PblNgridComponent,
         PblNgridPluginController,
         ElementRef,
@@ -1359,7 +1359,7 @@ class PblNgridColumnDragDirective extends CdkDrag {
         this._context = value;
         this.column = value && value.col;
         /** @type {?} */
-        const pluginCtrl = this.pluginCtrl = value && PblNgridPluginController.find(value.grid);
+        const pluginCtrl = this.pluginCtrl = value && PblNgridPluginController.find(value.table);
         /** @type {?} */
         const plugin = pluginCtrl && pluginCtrl.getPlugin(PLUGIN_KEY$1);
         this.cdkDropList = plugin || undefined;
@@ -1673,13 +1673,14 @@ let PblNgridDragResizeComponent = class PblNgridDragResizeComponent {
                 if (Math.abs(distanceX) + Math.abs(distanceY) >= this._config.dragStartThreshold) {
                     this._hasStartedDragging = true;
                     // It will be a good thing if we turned of the header's resize observer to boost performance
-                    // However, because we relay on the total grid minimum width updates to relatively even out the columns it will not work.
+                    // However, because we relay on the total table minimum width updates to relatively even out the columns it will not work.
                     // Group cells will not cover all of the children, when we enlarge the width of a child in the group.
-                    // This is because the max-width of the group is set proportional to the total min-width of the inner grid.
+                    // This is because the max-width of the group is set proportional to the total min-width of the inner table.
                     // For it to work we need to directly update the width of ALL OF THE GROUPS.
                     // this.column.columnDef.isDragging = true;
                     this.column.sizeInfo.updateSize();
                     this._lastWidth = this._initialWidth = this.column.columnDef.netWidth;
+                    this.cache = this.column.columnDef.queryCellElements('table', 'header', 'footer');
                 }
                 return;
             }
@@ -1696,10 +1697,13 @@ let PblNgridDragResizeComponent = class PblNgridDragResizeComponent {
             }
             if (this._lastWidth !== newWidth) {
                 this._lastWidth = newWidth;
-                this.column.updateWidth(`${newWidth}px`);
-                this.grid.resetColumnsWidth();
-                // `this.column.updateWidth` will update the grid width cell only, which will trigger a resize that will update all other cells
-                // `this.grid.resetColumnsWidth()` will re-adjust all other grid width cells, and if their size changes they will trigger the resize event...
+                this.column.width = newWidth + 'px';
+                this.table.resetColumnsWidth();
+                for (const el of this.cache) {
+                    this.column.columnDef.applyWidth(el);
+                }
+                // the above will change the size of on column AND because we didn't disable the resize observer it will pop an event.
+                // if there are groups it will fire table.resizeColumns(); which will recalculate the groups...
             }
         });
         /**
@@ -1718,7 +1722,9 @@ let PblNgridDragResizeComponent = class PblNgridDragResizeComponent {
                 return;
             }
             // this.column.columnDef.isDragging = false;
-            this.grid.columnApi.resizeColumn(this.column, this._lastWidth + 'px');
+            this.table.columnApi.resizeColumn(this.column, this._lastWidth + 'px');
+            // cleanup
+            this.cache = undefined;
         });
         _dragDropRegistry.registerDragItem(this);
     }
@@ -1729,20 +1735,15 @@ let PblNgridDragResizeComponent = class PblNgridDragResizeComponent {
      */
     set context(value) {
         if (value) {
-            const { col, grid } = value;
+            const { col, table } = value;
             if (isPblColumn(col)) {
                 this.column = col;
-                this.grid = grid;
+                this.table = table;
                 return;
             }
         }
-        this.column = this.grid = undefined;
+        this.column = this.table = undefined;
     }
-    /**
-     * @deprecated use grid instead
-     * @return {?}
-     */
-    get table() { return this.grid; }
     /**
      * @return {?}
      */
@@ -1782,7 +1783,7 @@ let PblNgridDragResizeComponent = class PblNgridDragResizeComponent {
      * @return {?}
      */
     onDoubleClick(event) {
-        this.grid.columnApi.autoSizeColumn(this.column);
+        this.table.columnApi.autoSizeColumn(this.column);
     }
     /**
      * Sets up the different variables and subscriptions
@@ -1891,7 +1892,7 @@ PblNgridDragResizeComponent.propDecorators = {
     onDoubleClick: [{ type: HostListener, args: ['dblclick', ['$event'],] }]
 };
 PblNgridDragResizeComponent = __decorate([
-    NgridPlugin({ id: PLUGIN_KEY$2, runOnce: extendGrid$1 }),
+    TablePlugin({ id: PLUGIN_KEY$2, runOnce: extendGrid$1 }),
     __metadata("design:paramtypes", [ElementRef,
         NgZone,
         ViewportRuler,
@@ -1907,7 +1908,7 @@ if (false) {
     /** @type {?} */
     PblNgridDragResizeComponent.prototype.column;
     /** @type {?} */
-    PblNgridDragResizeComponent.prototype.grid;
+    PblNgridDragResizeComponent.prototype.table;
     /** @type {?} */
     PblNgridDragResizeComponent.prototype._hasStartedDragging;
     /**
@@ -1950,6 +1951,11 @@ if (false) {
      * @private
      */
     PblNgridDragResizeComponent.prototype._lastWidth;
+    /**
+     * @type {?}
+     * @private
+     */
+    PblNgridDragResizeComponent.prototype.cache;
     /**
      * @type {?}
      * @private
@@ -2041,7 +2047,7 @@ class PblNgridCellDraggerRefDirective extends PblNgridMultiTemplateRegistry {
         //
         // However, when the plugin does not exists for this table we don't need to render...
         /** @type {?} */
-        const pluginCtrl = PblNgridPluginController.find(context.grid);
+        const pluginCtrl = PblNgridPluginController.find(context.table);
         return pluginCtrl.hasPlugin(PLUGIN_KEY$1);
     }
 }
@@ -2071,7 +2077,7 @@ let _uniqueIdCounter$2 = 0;
  */
 class PblNgridAggregationContainerDirective extends CdkDropList {
     /**
-     * @param {?} grid
+     * @param {?} table
      * @param {?} pluginCtrl
      * @param {?} element
      * @param {?} dragDrop
@@ -2081,10 +2087,10 @@ class PblNgridAggregationContainerDirective extends CdkDropList {
      * @param {?=} dragDropRegistry
      * @param {?=} _document
      */
-    constructor(grid, pluginCtrl, element, dragDrop, changeDetectorRef, dir, group, dragDropRegistry, // for v7 compat
+    constructor(table, pluginCtrl, element, dragDrop, changeDetectorRef, dir, group, dragDropRegistry, // for v7 compat
     _document) {
         super(...cdkDropList(element, dragDrop, changeDetectorRef, dir, group, dragDropRegistry, _document));
-        this.grid = grid;
+        this.table = table;
         this.id = `pbl-ngrid-column-aggregation-container-${_uniqueIdCounter$2++}`;
         this.orientation = 'horizontal';
         this._draggablesSet = new Set();
@@ -2101,7 +2107,7 @@ class PblNgridAggregationContainerDirective extends CdkDropList {
             /** @type {?} */
             const item = (/** @type {?} */ (event.item));
             this.pending = undefined;
-            this.grid.columnApi.addGroupBy(item.data.column);
+            this.table.columnApi.addGroupBy(item.data.column);
         }));
         this.pblDropListRef.entered
             .subscribe((/**
@@ -2204,7 +2210,7 @@ if (false) {
     /** @type {?} */
     PblNgridAggregationContainerDirective.prototype._draggablesSet;
     /** @type {?} */
-    PblNgridAggregationContainerDirective.prototype.grid;
+    PblNgridAggregationContainerDirective.prototype.table;
 }
 
 /**

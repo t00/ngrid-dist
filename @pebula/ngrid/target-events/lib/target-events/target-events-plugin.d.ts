@@ -2,7 +2,7 @@ import { ReplaySubject } from 'rxjs';
 import { EventEmitter, OnDestroy, Injector } from '@angular/core';
 import { PblNgridComponent, PblNgridPluginController } from '@pebula/ngrid';
 import * as Events from './events';
-declare module '@pebula/ngrid/lib/grid/services/config' {
+declare module '@pebula/ngrid/lib/table/services/config' {
     interface PblNgridConfig {
         targetEvents?: {
             /** When set to true will enable the target events plugin on all table instances by default. */
@@ -21,7 +21,7 @@ declare module '@pebula/ngrid/lib/ext/types' {
 export declare const PLUGIN_KEY: 'targetEvents';
 export declare function runOnce(): void;
 export declare class PblNgridTargetEventsPlugin<T = any> {
-    readonly grid: PblNgridComponent<any>;
+    table: PblNgridComponent<any>;
     protected injector: Injector;
     protected pluginCtrl: PblNgridPluginController;
     rowClick: EventEmitter<Events.PblNgridRowEvent<T>>;
@@ -100,11 +100,10 @@ export declare class PblNgridTargetEventsPlugin<T = any> {
         rowTarget: HTMLElement;
         root?: (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "data">) | (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta">) | (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta-group">) | Events.PblNgridDataCellEvent<T, MouseEvent | KeyboardEvent>;
     } & Events.PblNgridMatrixRow<"footer" | "header", "meta-group">)>;
-    /** @deprecated use `gird` instead */
-    readonly table: PblNgridComponent<any>;
-    protected readonly destroyed: ReplaySubject<void>;
+    private cdr;
     private _removePlugin;
-    constructor(grid: PblNgridComponent<any>, injector: Injector, pluginCtrl: PblNgridPluginController);
+    protected readonly destroyed: ReplaySubject<void>;
+    constructor(table: PblNgridComponent<any>, injector: Injector, pluginCtrl: PblNgridPluginController);
     static create<T = any>(table: PblNgridComponent<any>, injector: Injector): PblNgridTargetEventsPlugin<T>;
     private init;
     private setupDomEvents;

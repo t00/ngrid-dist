@@ -2,7 +2,7 @@ import { PblNgridColumnDefinitionSet, PblNgridComponent, PblNgridPluginControlle
 export declare const LOCAL_COLUMN_DEF: unique symbol;
 export declare const VIRTUAL_REFRESH: {};
 export declare class TransposeTableSession {
-    private grid;
+    private table;
     private pluginCtrl;
     private updateColumns;
     private sourceFactoryWrapper;
@@ -13,7 +13,7 @@ export declare class TransposeTableSession {
     headerRow: boolean;
     private destroyed;
     private rawSource;
-    constructor(grid: PblNgridComponent<any>, pluginCtrl: PblNgridPluginController, updateColumns: () => void, sourceFactoryWrapper: (results: any[]) => any[]);
+    constructor(table: PblNgridComponent<any>, pluginCtrl: PblNgridPluginController, updateColumns: () => void, sourceFactoryWrapper: (results: any[]) => any[]);
     destroy(updateTable: boolean): void;
     private init;
     private onInvalidateHeaders;

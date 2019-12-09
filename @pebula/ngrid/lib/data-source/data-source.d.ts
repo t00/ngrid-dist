@@ -1,7 +1,7 @@
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { SelectionModel, CollectionViewer } from '@angular/cdk/collections';
 import { DataSource } from '@angular/cdk/table';
-import { PblColumn } from '../grid/columns';
+import { PblColumn } from '../table/columns';
 import { PblNgridPaginatorKind, PblPaginator } from '../paginator';
 import { DataSourcePredicate, DataSourceFilter, PblNgridSortDefinition, PblNgridDataSourceSortChange } from './types';
 import { PblDataSourceAdapter } from './data-source-adapter';

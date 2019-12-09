@@ -5,7 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenu, MatMenuModule } from '@angular/material/menu';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { PblNgridPluginController, NgridPlugin, PblNgridMultiComponentRegistry, PblNgridModule, PblNgridRegistryService, PblNgridConfigService } from '@pebula/ngrid';
+import { PblNgridPluginController, TablePlugin, PblNgridMultiComponentRegistry, PblNgridModule, PblNgridRegistryService, PblNgridConfigService } from '@pebula/ngrid';
 import { PblNgridOverlayPanelFactory, PblNgridOverlayPanelRef, PblNgridOverlayPanelComponentExtension, PblNgridOverlayPanelModule } from '@pebula/ngrid/overlay-panel';
 import { __decorate, __metadata } from 'tslib';
 
@@ -22,7 +22,7 @@ let PblNgridMatHeaderContextMenuPlugin = class PblNgridMatHeaderContextMenuPlugi
      */
     constructor(overlayPanelFactory, pluginCtrl) {
         this.pluginCtrl = pluginCtrl;
-        this.overlayPanel = overlayPanelFactory.create(pluginCtrl.extApi.grid);
+        this.overlayPanel = overlayPanelFactory.create(pluginCtrl.extApi.table);
     }
 };
 PblNgridMatHeaderContextMenuPlugin.ctorParameters = () => [
@@ -42,7 +42,7 @@ PblNgridMatHeaderContextMenuPlugin.propDecorators = {
     config: [{ type: Input }]
 };
 PblNgridMatHeaderContextMenuPlugin = __decorate([
-    NgridPlugin({ id: PLUGIN_KEY }),
+    TablePlugin({ id: PLUGIN_KEY }),
     __metadata("design:paramtypes", [PblNgridOverlayPanelFactory,
         PblNgridPluginController])
 ], PblNgridMatHeaderContextMenuPlugin);
@@ -179,7 +179,7 @@ class MatExcelStyleHeaderMenu {
         this.vcRef = vcRef;
         this.currentFilter = '';
         this.column = ref.data.col;
-        this.grid = ref.data.grid;
+        this.grid = ref.data.table;
         if (this.grid.ds.sort.column === this.column) {
             this.currentSort = this.grid.ds.sort.sort.order;
         }

@@ -1,4 +1,4 @@
-import { PblColumn } from '../grid/columns';
+import { PblColumn } from '../table/columns';
 import { PblNgridSortDefinition } from './types';
 /**
  * Apply sorting on a collection, based on column and sort definitions.

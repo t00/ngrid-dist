@@ -372,7 +372,7 @@
             { type: sort.MatSort }
         ]; };
         PblNgridMatSortDirective = __decorate([
-            ngrid.NgridPlugin({ id: PLUGIN_KEY }),
+            ngrid.TablePlugin({ id: PLUGIN_KEY }),
             utils.UnRx(),
             __metadata("design:paramtypes", [ngrid.PblNgridComponent, ngrid.PblNgridPluginController, sort.MatSort])
         ], PblNgridMatSortDirective);

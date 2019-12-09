@@ -1,9 +1,9 @@
-declare module '@pebula/ngrid/lib/grid/columns/column' {
+declare module '@pebula/ngrid/lib/table/columns/column' {
     interface PblColumn {
         resize: boolean;
     }
 }
-declare module '@pebula/ngrid/lib/grid/columns/types' {
+declare module '@pebula/ngrid/lib/table/columns/types' {
     interface PblColumnDefinition {
         resize?: boolean;
     }
