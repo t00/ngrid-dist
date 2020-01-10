@@ -1,4 +1,4 @@
-import { PblNgridPluginController, utils, PblNgridComponent, TablePlugin, PblNgridModule, PblNgridConfigService } from '@pebula/ngrid';
+import { PblNgridPluginController, utils, PblNgridComponent, NgridPlugin, PblNgridModule, PblNgridConfigService } from '@pebula/ngrid';
 import { __decorate, __metadata } from 'tslib';
 import { Subject } from 'rxjs';
 import { filter, mapTo, map, take, skip, debounceTime } from 'rxjs/operators';
@@ -1743,7 +1743,7 @@ PblNgridStatePlugin.ctorParameters = () => [
     { type: PblNgridPluginController }
 ];
 PblNgridStatePlugin = PblNgridStatePlugin_1 = __decorate([
-    TablePlugin({ id: PLUGIN_KEY, factory: 'create', runOnce: registerBuiltInHandlers }),
+    NgridPlugin({ id: PLUGIN_KEY, factory: 'create', runOnce: registerBuiltInHandlers }),
     UnRx(),
     __metadata("design:paramtypes", [PblNgridComponent, Injector, PblNgridPluginController])
 ], PblNgridStatePlugin);

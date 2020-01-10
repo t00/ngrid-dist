@@ -470,7 +470,7 @@
          * @template T
          */
         PblNgridCellTooltipDirective = PblNgridCellTooltipDirective_1 = __decorate([
-            ngrid.TablePlugin({ id: PLUGIN_KEY, factory: 'create' }),
+            ngrid.NgridPlugin({ id: PLUGIN_KEY, factory: 'create' }),
             utils.UnRx(),
             __metadata("design:paramtypes", [ngrid.PblNgridComponent, core.Injector, ngrid.PblNgridPluginController])
         ], PblNgridCellTooltipDirective);

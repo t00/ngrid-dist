@@ -1,5 +1,5 @@
 import { __values, __assign, __read, __spread, __decorate, __metadata, __extends } from 'tslib';
-import { PblNgridPluginController, utils, PblNgridComponent, TablePlugin, PblNgridModule, PblNgridConfigService } from '@pebula/ngrid';
+import { PblNgridPluginController, utils, PblNgridComponent, NgridPlugin, PblNgridModule, PblNgridConfigService } from '@pebula/ngrid';
 import { Subject } from 'rxjs';
 import { filter, mapTo, map, take, skip, debounceTime } from 'rxjs/operators';
 import { Injector, Directive, Input, NgModule, Optional, SkipSelf } from '@angular/core';
@@ -2073,7 +2073,7 @@ var PblNgridStatePlugin = /** @class */ (function () {
         { type: PblNgridPluginController }
     ]; };
     PblNgridStatePlugin = PblNgridStatePlugin_1 = __decorate([
-        TablePlugin({ id: PLUGIN_KEY, factory: 'create', runOnce: registerBuiltInHandlers }),
+        NgridPlugin({ id: PLUGIN_KEY, factory: 'create', runOnce: registerBuiltInHandlers }),
         UnRx(),
         __metadata("design:paramtypes", [PblNgridComponent, Injector, PblNgridPluginController])
     ], PblNgridStatePlugin);

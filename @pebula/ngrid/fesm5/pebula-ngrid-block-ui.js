@@ -1,7 +1,7 @@
 import { Directive, TemplateRef, Input, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CdkTableModule } from '@angular/cdk/table';
-import { PblNgridRegistryService, PblNgridSingleTemplateRegistry, PblNgridComponent, PblNgridPluginController, TablePlugin, PblNgridModule } from '@pebula/ngrid';
+import { PblNgridRegistryService, PblNgridSingleTemplateRegistry, PblNgridComponent, PblNgridPluginController, NgridPlugin, PblNgridModule } from '@pebula/ngrid';
 import { __extends, __values, __decorate, __metadata } from 'tslib';
 import { isObservable } from 'rxjs';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
@@ -46,12 +46,12 @@ var PLUGIN_KEY = 'blockUi';
  * @template T
  */
 var PblNgridBlockUiPluginDirective = /** @class */ (function () {
-    function PblNgridBlockUiPluginDirective(table, pluginCtrl) {
+    function PblNgridBlockUiPluginDirective(grid, pluginCtrl) {
         var _this = this;
-        this.table = table;
+        this.grid = grid;
         this._blockInProgress = false;
         this._removePlugin = pluginCtrl.setPlugin(PLUGIN_KEY, this);
-        table.registry.changes.subscribe((/**
+        grid.registry.changes.subscribe((/**
          * @param {?} changes
          * @return {?}
          */
@@ -209,7 +209,7 @@ var PblNgridBlockUiPluginDirective = /** @class */ (function () {
      * @return {?}
      */
     function () {
-        this._removePlugin(this.table);
+        this._removePlugin(this.grid);
     };
     /**
      * @private
@@ -225,15 +225,15 @@ var PblNgridBlockUiPluginDirective = /** @class */ (function () {
         if (state) {
             if (!this._blockerEmbeddedVRef) {
                 /** @type {?} */
-                var blockerTemplate = this.table.registry.getSingle('blocker');
+                var blockerTemplate = this.grid.registry.getSingle('blocker');
                 if (blockerTemplate) {
-                    this._blockerEmbeddedVRef = this.table.createView('afterContent', blockerTemplate.tRef, { $implicit: this.table });
+                    this._blockerEmbeddedVRef = this.grid.createView('afterContent', blockerTemplate.tRef, { $implicit: this.grid });
                     this._blockerEmbeddedVRef.detectChanges();
                 }
             }
         }
         else if (this._blockerEmbeddedVRef) {
-            this.table.removeView(this._blockerEmbeddedVRef, 'afterContent');
+            this.grid.removeView(this._blockerEmbeddedVRef, 'afterContent');
             this._blockerEmbeddedVRef = undefined;
         }
     };
@@ -256,7 +256,7 @@ var PblNgridBlockUiPluginDirective = /** @class */ (function () {
      * @template T
      */
     PblNgridBlockUiPluginDirective = __decorate([
-        TablePlugin({ id: PLUGIN_KEY }),
+        NgridPlugin({ id: PLUGIN_KEY }),
         UnRx(),
         __metadata("design:paramtypes", [PblNgridComponent, PblNgridPluginController])
     ], PblNgridBlockUiPluginDirective);
@@ -287,7 +287,7 @@ if (false) {
      * @type {?}
      * @private
      */
-    PblNgridBlockUiPluginDirective.prototype.table;
+    PblNgridBlockUiPluginDirective.prototype.grid;
 }
 
 /**

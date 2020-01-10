@@ -2,7 +2,7 @@ import { __decorate, __metadata } from 'tslib';
 import { Directive, NgModule, ComponentFactoryResolver } from '@angular/core';
 import { MatSort, MatSortHeader, MatSortModule } from '@angular/material/sort';
 import { UnRx } from '@pebula/utils';
-import { PblNgridComponent, PblNgridPluginController, TablePlugin, PblNgridMultiComponentRegistry, PblNgridModule, PblNgridRegistryService } from '@pebula/ngrid';
+import { PblNgridComponent, PblNgridPluginController, NgridPlugin, PblNgridMultiComponentRegistry, PblNgridModule, PblNgridRegistryService } from '@pebula/ngrid';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 
@@ -173,7 +173,7 @@ PblNgridMatSortDirective.ctorParameters = () => [
     { type: MatSort }
 ];
 PblNgridMatSortDirective = __decorate([
-    TablePlugin({ id: PLUGIN_KEY }),
+    NgridPlugin({ id: PLUGIN_KEY }),
     UnRx(),
     __metadata("design:paramtypes", [PblNgridComponent, PblNgridPluginController, MatSort])
 ], PblNgridMatSortDirective);

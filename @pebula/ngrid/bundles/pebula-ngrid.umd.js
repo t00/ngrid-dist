@@ -244,8 +244,8 @@
                 }
             }
             /** @type {?} */
-            var tableConfig = this.config.get('table') || {};
-            this.config.set('table', __assign({}, DEFAULT_TABLE_CONFIG, tableConfig));
+            var gridConfig = this.config.get('table') || {};
+            this.config.set('table', __assign({}, DEFAULT_TABLE_CONFIG, gridConfig));
         }
         /**
          * @param {?} section
@@ -388,20 +388,20 @@
      * @record
      * @template P
      */
-    function TablePluginMetadata() { }
+    function NgridPluginMetadata() { }
     if (false) {
         /** @type {?} */
-        TablePluginMetadata.prototype.id;
+        NgridPluginMetadata.prototype.id;
         /** @type {?|undefined} */
-        TablePluginMetadata.prototype.factory;
+        NgridPluginMetadata.prototype.factory;
         /** @type {?|undefined} */
-        TablePluginMetadata.prototype.runOnce;
+        NgridPluginMetadata.prototype.runOnce;
     }
     /**
      * @param {?} metadata
      * @return {?}
      */
-    function TablePlugin(metadata) {
+    function NgridPlugin(metadata) {
         if (metadata.runOnce) {
             metadata.runOnce();
         }
@@ -419,7 +419,7 @@
      * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
-    var TABLE_PLUGIN_CONTEXT = new WeakMap();
+    var NGRID_PLUGIN_CONTEXT = new WeakMap();
     /**
      * \@internal
      * @template T
@@ -461,13 +461,13 @@
          * @return {?}
          */
         function (table, injector, extApi) {
-            if (TABLE_PLUGIN_CONTEXT.has(table)) {
+            if (NGRID_PLUGIN_CONTEXT.has(table)) {
                 throw new Error("Table is already registered for extensions.");
             }
             /** @type {?} */
             var instance = new PblNgridPluginContext();
-            TABLE_PLUGIN_CONTEXT.set(table, instance);
-            instance.table = table;
+            NGRID_PLUGIN_CONTEXT.set(table, instance);
+            instance.grid = table;
             instance.injector = injector;
             instance.extApi = extApi;
             instance.controller = new PblNgridPluginController(instance);
@@ -491,17 +491,17 @@
          * @return {?}
          */
         function () {
-            if (!TABLE_PLUGIN_CONTEXT.has(this.table)) {
+            if (!NGRID_PLUGIN_CONTEXT.has(this.grid)) {
                 throw new Error("Table is not registered.");
             }
             this._events.complete();
-            TABLE_PLUGIN_CONTEXT.delete(this.table);
+            NGRID_PLUGIN_CONTEXT.delete(this.grid);
         };
         return PblNgridPluginContext;
     }());
     if (false) {
         /** @type {?} */
-        PblNgridPluginContext.prototype.table;
+        PblNgridPluginContext.prototype.grid;
         /** @type {?} */
         PblNgridPluginContext.prototype.injector;
         /** @type {?} */
@@ -523,7 +523,7 @@
         function PblNgridPluginController(context) {
             this.context = context;
             this.plugins = new Map();
-            this.grid = context.table;
+            this.grid = context.grid;
             this.extApi = context.extApi;
             this.events = context.events;
             PblNgridPluginController.created$.next({ table: this.grid, controller: this });
@@ -548,7 +548,7 @@
          */
         function (grid) {
             /** @type {?} */
-            var context = TABLE_PLUGIN_CONTEXT.get(grid);
+            var context = NGRID_PLUGIN_CONTEXT.get(grid);
             if (context) {
                 return context.controller;
             }
@@ -683,7 +683,7 @@
     function PblNgridExtensionApi() { }
     if (false) {
         /** @type {?} */
-        PblNgridExtensionApi.prototype.table;
+        PblNgridExtensionApi.prototype.grid;
         /** @type {?} */
         PblNgridExtensionApi.prototype.element;
         /** @type {?} */
@@ -3353,7 +3353,7 @@
          */
         PblColumnGroupDefinition.prototype.rowIndex;
         /**
-         * The table's column that is the first child column for this group.
+         * The grid's column that is the first child column for this group.
          * @type {?}
          */
         PblColumnGroupDefinition.prototype.prop;
@@ -3397,7 +3397,7 @@
         PblColumnDefinition.prototype.footerType;
         /**
          * A path to a nested object, relative to the row element.
-         * The table will display `prop` from the object referenced by `path`.
+         * The grid will display `prop` from the object referenced by `path`.
          *
          * You can also use dot notation directly from `prop`.
          *
@@ -3422,7 +3422,7 @@
          */
         PblColumnDefinition.prototype.filter;
         /**
-         * Indicates if the table is editable or not.
+         * Indicates if the grid is editable or not.
          * Note that an editable also requires an edit template to qualify as editable, this flag alone is not enough.
          * @type {?|undefined}
          */
@@ -3462,7 +3462,7 @@
      * Represent a list of meta column's that together form a META ROW.
      * In other words, this is the definition of a row, using it's building blocks - the columns.
      *
-     * > A row in the table represents a row in the datasource, A **meta row** does not, it can represent anything.
+     * > A row in the grid represents a row in the datasource, A **meta row** does not, it can represent anything.
      * Meta rows are header, footer and header group.
      * @record
      * @template T
@@ -3475,7 +3475,7 @@
         PblColumnSet.prototype.cols;
     }
     /**
-     * Represent a complete column definition set for a table. (table, header, footer and headerGroup columns).
+     * Represent a complete column definition set for a grid. (table, header, footer and headerGroup columns).
      *
      * `PblNgridColumnDefinitionSet` contains POJO objects (simple JSON like objects) for each column type (`PblColumnDefinition`, `PblMetaColumnDefinition` and `PblColumnGroupDefinition`)
      * which are later used to create runtime instance for each column type (`PblColumn`, `PblMetaColumn` and `PblColumnGroup`)
@@ -3495,7 +3495,7 @@
         PblNgridColumnDefinitionSet.prototype.headerGroup;
     }
     /**
-     * Represent a complete column set for a table. (table, header, footer and headerGroup columns).
+     * Represent a complete column set for a grid. (table, header, footer and headerGroup columns).
      *
      * `PblNgridColumnSet` contains runtime instances of for each column type (`PblColumn`, `PblMetaColumn` and `PblColumnGroup`)
      * which
@@ -3762,7 +3762,7 @@
          * The index (zero based) of the header row this column is attached to, used for multi-header setup.
          * When not set (undefined) the index is considered the LAST index.
          *
-         * If you want to setup a multi header table with 2 header rows, set this to 0 for the first header row and for the 2nd header
+         * If you want to setup a multi header grid with 2 header rows, set this to 0 for the first header row and for the 2nd header
          * row do not set a rowIndex.
          * @type {?}
          */
@@ -4128,7 +4128,7 @@
     }(PblMetaColumn));
     if (false) {
         /**
-         * The table's column that is the first child column for this group.
+         * The grid's column that is the first child column for this group.
          * @type {?}
          */
         PblColumnGroup.prototype.prop;
@@ -5152,10 +5152,10 @@
             // Moreover, the user might not specify a `prop`, which we might need to complete.
             // We do that for each header group row.
             //
-            // The end goal is to return a list of `PblColumnGroup` that span over the entire columns of the table.
+            // The end goal is to return a list of `PblColumnGroup` that span over the entire columns of the grid.
             //
             // The logic is as follows:
-            // For each column in the table, find a matching column group - a group pointing at the column by having the same `prop`
+            // For each column in the grid, find a matching column group - a group pointing at the column by having the same `prop`
             // If found, check it's span and skip X amount of columns where X is the span.
             // If a span is not defined then treat it as a greedy group that spans over all columns ahead until the next column that has a matching group column.
             //
@@ -7120,8 +7120,13 @@
         PblNgridMetaCellContext.prototype.$implicit;
         /** @type {?} */
         PblNgridMetaCellContext.prototype.col;
-        /** @type {?} */
+        /**
+         * @deprecated use grid instead
+         * @type {?}
+         */
         PblNgridMetaCellContext.prototype.table;
+        /** @type {?} */
+        PblNgridMetaCellContext.prototype.grid;
     }
     /**
      * @record
@@ -7139,8 +7144,13 @@
         PblNgridCellContext.prototype.value;
         /** @type {?} */
         PblNgridCellContext.prototype.col;
-        /** @type {?} */
+        /**
+         * @deprecated use grid instead
+         * @type {?}
+         */
         PblNgridCellContext.prototype.table;
+        /** @type {?} */
+        PblNgridCellContext.prototype.grid;
         /** @type {?} */
         PblNgridCellContext.prototype.index;
         /** @type {?} */
@@ -7191,8 +7201,13 @@
          * @type {?}
          */
         PblNgridRowContext.prototype.outOfView;
-        /** @type {?} */
+        /**
+         * @deprecated use grid instead
+         * @type {?}
+         */
         PblNgridRowContext.prototype.table;
+        /** @type {?} */
+        PblNgridRowContext.prototype.grid;
         /**
          * Returns the length of cells context stored in this row
          * @type {?}
@@ -7363,6 +7378,17 @@
             enumerable: true,
             configurable: true
         });
+        Object.defineProperty(MetaCellContext.prototype, "table", {
+            /** @deprecated use grid instead */
+            get: /**
+             * @deprecated use grid instead
+             * @return {?}
+             */
+            function () { return this.grid; },
+            enumerable: true,
+            configurable: true
+        });
+        ;
         // workaround, we need a parameter-less constructor since @ngtools/webpack@8.0.4
         // Non @Injectable classes are now getting addded with hard reference to the ctor params which at the class creation point are undefined
         // forwardRef() will not help since it's not inject by angular, we instantiate the class..
@@ -7374,7 +7400,7 @@
         /**
          * @template T, TCol
          * @param {?} col
-         * @param {?} table
+         * @param {?} grid
          * @return {?}
          */
         MetaCellContext.create = 
@@ -7385,14 +7411,14 @@
         /**
          * @template T, TCol
          * @param {?} col
-         * @param {?} table
+         * @param {?} grid
          * @return {?}
          */
-        function (col, table) {
+        function (col, grid) {
             /** @type {?} */
             var instance = new MetaCellContext();
             instance.col = col;
-            instance.table = table;
+            instance.grid = grid;
             return instance;
         };
         return MetaCellContext;
@@ -7401,7 +7427,8 @@
         /** @type {?} */
         MetaCellContext.prototype.col;
         /** @type {?} */
-        MetaCellContext.prototype.table;
+        MetaCellContext.prototype.grid;
+        /* Skipping unhandled member: ;*/
     }
     /**
      * @template T
@@ -7477,6 +7504,16 @@
             enumerable: true,
             configurable: true
         });
+        Object.defineProperty(PblCellContext.prototype, "table", {
+            /** @deprecated use grid instead */
+            get: /**
+             * @deprecated use grid instead
+             * @return {?}
+             */
+            function () { return this.grid; },
+            enumerable: true,
+            configurable: true
+        });
         // workaround, we need a parameter-less constructor since @ngtools/webpack@8.0.4
         // Non @Injectable classes are now getting addded with hard reference to the ctor params which at the class creation point are undefined
         // forwardRef() will not help since it's not inject by angular, we instantiate the class..
@@ -7511,8 +7548,8 @@
             instance.col = col;
             instance.extApi = extApi;
             Object.defineProperties(instance, {
-                table: { value: extApi.table },
-                index: { value: extApi.table.columnApi.indexOf(col) },
+                grid: { value: extApi.grid },
+                index: { value: extApi.grid.columnApi.indexOf(col) },
             });
             return instance;
         };
@@ -7588,7 +7625,7 @@
                 this._editing = true;
                 this._rowContext.updateCell(this);
                 if (markForCheck) {
-                    this.table._cdkTable.syncRows('data', true, this.rowContext.index);
+                    this.grid._cdkTable.syncRows('data', true, this.rowContext.index);
                 }
             }
         };
@@ -7601,11 +7638,11 @@
          * @return {?}
          */
         function (markForCheck) {
-            if (this.editing && !this.table.viewport.isScrolling) {
+            if (this.editing && !this.grid.viewport.isScrolling) {
                 this._editing = false;
                 this._rowContext.updateCell(this);
                 if (markForCheck) {
-                    this.table._cdkTable.syncRows('data', this.rowContext.index);
+                    this.grid._cdkTable.syncRows('data', this.rowContext.index);
                 }
             }
         };
@@ -7613,7 +7650,7 @@
     }());
     if (false) {
         /** @type {?} */
-        PblCellContext.prototype.table;
+        PblCellContext.prototype.grid;
         /** @type {?} */
         PblCellContext.prototype.index;
         /**
@@ -7683,10 +7720,10 @@
                      */
                     function () { return this.renderIndex; }) });
             }
-            this.table = extApi.table;
+            this.grid = this.table = extApi.grid;
             /** @type {?} */
             var cells = this.cells = [];
-            var columns = extApi.table.columnApi.columns;
+            var columns = extApi.grid.columnApi.columns;
             /** @type {?} */
             var len = columns.length;
             for (var columnIndex = 0; columnIndex < len; columnIndex++) {
@@ -7808,7 +7845,7 @@
          */
         function (index) {
             /** @type {?} */
-            var idx = typeof index === 'number' ? index : this.table.columnApi.indexOf(index);
+            var idx = typeof index === 'number' ? index : this.grid.columnApi.indexOf(index);
             return this.cells[idx];
         };
         /**
@@ -7894,8 +7931,13 @@
         PblRowContext.prototype.firstRender;
         /** @type {?} */
         PblRowContext.prototype.outOfView;
-        /** @type {?} */
+        /**
+         * @deprecated use grid instead
+         * @type {?}
+         */
         PblRowContext.prototype.table;
+        /** @type {?} */
+        PblRowContext.prototype.grid;
         /**
          * @type {?}
          * @private
@@ -8006,7 +8048,7 @@
         var rowState = context.cache.get(rowIdent);
         if (rowState) {
             /** @type {?} */
-            var rowContext = context.extApi.table.contextApi.findRowInView(rowState.identity);
+            var rowContext = context.extApi.grid.contextApi.findRowInView(rowState.identity);
             if (rowContext) {
                 return rowContext.cell(colIndex);
             }
@@ -8069,7 +8111,7 @@
              */
             this.selectionChanged = this.selectionChanged$.asObservable();
             this.vcRef = extApi.cdkTable._rowOutlet.viewContainer;
-            this.columnApi = extApi.table.columnApi;
+            this.columnApi = extApi.grid.columnApi;
             extApi.events
                 .pipe(operators.filter((/**
              * @param {?} e
@@ -8304,7 +8346,7 @@
                         /** @type {?} */
                         var rowContext = this.findRowInView(rowIdent);
                         if (rowContext) {
-                            this.extApi.table._cdkTable.syncRows('data', rowContext.index);
+                            this.extApi.grid._cdkTable.syncRows('data', rowContext.index);
                         }
                     }
                 }
@@ -8315,12 +8357,12 @@
                 if (ref) {
                     this.focusCell(markForCheck);
                     if (ref instanceof PblCellContext) {
-                        if (!ref.focused && !this.extApi.table.viewport.isScrolling) {
+                        if (!ref.focused && !this.extApi.grid.viewport.isScrolling) {
                             this.updateState(ref.rowContext.identity, ref.index, { focused: true });
                             this.activeFocused = { rowIdent: ref.rowContext.identity, colIndex: ref.index };
                             this.selectCells([this.activeFocused], markForCheck, true);
                             if (markForCheck) {
-                                this.extApi.table._cdkTable.syncRows('data', ref.rowContext.index);
+                                this.extApi.grid._cdkTable.syncRows('data', ref.rowContext.index);
                             }
                         }
                     }
@@ -8370,7 +8412,7 @@
                     /** @type {?} */
                     var ref = resolveCellReference(cellRef, (/** @type {?} */ (this)));
                     if (ref instanceof PblCellContext) {
-                        if (!ref.selected && !this.extApi.table.viewport.isScrolling) {
+                        if (!ref.selected && !this.extApi.grid.viewport.isScrolling) {
                             /** @type {?} */
                             var rowIdent = ref.rowContext.identity;
                             /** @type {?} */
@@ -8402,7 +8444,7 @@
                 finally { if (e_2) throw e_2.error; }
             }
             if (toMarkRendered.size > 0) {
-                (_b = this.extApi.table._cdkTable).syncRows.apply(_b, __spread(['data'], Array.from(toMarkRendered.values())));
+                (_b = this.extApi.grid._cdkTable).syncRows.apply(_b, __spread(['data'], Array.from(toMarkRendered.values())));
             }
             this.selectionChanged$.next({ added: added, removed: [] });
         };
@@ -8503,7 +8545,7 @@
                 finally { if (e_3) throw e_3.error; }
             }
             if (toMarkRendered.size > 0) {
-                (_b = this.extApi.table._cdkTable).syncRows.apply(_b, __spread(['data'], Array.from(toMarkRendered.values())));
+                (_b = this.extApi.grid._cdkTable).syncRows.apply(_b, __spread(['data'], Array.from(toMarkRendered.values())));
             }
             this.selectionChanged$.next({ added: [], removed: removed });
         };
@@ -8577,9 +8619,9 @@
             }
             else if (ref) {
                 /** @type {?} */
-                var row = this.extApi.table.ds.source[ref[0].dataIndex];
+                var row = this.extApi.grid.ds.source[ref[0].dataIndex];
                 /** @type {?} */
-                var column = this.extApi.table.columnApi.findColumnAt(ref[1]);
+                var column = this.extApi.grid.columnApi.findColumnAt(ref[1]);
                 return column.getValue(row);
             }
         };
@@ -8681,7 +8723,7 @@
             var rowState = this.cache.get(rowIdentity);
             if (rowState) {
                 /** @type {?} */
-                var renderRowIndex = rowState.dataIndex - this.extApi.table.ds.renderStart;
+                var renderRowIndex = rowState.dataIndex - this.extApi.grid.ds.renderStart;
                 /** @type {?} */
                 var rowContext = this.viewCache.get(renderRowIndex);
                 if (rowContext && rowContext.identity === rowIdentity) {
@@ -8715,7 +8757,7 @@
                 if (identity !== null) {
                     /** @type {?} */
                     var result = this.findRowInCache(identity);
-                    if (!result && create && dataIndex < this.extApi.table.ds.length) {
+                    if (!result && create && dataIndex < this.extApi.grid.ds.length) {
                         result = PblRowContext.defaultState(identity, dataIndex, this.columnApi.columns.length);
                         this.cache.set(identity, result);
                     }
@@ -8734,7 +8776,7 @@
          * @return {?}
          */
         function (dataIndex, context) {
-            var ds = this.extApi.table.ds;
+            var ds = this.extApi.grid.ds;
             var primary = this.extApi.columnStore.primary;
             /** @type {?} */
             var row = context ? context.$implicit : ds.source[dataIndex];
@@ -8762,7 +8804,7 @@
          * Find/Update/Create the `RowContext` for the provided `EmbeddedViewRef` at the provided render position.
          *
          * A `RowContext` object is a wrapper for the internal context of a row in `CdkTable` with the purpose of
-         * extending it for the table features.
+         * extending it for the grid features.
          *
          * The process has 2 layers of cache:
          *
@@ -8782,7 +8824,7 @@
          * Find/Update/Create the `RowContext` for the provided `EmbeddedViewRef` at the provided render position.
          *
          * A `RowContext` object is a wrapper for the internal context of a row in `CdkTable` with the purpose of
-         * extending it for the table features.
+         * extending it for the grid features.
          *
          * The process has 2 layers of cache:
          *
@@ -8804,7 +8846,7 @@
          * Find/Update/Create the `RowContext` for the provided `EmbeddedViewRef` at the provided render position.
          *
          * A `RowContext` object is a wrapper for the internal context of a row in `CdkTable` with the purpose of
-         * extending it for the table features.
+         * extending it for the grid features.
          *
          * The process has 2 layers of cache:
          *
@@ -8826,7 +8868,7 @@
             var _this = this;
             var context = viewRef.context;
             /** @type {?} */
-            var dataIndex = this.extApi.table.ds.renderStart + renderRowIndex;
+            var dataIndex = this.extApi.grid.ds.renderStart + renderRowIndex;
             /** @type {?} */
             var identity = this.getRowIdentity(dataIndex, viewRef.context);
             /** @type {?} */
@@ -8877,7 +8919,7 @@
          * @return {?}
          */
         function () {
-            return this.extApi.table.viewport.elementRef.nativeElement.getBoundingClientRect();
+            return this.extApi.grid.viewport.elementRef.nativeElement.getBoundingClientRect();
         };
         /**
          * @private
@@ -9339,7 +9381,7 @@
         // probably due to https://github.com/angular/angular-cli/commit/639198499973e0f437f059b3c933c72c733d93d8
         /**
          * @template T
-         * @param {?} table
+         * @param {?} grid
          * @param {?} store
          * @param {?} extApi
          * @return {?}
@@ -9351,15 +9393,15 @@
         // probably due to https://github.com/angular/angular-cli/commit/639198499973e0f437f059b3c933c72c733d93d8
         /**
          * @template T
-         * @param {?} table
+         * @param {?} grid
          * @param {?} store
          * @param {?} extApi
          * @return {?}
          */
-        function (table, store, extApi) {
+        function (grid, store, extApi) {
             /** @type {?} */
             var instance = new ColumnApi();
-            instance.table = table;
+            instance.grid = grid;
             instance.store = store;
             instance.extApi = extApi;
             return instance;
@@ -9393,6 +9435,34 @@
              * @return {?}
              */
             function () { return this.store.allColumns; },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(ColumnApi.prototype, "totalColumnWidthChange", {
+            get: /**
+             * @return {?}
+             */
+            function () {
+                var _this = this;
+                if (!this._totalColumnWidthChange) {
+                    this._totalColumnWidthChange = this.extApi.events
+                        .pipe(operators.filter((/**
+                     * @param {?} event
+                     * @return {?}
+                     */
+                    function (event) { return event.kind === 'onResizeRow'; })), operators.map((/**
+                     * @param {?} e
+                     * @return {?}
+                     */
+                    function (e) { return _this.grid.columnApi.visibleColumns.reduce((/**
+                     * @param {?} p
+                     * @param {?} c
+                     * @return {?}
+                     */
+                    function (p, c) { return p + c.sizeInfo.width; }), 0); })));
+                }
+                return this._totalColumnWidthChange;
+            },
             enumerable: true,
             configurable: true
         });
@@ -9512,8 +9582,8 @@
          */
         function (column, width) {
             column.updateWidth(width);
-            // this.table.resetColumnsWidth();
-            // this.table.resizeColumns();
+            // this.grid.resetColumnsWidth();
+            // this.grid.resizeColumns();
         };
         /**
          * Resize the column to best fit it's content.
@@ -9582,8 +9652,8 @@
                 }
                 finally { if (e_1) throw e_1.error; }
             }
-            // this.table.resetColumnsWidth();
-            // this.table.resizeColumns();
+            // this.grid.resetColumnsWidth();
+            // this.grid.resizeColumns();
         };
         /**
          * For each visible column in the table, resize the width to a proportional width relative to the total width provided.
@@ -9675,7 +9745,7 @@
                 // There are 3 scenarios when updating the column
                 // 1) if it's a fixed width or we're force into fixed width
                 // 2) Not fixed width and width is set (%)
-                // 3) Not fixed width an width is not set ( the width depends on the calculated `defaultWidth` done in `this.table.resetColumnsWidth()` )
+                // 3) Not fixed width an width is not set ( the width depends on the calculated `defaultWidth` done in `this.grid.resetColumnsWidth()` )
                 /** @type {?} */
                 var width = void 0;
                 var forceWidthType = instructions.forceWidthType;
@@ -9691,8 +9761,8 @@
             }
             // we now reset the column widths, this will calculate a new `defaultWidth` and set it in all columns but the relevant ones are column from (3)
             // It will also mark all columnDefs for check
-            this.table.resetColumnsWidth();
-            this.table.resizeColumns();
+            this.grid.resetColumnsWidth();
+            this.grid.resizeColumns();
         };
         // tslint:disable-line:unified-signatures
         /**
@@ -9829,8 +9899,8 @@
         function () {
             this.extApi.contextApi.clear();
             this.store.updateGroups();
-            this.table.resetColumnsWidth();
-            this.table.resizeColumns();
+            this.grid.resetColumnsWidth();
+            this.grid.resizeColumns();
         };
         return ColumnApi;
     }());
@@ -9839,7 +9909,7 @@
          * @type {?}
          * @private
          */
-        ColumnApi.prototype.table;
+        ColumnApi.prototype.grid;
         /**
          * @type {?}
          * @private
@@ -9850,6 +9920,11 @@
          * @private
          */
         ColumnApi.prototype.extApi;
+        /**
+         * @type {?}
+         * @private
+         */
+        ColumnApi.prototype._totalColumnWidthChange;
     }
 
     /**
@@ -9894,12 +9969,12 @@
              * @return {?}
              */
             function () {
-                var table = extApi.table;
+                var grid = extApi.grid;
                 /** @type {?} */
-                var hzOffset = table.viewport.measureScrollOffset('start');
+                var hzOffset = grid.viewport.measureScrollOffset('start');
                 /** @type {?} */
                 var trackScroll = true;
-                table.viewport.elementScrolled()
+                grid.viewport.elementScrolled()
                     .pipe(operators.filter((/**
                  * @return {?}
                  */
@@ -9909,13 +9984,13 @@
                  */
                 function () {
                     /** @type {?} */
-                    var newOffset = table.viewport.measureScrollOffset('start');
+                    var newOffset = grid.viewport.measureScrollOffset('start');
                     if (hzOffset !== newOffset) {
                         _this.hzScroll$.next(hzOffset = newOffset);
                     }
-                    else if (table.viewport.isScrolling) {
+                    else if (grid.viewport.isScrolling) {
                         trackScroll = false;
-                        table.viewport.scrolling
+                        grid.viewport.scrolling
                             .pipe(operators.take(1))
                             .subscribe((/**
                          * @return {?}
@@ -9941,11 +10016,17 @@
             var _a = columnStore.metaColumnIds, header = _a.header, footer = _a.footer;
             /** @type {?} */
             var rowDef = metaRow.meta;
-            if (rowDef === columnStore.footerColumnDef) {
-                this.addToSection(this.footer, metaRow, 0);
+            if (rowDef === columnStore.headerColumnDef) {
+                if (metaRow.gridWidthRow === true) {
+                    this.gridWidthRow = { rowDef: rowDef, el: metaRow.elRef.nativeElement };
+                    this.header.all.push(rowDef);
+                }
+                else {
+                    this.addToSection(this.header, metaRow, columnStore.metaColumnIds.header.length);
+                }
             }
-            else if (rowDef === columnStore.headerColumnDef) {
-                this.addToSection(this.header, metaRow, columnStore.metaColumnIds.header.length);
+            else if (rowDef === columnStore.footerColumnDef) {
+                this.addToSection(this.footer, metaRow, 0);
             }
             else {
                 /** @type {?} */
@@ -10036,6 +10117,8 @@
     }());
     if (false) {
         /** @type {?} */
+        PblNgridMetaRowService.prototype.gridWidthRow;
+        /** @type {?} */
         PblNgridMetaRowService.prototype.header;
         /** @type {?} */
         PblNgridMetaRowService.prototype.footer;
@@ -10065,6 +10148,8 @@
         function PblNgridMetaRowContainerComponent(metaRows, elRef) {
             var _this = this;
             this.metaRows = metaRows;
+            this._width$ = new rxjs.Subject();
+            this._totalColumnWidth = 0;
             this.element = elRef.nativeElement;
             metaRows.sync.pipe(utils$1.UnRx(this)).subscribe((/**
              * @return {?}
@@ -10078,10 +10163,18 @@
              */
             function (event) {
                 if (event.kind === 'onResizeRow') {
-                    _this._innerWidth = _this.metaRows.extApi.table.viewport.innerWidth;
-                    _this._minWidth = _this.metaRows.extApi.cdkTable.minWidth;
-                    _this._width = Math.max(_this._innerWidth, _this._minWidth);
+                    _this.updateWidths();
                 }
+            }));
+            this.metaRows.extApi.grid.columnApi.totalColumnWidthChange
+                .pipe(utils$1.UnRx(this))
+                .subscribe((/**
+             * @param {?} width
+             * @return {?}
+             */
+            function (width) {
+                _this._totalColumnWidth = width;
+                _this.updateWidths();
             }));
         }
         Object.defineProperty(PblNgridMetaRowContainerComponent.prototype, "type", {
@@ -10098,6 +10191,29 @@
             configurable: true
         });
         ;
+        /**
+         * @return {?}
+         */
+        PblNgridMetaRowContainerComponent.prototype.ngOnDestroy = /**
+         * @return {?}
+         */
+        function () {
+            this._width$.complete();
+        };
+        /**
+         * @private
+         * @return {?}
+         */
+        PblNgridMetaRowContainerComponent.prototype.updateWidths = /**
+         * @private
+         * @return {?}
+         */
+        function () {
+            this._innerWidth = this.metaRows.extApi.grid.viewport.innerWidth;
+            this._minWidth = this.metaRows.extApi.cdkTable.minWidth;
+            this._width = Math.max(this._innerWidth, this._minWidth);
+            this._width$.next(Math.max(this._innerWidth, this._totalColumnWidth));
+        };
         /**
          * @private
          * @param {?} type
@@ -10118,7 +10234,7 @@
             }
             /** @type {?} */
             var scrollContainerElement = this.element;
-            scrollContainerElement.scrollLeft = this.metaRows.extApi.table.viewport.measureScrollOffset('start');
+            scrollContainerElement.scrollLeft = this.metaRows.extApi.grid.viewport.measureScrollOffset('start');
             this.metaRows.hzScroll
                 .pipe(utils$1.UnRx(this))
                 .subscribe((/**
@@ -10131,10 +10247,7 @@
                 .subscribe((/**
              * @return {?}
              */
-            function () {
-                _this._innerWidth = _this.metaRows.extApi.table.viewport.innerWidth;
-                _this._width = Math.max(_this._innerWidth, _this._minWidth);
-            }));
+            function () { _this.updateWidths(); }));
         };
         /**
          * @private
@@ -10146,17 +10259,20 @@
          */
         function () {
             var e_1, _a;
-            this.defs = [];
             /** @type {?} */
             var isHeader = this._type === 'header';
             /** @type {?} */
             var section = isHeader ? this.metaRows.header : this.metaRows.footer;
             /** @type {?} */
-            var container = this.element.firstElementChild;
+            var widthContainer = this.element.firstElementChild;
+            /** @type {?} */
+            var container = widthContainer.nextElementSibling;
+            if (isHeader) {
+                widthContainer.appendChild(this.metaRows.gridWidthRow.el);
+            }
             try {
                 for (var _b = __values(section.fixed), _c = _b.next(); !_c.done; _c = _b.next()) {
                     var def = _c.value;
-                    this.defs.push(def);
                     container.appendChild(def.el);
                 }
             }
@@ -10175,7 +10291,7 @@
         PblNgridMetaRowContainerComponent.decorators = [
             { type: core.Component, args: [{
                         selector: 'div[pbl-ngrid-fixed-meta-row-container]',
-                        template: "<div class=\"pbl-cdk-table\" [style.width.px]=\"_width\"></div>",
+                        template: "<div class=\"pbl-cdk-table\" [style.width.px]=\"_width\"></div><div class=\"pbl-cdk-table\" [style.width.px]=\"_width$ | async\"></div>",
                         host: {
                             // tslint:disable-line:use-host-property-decorator
                             style: 'flex: 0 0 auto; overflow: hidden;',
@@ -10199,8 +10315,8 @@
     }());
     if (false) {
         /**
-         * The inner width of the table, the viewport width of a row.
-         * The width of the table minus scroll bar.
+         * The inner width of the grid, the viewport width of a row.
+         * The width of the grid minus scroll bar.
          * @type {?}
          */
         PblNgridMetaRowContainerComponent.prototype._innerWidth;
@@ -10208,16 +10324,18 @@
         PblNgridMetaRowContainerComponent.prototype._minWidth;
         /** @type {?} */
         PblNgridMetaRowContainerComponent.prototype._width;
+        /** @type {?} */
+        PblNgridMetaRowContainerComponent.prototype._width$;
+        /**
+         * @type {?}
+         * @private
+         */
+        PblNgridMetaRowContainerComponent.prototype._totalColumnWidth;
         /**
          * @type {?}
          * @private
          */
         PblNgridMetaRowContainerComponent.prototype._type;
-        /**
-         * @type {?}
-         * @private
-         */
-        PblNgridMetaRowContainerComponent.prototype.defs;
         /**
          * @type {?}
          * @private
@@ -10233,9 +10351,10 @@
      * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var PblMetaRowDirective = /** @class */ (function () {
-        function PblMetaRowDirective(metaRows, elRef) {
+        function PblMetaRowDirective(metaRows, elRef, gridWidthRow) {
             this.metaRows = metaRows;
             this.elRef = elRef;
+            this.gridWidthRow = gridWidthRow !== null;
         }
         Object.defineProperty(PblMetaRowDirective.prototype, "meta", {
             // tslint:disable-next-line:no-input-rename
@@ -10295,7 +10414,8 @@
         };
         PblMetaRowDirective.ctorParameters = function () { return [
             { type: PblNgridMetaRowService },
-            { type: core.ElementRef }
+            { type: core.ElementRef },
+            { type: undefined }
         ]; };
         PblMetaRowDirective.decorators = [
             { type: core.Directive, args: [{
@@ -10305,18 +10425,22 @@
         /** @nocollapse */
         PblMetaRowDirective.ctorParameters = function () { return [
             { type: PblNgridMetaRowService },
-            { type: core.ElementRef }
+            { type: core.ElementRef },
+            { type: undefined, decorators: [{ type: core.Attribute, args: ['gridWidthRow',] }] }
         ]; };
         PblMetaRowDirective.propDecorators = {
             meta: [{ type: core.Input, args: ['pblMetaRow',] }]
         };
         PblMetaRowDirective = __decorate([
             utils$1.UnRx(),
-            __metadata("design:paramtypes", [PblNgridMetaRowService, core.ElementRef])
+            __metadata("design:paramtypes", [PblNgridMetaRowService,
+                core.ElementRef, Object])
         ], PblMetaRowDirective);
         return PblMetaRowDirective;
     }());
     if (false) {
+        /** @type {?} */
+        PblMetaRowDirective.prototype.gridWidthRow;
         /**
          * @type {?}
          * @private
@@ -10349,17 +10473,17 @@
         function (event) {
             if (event.kind === 'onDataSource') {
                 var curr = event.curr, prev = event.prev;
-                if (prev && prev.hostGrid === plugin.table) {
+                if (prev && prev.hostGrid === plugin.grid) {
                     prev.hostGrid = undefined;
                 }
                 if (curr) {
-                    curr.hostGrid = plugin.table;
+                    curr.hostGrid = plugin.grid;
                 }
             }
             else if (event.kind === 'onDestroy') {
                 /** @type {?} */
-                var ds = plugin.table.ds;
-                if (ds.hostGrid === plugin.table) {
+                var ds = plugin.grid.ds;
+                if (ds.hostGrid === plugin.grid) {
                     ds.hostGrid = undefined;
                 }
             }
@@ -10415,20 +10539,20 @@
      * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /**
-     * @param {?} table
+     * @param {?} grid
      * @return {?}
      */
-    function internalApiFactory(table) { return table._extApi; }
+    function internalApiFactory(grid) { return grid._extApi; }
     /**
-     * @param {?} table
+     * @param {?} grid
      * @return {?}
      */
-    function pluginControllerFactory(table) { return table._plugin.controller; }
+    function pluginControllerFactory(grid) { return grid._plugin.controller; }
     /**
-     * @param {?} table
+     * @param {?} grid
      * @return {?}
      */
-    function metaRowServiceFactory(table) { return table._extApi.metaRowService; }
+    function metaRowServiceFactory(grid) { return grid._extApi.metaRowService; }
     /**
      * @template T
      */
@@ -10448,10 +10572,10 @@
             this._store = new PblColumnStore();
             this._noCachePaginator = false;
             /** @type {?} */
-            var tableConfig = config.get('table');
-            this.showHeader = tableConfig.showHeader;
-            this.showFooter = tableConfig.showFooter;
-            this.noFiller = tableConfig.noFiller;
+            var gridConfig = config.get('table');
+            this.showHeader = gridConfig.showHeader;
+            this.showFooter = gridConfig.showFooter;
+            this.noFiller = gridConfig.noFiller;
             this.initExtApi();
             this.columnApi = ColumnApi.create(this, this._store, this._extApi);
             this.initPlugins(injector, elRef, vcRef);
@@ -10543,20 +10667,20 @@
         });
         Object.defineProperty(PblNgridComponent.prototype, "dataSource", {
             /**
-             * The table's source of data
+             * The grid's source of data
              *
              * @remarks
-             * The table's source of data, which can be provided in 2 ways:
+             * The grid's source of data, which can be provided in 2 ways:
              *
              * - DataSourceOf<T>
              * - PblDataSource<T>
              *
-             * The table only works with `PblDataSource<T>`, `DataSourceOf<T>` is a shortcut for providing
+             * The grid only works with `PblDataSource<T>`, `DataSourceOf<T>` is a shortcut for providing
              * the data array directly.
              *
              * `DataSourceOf<T>` can be:
              *
-             * - Simple data array (each object represents one table row)
+             * - Simple data array (each object represents one grid row)
              * - Promise for a data array
              * - Stream that emits a data array each time the array changes
              *
@@ -10575,20 +10699,20 @@
              * > This is a write-only (setter) property that triggers the `setDataSource` method.
              */
             set: /**
-             * The table's source of data
+             * The grid's source of data
              *
              * \@remarks
-             * The table's source of data, which can be provided in 2 ways:
+             * The grid's source of data, which can be provided in 2 ways:
              *
              * - DataSourceOf<T>
              * - PblDataSource<T>
              *
-             * The table only works with `PblDataSource<T>`, `DataSourceOf<T>` is a shortcut for providing
+             * The grid only works with `PblDataSource<T>`, `DataSourceOf<T>` is a shortcut for providing
              * the data array directly.
              *
              * `DataSourceOf<T>` can be:
              *
-             * - Simple data array (each object represents one table row)
+             * - Simple data array (each object represents one grid row)
              * - Promise for a data array
              * - Stream that emits a data array each time the array changes
              *
@@ -10694,18 +10818,18 @@
              * The "inner scroll container" is defined to consume all the height left after all external objects are rendered.
              * External objects can be fixed meta rows (header/footer), pagination row, action row etc...
              *
-             * If the table does not have a height (% or px) the "inner scroll container" will always have no height (0).
-             * If the table has a height, the "inner scroll container" will get the height left, which can also be 0 if there are a lot of external objects.
+             * If the grid does not have a height (% or px) the "inner scroll container" will always have no height (0).
+             * If the grid has a height, the "inner scroll container" will get the height left, which can also be 0 if there are a lot of external objects.
              *
              * To solve the no-height problem we use the fallbackMinHeight property.
              *
-             * When virtual scroll is disabled and fallbackMinHeight is not set the table will set the "inner scroll container" height to show all rows.
+             * When virtual scroll is disabled and fallbackMinHeight is not set the grid will set the "inner scroll container" height to show all rows.
              *
-             * Note that when using a fixed (px) height for the table, if the height of all external objects + the height of the "inner scroll container" is greater then
-             * the table's height a vertical scroll bar will show.
+             * Note that when using a fixed (px) height for the grid, if the height of all external objects + the height of the "inner scroll container" is greater then
+             * the grid's height a vertical scroll bar will show.
              * If the "inner scroll container"s height will be lower then it's rendered content height and additional vertical scroll bar will appear, which is, usually, not good.
              *
-             * To avoid this, don't use fallbackMinHeight together with a fixed height for the table. Instead use fallbackMinHeight together with a min height for the table.
+             * To avoid this, don't use fallbackMinHeight together with a fixed height for the grid. Instead use fallbackMinHeight together with a min height for the grid.
              */
             get: /**
              * A fallback height for "the inner scroll container".
@@ -10715,18 +10839,18 @@
              * The "inner scroll container" is defined to consume all the height left after all external objects are rendered.
              * External objects can be fixed meta rows (header/footer), pagination row, action row etc...
              *
-             * If the table does not have a height (% or px) the "inner scroll container" will always have no height (0).
-             * If the table has a height, the "inner scroll container" will get the height left, which can also be 0 if there are a lot of external objects.
+             * If the grid does not have a height (% or px) the "inner scroll container" will always have no height (0).
+             * If the grid has a height, the "inner scroll container" will get the height left, which can also be 0 if there are a lot of external objects.
              *
              * To solve the no-height problem we use the fallbackMinHeight property.
              *
-             * When virtual scroll is disabled and fallbackMinHeight is not set the table will set the "inner scroll container" height to show all rows.
+             * When virtual scroll is disabled and fallbackMinHeight is not set the grid will set the "inner scroll container" height to show all rows.
              *
-             * Note that when using a fixed (px) height for the table, if the height of all external objects + the height of the "inner scroll container" is greater then
-             * the table's height a vertical scroll bar will show.
+             * Note that when using a fixed (px) height for the grid, if the height of all external objects + the height of the "inner scroll container" is greater then
+             * the grid's height a vertical scroll bar will show.
              * If the "inner scroll container"s height will be lower then it's rendered content height and additional vertical scroll bar will appear, which is, usually, not good.
              *
-             * To avoid this, don't use fallbackMinHeight together with a fixed height for the table. Instead use fallbackMinHeight together with a min height for the table.
+             * To avoid this, don't use fallbackMinHeight together with a fixed height for the grid. Instead use fallbackMinHeight together with a min height for the grid.
              * @return {?}
              */
             function () { return this._fallbackMinHeight; },
@@ -10829,9 +10953,9 @@
          */
         function () {
             var _this = this;
-            // no need to unsubscribe, the reg service is per table instance and it will destroy when this table destroy.
+            // no need to unsubscribe, the reg service is per grid instance and it will destroy when this grid destroy.
             // Also, at this point initial changes from templates provided in the content are already inside so they will not trigger
-            // the order here is very important, because component top of this table will fire life cycle hooks AFTER this component
+            // the order here is very important, because component top of this grid will fire life cycle hooks AFTER this component
             // so if we have a top level component registering a template on top it will not show unless we listen.
             this.registry.changes.subscribe((/**
              * @param {?} changes
@@ -10840,7 +10964,7 @@
             function (changes) {
                 var e_1, _a;
                 /** @type {?} */
-                var tableCell = false;
+                var gridCell = false;
                 /** @type {?} */
                 var headerFooterCell = false;
                 try {
@@ -10848,7 +10972,7 @@
                         var c = changes_1_1.value;
                         switch (c.type) {
                             case 'tableCell':
-                                tableCell = true;
+                                gridCell = true;
                                 break;
                             case 'headerCell':
                             case 'footerCell':
@@ -10870,7 +10994,7 @@
                     }
                     finally { if (e_1) throw e_1.error; }
                 }
-                if (tableCell) {
+                if (gridCell) {
                     _this.attachCustomCellTemplates();
                 }
                 if (headerFooterCell) {
@@ -11146,7 +11270,7 @@
                      * @return {?}
                      */
                     function (previousRenderLength) {
-                        // If the number of rendered items has changed the table will update the data and run CD on it.
+                        // If the number of rendered items has changed the grid will update the data and run CD on it.
                         // so we only update the rows.
                         var cdkTable = _this._extApi.cdkTable;
                         if (previousRenderLength === _this.ds.renderLength) {
@@ -11249,7 +11373,7 @@
                 also create a context which has reference to a column thus a new context is required.
                 Keeping track for all references will be difficult and bugs are likely to occur, which are hard to track.
         
-                The simplest solution is to force the table to render all data rows from scratch which will destroy the cache and all cell's with it, creating new one's with proper reference.
+                The simplest solution is to force the grid to render all data rows from scratch which will destroy the cache and all cell's with it, creating new one's with proper reference.
         
                 The simple solution is currently preferred because:
         
@@ -11268,16 +11392,16 @@
             this._plugin.emitEvent({ kind: 'onInvalidateHeaders' });
         };
         /**
-         * Updates the column sizes for all columns in the table based on the column definition metadata for each column.
+         * Updates the column sizes for all columns in the grid based on the column definition metadata for each column.
          * The final width represent a static width, it is the value as set in the definition (except column without width, where the calculated global width is set).
          */
         /**
-         * Updates the column sizes for all columns in the table based on the column definition metadata for each column.
+         * Updates the column sizes for all columns in the grid based on the column definition metadata for each column.
          * The final width represent a static width, it is the value as set in the definition (except column without width, where the calculated global width is set).
          * @return {?}
          */
         PblNgridComponent.prototype.resetColumnsWidth = /**
-         * Updates the column sizes for all columns in the table based on the column definition metadata for each column.
+         * Updates the column sizes for all columns in the grid based on the column definition metadata for each column.
          * The final width represent a static width, it is the value as set in the definition (except column without width, where the calculated global width is set).
          * @return {?}
          */
@@ -11285,16 +11409,16 @@
             resetColumnWidths(this._store.getStaticWidth(), this._store.columns, this._store.metaColumns);
         };
         /**
-         * Update the size of all group columns in the table based on the size of their visible children (not hidden).
+         * Update the size of all group columns in the grid based on the size of their visible children (not hidden).
          * @param dynamicWidthLogic - Optional logic container, if not set a new one is created.
          */
         /**
-         * Update the size of all group columns in the table based on the size of their visible children (not hidden).
+         * Update the size of all group columns in the grid based on the size of their visible children (not hidden).
          * @param {?=} dynamicWidthLogic - Optional logic container, if not set a new one is created.
          * @return {?}
          */
         PblNgridComponent.prototype.syncColumnGroupsSize = /**
-         * Update the size of all group columns in the table based on the size of their visible children (not hidden).
+         * Update the size of all group columns in the grid based on the size of their visible children (not hidden).
          * @param {?=} dynamicWidthLogic - Optional logic container, if not set a new one is created.
          * @return {?}
          */
@@ -11372,7 +11496,7 @@
             /** @type {?} */
             var rowWidth = this._extApi.dynamicColumnWidthFactory();
             this.syncColumnGroupsSize(rowWidth);
-            // if this is a table without groups
+            // if this is a grid without groups
             if (rowWidth.minimumRowWidth === 0) {
                 rowWidth.addGroup(columns.map((/**
                  * @param {?} c
@@ -11387,9 +11511,9 @@
                 return;
             }
             if (!this._minimumRowWidth) {
-                // We calculate the total minimum width of the table
+                // We calculate the total minimum width of the grid
                 // We do it once, to set the minimum width based on the initial setup.
-                // Note that we don't apply strategy here, we want the entire length of the table!
+                // Note that we don't apply strategy here, we want the entire length of the grid!
                 this._cdkTable.minWidth = rowWidth.minimumRowWidth;
             }
             this.ngZone.run((/**
@@ -11461,16 +11585,16 @@
             }
         };
         /**
-         * Resize all visible columns to fit content of the table.
+         * Resize all visible columns to fit content of the grid.
          * @param forceFixedWidth - When true will resize all columns with absolute pixel values, otherwise will keep the same format as originally set (% or none)
          */
         /**
-         * Resize all visible columns to fit content of the table.
+         * Resize all visible columns to fit content of the grid.
          * @param {?=} options
          * @return {?}
          */
         PblNgridComponent.prototype.autoSizeColumnToFit = /**
-         * Resize all visible columns to fit content of the table.
+         * Resize all visible columns to fit content of the grid.
          * @param {?=} options
          * @return {?}
          */
@@ -11634,8 +11758,8 @@
             // Debounce all resizes until the next complete animation frame without a resize
             // finally maps to the entries collection
             // SKIP:  We should skip the first emission (`skip(1)`) before we debounce, since its called upon calling "observe" on the resizeObserver.
-            //        The problem is that some tables might require this because they do change size.
-            //        An example is a table in a mat-tab that is hidden, the table will hit the resize one when we focus the tab
+            //        The problem is that some grid might require this because they do change size.
+            //        An example is a grid in a mat-tab that is hidden, the grid will hit the resize one when we focus the tab
             //        which will require a resize handling because it's initial size is 0
             //        To workaround this, we only skip elements not yet added to the DOM, which means they will not trigger a resize event.
             /** @type {?} */
@@ -11691,16 +11815,16 @@
             var onInit = [];
             /** @type {?} */
             var extApi = {
-                table: this,
+                grid: this,
                 element: this.elRef.nativeElement,
                 /**
                  * @return {?}
                  */
-                get cdkTable() { return extApi.table._cdkTable; },
+                get cdkTable() { return extApi.grid._cdkTable; },
                 /**
                  * @return {?}
                  */
-                get events() { return extApi.table._plugin.events; },
+                get events() { return extApi.grid._plugin.events; },
                 /**
                  * @return {?}
                  */
@@ -11720,7 +11844,7 @@
                  * @return {?}
                  */
                 function (fn) {
-                    if (extApi.table.isInit) {
+                    if (extApi.grid.isInit) {
                         fn();
                     }
                     else {
@@ -11960,7 +12084,7 @@
         function () {
             var e_9, _a;
             if (this._headerRowDefs) {
-                // The table header (main, with column names) is always the last row def (index 0)
+                // The grid header (main, with column names) is always the last row def (index 0)
                 // Because we want it to show last (after custom headers, group headers...) we first need to pull it and then push.
                 this._cdkTable.clearHeaderRowDefs();
                 /** @type {?} */
@@ -12023,7 +12147,7 @@
         PblNgridComponent.decorators = [
             { type: core.Component, args: [{
                         selector: 'pbl-ngrid',
-                        template: "<!-- TABLE HEADER ROW DEF -->\n<cdk-header-row *cdkHeaderRowDef=\"columnApi.visibleColumnIds; sticky: columnRowDef.header?.type === 'sticky'\"\n                [pblMetaRow]=\"columnRowDef.header\"\n                data-rowtype=\"header\"\n                class=\"pbl-ngrid-header-row pbl-ngrid-header-row-main\"\n                [class.pbl-ngrid-row-visually-hidden]=\"!showHeader\"></cdk-header-row>\n\n<!-- MULTI-HEADER ROW DEF & MULTI-HEADER GROUP ROW DEFINITION TEMPLATES -->\n<ng-container *ngFor=\"let row of metaColumnIds.header;\">\n  <cdk-header-row *cdkHeaderRowDef=\"row.keys; sticky: row.rowDef.type === 'sticky'\"\n                  [pblMetaRow]=\"row.rowDef\"\n                  data-rowtype=\"meta-header\" class=\"pbl-ngrid-header-row\"\n                  [class.pbl-meta-group-row]=\"row.isGroup\"></cdk-header-row>\n</ng-container>\n\n<!-- TABLE FOOTER ROW DEF -->\n<cdk-footer-row *cdkFooterRowDef=\"columnApi.visibleColumnIds; sticky: columnRowDef.footer?.type === 'sticky'\"\n                [pblMetaRow]=\"columnRowDef.footer\"\n                data-rowtype=\"footer\"\n                class=\"pbl-ngrid-footer-row\"\n                [class.pbl-ngrid-row-hidden]=\"!showFooter\"></cdk-footer-row> <!-- TABLE FOOTER ROW DEF -->\n<!-- MULTI-FOOTER ROW DEF -->\n<ng-container *ngFor=\"let row of metaColumnIds.footer\">   <!-- MULTI-FOOTER ROW DEF -->\n  <cdk-footer-row *cdkFooterRowDef=\"row.keys; sticky: row.rowDef.type === 'sticky'\"\n                  [pblMetaRow]=\"row.rowDef\"\n                  data-rowtype=\"meta-footer\" class=\"pbl-ngrid-footer-row\"\n                  [class.pbl-meta-group-row]=\"row.isGroup\"></cdk-footer-row>\n</ng-container>\n\n<div class=\"pbl-ngrid-container\">\n  <ng-container #beforeTable></ng-container>\n  <div pbl-ngrid-fixed-meta-row-container=\"header\"></div>\n  <pbl-cdk-virtual-scroll-viewport class=\"pbl-ngrid-scroll-container\"\n                                   [stickyRowHeaderContainer]=\"stickyRowHeaderContainer\" [stickyRowFooterContainer]=\"stickyRowFooterContainer\">\n    <pbl-cdk-table tabindex=\"-1\">\n      <!-- Row templates. The columns used are set at the row template level -->\n\n      <!-- MULTI-HEADER/FOOTER CELL DEF -->\n      <ng-container *ngFor=\"let meta of metaColumns\">\n        <ng-container *ngIf=\"(meta.header || meta.headerGroup) as c\" [pblNgridColumnDef]=\"c\">\n          <pbl-ngrid-header-cell #hCell=\"ngridHeaderCell\" *cdkHeaderCellDef>\n            <ng-container *ngTemplateOutlet=\"c.template; context: hCell.cellCtx\"></ng-container>\n          </pbl-ngrid-header-cell>\n        </ng-container>\n        <ng-container *ngIf=\"meta.footer as c\" [pblNgridColumnDef]=\"c\">\n          <pbl-ngrid-footer-cell #fCell=\"ngridFooterCell\" *cdkFooterCellDef>\n            <ng-container *ngTemplateOutlet=\"c.template; context: fCell.cellCtx\"></ng-container>\n          </pbl-ngrid-footer-cell>\n        </ng-container>\n      </ng-container>\n      <!-- MULTI-HEADER/FOOTER CELL DEF -->\n\n       <!-- HEADER-RECORD-FOOTER CELL DEF -->\n      <ng-container *ngFor=\"let c of columnApi.visibleColumns;\" [pblNgridColumnDef]=\"c\">\n        <!-- TABLE HEADER CELL DEF -->\n        <pbl-ngrid-header-cell *cdkHeaderCellDef=\"let row\" [observeSize]=\"c\"></pbl-ngrid-header-cell>\n        <!-- RECORD CELL DEF -->\n        <pbl-ngrid-cell #cell=\"pblNgridCell\" *cdkCellDef=\"let row; pblRowContext as pblRowContext\"\n                        [rowCtx]=\"pblRowContext\" [attr.tabindex]=\"cellFocus\" [attr.id]=\"c.id\">\n          <ng-container *ngTemplateOutlet=\"cell.cellCtx?.editing ? c.editorTpl : c.cellTpl; context: cell.cellCtx\"></ng-container>\n        </pbl-ngrid-cell>\n\n        <!-- TABLE FOOTER CELL DEF -->\n        <pbl-ngrid-footer-cell #fCell=\"ngridFooterCell\" *cdkFooterCellDef>\n          <ng-container *ngTemplateOutlet=\"c.footerCellTpl; context: fCell.cellCtx\"></ng-container>\n        </pbl-ngrid-footer-cell>\n      </ng-container>\n      <!-- HEADER-RECORD-FOOTER CELL DEF -->\n\n      <!-- TABLE RECORD ROW DEFINITION TEMPLATES -->\n      <pbl-ngrid-row *cdkRowDef=\"let row; columns: columnApi.visibleColumnIds;\" [row]=\"row\"></pbl-ngrid-row>\n      <!-- TABLE RECORD ROW DEFINITION TEMPLATES -->\n    </pbl-cdk-table>\n  </pbl-cdk-virtual-scroll-viewport>\n  <div pbl-ngrid-fixed-meta-row-container=\"footer\"></div>\n  <ng-container #beforeContent>\n    <!-- This dummy row is used to extract an initial row height -->\n    <pbl-ngrid-row row style=\"display: none\"></pbl-ngrid-row>\n  </ng-container>\n  <ng-content></ng-content>\n  <ng-container #afterContent></ng-container>\n\n  <!-- Placeholder for header/footer scroll containers that will get populated with header/meta roles when the following conditions are met:\n       - Virtual scrolling is enabled\n       - Rows are rendered in the viewport\n       - Container is scrolling\n\n       The placeholder is fixed so the browsers does not use sticky positioning while scrolling, which takes the rows out of view while scrolling.\n       While scrolling the rows are moved into this placeholder and when scrolling ends they return to their original positioning.\n\n       The actual rows are added into the internal div, within the placeholder.\n       The top container get the proper width and the internal header gets the scroll offset (horizontal) that matches the current offset.\n       This has an effect only when scrolling with the wheel within a long scrolling session.\n\n       Implementation is in the virtual scroll viewport (more precisely in `PblVirtualScrollForOf`)\n  -->\n  <div #stickyRowHeaderContainer class=\"pbl-ngrid-sticky-row-scroll-container\"><div [style.minWidth.px]=\"_cdkTable?.minWidth\"></div></div> <!-- HEADERS -->\n  <div #stickyRowFooterContainer class=\"pbl-ngrid-sticky-row-scroll-container\"><div [style.minWidth.px]=\"_cdkTable?.minWidth\"></div></div> <!-- FOOTERS -->\n</div>\n\n<ng-template #fbTableCell let-value=\"value\"><div>{{value}}</div></ng-template>\n<ng-template #fbHeaderCell let-column=\"col\"><div>{{column.label}}</div></ng-template>\n<ng-template #fbFooterCell let-column=\"col\"><div>{{column.label}}</div></ng-template>\n",
+                        template: "<!-- GRID HEADER ROW DEF - THE MAIN HEADER OF THE GRID -->\n<cdk-header-row *cdkHeaderRowDef=\"columnApi.visibleColumnIds; sticky: columnRowDef.header?.type === 'sticky'\"\n                [pblMetaRow]=\"columnRowDef.header\"\n                data-rowtype=\"header\"\n                class=\"pbl-ngrid-header-row pbl-ngrid-header-row-main\"\n                [class.pbl-ngrid-row-hidden]=\"!showHeader\"></cdk-header-row>\n\n<!-- DUPLICATE HEADER FOR THE MAIN HEADER, NEVER SEEN (NOT VISUAL), USED FOR RESIZING -->\n<cdk-header-row *cdkHeaderRowDef=\"columnApi.visibleColumnIds;\"\n                [pblMetaRow]=\"columnRowDef.header\" gridWidthRow\n                data-rowtype=\"header\"\n                style=\"visibility: hidden !important;\"\n                class=\"pbl-ngrid-header-row pbl-ngrid-row-visually-hidden\"></cdk-header-row>\n\n<!-- MULTI-HEADER ROW DEF & MULTI-HEADER GROUP ROW DEFINITION TEMPLATES -->\n<ng-container *ngFor=\"let row of metaColumnIds.header;\">\n  <cdk-header-row *cdkHeaderRowDef=\"row.keys; sticky: row.rowDef.type === 'sticky'\"\n                  [pblMetaRow]=\"row.rowDef\"\n                  data-rowtype=\"meta-header\" class=\"pbl-ngrid-header-row\"\n                  [class.pbl-meta-group-row]=\"row.isGroup\"></cdk-header-row>\n</ng-container>\n\n<!-- GRID FOOTER ROW DEF -->\n<cdk-footer-row *cdkFooterRowDef=\"columnApi.visibleColumnIds; sticky: columnRowDef.footer?.type === 'sticky'\"\n                [pblMetaRow]=\"columnRowDef.footer\"\n                data-rowtype=\"footer\"\n                class=\"pbl-ngrid-footer-row\"\n                [class.pbl-ngrid-row-hidden]=\"!showFooter\"></cdk-footer-row> <!-- GRID FOOTER ROW DEF -->\n<!-- MULTI-FOOTER ROW DEF -->\n<ng-container *ngFor=\"let row of metaColumnIds.footer\">   <!-- MULTI-FOOTER ROW DEF -->\n  <cdk-footer-row *cdkFooterRowDef=\"row.keys; sticky: row.rowDef.type === 'sticky'\"\n                  [pblMetaRow]=\"row.rowDef\"\n                  data-rowtype=\"meta-footer\" class=\"pbl-ngrid-footer-row\"\n                  [class.pbl-meta-group-row]=\"row.isGroup\"></cdk-footer-row>\n</ng-container>\n\n<div class=\"pbl-ngrid-container\">\n  <ng-container #beforeTable></ng-container>\n  <div pbl-ngrid-fixed-meta-row-container=\"header\"></div>\n  <pbl-cdk-virtual-scroll-viewport class=\"pbl-ngrid-scroll-container\"\n                                   [stickyRowHeaderContainer]=\"stickyRowHeaderContainer\" [stickyRowFooterContainer]=\"stickyRowFooterContainer\">\n    <pbl-cdk-table tabindex=\"-1\">\n      <!-- Row templates. The columns used are set at the row template level -->\n\n      <!-- MULTI-HEADER/FOOTER CELL DEF -->\n      <ng-container *ngFor=\"let meta of metaColumns\">\n        <ng-container *ngIf=\"(meta.header || meta.headerGroup) as c\" [pblNgridColumnDef]=\"c\">\n          <pbl-ngrid-header-cell #hCell=\"ngridHeaderCell\" *cdkHeaderCellDef>\n            <ng-container *ngTemplateOutlet=\"c.template; context: hCell.cellCtx\"></ng-container>\n          </pbl-ngrid-header-cell>\n        </ng-container>\n        <ng-container *ngIf=\"meta.footer as c\" [pblNgridColumnDef]=\"c\">\n          <pbl-ngrid-footer-cell #fCell=\"ngridFooterCell\" *cdkFooterCellDef>\n            <ng-container *ngTemplateOutlet=\"c.template; context: fCell.cellCtx\"></ng-container>\n          </pbl-ngrid-footer-cell>\n        </ng-container>\n      </ng-container>\n      <!-- MULTI-HEADER/FOOTER CELL DEF -->\n\n      <!-- HEADER-RECORD-FOOTER CELL DEF -->\n      <ng-container *ngFor=\"let c of columnApi.visibleColumns;\" [pblNgridColumnDef]=\"c\">\n        <!-- GRID HEADER CELL DEF -->\n        <pbl-ngrid-header-cell *cdkHeaderCellDef=\"let row\" [observeSize]=\"c\"></pbl-ngrid-header-cell>\n\n        <!-- RECORD CELL DEF -->\n        <pbl-ngrid-cell #cell=\"pblNgridCell\" *cdkCellDef=\"let row; pblRowContext as pblRowContext\"\n                        [rowCtx]=\"pblRowContext\" [attr.tabindex]=\"cellFocus\" [attr.id]=\"c.id\">\n          <ng-container *ngTemplateOutlet=\"cell.cellCtx?.editing ? c.editorTpl : c.cellTpl; context: cell.cellCtx\"></ng-container>\n        </pbl-ngrid-cell>\n\n        <!-- GRID FOOTER CELL DEF -->\n        <pbl-ngrid-footer-cell #fCell=\"ngridFooterCell\" *cdkFooterCellDef>\n          <ng-container *ngTemplateOutlet=\"c.footerCellTpl; context: fCell.cellCtx\"></ng-container>\n        </pbl-ngrid-footer-cell>\n      </ng-container>\n      <!-- HEADER-RECORD-FOOTER CELL DEF -->\n\n      <!-- GRID RECORD ROW DEFINITION TEMPLATES -->\n      <pbl-ngrid-row *cdkRowDef=\"let row; columns: columnApi.visibleColumnIds;\" [row]=\"row\"></pbl-ngrid-row>\n      <!-- GRID RECORD ROW DEFINITION TEMPLATES -->\n    </pbl-cdk-table>\n  </pbl-cdk-virtual-scroll-viewport>\n  <div pbl-ngrid-fixed-meta-row-container=\"footer\"></div>\n  <ng-container #beforeContent>\n    <!-- This dummy row is used to extract an initial row height -->\n    <pbl-ngrid-row row style=\"display: none\"></pbl-ngrid-row>\n  </ng-container>\n  <ng-content></ng-content>\n  <ng-container #afterContent></ng-container>\n\n  <!-- Placeholder for header/footer scroll containers that will get populated with header/meta roles when the following conditions are met:\n       - Virtual scrolling is enabled\n       - Rows are rendered in the viewport\n       - Container is scrolling\n\n       The placeholder is fixed so the browsers does not use sticky positioning while scrolling, which takes the rows out of view while scrolling.\n       While scrolling the rows are moved into this placeholder and when scrolling ends they return to their original positioning.\n\n       The actual rows are added into the internal div, within the placeholder.\n       The top container get the proper width and the internal header gets the scroll offset (horizontal) that matches the current offset.\n       This has an effect only when scrolling with the wheel within a long scrolling session.\n\n       Implementation is in the virtual scroll viewport (more precisely in `PblVirtualScrollForOf`)\n  -->\n  <div #stickyRowHeaderContainer class=\"pbl-ngrid-sticky-row-scroll-container\"><div [style.minWidth.px]=\"_cdkTable?.minWidth\"></div></div> <!-- HEADERS -->\n  <div #stickyRowFooterContainer class=\"pbl-ngrid-sticky-row-scroll-container\"><div [style.minWidth.px]=\"_cdkTable?.minWidth\"></div></div> <!-- FOOTERS -->\n</div>\n\n<ng-template #fbTableCell let-value=\"value\"><div>{{value}}</div></ng-template>\n<ng-template #fbHeaderCell let-column=\"col\"><div>{{column.label}}</div></ng-template>\n<ng-template #fbFooterCell let-column=\"col\"><div>{{column.label}}</div></ng-template>\n",
                         providers: [
                             PblNgridRegistryService,
                             {
@@ -12115,7 +12239,7 @@
         /** @type {?} */
         PblNgridComponent.prototype._noFiller;
         /**
-         * Set's the behavior of the table when tabbing.
+         * Set's the behavior of the grid when tabbing.
          * The default behavior is none (rows and cells are not focusable)
          *
          * Note that the focus mode has an effect on other functions, for example a detail row will toggle (open/close) using
@@ -12129,7 +12253,7 @@
          */
         PblNgridComponent.prototype.__identityProp;
         /**
-         * The column definitions for this table.
+         * The column definitions for this grid.
          * @type {?}
          */
         PblNgridComponent.prototype.columns;
@@ -12767,7 +12891,7 @@
             _this.extApi = extApi;
             _this.el = el;
             if (extApi) {
-                _this.grid = extApi.table;
+                _this.grid = extApi.grid;
             }
             return _this;
         }
@@ -13165,7 +13289,7 @@
             /** @type {?} */
             var instance = new PblNgridDataHeaderExtensionContext();
             instance.col = headerCell.columnDef.column;
-            instance.table = headerCell.table;
+            instance.grid = headerCell.grid;
             Object.defineProperty(instance, 'injector', { value: injector });
             return instance;
         };
@@ -13194,7 +13318,7 @@
      * ```ts
      * interface PblNgridDataHeaderExtensionContext {
      *   col: PblMetaColumn;
-     *   table: PblNgridComponent<any>;
+     *   grid: PblNgridComponent<any>;
      *   injector: Injector;
      * }
      * ```
@@ -13284,7 +13408,7 @@
         PblNgridPaginatorRefDirective.prototype.kind;
     }
     /**
-     * Marks the element as the display element when table has no data.
+     * Marks the element as the display element when grid has no data.
      *
      * \@example
      * ```html
@@ -13322,14 +13446,14 @@
      * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /**
-     * A directive that marks the template as a projected section inside the table.
+     * A directive that marks the template as a projected section inside the grid.
      * The location of the project content is set by the position input.
      *
-     * Note that this directive can only be set as the content inside the table.
+     * Note that this directive can only be set as the content inside the grid.
      */
     var PblNgridOuterSectionDirective = /** @class */ (function () {
-        function PblNgridOuterSectionDirective(table, tRef) {
-            this.table = table;
+        function PblNgridOuterSectionDirective(grid, tRef) {
+            this.grid = grid;
             this.tRef = tRef;
         }
         /**
@@ -13339,7 +13463,7 @@
          * @return {?}
          */
         function () {
-            this.table.createView(this.position === 'bottom' ? 'beforeContent' : 'beforeTable', this.tRef);
+            this.grid.createView(this.position === 'bottom' ? 'beforeContent' : 'beforeTable', this.tRef);
         };
         PblNgridOuterSectionDirective.decorators = [
             { type: core.Directive, args: [{
@@ -13361,7 +13485,7 @@
          * @type {?}
          * @private
          */
-        PblNgridOuterSectionDirective.prototype.table;
+        PblNgridOuterSectionDirective.prototype.grid;
         /**
          * @type {?}
          * @private
@@ -13427,7 +13551,18 @@
              * An event emitted when width of this column has changed.
              */
             _this.widthChange = new core.EventEmitter();
-            _this.table = extApi.table;
+            /**
+             * The complete width definition for the column.
+             *
+             * There are 2 width sets (tuple):
+             * - [0]: The source width definitions as set in static column definition instance
+             * - [1]: The absolute width definitions, as currently set in the DOM (getBoundingClientRect())
+             *
+             * Each set is made up of 3 primitive width definitions: MIN-WIDTH, WIDTH and MAX-WIDTH.
+             * The tuple represents them in that order, i.e: [ MIN-WIDTH, WIDTH, MAX-WIDTH ]
+             */
+            _this._widths = [];
+            _this.grid = _this.table = extApi.grid;
             /** @type {?} */
             var s = extApi.dynamicColumnWidthFactory().strategy;
             _this.widthBreakout = (/**
@@ -13453,19 +13588,19 @@
         ;
         Object.defineProperty(PblNgridColumnDef.prototype, "widths", {
             /**
-             * The complete width definition for the column.
-             * There are 3 width definitions: MIN-WIDTH, WIDTH and MAX-WIDTH.
+             * The absolute width definitions, as currently set in the DOM (getBoundingClientRect()).
+             * If no measurements exists yet, return the user defined width's.
              *
              * The tuple represents them in that order, i.e: [ MIN-WIDTH, WIDTH, MAX-WIDTH ]
              */
             get: /**
-             * The complete width definition for the column.
-             * There are 3 width definitions: MIN-WIDTH, WIDTH and MAX-WIDTH.
+             * The absolute width definitions, as currently set in the DOM (getBoundingClientRect()).
+             * If no measurements exists yet, return the user defined width's.
              *
              * The tuple represents them in that order, i.e: [ MIN-WIDTH, WIDTH, MAX-WIDTH ]
              * @return {?}
              */
-            function () { return this._widths; },
+            function () { return this._widths[1]; },
             enumerable: true,
             configurable: true
         });
@@ -13563,15 +13698,20 @@
                 ? Math.min(this._column.parsedWidth.value, this._column.maxWidth || this._column.parsedWidth.value)
                 : this._column.maxWidth;
             /** @type {?} */
-            var prev = this._widths || [];
-            this._widths = [minWidth || '', width, maxWidth ? maxWidth + "px" : width];
-            // a previous 'resize' event will be followed by another 'resize' event with the same width, so fire....
+            var newWidths = (/** @type {?} */ ([minWidth || '', width, maxWidth ? maxWidth + "px" : width]));
             if (reason === 'resize') {
+                this._widths[1] = newWidths;
                 this.widthChange.emit({ reason: reason });
             }
             else {
+                /** @type {?} */
+                var prev = this._widths[0] || [];
+                this._widths[0] = newWidths;
+                if (!this._widths[1]) {
+                    this._widths[1] = newWidths;
+                }
                 for (var i = 0; i < 3; i++) {
-                    if (prev[i] !== this._widths[i]) {
+                    if (prev[i] !== newWidths[i]) {
                         this.widthChange.emit({ reason: reason });
                         break;
                     }
@@ -13579,19 +13719,33 @@
             }
         };
         /**
-         * Apply the current width definitions (minWidth, width, maxWidth) onto the element.
+         * Apply the current absolute width definitions (minWidth, width, maxWidth) onto an element.
          */
         /**
-         * Apply the current width definitions (minWidth, width, maxWidth) onto the element.
+         * Apply the current absolute width definitions (minWidth, width, maxWidth) onto an element.
          * @param {?} element
          * @return {?}
          */
         PblNgridColumnDef.prototype.applyWidth = /**
-         * Apply the current width definitions (minWidth, width, maxWidth) onto the element.
+         * Apply the current absolute width definitions (minWidth, width, maxWidth) onto an element.
          * @param {?} element
          * @return {?}
          */
         function (element) { setWidth(element, this.widths); };
+        /**
+         * Apply the source width definitions )set in static column definition instance) onto an element.
+         */
+        /**
+         * Apply the source width definitions )set in static column definition instance) onto an element.
+         * @param {?} element
+         * @return {?}
+         */
+        PblNgridColumnDef.prototype.applySourceWidth = /**
+         * Apply the source width definitions )set in static column definition instance) onto an element.
+         * @param {?} element
+         * @return {?}
+         */
+        function (element) { setWidth(element, this._widths[0]); };
         /**
          * Query for cell elements related to this column definition.
          *
@@ -13707,8 +13861,8 @@
                     this.stickyEnd = true;
                     break;
             }
-            if (this.table.isInit) {
-                this.table._cdkTable.updateStickyColumnStyles();
+            if (this.grid.isInit) {
+                this.grid._cdkTable.updateStickyColumnStyles();
             }
         };
         /**
@@ -13770,8 +13924,13 @@
     if (false) {
         /** @type {?} */
         PblNgridColumnDef.prototype.isDragging;
-        /** @type {?} */
+        /**
+         * @deprecated use grid instead
+         * @type {?}
+         */
         PblNgridColumnDef.prototype.table;
+        /** @type {?} */
+        PblNgridColumnDef.prototype.grid;
         /**
          * An event emitted when width of this column has changed.
          * @type {?}
@@ -13784,8 +13943,12 @@
         PblNgridColumnDef.prototype._column;
         /**
          * The complete width definition for the column.
-         * There are 3 width definitions: MIN-WIDTH, WIDTH and MAX-WIDTH.
          *
+         * There are 2 width sets (tuple):
+         * - [0]: The source width definitions as set in static column definition instance
+         * - [1]: The absolute width definitions, as currently set in the DOM (getBoundingClientRect())
+         *
+         * Each set is made up of 3 primitive width definitions: MIN-WIDTH, WIDTH and MAX-WIDTH.
          * The tuple represents them in that order, i.e: [ MIN-WIDTH, WIDTH, MAX-WIDTH ]
          * @type {?}
          * @private
@@ -13885,6 +14048,20 @@
     /** @type {?} */
     var lastDataHeaderExtensions = new Map();
     /**
+     * @this {?}
+     * @return {?}
+     */
+    function applyWidth() {
+        this.columnDef.applyWidth(this.el);
+    }
+    /**
+     * @this {?}
+     * @return {?}
+     */
+    function applySourceWidth() {
+        this.columnDef.applySourceWidth(this.el);
+    }
+    /**
      * Header cell component.
      * The header cell component will render the header cell template and add the proper classes and role.
      *
@@ -13895,31 +14072,17 @@
      */
     var PblNgridHeaderCellComponent = /** @class */ (function (_super) {
         __extends(PblNgridHeaderCellComponent, _super);
-        function PblNgridHeaderCellComponent(columnDef, table, elementRef, zone) {
+        function PblNgridHeaderCellComponent(columnDef, grid, elementRef, zone) {
             var _this = _super.call(this, columnDef, elementRef) || this;
             _this.columnDef = columnDef;
-            _this.table = table;
+            _this.grid = grid;
             _this.elementRef = elementRef;
             _this.zone = zone;
+            _this.table = grid;
             /** @type {?} */
             var column = columnDef.column;
             /** @type {?} */
             var el = _this.el = elementRef.nativeElement;
-            /*  Apply width changes to this header cell
-                We don't update resize events to any of the possible columns because
-                - PblColumn headers NEVER change their size, they always reflect the user's definitions
-                - PblMetaColumn and PblColumnGroup headers are auto-adjusted by `PblNgridComponent.syncColumnGroupsSize` */
-            columnDef.widthChange
-                .pipe(operators.filter((/**
-             * @param {?} event
-             * @return {?}
-             */
-            function (event) { return event.reason !== 'resize'; })), utils$1.UnRx(_this))
-                .subscribe((/**
-             * @param {?} event
-             * @return {?}
-             */
-            function (event) { return _this.columnDef.applyWidth(_this.el); }));
             if (isPblColumnGroup(column)) {
                 el.classList.add(HEADER_GROUP_CSS);
                 if (column.placeholder) {
@@ -13937,52 +14100,85 @@
         function () {
             /** @type {?} */
             var col = this.columnDef.column;
-            if (isPblColumn(col)) {
-                this.cellCtx = PblNgridDataHeaderExtensionContext
-                    .createDateHeaderCtx((/** @type {?} */ (this)), this.vcRef.injector);
-            }
-            else {
-                this.cellCtx = MetaCellContext.create(col, this.table);
-            }
-        };
-        /**
-         * @return {?}
-         */
-        PblNgridHeaderCellComponent.prototype.ngAfterViewInit = /**
-         * @return {?}
-         */
-        function () {
-            var _this = this;
             /** @type {?} */
-            var col = this.columnDef.column;
-            var vcRef = this.vcRef;
+            var predicate;
             /** @type {?} */
             var view;
+            /** @type {?} */
+            var widthUpdater;
             if (isPblColumn(col)) {
                 /** @type {?} */
-                var context_1 = (/** @type {?} */ (this.cellCtx));
-                view = vcRef.createEmbeddedView(col.headerCellTpl, context_1);
-                this.zone.onStable
-                    .pipe(operators.first())
-                    .subscribe((/**
+                var gridWidthRow_1 = this.el.parentElement.hasAttribute('gridWidthRow');
+                widthUpdater = gridWidthRow_1 ? applySourceWidth : applyWidth;
+                predicate = (/**
+                 * @param {?} event
                  * @return {?}
                  */
-                function () {
-                    _this.runHeaderExtensions(context_1, (/** @type {?} */ (view)));
-                    /** @type {?} */
-                    var v = vcRef.get(0);
-                    // at this point the view might get destroyed, its possible...
-                    if (!v.destroyed) {
-                        v.detectChanges();
-                    }
-                }));
+                function (event) { return (!gridWidthRow_1 && event.reason !== 'update') || (gridWidthRow_1 && event.reason !== 'resize'); });
+                view = !gridWidthRow_1 ? this.initMainHeaderColumnView(col) : undefined;
             }
             else {
-                view = vcRef.createEmbeddedView(col.template, this.cellCtx);
+                widthUpdater = applySourceWidth;
+                predicate = (/**
+                 * @param {?} event
+                 * @return {?}
+                 */
+                function (event) { return event.reason !== 'resize'; });
+                view = this.initMetaHeaderColumnView(col);
             }
-            view.detectChanges();
-            this.columnDef.applyWidth(this.el);
+            this.columnDef.widthChange
+                .pipe(operators.filter(predicate), utils$1.UnRx(this))
+                .subscribe(widthUpdater.bind(this));
+            view && view.detectChanges();
+            widthUpdater.call(this);
             initCellElement(this.el, col);
+        };
+        /**
+         * @protected
+         * @param {?} col
+         * @return {?}
+         */
+        PblNgridHeaderCellComponent.prototype.initMainHeaderColumnView = /**
+         * @protected
+         * @param {?} col
+         * @return {?}
+         */
+        function (col) {
+            var _this = this;
+            this.cellCtx = PblNgridDataHeaderExtensionContext.createDateHeaderCtx((/** @type {?} */ (this)), this.vcRef.injector);
+            /** @type {?} */
+            var context = (/** @type {?} */ (this.cellCtx));
+            /** @type {?} */
+            var view = this.vcRef.createEmbeddedView(col.headerCellTpl, context);
+            this.zone.onStable
+                .pipe(operators.first())
+                .subscribe((/**
+             * @return {?}
+             */
+            function () {
+                _this.runHeaderExtensions(context, (/** @type {?} */ (view)));
+                /** @type {?} */
+                var v = _this.vcRef.get(0);
+                // at this point the view might get destroyed, its possible...
+                if (!v.destroyed) {
+                    v.detectChanges();
+                }
+            }));
+            return view;
+        };
+        /**
+         * @protected
+         * @param {?} col
+         * @return {?}
+         */
+        PblNgridHeaderCellComponent.prototype.initMetaHeaderColumnView = /**
+         * @protected
+         * @param {?} col
+         * @return {?}
+         */
+        function (col) {
+            this.cellCtx = MetaCellContext.create(col, this.grid);
+            return this.vcRef.createEmbeddedView(col.template, this.cellCtx);
         };
         /**
          * @protected
@@ -13999,13 +14195,13 @@
         function (context, view) {
             var _this = this;
             var e_2, _a;
-            // we collect the first header extension for each unique name only once per table instance
+            // we collect the first header extension for each unique name only once per grid instance
             /** @type {?} */
-            var extensions = lastDataHeaderExtensions.get(this.table);
+            var extensions = lastDataHeaderExtensions.get(this.grid);
             if (!extensions) {
                 /** @type {?} */
                 var dataHeaderExtensions_1 = new Map();
-                this.table.registry.forMulti('dataHeaderExtensions', (/**
+                this.grid.registry.forMulti('dataHeaderExtensions', (/**
                  * @param {?} values
                  * @return {?}
                  */
@@ -14028,12 +14224,12 @@
                     }
                 }));
                 extensions = Array.from(dataHeaderExtensions_1.values());
-                lastDataHeaderExtensions.set(this.table, extensions);
+                lastDataHeaderExtensions.set(this.grid, extensions);
                 // destroy it on the next turn, we know all cells will render on the same turn.
                 this.zone.onStable.pipe(operators.first()).subscribe((/**
                  * @return {?}
                  */
-                function () { return lastDataHeaderExtensions.delete(_this.table); }));
+                function () { return lastDataHeaderExtensions.delete(_this.grid); }));
             }
             var rootNodes = view.rootNodes;
             try {
@@ -14148,10 +14344,15 @@
         PblNgridHeaderCellComponent.prototype.el;
         /** @type {?} */
         PblNgridHeaderCellComponent.prototype.cellCtx;
+        /**
+         * @deprecated use grid instead
+         * @type {?}
+         */
+        PblNgridHeaderCellComponent.prototype.table;
         /** @type {?} */
         PblNgridHeaderCellComponent.prototype.columnDef;
         /** @type {?} */
-        PblNgridHeaderCellComponent.prototype.table;
+        PblNgridHeaderCellComponent.prototype.grid;
         /** @type {?} */
         PblNgridHeaderCellComponent.prototype.elementRef;
         /**
@@ -14170,7 +14371,7 @@
             _this.colDef = colDef;
             _this.focused = false;
             _this.selected = false;
-            _this.colIndex = _this.colDef.table.columnApi.indexOf((/** @type {?} */ (colDef.column)));
+            _this.colIndex = _this.colDef.grid.columnApi.indexOf((/** @type {?} */ (colDef.column)));
             _this.el = elementRef.nativeElement;
             colDef.applyWidth(_this.el);
             initCellElement(_this.el, colDef.column);
@@ -14300,24 +14501,23 @@
     }
     var PblNgridFooterCellDirective = /** @class */ (function (_super) {
         __extends(PblNgridFooterCellDirective, _super);
-        function PblNgridFooterCellDirective(columnDef, table, elementRef) {
+        function PblNgridFooterCellDirective(columnDef, grid, elementRef) {
             var _this = _super.call(this, columnDef, elementRef) || this;
             _this.columnDef = columnDef;
-            _this.table = table;
+            _this.grid = grid;
+            _this.table = grid;
             _this.el = elementRef.nativeElement;
             /** @type {?} */
             var column = columnDef.column;
-            columnDef.applyWidth(_this.el);
+            applyWidth.call(_this);
             initCellElement(_this.el, column);
-            // update widths for meta rows only, main footer never updates
-            if (!isPblColumn(column)) {
-                columnDef.widthChange
-                    .pipe(utils$1.UnRx(_this))
-                    .subscribe((/**
-                 * @return {?}
-                 */
-                function () { return _this.columnDef.applyWidth(_this.el); }));
-            }
+            columnDef.widthChange
+                .pipe(operators.filter((/**
+             * @param {?} event
+             * @return {?}
+             */
+            function (event) { return event.reason !== 'update'; })), utils$1.UnRx(_this))
+                .subscribe(applyWidth.bind(_this));
             return _this;
         }
         /**
@@ -14327,7 +14527,7 @@
          * @return {?}
          */
         function () {
-            this.cellCtx = MetaCellContext.create(this.columnDef.column, this.table);
+            this.cellCtx = MetaCellContext.create(this.columnDef.column, this.grid);
         };
         PblNgridFooterCellDirective.ctorParameters = function () { return [
             { type: PblNgridColumnDef },
@@ -14352,25 +14552,32 @@
         ]; };
         PblNgridFooterCellDirective = __decorate([
             utils$1.UnRx(),
-            __metadata("design:paramtypes", [PblNgridColumnDef, PblNgridComponent, core.ElementRef])
+            __metadata("design:paramtypes", [PblNgridColumnDef,
+                PblNgridComponent,
+                core.ElementRef])
         ], PblNgridFooterCellDirective);
         return PblNgridFooterCellDirective;
     }(table.CdkFooterCell));
     if (false) {
+        /** @type {?} */
+        PblNgridFooterCellDirective.prototype.cellCtx;
+        /**
+         * @deprecated use grid instead
+         * @type {?}
+         */
+        PblNgridFooterCellDirective.prototype.table;
         /**
          * @type {?}
          * @private
          */
         PblNgridFooterCellDirective.prototype.el;
-        /** @type {?} */
-        PblNgridFooterCellDirective.prototype.cellCtx;
         /**
          * @type {?}
          * @private
          */
         PblNgridFooterCellDirective.prototype.columnDef;
         /** @type {?} */
-        PblNgridFooterCellDirective.prototype.table;
+        PblNgridFooterCellDirective.prototype.grid;
     }
 
     /**
@@ -14639,7 +14846,7 @@
                  */
                 function () {
                     if (!_this._destroyed) {
-                        var viewport = _this.context.table.viewport;
+                        var viewport = _this.context.grid.viewport;
                         if (viewport && viewport.isScrolling) {
                             viewport.scrolling.pipe(operators.take(1)).subscribe(doFocus);
                         }
@@ -14710,8 +14917,8 @@
      * If a section is not part of the aggregated range it's range is invalid, i.e: ListRange.start >= ListRange.end.
      *
      * @param {?} range The aggregated range
-     * @param {?} headerLen The total length of header rows in the table
-     * @param {?} dataLen The total length of data rows in the table
+     * @param {?} headerLen The total length of header rows in the grid
+     * @param {?} dataLen The total length of data rows in the grid
      * @return {?} A tuple containing the ranges [header, data, footer].
      */
     function splitRange(range, headerLen, dataLen) {
@@ -15213,7 +15420,6 @@
     PblVirtualScrollForOf = /** @class */ (function () {
         function PblVirtualScrollForOf(extApi, ngZone) {
             var _this = this;
-            this.extApi = extApi;
             this.ngZone = ngZone;
             this.destroyed = new rxjs.Subject();
             this.renderedContentOffset = 0;
@@ -15223,11 +15429,11 @@
             this.metaRows = [0, 0];
             this.header = { rows: (/** @type {?} */ ([])), sticky: (/** @type {?} */ ([])), rendered: (/** @type {?} */ ([])) };
             this.footer = { rows: (/** @type {?} */ ([])), sticky: (/** @type {?} */ ([])), rendered: (/** @type {?} */ ([])) };
-            this.table = extApi.table;
+            this.grid = extApi.grid;
             this.cdkTable = extApi.cdkTable;
-            this.viewport = extApi.table.viewport;
+            this.viewport = extApi.grid.viewport;
             this.viewChange = this.cdkTable.viewChange;
-            PblNgridPluginController.find(extApi.table).events
+            PblNgridPluginController.find(extApi.grid).events
                 .pipe(operators.takeUntil(this.destroyed))
                 .subscribe((/**
              * @param {?} event
@@ -15239,7 +15445,7 @@
                     _this.attachView(event.curr);
                 }
             }));
-            this.attachView(extApi.table.ds);
+            this.attachView(extApi.grid.ds);
             extApi.metaRowService.sync
                 .pipe(operators.takeUntil(this.destroyed))
                 .subscribe((/**
@@ -15553,10 +15759,10 @@
                         This means that ALL sections are wrapped (hence scrolled over) but only DATA rows are moving...
           
                         Each emission of `ListRange` in `renderedRangeStream` is based on size calculation of ALL sections (see `measureRangeSize` above)
-                        and we need to extract the relevant range for DATA rows only and pass it on to the table.
+                        and we need to extract the relevant range for DATA rows only and pass it on to the grid.
           
                         To make this work we need to extract Header/Footer rows based on the starting position of the range and handle them as well.
-                        Because the table will only handle the scrolling of DATA rows we need to update HEADER/FOOTER rows to show/hide based on the range.
+                        Because the grid will only handle the scrolling of DATA rows we need to update HEADER/FOOTER rows to show/hide based on the range.
           
                         Because Header/Footer rows are fixed we do this by hiding them with `display: none`, unless they are sticky / pinned.
                         One exception is the main header row, which we hide virtually because we need it to render and reflect the cell size.
@@ -15578,7 +15784,7 @@
                      */
                     function () {
                         // We update the header DOM elements in reverse, skipping the last (first when reversed) DOM element.
-                        // The skipped element is the table's header row that must keep track of the layout for internal size calculation (e.g. group header rows).
+                        // The skipped element is the grid's header row that must keep track of the layout for internal size calculation (e.g. group header rows).
                         // An hidden row is one that is out of range AND not sticky
                         if (_this.headerLength > 0) {
                             /** @type {?} */
@@ -15599,7 +15805,7 @@
                             if (!(renderedRows[rowIndex] = rowIndex >= header.start) && !stickyRows[rowIndex]) {
                                 htmlRows[rowIndex].classList.add('pbl-ngrid-row-visually-hidden');
                             }
-                            else if (_this.table.showHeader && htmlRows[rowIndex]) {
+                            else if (_this.grid.showHeader && htmlRows[rowIndex]) {
                                 htmlRows[rowIndex].classList.remove('pbl-ngrid-row-visually-hidden');
                             }
                         }
@@ -15720,7 +15926,7 @@
          * @type {?}
          * @private
          */
-        PblVirtualScrollForOf.prototype.table;
+        PblVirtualScrollForOf.prototype.grid;
         /**
          * @type {?}
          * @private
@@ -15731,11 +15937,6 @@
          * @private
          */
         PblVirtualScrollForOf.prototype.viewport;
-        /**
-         * @type {?}
-         * @private
-         */
-        PblVirtualScrollForOf.prototype.extApi;
         /**
          * @type {?}
          * @private
@@ -15757,18 +15958,18 @@
      */
     var PblCdkTableComponent = /** @class */ (function (_super) {
         __extends(PblCdkTableComponent, _super);
-        function PblCdkTableComponent(_differs, _changeDetectorRef, _elementRef, role, _dir, injector, table, extApi, _document, platform) {
+        function PblCdkTableComponent(_differs, _changeDetectorRef, _elementRef, role, _dir, injector, grid, extApi, _document, platform) {
             var _this = _super.call(this, _differs, _changeDetectorRef, _elementRef, role, _dir, _document, platform) || this;
             _this.injector = injector;
-            _this.table = table;
+            _this.grid = grid;
             _this.extApi = extApi;
             _this._minWidth = null;
             //#endregion CSS-CLASS-CONTROL
             //#region CLEAR-ROW-DEFS
             // TODO: remove if https://github.com/angular/material2/pull/13000 is pushed
             _this._cachedRowDefs = { header: new Set(), footer: new Set() }; //tslint:disable-line
-            _this.table._cdkTable = _this;
-            _this.trackBy = _this.table.trackBy;
+            _this.grid._cdkTable = _this;
+            _this.trackBy = _this.grid.trackBy;
             extApi.events.subscribe((/**
              * @param {?} e
              * @return {?}
@@ -16058,7 +16259,7 @@
                 var viewRef = (/** @type {?} */ (viewContainer.get(renderIndex)));
                 /** @type {?} */
                 var context = viewRef.context;
-                context.gridInstance = this.table;
+                context.gridInstance = this.grid;
             }
             if (this.onRenderRows$) {
                 this.onRenderRows$.next(this._rowOutlet);
@@ -16144,7 +16345,7 @@
          */
         function () {
             /** @type {?} */
-            var columns = this.table.columnApi.visibleColumns;
+            var columns = this.grid.columnApi.visibleColumns;
             /** @type {?} */
             var sticky;
             /** @type {?} */
@@ -16269,7 +16470,7 @@
          * @type {?}
          * @protected
          */
-        PblCdkTableComponent.prototype.table;
+        PblCdkTableComponent.prototype.grid;
         /**
          * @type {?}
          * @protected
@@ -16284,9 +16485,9 @@
     /** @type {?} */
     var PBL_NGRID_MAP = new Map();
     var PblNgridGroupHeaderSizeController = /** @class */ (function () {
-        function PblNgridGroupHeaderSizeController(table) {
+        function PblNgridGroupHeaderSizeController(grid) {
             var _this = this;
-            this.table = table;
+            this.grid = grid;
             this.columns = [];
             this.entries = new WeakMap();
             this.ro = new ResizeObserver((/**
@@ -16321,6 +16522,32 @@
          * @param {?} col
          * @return {?}
          */
+        PblNgridGroupHeaderSizeController.prototype.has = /**
+         * @param {?} col
+         * @return {?}
+         */
+        function (col) {
+            return this.columns.indexOf(col) !== -1;
+        };
+        /**
+         * @param {?} column
+         * @return {?}
+         */
+        PblNgridGroupHeaderSizeController.prototype.hasColumn = /**
+         * @param {?} column
+         * @return {?}
+         */
+        function (column) {
+            return this.columns.some((/**
+             * @param {?} c
+             * @return {?}
+             */
+            function (c) { return c.column === column; }));
+        };
+        /**
+         * @param {?} col
+         * @return {?}
+         */
         PblNgridGroupHeaderSizeController.prototype.add = /**
          * @param {?} col
          * @return {?}
@@ -16348,7 +16575,7 @@
             }
             if (this.columns.length === 0) {
                 this.ro.disconnect();
-                PBL_NGRID_MAP.delete(this.table);
+                PBL_NGRID_MAP.delete(this.grid);
             }
         };
         /**
@@ -16400,7 +16627,7 @@
                     finally { if (e_2) throw e_2.error; }
                 }
                 if (!isDragging) {
-                    this.table.resizeColumns(this.columns.map((/**
+                    this.grid.resizeColumns(this.columns.map((/**
                      * @param {?} c
                      * @return {?}
                      */
@@ -16430,7 +16657,7 @@
          * @type {?}
          * @private
          */
-        PblNgridGroupHeaderSizeController.prototype.table;
+        PblNgridGroupHeaderSizeController.prototype.grid;
     }
     /**
      * A directive that listen to size changes from the element of a cell, using ResizeObserver.
@@ -16462,13 +16689,32 @@
             configurable: true
         });
         /**
+         * @param {?} column
+         * @return {?}
+         */
+        PblColumnSizeObserver.prototype.attachColumn = /**
+         * @param {?} column
+         * @return {?}
+         */
+        function (column) {
+            if (!this.controller.hasColumn(column)) {
+                _super.prototype.attachColumn.call(this, column);
+                this.updateSize();
+            }
+            else {
+                this._column = column;
+            }
+        };
+        /**
          * @return {?}
          */
         PblColumnSizeObserver.prototype.ngAfterViewInit = /**
          * @return {?}
          */
         function () {
-            this.controller.add(this);
+            if (!this.column || !this.controller.hasColumn(this.column)) {
+                this.controller.add(this);
+            }
         };
         /**
          * @return {?}
@@ -16569,7 +16815,7 @@
         /**
          * A temp workaround to solve the actual vs wanted rendered row issue in `CdkVirtualScrollViewport`
          *
-         * `CdkVirtualScrollViewport.getRenderedRange()` return the rows that the virtual container want's the table to render
+         * `CdkVirtualScrollViewport.getRenderedRange()` return the rows that the virtual container want's the grid to render
          * however, the actual rendered rows might be different. This is a problem especially in init, when the rendered rows are actually 0
          * but `CdkVirtualScrollViewport.getRenderedRange()` return the initial range of rows that should be rendered. This results in a wrong
          * calculation of the average item size in `ItemSizeAverager`
@@ -16579,7 +16825,7 @@
         /**
          * A temp workaround to solve the actual vs wanted rendered row issue in `CdkVirtualScrollViewport`
          *
-         * `CdkVirtualScrollViewport.getRenderedRange()` return the rows that the virtual container want's the table to render
+         * `CdkVirtualScrollViewport.getRenderedRange()` return the rows that the virtual container want's the grid to render
          * however, the actual rendered rows might be different. This is a problem especially in init, when the rendered rows are actually 0
          * but `CdkVirtualScrollViewport.getRenderedRange()` return the initial range of rows that should be rendered. This results in a wrong
          * calculation of the average item size in `ItemSizeAverager`
@@ -16591,7 +16837,7 @@
         TableItemSizeAverager.prototype.setRowInfo = /**
          * A temp workaround to solve the actual vs wanted rendered row issue in `CdkVirtualScrollViewport`
          *
-         * `CdkVirtualScrollViewport.getRenderedRange()` return the rows that the virtual container want's the table to render
+         * `CdkVirtualScrollViewport.getRenderedRange()` return the rows that the virtual container want's the grid to render
          * however, the actual rendered rows might be different. This is a problem especially in init, when the rendered rows are actually 0
          * but `CdkVirtualScrollViewport.getRenderedRange()` return the initial range of rows that should be rendered. This results in a wrong
          * calculation of the average item size in `ItemSizeAverager`
@@ -16716,8 +16962,8 @@
      * A virtual scroll strategy that supports unknown or dynamic size items.
      */
     var PblCdkVirtualScrollDirective = /** @class */ (function () {
-        function PblCdkVirtualScrollDirective(el, table) {
-            this.table = table;
+        function PblCdkVirtualScrollDirective(el, grid) {
+            this.grid = grid;
             this._minBufferPx = 100;
             this._maxBufferPx = 200;
             /** @type {?} */
@@ -16884,13 +17130,13 @@
             switch (this.type) {
                 case 'vScrollFixed':
                     if (!this._vScrollFixed) {
-                        this.vScrollFixed = this.table.findInitialRowHeight() || 48;
+                        this.vScrollFixed = this.grid.findInitialRowHeight() || 48;
                     }
                     this._scrollStrategy = new PblNgridFixedSizeVirtualScrollStrategy(this.vScrollFixed, this.minBufferPx, this.maxBufferPx);
                     break;
                 case 'vScrollAuto':
                     if (!this._vScrollAuto) {
-                        this._vScrollAuto = this.table.findInitialRowHeight() || 48;
+                        this._vScrollAuto = this.grid.findInitialRowHeight() || 48;
                     }
                     this._scrollStrategy = new TableAutoSizeVirtualScrollStrategy(this.minBufferPx, this.maxBufferPx, new TableItemSizeAverager(this._vScrollAuto));
                     break;
@@ -17037,7 +17283,7 @@
          * @type {?}
          * @private
          */
-        PblCdkVirtualScrollDirective.prototype.table;
+        PblCdkVirtualScrollDirective.prototype.grid;
         /* Skipping unhandled member: ;*/
     }
 
@@ -17062,16 +17308,16 @@
     }
     var PblCdkVirtualScrollViewportComponent = /** @class */ (function (_super) {
         __extends(PblCdkVirtualScrollViewportComponent, _super);
-        function PblCdkVirtualScrollViewportComponent(elementRef, cdr, ngZone, config, pblScrollStrategy, dir, scrollDispatcher, pluginCtrl, table) {
+        function PblCdkVirtualScrollViewportComponent(elementRef, cdr, ngZone, config, pblScrollStrategy, dir, scrollDispatcher, pluginCtrl, grid) {
             var _this = _super.call(this, elementRef, cdr, ngZone, pblScrollStrategy = resolveScrollStrategy(config, pblScrollStrategy), dir, scrollDispatcher) || this;
             _this.cdr = cdr;
             _this.pblScrollStrategy = pblScrollStrategy;
-            _this.table = table;
+            _this.grid = grid;
             /**
-             * Event emitted when the scrolling state of rows in the table changes.
+             * Event emitted when the scrolling state of rows in the grid changes.
              * When scrolling starts `true` is emitted and when the scrolling ends `false` is emitted.
              *
-             * The table is in "scrolling" state from the first scroll event and until 2 animation frames
+             * The grid is in "scrolling" state from the first scroll event and until 2 animation frames
              * have passed without a scroll event.
              *
              * When scrolling, the emitted value is the direction: -1 or 1
@@ -17145,21 +17391,7 @@
             }
             pluginCtrl.extApi.setViewport(_this);
             _this.offsetChange = _this.offsetChange$.asObservable();
-            _this._minWidth$ = pluginCtrl.events
-                .pipe(operators.filter((/**
-             * @param {?} event
-             * @return {?}
-             */
-            function (event) { return event.kind === 'onResizeRow'; })), operators.map((/**
-             * @param {?} e
-             * @return {?}
-             */
-            function (e) { return _this.table.columnApi.visibleColumns.reduce((/**
-             * @param {?} p
-             * @param {?} c
-             * @return {?}
-             */
-            function (p, c) { return p + c.sizeInfo.width; }), 0); })), utils$1.UnRx(_this));
+            _this._minWidth$ = grid.columnApi.totalColumnWidthChange;
             return _this;
         }
         Object.defineProperty(PblCdkVirtualScrollViewportComponent.prototype, "isScrolling", {
@@ -17263,12 +17495,12 @@
             var _this = this;
             // If virtual scroll is disabled (`NoVirtualScrollStrategy`) we need to disable any effect applied
             // by the viewport, wrapping the content injected to it.
-            // The main effect is the table having height 0 at all times, unless the height is explicitly set.
+            // The main effect is the grid having height 0 at all times, unless the height is explicitly set.
             // This happens because the content taking out of the layout, wrapped in absolute positioning.
             // Additionally, the host itself (viewport) is set to contain: strict.
-            var table = this.table;
+            var grid = this.grid;
             if (this.enabled) {
-                table._cdkTable.attachViewPort();
+                grid._cdkTable.attachViewPort();
             }
             this.scrolling
                 .pipe(utils$1.UnRx(this))
@@ -17279,10 +17511,10 @@
             function (isScrolling) {
                 _this._isScrolling = !!isScrolling;
                 if (isScrolling) {
-                    table.addClass('pbl-ngrid-scrolling');
+                    grid.addClass('pbl-ngrid-scrolling');
                 }
                 else {
-                    table.removeClass('pbl-ngrid-scrolling');
+                    grid.removeClass('pbl-ngrid-scrolling');
                 }
             }));
         };
@@ -17365,7 +17597,7 @@
          */
         function () {
             this.measureRenderedContentSize();
-            if (this.table.noFiller) {
+            if (this.grid.noFiller) {
                 this.pblFillerHeight = undefined;
             }
             else {
@@ -17605,10 +17837,10 @@
         /** @type {?} */
         PblCdkVirtualScrollViewportComponent.prototype.stickyRowFooterContainer;
         /**
-         * Event emitted when the scrolling state of rows in the table changes.
+         * Event emitted when the scrolling state of rows in the grid changes.
          * When scrolling starts `true` is emitted and when the scrolling ends `false` is emitted.
          *
-         * The table is in "scrolling" state from the first scroll event and until 2 animation frames
+         * The grid is in "scrolling" state from the first scroll event and until 2 animation frames
          * have passed without a scroll event.
          *
          * When scrolling, the emitted value is the direction: -1 or 1
@@ -17709,7 +17941,7 @@
          * @type {?}
          * @private
          */
-        PblCdkVirtualScrollViewportComponent.prototype.table;
+        PblCdkVirtualScrollViewportComponent.prototype.grid;
     }
 
     /**
@@ -18008,6 +18240,7 @@
 
     exports.ColumnApi = ColumnApi;
     exports.EXT_API_TOKEN = EXT_API_TOKEN;
+    exports.NgridPlugin = NgridPlugin;
     exports.NoVirtualScrollStrategy = NoVirtualScrollStrategy;
     exports.PBL_NGRID_ROW_TEMPLATE = PBL_NGRID_ROW_TEMPLATE;
     exports.PEB_NGRID_CONFIG = PEB_NGRID_CONFIG;
@@ -18037,7 +18270,6 @@
     exports.PblRowContext = PblRowContext;
     exports.PblTokenPaginator = PblTokenPaginator;
     exports.TableAutoSizeVirtualScrollStrategy = TableAutoSizeVirtualScrollStrategy;
-    exports.TablePlugin = TablePlugin;
     exports.applySort = applySort;
     exports.columnFactory = columnFactory;
     exports.createDS = createDS;

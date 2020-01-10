@@ -9,7 +9,7 @@ declare module '@pebula/ngrid/lib/ext/types' {
     }
 }
 export declare class PblNgridBlockUiPluginDirective<T> implements OnDestroy {
-    private table;
+    private grid;
     /**
      * Blocks the UI with the template defined via `PblNgridBlockUiDefDirective`.
      * If a template does not exist blocking is ignored.
@@ -41,7 +41,7 @@ export declare class PblNgridBlockUiPluginDirective<T> implements OnDestroy {
     private _blockUi;
     private _blockerEmbeddedVRef;
     private _removePlugin;
-    constructor(table: PblNgridComponent<any>, pluginCtrl: PblNgridPluginController<T>);
+    constructor(grid: PblNgridComponent<any>, pluginCtrl: PblNgridPluginController<T>);
     ngOnDestroy(): void;
     private setupBlocker;
 }

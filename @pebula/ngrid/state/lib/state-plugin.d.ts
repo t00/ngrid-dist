@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { OnDestroy, Injector } from '@angular/core';
 import { PblNgridComponent, PblNgridPluginController } from '@pebula/ngrid';
 import { PblNgridStateLoadOptions, PblNgridStateSaveOptions } from './core/index';
-declare module '@pebula/ngrid/lib/table/services/config' {
+declare module '@pebula/ngrid/lib/grid/services/config' {
     interface PblNgridConfig {
         state?: {
             /** When set to true will enable the state plugin on all table instances by default. */

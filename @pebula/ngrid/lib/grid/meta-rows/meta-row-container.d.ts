@@ -1,7 +1,7 @@
-import { ElementRef } from '@angular/core';
+import { Subject } from 'rxjs';
+import { ElementRef, OnDestroy } from '@angular/core';
 import { PblNgridMetaRowService } from './meta-row.service';
-import { Observable } from 'rxjs';
-export declare class PblNgridMetaRowContainerComponent {
+export declare class PblNgridMetaRowContainerComponent implements OnDestroy {
     readonly metaRows: PblNgridMetaRowService;
     type: 'header' | 'footer';
     /**
@@ -11,10 +11,13 @@ export declare class PblNgridMetaRowContainerComponent {
     _innerWidth: number;
     _minWidth: number;
     _width: number;
-    readonly _width$: Observable<number>;
+    readonly _width$: Subject<number>;
+    private _totalColumnWidth;
     private _type;
     private element;
     constructor(metaRows: PblNgridMetaRowService, elRef: ElementRef<HTMLElement>);
+    ngOnDestroy(): void;
+    private updateWidths;
     private init;
     private syncRowDefinitions;
 }

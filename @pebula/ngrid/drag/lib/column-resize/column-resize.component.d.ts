@@ -23,7 +23,9 @@ export declare class PblNgridDragResizeComponent implements AfterViewInit, OnDes
      */
     grabAreaWidth: number;
     column: PblColumn;
-    table: PblNgridComponent<any>;
+    /** @deprecated use grid instead */
+    readonly table: PblNgridComponent<any>;
+    grid: PblNgridComponent<any>;
     _hasStartedDragging: boolean;
     private _hasMoved;
     private _rootElement;
@@ -33,7 +35,6 @@ export declare class PblNgridDragResizeComponent implements AfterViewInit, OnDes
     private _pickupPositionOnPage;
     private _initialWidth;
     private _lastWidth;
-    private cache;
     private _rootElementInitSubscription;
     constructor(element: ElementRef<HTMLElement>, _ngZone: NgZone, _viewportRuler: ViewportRuler, _dragDropRegistry: DragDropRegistry<PblNgridDragResizeComponent, any>, _config: CdkDragConfig, _dir: Directionality);
     ngAfterViewInit(): void;

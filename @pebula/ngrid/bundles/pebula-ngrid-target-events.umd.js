@@ -418,7 +418,7 @@
         var isCellFocusMode = (/**
          * @return {?}
          */
-        function () { return targetEvents.table.focusMode === 'cell'; });
+        function () { return targetEvents.grid.focusMode === 'cell'; });
         /** @type {?} */
         var handlers = createHandlers(targetEvents);
         // Handle array keys move (with shift for selection, without for cell focus change)
@@ -446,7 +446,7 @@
      * @return {?}
      */
     function createHandlers(targetEvents) {
-        var contextApi = targetEvents.table.contextApi;
+        var contextApi = targetEvents.grid.contextApi;
         /**
          * @param {?} rowIdent
          * @param {?} colIndex
@@ -718,9 +718,9 @@
      * @template T
      */
     var PblNgridTargetEventsPlugin = /** @class */ (function () {
-        function PblNgridTargetEventsPlugin(table, injector, pluginCtrl) {
+        function PblNgridTargetEventsPlugin(grid, injector, pluginCtrl) {
             var _this = this;
-            this.table = table;
+            this.grid = grid;
             this.injector = injector;
             this.pluginCtrl = pluginCtrl;
             this.rowClick = new core.EventEmitter();
@@ -737,8 +737,7 @@
             this.keyDown = new core.EventEmitter();
             this.destroyed = new rxjs.ReplaySubject();
             this._removePlugin = pluginCtrl.setPlugin(PLUGIN_KEY, this);
-            this.cdr = injector.get(core.ChangeDetectorRef);
-            if (table.isInit) {
+            if (grid.isInit) {
                 this.init();
             }
             else {
@@ -758,6 +757,16 @@
             }
         }
         PblNgridTargetEventsPlugin_1 = PblNgridTargetEventsPlugin;
+        Object.defineProperty(PblNgridTargetEventsPlugin.prototype, "table", {
+            /** @deprecated use `gird` instead */
+            get: /**
+             * @deprecated use `gird` instead
+             * @return {?}
+             */
+            function () { return this.grid; },
+            enumerable: true,
+            configurable: true
+        });
         /**
          * @template T
          * @param {?} table
@@ -798,9 +807,9 @@
         function () {
             var _this = this;
             /** @type {?} */
-            var table = this.table;
+            var grid = this.grid;
             /** @type {?} */
-            var cdkTable = table._cdkTable;
+            var cdkTable = grid._cdkTable;
             /** @type {?} */
             var cdkTableElement = cdkTable['_element'];
             /** @type {?} */
@@ -820,7 +829,7 @@
                     /** @type {?} */
                     var event_1 = (/** @type {?} */ (__assign({}, matrixPoint, { source: source, cellTarget: cellTarget, rowTarget: rowTarget })));
                     if (matrixPoint.type === 'data') {
-                        ((/** @type {?} */ (event_1))).row = table.ds.renderedData[matrixPoint.rowIndex];
+                        ((/** @type {?} */ (event_1))).row = grid.ds.renderedData[matrixPoint.rowIndex];
                     }
                     else if (event_1.subType === 'meta') {
                         // When multiple containers exists (fixed/sticky/row) the rowIndex we get is the one relative to the container..
@@ -860,9 +869,9 @@
                     event_1.colIndex = findCellRenderIndex(cellTarget);
                     if (matrixPoint.subType === 'data') {
                         /** @type {?} */
-                        var column = _this.table.columnApi.findColumnAt(event_1.colIndex);
+                        var column = _this.grid.columnApi.findColumnAt(event_1.colIndex);
                         /** @type {?} */
-                        var columnIndex = _this.table.columnApi.indexOf(column);
+                        var columnIndex = _this.grid.columnApi.indexOf(column);
                         event_1.column = column;
                         ((/** @type {?} */ (event_1))).context = _this.pluginCtrl.extApi.contextApi.getCell(event_1.rowIndex, columnIndex);
                     }
@@ -1182,7 +1191,7 @@
         function () {
             this.destroyed.next();
             this.destroyed.complete();
-            this._removePlugin(this.table);
+            this._removePlugin(this.grid);
         };
         /**
          * @private
@@ -1197,7 +1206,7 @@
          * @return {?}
          */
         function (event) {
-            this.table._cdkTable.syncRows(event.type, event.rowIndex);
+            this.grid._cdkTable.syncRows(event.type, event.rowIndex);
         };
         var PblNgridTargetEventsPlugin_1;
         PblNgridTargetEventsPlugin.ctorParameters = function () { return [
@@ -1209,8 +1218,10 @@
          * @template T
          */
         PblNgridTargetEventsPlugin = PblNgridTargetEventsPlugin_1 = __decorate([
-            ngrid.TablePlugin({ id: PLUGIN_KEY, factory: 'create', runOnce: runOnce }),
-            __metadata("design:paramtypes", [ngrid.PblNgridComponent, core.Injector, ngrid.PblNgridPluginController])
+            ngrid.NgridPlugin({ id: PLUGIN_KEY, factory: 'create', runOnce: runOnce }),
+            __metadata("design:paramtypes", [ngrid.PblNgridComponent,
+                core.Injector,
+                ngrid.PblNgridPluginController])
         ], PblNgridTargetEventsPlugin);
         return PblNgridTargetEventsPlugin;
     }());
@@ -1241,21 +1252,16 @@
         PblNgridTargetEventsPlugin.prototype.keyDown;
         /**
          * @type {?}
-         * @private
+         * @protected
          */
-        PblNgridTargetEventsPlugin.prototype.cdr;
+        PblNgridTargetEventsPlugin.prototype.destroyed;
         /**
          * @type {?}
          * @private
          */
         PblNgridTargetEventsPlugin.prototype._removePlugin;
-        /**
-         * @type {?}
-         * @protected
-         */
-        PblNgridTargetEventsPlugin.prototype.destroyed;
         /** @type {?} */
-        PblNgridTargetEventsPlugin.prototype.table;
+        PblNgridTargetEventsPlugin.prototype.grid;
         /**
          * @type {?}
          * @protected
@@ -1321,7 +1327,7 @@
      * @template T
      */
     var PblNgridCellEditDirective = /** @class */ (function () {
-        function PblNgridCellEditDirective(table, injector, pluginCtrl) {
+        function PblNgridCellEditDirective(grid, injector, pluginCtrl) {
             var _this = this;
             this._click = false;
             this._dblClick = false;

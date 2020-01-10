@@ -1,9 +1,9 @@
 {
   "name": "@pebula/ngrid-material",
-  "version": "1.0.0-rc.11",
+  "version": "1.0.0-rc.13",
   "peerDependencies": {
     "@angular/material": "^8.0.0",
-    "@pebula/ngrid": "1.0.0-rc.11"
+    "@pebula/ngrid": "1.0.0-rc.13"
   },
   "main": "bundles/pebula-ngrid-material.umd.js",
   "module": "fesm5/pebula-ngrid-material.js",

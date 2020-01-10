@@ -2268,7 +2268,7 @@
             { type: ngrid.PblNgridPluginController }
         ]; };
         PblNgridStatePlugin = PblNgridStatePlugin_1 = __decorate([
-            ngrid.TablePlugin({ id: PLUGIN_KEY, factory: 'create', runOnce: registerBuiltInHandlers }),
+            ngrid.NgridPlugin({ id: PLUGIN_KEY, factory: 'create', runOnce: registerBuiltInHandlers }),
             utils.UnRx(),
             __metadata("design:paramtypes", [ngrid.PblNgridComponent, core.Injector, ngrid.PblNgridPluginController])
         ], PblNgridStatePlugin);
