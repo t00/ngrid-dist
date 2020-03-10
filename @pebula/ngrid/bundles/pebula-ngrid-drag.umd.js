@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('rxjs/operators'), require('@angular/core'), require('@angular/cdk/drag-drop'), require('rxjs'), require('@angular/cdk/coercion'), require('@angular/common'), require('@angular/cdk/bidi'), require('@angular/cdk/scrolling'), require('@pebula/ngrid'), require('@angular/cdk/platform')) :
-    typeof define === 'function' && define.amd ? define('@pebula/ngrid/drag', ['exports', 'rxjs/operators', '@angular/core', '@angular/cdk/drag-drop', 'rxjs', '@angular/cdk/coercion', '@angular/common', '@angular/cdk/bidi', '@angular/cdk/scrolling', '@pebula/ngrid', '@angular/cdk/platform'], factory) :
-    (global = global || self, factory((global.pebula = global.pebula || {}, global.pebula.ngrid = global.pebula.ngrid || {}, global.pebula.ngrid.drag = {}), global.rxjs.operators, global.ng.core, global.ng.cdk['drag-drop'], global.rxjs, global.ng.cdk.coercion, global.ng.common, global.ng.cdk.bidi, global.ng.cdk.scrolling, global.pebula.ngrid, global.ng.cdk.platform));
-}(this, (function (exports, operators, core, dragDrop, rxjs, coercion, common, bidi, scrolling, ngrid, platform) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('rxjs/operators'), require('@angular/core'), require('@angular/cdk/drag-drop'), require('rxjs'), require('@angular/cdk/coercion'), require('@angular/common'), require('@angular/cdk/scrolling'), require('@angular/cdk/bidi'), require('@pebula/ngrid'), require('@angular/cdk/platform')) :
+    typeof define === 'function' && define.amd ? define('@pebula/ngrid/drag', ['exports', 'rxjs/operators', '@angular/core', '@angular/cdk/drag-drop', 'rxjs', '@angular/cdk/coercion', '@angular/common', '@angular/cdk/scrolling', '@angular/cdk/bidi', '@pebula/ngrid', '@angular/cdk/platform'], factory) :
+    (global = global || self, factory((global.pebula = global.pebula || {}, global.pebula.ngrid = global.pebula.ngrid || {}, global.pebula.ngrid.drag = {}), global.rxjs.operators, global.ng.core, global.ng.cdk['drag-drop'], global.rxjs, global.ng.cdk.coercion, global.ng.common, global.ng.cdk.scrolling, global.ng.cdk.bidi, global.pebula.ngrid, global.ng.cdk.platform));
+}(this, (function (exports, operators, core, dragDrop, rxjs, coercion, common, scrolling, bidi, ngrid, platform) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -356,6 +356,106 @@
      * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /**
+     * Default configuration to be used when creating a `DragRef`.
+     * @type {?}
+     */
+    var DEFAULT_CONFIG = {
+        dragStartThreshold: 5,
+        pointerDirectionChangeThreshold: 5
+    };
+    /**
+     * Service that allows for drag-and-drop functionality to be attached to DOM elements.
+     */
+    var PblDragDrop = /** @class */ (function () {
+        function PblDragDrop(_document, _ngZone, _viewportRuler, _dragDropRegistry) {
+            this._document = _document;
+            this._ngZone = _ngZone;
+            this._viewportRuler = _viewportRuler;
+            this._dragDropRegistry = _dragDropRegistry;
+        }
+        /**
+         * Turns an element into a draggable item.
+         * @param element Element to which to attach the dragging functionality.
+         * @param config Object used to configure the dragging behavior.
+         */
+        /**
+         * Turns an element into a draggable item.
+         * @template T
+         * @param {?} element Element to which to attach the dragging functionality.
+         * @param {?=} config Object used to configure the dragging behavior.
+         * @return {?}
+         */
+        PblDragDrop.prototype.createDrag = /**
+         * Turns an element into a draggable item.
+         * @template T
+         * @param {?} element Element to which to attach the dragging functionality.
+         * @param {?=} config Object used to configure the dragging behavior.
+         * @return {?}
+         */
+        function (element, config) {
+            if (config === void 0) { config = DEFAULT_CONFIG; }
+            return new PblDragRef(element, config, this._document, this._ngZone, this._viewportRuler, this._dragDropRegistry);
+        };
+        /**
+         * Turns an element into a drop list.
+         * @param element Element to which to attach the drop list functionality.
+         */
+        /**
+         * Turns an element into a drop list.
+         * @template T
+         * @param {?} element Element to which to attach the drop list functionality.
+         * @return {?}
+         */
+        PblDragDrop.prototype.createDropList = /**
+         * Turns an element into a drop list.
+         * @template T
+         * @param {?} element Element to which to attach the drop list functionality.
+         * @return {?}
+         */
+        function (element) {
+            return new PblDropListRef(element, this._dragDropRegistry, this._document, this._ngZone, this._viewportRuler);
+        };
+        PblDragDrop.decorators = [
+            { type: core.Injectable, args: [{ providedIn: 'root' },] }
+        ];
+        /** @nocollapse */
+        PblDragDrop.ctorParameters = function () { return [
+            { type: undefined, decorators: [{ type: core.Inject, args: [common.DOCUMENT,] }] },
+            { type: core.NgZone },
+            { type: scrolling.ViewportRuler },
+            { type: dragDrop.DragDropRegistry }
+        ]; };
+        /** @nocollapse */ PblDragDrop.ngInjectableDef = core.ɵɵdefineInjectable({ factory: function PblDragDrop_Factory() { return new PblDragDrop(core.ɵɵinject(common.DOCUMENT), core.ɵɵinject(core.NgZone), core.ɵɵinject(scrolling.ViewportRuler), core.ɵɵinject(dragDrop.DragDropRegistry)); }, token: PblDragDrop, providedIn: "root" });
+        return PblDragDrop;
+    }());
+    if (false) {
+        /**
+         * @type {?}
+         * @private
+         */
+        PblDragDrop.prototype._document;
+        /**
+         * @type {?}
+         * @private
+         */
+        PblDragDrop.prototype._ngZone;
+        /**
+         * @type {?}
+         * @private
+         */
+        PblDragDrop.prototype._viewportRuler;
+        /**
+         * @type {?}
+         * @private
+         */
+        PblDragDrop.prototype._dragDropRegistry;
+    }
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    /**
      * @template T, DRef
      */
     var CdkLazyDropList = /** @class */ (function (_super) {
@@ -446,6 +546,7 @@
                         selector: '[cdkLazyDropList]',
                         exportAs: 'cdkLazyDropList',
                         providers: [
+                            { provide: dragDrop.DragDrop, useExisting: PblDragDrop },
                             { provide: dragDrop.CDK_DROP_LIST, useClass: CdkLazyDropList },
                         ],
                         host: {
@@ -635,6 +736,9 @@
                             'class': 'cdk-drag',
                             '[class.cdk-drag-dragging]': '_dragRef.isDragging()',
                         },
+                        providers: [
+                            { provide: dragDrop.DragDrop, useExisting: PblDragDrop },
+                        ],
                     },] }
         ];
         CdkLazyDrag.propDecorators = {
@@ -880,6 +984,7 @@
                             '[class.pbl-row-reorder]': 'rowReorder && !this.grid.ds?.sort.sort?.order && !this.grid.ds?.filter?.filter',
                         },
                         providers: [
+                            { provide: dragDrop.DragDrop, useExisting: PblDragDrop },
                             { provide: dragDrop.CdkDropListGroup, useValue: ɵ0 },
                             { provide: dragDrop.CDK_DROP_LIST, useExisting: PblNgridRowReorderPluginDirective_1 },
                         ],
@@ -1110,6 +1215,7 @@
                             '[class.cdk-drag-dragging]': '_dragRef.isDragging()',
                         },
                         providers: [
+                            { provide: dragDrop.DragDrop, useExisting: PblDragDrop },
                             { provide: dragDrop.CdkDrag, useExisting: PblNgridRowDragDirective }
                         ]
                     },] }
@@ -1157,106 +1263,6 @@
         PblNgridRowDragDirective.prototype._rootClass;
         /** @type {?} */
         PblNgridRowDragDirective.prototype._hostNotRoot;
-    }
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /**
-     * Default configuration to be used when creating a `DragRef`.
-     * @type {?}
-     */
-    var DEFAULT_CONFIG = {
-        dragStartThreshold: 5,
-        pointerDirectionChangeThreshold: 5
-    };
-    /**
-     * Service that allows for drag-and-drop functionality to be attached to DOM elements.
-     */
-    var PblDragDrop = /** @class */ (function () {
-        function PblDragDrop(_document, _ngZone, _viewportRuler, _dragDropRegistry) {
-            this._document = _document;
-            this._ngZone = _ngZone;
-            this._viewportRuler = _viewportRuler;
-            this._dragDropRegistry = _dragDropRegistry;
-        }
-        /**
-         * Turns an element into a draggable item.
-         * @param element Element to which to attach the dragging functionality.
-         * @param config Object used to configure the dragging behavior.
-         */
-        /**
-         * Turns an element into a draggable item.
-         * @template T
-         * @param {?} element Element to which to attach the dragging functionality.
-         * @param {?=} config Object used to configure the dragging behavior.
-         * @return {?}
-         */
-        PblDragDrop.prototype.createDrag = /**
-         * Turns an element into a draggable item.
-         * @template T
-         * @param {?} element Element to which to attach the dragging functionality.
-         * @param {?=} config Object used to configure the dragging behavior.
-         * @return {?}
-         */
-        function (element, config) {
-            if (config === void 0) { config = DEFAULT_CONFIG; }
-            return new PblDragRef(element, config, this._document, this._ngZone, this._viewportRuler, this._dragDropRegistry);
-        };
-        /**
-         * Turns an element into a drop list.
-         * @param element Element to which to attach the drop list functionality.
-         */
-        /**
-         * Turns an element into a drop list.
-         * @template T
-         * @param {?} element Element to which to attach the drop list functionality.
-         * @return {?}
-         */
-        PblDragDrop.prototype.createDropList = /**
-         * Turns an element into a drop list.
-         * @template T
-         * @param {?} element Element to which to attach the drop list functionality.
-         * @return {?}
-         */
-        function (element) {
-            return new PblDropListRef(element, this._dragDropRegistry, this._document);
-        };
-        PblDragDrop.decorators = [
-            { type: core.Injectable, args: [{ providedIn: 'root' },] }
-        ];
-        /** @nocollapse */
-        PblDragDrop.ctorParameters = function () { return [
-            { type: undefined, decorators: [{ type: core.Inject, args: [common.DOCUMENT,] }] },
-            { type: core.NgZone },
-            { type: scrolling.ViewportRuler },
-            { type: dragDrop.DragDropRegistry }
-        ]; };
-        /** @nocollapse */ PblDragDrop.ngInjectableDef = core.ɵɵdefineInjectable({ factory: function PblDragDrop_Factory() { return new PblDragDrop(core.ɵɵinject(common.DOCUMENT), core.ɵɵinject(core.NgZone), core.ɵɵinject(scrolling.ViewportRuler), core.ɵɵinject(dragDrop.DragDropRegistry)); }, token: PblDragDrop, providedIn: "root" });
-        return PblDragDrop;
-    }());
-    if (false) {
-        /**
-         * @type {?}
-         * @private
-         */
-        PblDragDrop.prototype._document;
-        /**
-         * @type {?}
-         * @private
-         */
-        PblDragDrop.prototype._ngZone;
-        /**
-         * @type {?}
-         * @private
-         */
-        PblDragDrop.prototype._viewportRuler;
-        /**
-         * @type {?}
-         * @private
-         */
-        PblDragDrop.prototype._dragDropRegistry;
     }
 
     /**
@@ -1688,6 +1694,7 @@
                             '[class.cdk-drop-list-receiving]': '_dropListRef.isReceiving()',
                         },
                         providers: [
+                            { provide: dragDrop.DragDrop, useExisting: PblDragDrop },
                             { provide: dragDrop.CDK_DROP_LIST, useExisting: PblNgridColumnReorderPluginDirective_1 },
                         ],
                     },] }
@@ -1978,6 +1985,7 @@
                             '[class.cdk-drag-dragging]': '_dragRef.isDragging()',
                         },
                         providers: [
+                            { provide: dragDrop.DragDrop, useExisting: PblDragDrop },
                             { provide: dragDrop.CdkDrag, useExisting: PblNgridColumnDragDirective }
                         ]
                     },] }
@@ -2754,6 +2762,7 @@
                             '[id]': 'id',
                         },
                         providers: [
+                            { provide: dragDrop.DragDrop, useExisting: PblDragDrop },
                             { provide: dragDrop.CDK_DROP_LIST, useExisting: PblNgridAggregationContainerDirective },
                         ],
                     },] }
@@ -2900,7 +2909,6 @@
                         ],
                         providers: [
                             PblDragDrop,
-                            { provide: dragDrop.DragDrop, useExisting: PblDragDrop },
                         ],
                         entryComponents: [DragPluginDefaultTemplatesComponent],
                     },] }
@@ -2919,13 +2927,14 @@
     exports.PblNgridRowReorderPluginDirective = PblNgridRowReorderPluginDirective;
     exports.ɵa = PLUGIN_KEY$1;
     exports.ɵb = PLUGIN_KEY$2;
-    exports.ɵc = extendGrid;
-    exports.ɵd = extendGrid$1;
-    exports.ɵe = DragPluginDefaultTemplatesComponent;
-    exports.ɵf = PblNgridCellDraggerRefDirective;
-    exports.ɵg = PblNgridAggregationContainerDirective;
-    exports.ɵh = PblNgridCellResizerRefDirective;
-    exports.ɵi = PblDragDrop;
+    exports.ɵc = PblDragDrop;
+    exports.ɵd = extendGrid;
+    exports.ɵe = PblDragDrop;
+    exports.ɵf = extendGrid$1;
+    exports.ɵg = DragPluginDefaultTemplatesComponent;
+    exports.ɵh = PblNgridCellDraggerRefDirective;
+    exports.ɵi = PblNgridAggregationContainerDirective;
+    exports.ɵj = PblNgridCellResizerRefDirective;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

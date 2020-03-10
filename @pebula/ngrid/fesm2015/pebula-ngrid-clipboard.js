@@ -249,9 +249,36 @@ let PblNgridClipboardPlugin = PblNgridClipboardPlugin_1 = class PblNgridClipboar
                 }
             }
         }
+        // contextApi.selectedCells are un-ordered, their order is based on the order in which user have selected cells.
+        // It means that the row's will not paste in the proper order unless we re-order them based on the data index.
+        // This is a very native and simple implementation that will hold most copy actions 1k +-
+        // TODO: Consider a better logic, taking performance into consideration.
+        /** @type {?} */
+        const entries = Array.from(data.entries());
+        entries.sort((/**
+         * @param {?} a
+         * @param {?} b
+         * @return {?}
+         */
+        (a, b) => {
+            /** @type {?} */
+            const aIndex = contextApi.findRowInCache(a[0]).dataIndex;
+            /** @type {?} */
+            const bIndex = contextApi.findRowInCache(b[0]).dataIndex;
+            if (aIndex < bIndex) {
+                return -1;
+            }
+            else {
+                return 1;
+            }
+        }));
         return {
             minIndex,
-            rows: Array.from(data.values()),
+            rows: entries.map((/**
+             * @param {?} e
+             * @return {?}
+             */
+            e => e[1])),
         };
     }
     /**
