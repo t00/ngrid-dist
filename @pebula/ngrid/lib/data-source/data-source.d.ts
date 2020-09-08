@@ -21,7 +21,8 @@ export interface PblDataSourceOptions {
     skipInitial?: boolean;
 }
 export declare class PblDataSource<T = any, TData = any> extends DataSource<T> {
-    pagination: PblNgridPaginatorKind | false;
+    get pagination(): PblNgridPaginatorKind | false;
+    set pagination(value: PblNgridPaginatorKind | false);
     /**
      * An observable that emit events when an new incoming source is expected, before calling the trigger handler to get the new source.
      * This even is usually followed by the `onSourceChanged` event but not always. This is because the trigger handler
@@ -82,13 +83,14 @@ export declare class PblDataSource<T = any, TData = any> extends DataSource<T> {
      * Note that only the internal trigger call is skipped, a custom calls to refresh will go through
      */
     readonly skipInitial: boolean;
-    adapter: PblDataSourceAdapter;
+    get adapter(): PblDataSourceAdapter;
+    set adapter(value: PblDataSourceAdapter);
     /** @deprecated BREAKING CHANGE: removed in 1.0.0 - Use renderedData instead. */
-    readonly renderedRows: T[];
+    get renderedRows(): T[];
     /** Returns the starting index of the rendered data */
-    readonly renderStart: number;
-    readonly renderLength: number;
-    readonly renderedData: T[];
+    get renderStart(): number;
+    get renderLength(): number;
+    get renderedData(): T[];
     /**
      * The `source` with sorting applied.
      * Valid only when sorting is performed client-side.
@@ -96,7 +98,7 @@ export declare class PblDataSource<T = any, TData = any> extends DataSource<T> {
      * To get real-time notifications use `onRenderDataChanging`.
      * The sorted data is updated just before `onRenderDataChanging` fire.
      */
-    readonly sortedData: T[];
+    get sortedData(): T[];
     /**
      * The `source` with filtering applied.
      * Valid only when filtering is performed client-side.
@@ -105,14 +107,14 @@ export declare class PblDataSource<T = any, TData = any> extends DataSource<T> {
      * To get real-time notifications use `onRenderDataChanging`.
      * The filtered data is updated just before `onRenderDataChanging` fire.
      */
-    readonly filteredData: T[];
-    readonly filter: DataSourceFilter;
-    readonly sort: PblNgridDataSourceSortChange;
-    readonly paginator: PblPaginator<any>;
-    readonly length: number;
-    readonly source: T[];
+    get filteredData(): T[];
+    get filter(): DataSourceFilter;
+    get sort(): PblNgridDataSourceSortChange;
+    get paginator(): PblPaginator<any>;
+    get length(): number;
+    get source(): T[];
     /** Represents selected items on the data source. */
-    readonly selection: SelectionModel<T>;
+    get selection(): SelectionModel<T>;
     protected readonly _selection: SelectionModel<T>;
     protected readonly _tableConnectionChange$: Subject<boolean>;
     protected readonly _onRenderDataChanging: Subject<{

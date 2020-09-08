@@ -29,7 +29,7 @@ export declare class DynamicColumnWidthLogic {
      * @readonly
      */
     maxWidthLockChanged: boolean;
-    readonly minimumRowWidth: number;
+    get minimumRowWidth(): number;
     private readonly cols;
     private _minimumRowWidth;
     constructor(strategy: BoxModelSpaceStrategy);

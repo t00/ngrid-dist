@@ -26,8 +26,9 @@ export declare class PblNgridDetailRowPluginDirective<T> implements OnDestroy {
      * You can enable/disable detail row for the entire grid by setting `detailRow` to true/false respectively.
      * To control detail row per row, provide a predicate.
      */
-    detailRow: ((index: number, rowData: T) => boolean) | boolean;
-    singleDetailRow: boolean;
+    get detailRow(): ((index: number, rowData: T) => boolean) | boolean;
+    set detailRow(value: ((index: number, rowData: T) => boolean) | boolean);
+    set singleDetailRow(value: boolean);
     /**
      * A list of columns that will not trigger a detail row toggle when clicked.
      */

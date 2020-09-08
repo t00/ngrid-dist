@@ -41,11 +41,14 @@ export interface PblPaginator<TPage> {
 export declare class PblTokenPaginator implements PblPaginator<string> {
     readonly kind: 'token';
     noCacheMode: boolean;
-    perPage: number;
-    page: string;
-    total: number;
-    readonly totalPages: number;
-    readonly range: [number, number];
+    get perPage(): number;
+    set perPage(value: number);
+    get page(): string;
+    set page(value: string);
+    get total(): number;
+    set total(value: number);
+    get totalPages(): number;
+    get range(): [number, number];
     readonly onChange: Observable<PblPaginatorChangeEvent<string>>;
     protected onChange$: BehaviorSubject<PblPaginatorChangeEvent<string>>;
     protected queuedChanges: PblPaginatorChangeEvent<string> | undefined;
@@ -69,17 +72,20 @@ export declare class PblTokenPaginator implements PblPaginator<string> {
 export declare class PblPagingPaginator implements PblPaginator<number> {
     readonly kind: 'pageNumber';
     noCacheMode: boolean;
-    perPage: number;
+    get perPage(): number;
+    set perPage(value: number);
     /**
      * Get / Set the current page
      */
-    page: number;
-    total: number;
+    get page(): number;
+    set page(value: number);
+    get total(): number;
+    set total(value: number);
     /**
      * The amount of pages in this paginator
      */
-    readonly totalPages: number;
-    readonly range: [number, number];
+    get totalPages(): number;
+    get range(): [number, number];
     readonly onChange: Observable<PblPaginatorChangeEvent<number>>;
     protected onChange$: BehaviorSubject<PblPaginatorChangeEvent<number>>;
     private _total;

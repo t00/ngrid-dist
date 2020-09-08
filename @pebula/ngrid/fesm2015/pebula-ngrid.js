@@ -1,11 +1,9 @@
 import { ReplaySubject, Subject, combineLatest, of, isObservable, from, asapScheduler, BehaviorSubject, animationFrameScheduler, fromEventPattern, fromEvent, race, timer } from 'rxjs';
-import { InjectionToken, Injectable, Optional, Inject, ɵɵdefineInjectable, ɵɵinject, isDevMode, SkipSelf, Directive, TemplateRef, ElementRef, Component, Input, Attribute, Injector, ViewContainerRef, ChangeDetectorRef, IterableDiffers, NgZone, forwardRef, ChangeDetectionStrategy, ViewEncapsulation, ViewChild, ViewChildren, EventEmitter, Output, ANALYZE_FOR_ENTRY_COMPONENTS, NgModule, NgModuleRef, Self } from '@angular/core';
+import { InjectionToken, Injectable, Optional, Inject, ɵɵdefineInjectable, ɵɵinject, isDevMode, SkipSelf, Directive, TemplateRef, Component, ElementRef, Input, Attribute, Injector, ViewContainerRef, ChangeDetectorRef, forwardRef, ChangeDetectionStrategy, ViewEncapsulation, IterableDiffers, NgZone, ViewChild, ViewChildren, EventEmitter, Output, NgModule, NgModuleRef, Self } from '@angular/core';
 import { DataSource, CdkRowDef, CdkHeaderRowDef, CdkFooterRowDef, CDK_ROW_TEMPLATE, CdkRow, CdkColumnDef, CdkHeaderCell, CdkCell, CdkFooterCell, CdkTable, CDK_TABLE_TEMPLATE, CdkTableModule } from '@angular/cdk/table';
-import { __decorate, __metadata } from 'tslib';
 import ResizeObserver from 'resize-observer-polyfill';
-import { map, filter as filter$1, debounceTime, switchMap, tap, observeOn, mapTo, skip, buffer, auditTime, take, startWith, pairwise, first, takeUntil } from 'rxjs/operators';
+import { takeUntil, filter as filter$1, map, debounceTime, switchMap, tap, observeOn, mapTo, skip, buffer, auditTime, take, startWith, pairwise, first } from 'rxjs/operators';
 import { coerceBooleanProperty, coerceNumberProperty } from '@angular/cdk/coercion';
-import { UnRx, removeFromArray } from '@pebula/utils';
 import { SelectionModel } from '@angular/cdk/collections';
 import { moveItemInArray as moveItemInArray$1 } from '@angular/cdk/drag-drop';
 import { DOCUMENT, CommonModule } from '@angular/common';
@@ -16,7 +14,8 @@ import { ItemSizeAverager, AutoSizeVirtualScrollStrategy, ScrollingModule as Scr
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/services/config.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @record
@@ -48,7 +47,7 @@ class PblNgridConfigService {
         }
         /** @type {?} */
         const gridConfig = this.config.get('table') || {};
-        this.config.set('table', Object.assign({}, DEFAULT_TABLE_CONFIG, gridConfig));
+        this.config.set('table', Object.assign(Object.assign({}, DEFAULT_TABLE_CONFIG), gridConfig));
     }
     /**
      * @param {?} section
@@ -123,7 +122,7 @@ PblNgridConfigService.decorators = [
 PblNgridConfigService.ctorParameters = () => [
     { type: undefined, decorators: [{ type: Optional }, { type: Inject, args: [PEB_NGRID_CONFIG,] }] }
 ];
-/** @nocollapse */ PblNgridConfigService.ngInjectableDef = ɵɵdefineInjectable({ factory: function PblNgridConfigService_Factory() { return new PblNgridConfigService(ɵɵinject(PEB_NGRID_CONFIG, 8)); }, token: PblNgridConfigService, providedIn: "root" });
+/** @nocollapse */ PblNgridConfigService.ɵprov = ɵɵdefineInjectable({ factory: function PblNgridConfigService_Factory() { return new PblNgridConfigService(ɵɵinject(PEB_NGRID_CONFIG, 8)); }, token: PblNgridConfigService, providedIn: "root" });
 if (false) {
     /**
      * @type {?}
@@ -139,12 +138,14 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/services/index.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/ext/grid-plugin.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * \@internal
@@ -166,24 +167,21 @@ if (false) {
 }
 /**
  * @param {?} metadata
+ * @param {?} target
  * @return {?}
  */
-function NgridPlugin(metadata) {
+function ngridPlugin(metadata, target) {
     if (metadata.runOnce) {
         metadata.runOnce();
     }
-    return (/**
-     * @param {?} target
-     * @return {?}
-     */
-    target => {
-        PLUGIN_STORE.set(metadata.id, Object.assign({}, metadata, { target }));
-    });
+    PLUGIN_STORE.set(metadata.id, Object.assign(Object.assign({}, metadata), { target }));
+    return metadata.id;
 }
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/ext/plugin-control.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const NGRID_PLUGIN_CONTEXT = new WeakMap();
@@ -381,7 +379,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/ext/grid-ext-api.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const EXT_API_TOKEN = new InjectionToken('PBL_NGRID_EXTERNAL_API');
@@ -423,7 +422,233 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/utils/type-helpers.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+// https://stackoverflow.com/questions/49579094/typescript-conditional-types-filter-out-readonly-properties-pick-only-requir
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: lib/grid/utils/helpers.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * Given an object (item) and a path, returns the value at the path
+ * @param {?} item
+ * @param {?} col
+ * @return {?}
+ */
+function deepPathGet(item, col) {
+    if (col.path) {
+        for (const p of col.path) {
+            item = item[p];
+            if (!item)
+                return;
+        }
+    }
+    return item[col.prop];
+}
+/**
+ * Given an object (item) and a path, returns the value at the path
+ * @param {?} item
+ * @param {?} col
+ * @param {?} value
+ * @return {?}
+ */
+function deepPathSet(item, col, value) {
+    if (col.path) {
+        for (const p of col.path) {
+            item = item[p];
+            if (!item)
+                return;
+        }
+    }
+    item[col.prop] = value;
+}
+/**
+ * Updates the column sizes of the columns provided based on the column definition metadata for each column.
+ * The final width represent a static width, it is the value as set in the definition (except column without width, where the calculated global width is set).
+ * @param {?} rowWidth
+ * @param {?} tableColumns
+ * @param {?} metaColumns
+ * @return {?}
+ */
+function resetColumnWidths(rowWidth, tableColumns, metaColumns) {
+    const { pct, px } = rowWidth.defaultColumnWidth;
+    /** @type {?} */
+    const defaultWidth = `calc(${pct}% - ${px}px)`;
+    for (const c of tableColumns) {
+        c.setDefaultWidth(defaultWidth);
+        c.updateWidth();
+    }
+    for (const m of metaColumns) {
+        for (const c of [m.header, m.footer]) {
+            if (c) {
+                c.updateWidth('');
+            }
+        }
+        // We don't handle groups because they are handled by `PblNgridComponent.resizeRows()`
+        // which set the width for each.
+    }
+}
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: lib/grid/utils/unrx.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * Emits the values emitted by the source observable until a kill signal is sent to the group.
+ * You can also specify a `subKillGroup` which can be used to kill specific subscriptions within a group.
+ *
+ * When a `killGroup` is "killed" all `subKillGroup` are killed as well. When a `subKillGroup` is "killed" the group remains
+ * as well as other "subKillGroup" registered for that group.
+ *
+ * > WARNING: Do not apply operators that subscribe internally (e.g. combineLatest, switchMap) after the `killOnDestroy` operator.
+ * Internal subscriptions will not unsubscribe automatically.
+ * For more information see {\@link https://blog.angularindepth.com/rxjs-avoiding-takeuntil-leaks-fb5182d047ef | this blog post}
+ * @template T
+ * @param {?} killGroup
+ * @param {?=} subKillGroup
+ * @return {?}
+ */
+function unrx(killGroup, subKillGroup) {
+    return unrx.pipe(killGroup, subKillGroup);
+}
+(function (unrx) {
+    /** @type {?} */
+    const ALL_HANDLERS_TOKEN = {};
+    /** @type {?} */
+    const notifierStore = new WeakMap();
+    /**
+     * @param {?} component
+     * @param {?=} create
+     * @return {?}
+     */
+    function getNotifier(component, create = false) {
+        /** @type {?} */
+        let notifier = notifierStore.get(component);
+        if (!notifier && create === true) {
+            notifierStore.set(component, notifier = new Subject());
+        }
+        return notifier;
+    }
+    /**
+     * @param {?} killGroup
+     * @param {...?} subKillGroup
+     * @return {?}
+     */
+    function kill(killGroup, ...subKillGroup) {
+        if (subKillGroup.length === 0) {
+            killAll(killGroup);
+        }
+        else {
+            /** @type {?} */
+            const notifier = getNotifier(killGroup);
+            if (notifier) {
+                for (const h of subKillGroup) {
+                    notifier.next(h);
+                }
+            }
+        }
+    }
+    unrx.kill = kill;
+    /**
+     * {\@inheritdoc unrx}
+     * @template T
+     * @param {?} killGroup
+     * @param {?=} subKillGroup
+     * @return {?}
+     */
+    function pipe(killGroup, subKillGroup) {
+        return (/**
+         * @param {?} source
+         * @return {?}
+         */
+        (source) => source.pipe(takeUntil(getNotifier(killGroup, true).pipe(filter$1((/**
+         * @param {?} h
+         * @return {?}
+         */
+        h => h === ALL_HANDLERS_TOKEN || (subKillGroup && h === subKillGroup)))))));
+    }
+    unrx.pipe = pipe;
+    /**
+     * @param {?} obj
+     * @return {?}
+     */
+    function killAll(obj) {
+        /** @type {?} */
+        const notifier = getNotifier(obj);
+        if (notifier) {
+            notifier.next(ALL_HANDLERS_TOKEN);
+            notifier.complete();
+            notifierStore.delete(obj);
+        }
+    }
+})(unrx || (unrx = {}));
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: lib/grid/utils/array.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * @template T
+ * @param {?} arr
+ * @param {?} value
+ * @return {?}
+ */
+function removeFromArray(arr, value) {
+    if (Array.isArray(value)) {
+        return value.map((/**
+         * @param {?} v
+         * @return {?}
+         */
+        v => _removeFromArray(arr, v)));
+    }
+    else if (typeof value === 'function') {
+        /** @type {?} */
+        const idx = arr.findIndex((/** @type {?} */ (value)));
+        if (idx > -1) {
+            arr.splice(idx, 1);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    else {
+        return _removeFromArray(arr, value);
+    }
+}
+/**
+ * @template T
+ * @param {?} arr
+ * @param {?} value
+ * @return {?}
+ */
+function _removeFromArray(arr, value) {
+    /** @type {?} */
+    const idx = arr.indexOf(value);
+    if (idx > -1) {
+        arr.splice(idx, 1);
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: lib/grid/utils/index.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: lib/data-source/filtering.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @param {?} value
@@ -498,7 +723,8 @@ const genericColumnPredicate = (/**
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/data-source/sorting.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * Apply sorting on a collection, based on column and sort definitions.
@@ -549,7 +775,8 @@ function defaultSorter(column, sort, data) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/data-source/data-source-adapter.helpers.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const EMPTY = Object.freeze({});
@@ -665,7 +892,8 @@ function createNotChangedEvent(value) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/data-source/data-source-adapter.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const CUSTOM_BEHAVIOR_TRIGGER_KEYS = ['sort', 'filter', 'pagination'];
@@ -789,7 +1017,7 @@ class PblDataSourceAdapter {
          */
         (o) => o.skipUpdate !== true);
         this._lastSource = undefined;
-        this.cache = Object.assign({}, DEFAULT_INITIAL_CACHE_STATE, initialState);
+        this.cache = Object.assign(Object.assign({}, DEFAULT_INITIAL_CACHE_STATE), initialState);
         /** @type {?} */
         const combine = [
             filter$.pipe(map((/**
@@ -1127,7 +1355,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/paginator/paginator.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * An object with properties representing the change in the paginator.
@@ -1628,12 +1857,14 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/paginator/index.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/data-source/data-source.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const PROCESSING_SUBSCRIPTION_GROUP = {};
@@ -1858,7 +2089,7 @@ class PblDataSource extends DataSource {
      */
     dispose() {
         if (!this._disposed) {
-            UnRx.kill(this);
+            unrx.kill(this);
             this._adapter.dispose();
             this._onRenderDataChanging.complete();
             this._renderData$.complete();
@@ -1933,7 +2164,7 @@ class PblDataSource extends DataSource {
         }
         /** @type {?} */
         const stream = this._adapter.updateProcessingLogic(this._filter$, this._sort$, paginator ? paginator.onChange : of(undefined), initialState);
-        UnRx.kill(this, PROCESSING_SUBSCRIPTION_GROUP);
+        unrx.kill(this, PROCESSING_SUBSCRIPTION_GROUP);
         /** @type {?} */
         const trimToRange = (/**
          * @param {?} range
@@ -1946,7 +2177,7 @@ class PblDataSource extends DataSource {
         /** @type {?} */
         let lastEmittedSource;
         cv.viewChange
-            .pipe(UnRx(this, PROCESSING_SUBSCRIPTION_GROUP))
+            .pipe(unrx(this, PROCESSING_SUBSCRIPTION_GROUP))
             .subscribe((/**
          * @param {?} range
          * @return {?}
@@ -1963,7 +2194,7 @@ class PblDataSource extends DataSource {
             }
         }));
         stream
-            .pipe(UnRx(this, PROCESSING_SUBSCRIPTION_GROUP), tap((/**
+            .pipe(unrx(this, PROCESSING_SUBSCRIPTION_GROUP), tap((/**
          * @param {?} result
          * @return {?}
          */
@@ -1988,7 +2219,7 @@ class PblDataSource extends DataSource {
          */
         error => { this._onError$.next(error); }));
         this._adapter.onSourceChanged
-            .pipe(UnRx(this, PROCESSING_SUBSCRIPTION_GROUP))
+            .pipe(unrx(this, PROCESSING_SUBSCRIPTION_GROUP))
             .subscribe((/**
          * @param {?} source
          * @return {?}
@@ -2158,7 +2389,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/data-source/factory.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @record
@@ -2303,87 +2535,14 @@ function createDS() {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/data-source/index.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-// https://stackoverflow.com/questions/49579094/typescript-conditional-types-filter-out-readonly-properties-pick-only-requir
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * Given an object (item) and a path, returns the value at the path
- * @param {?} item
- * @param {?} col
- * @return {?}
- */
-function deepPathGet(item, col) {
-    if (col.path) {
-        for (const p of col.path) {
-            item = item[p];
-            if (!item)
-                return;
-        }
-    }
-    return item[col.prop];
-}
-/**
- * Given an object (item) and a path, returns the value at the path
- * @param {?} item
- * @param {?} col
- * @param {?} value
- * @return {?}
- */
-function deepPathSet(item, col, value) {
-    if (col.path) {
-        for (const p of col.path) {
-            item = item[p];
-            if (!item)
-                return;
-        }
-    }
-    item[col.prop] = value;
-}
-/**
- * Updates the column sizes of the columns provided based on the column definition metadata for each column.
- * The final width represent a static width, it is the value as set in the definition (except column without width, where the calculated global width is set).
- * @param {?} rowWidth
- * @param {?} tableColumns
- * @param {?} metaColumns
- * @return {?}
- */
-function resetColumnWidths(rowWidth, tableColumns, metaColumns) {
-    const { pct, px } = rowWidth.defaultColumnWidth;
-    /** @type {?} */
-    const defaultWidth = `calc(${pct}% - ${px}px)`;
-    for (const c of tableColumns) {
-        c.setDefaultWidth(defaultWidth);
-        c.updateWidth();
-    }
-    for (const m of metaColumns) {
-        for (const c of [m.header, m.footer]) {
-            if (c) {
-                c.updateWidth('');
-            }
-        }
-        // We don't handle groups because they are handled by `PblNgridComponent.resizeRows()`
-        // which set the width for each.
-    }
-}
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/columns/types.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @record
@@ -2647,7 +2806,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/columns/utils.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const RE_PARSE_STYLE_LENGTH_UNIT = /((?:\d*\.)?\d+)(%|px)$/;
@@ -2675,7 +2835,7 @@ function initDefinitions(def, target) {
      * @param {?} k
      * @return {?}
      */
-    k => k in def && (target[k] = def[k])));
+    k => k in def && (target[(/** @type {?} */ (k))] = def[k])));
     if (def.data) {
         target.data = Object.assign(target.data || {}, def.data);
     }
@@ -2685,7 +2845,7 @@ function initDefinitions(def, target) {
  * @return {?}
  */
 function isColumnDefinition(obj) {
-    // TODO: Get rid of this duckt-type type matching. Accept solid instances in PblTable.columns instead of interfaces.
+    // TODO: Get rid of this duck-type type matching. Accept solid instances in PblTable.columns instead of interfaces.
     return !!obj.prop && !obj.hasOwnProperty('span');
 }
 /**
@@ -2693,13 +2853,14 @@ function isColumnDefinition(obj) {
  * @return {?}
  */
 function isColumnGroupDefinition(obj) {
-    // TODO: Get rid of this duckt-type type matching. Accept solid instances in PblTable.columns instead of interfaces.
+    // TODO: Get rid of this duck-type type matching. Accept solid instances in PblTable.columns instead of interfaces.
     return !!obj.prop && obj.hasOwnProperty('span');
 }
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/columns/meta-column.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const PBL_NGRID_META_COLUMN_MARK = Symbol('PblMetaColumn');
@@ -2888,7 +3049,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/columns/group-column.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const PBL_NGRID_COLUMN_GROUP_MARK = Symbol('PblColumnGroup');
@@ -3152,7 +3314,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/columns/column.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const PBL_NGRID_COLUMN_MARK = Symbol('PblColumn');
@@ -3651,7 +3814,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/columns/factory.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class PblColumnFactory {
     constructor() {
@@ -3697,7 +3861,7 @@ class PblColumnFactory {
              * @param {?} d
              * @return {?}
              */
-            d => new PblColumn(Object.assign({}, _defaults.table, d), groupStore))),
+            d => new PblColumn(Object.assign(Object.assign({}, _defaults.table), d), groupStore))),
         };
         /** @type {?} */
         const header = _raw.header.map((/**
@@ -3712,7 +3876,7 @@ class PblColumnFactory {
              * @param {?} c
              * @return {?}
              */
-            c => new PblMetaColumn(Object.assign({}, _defaults.header, c)))),
+            c => new PblMetaColumn(Object.assign(Object.assign({}, _defaults.header), c)))),
         })));
         /** @type {?} */
         const footer = _raw.footer.map((/**
@@ -3727,7 +3891,7 @@ class PblColumnFactory {
              * @param {?} c
              * @return {?}
              */
-            c => new PblMetaColumn(Object.assign({}, _defaults.footer, c))))
+            c => new PblMetaColumn(Object.assign(Object.assign({}, _defaults.footer), c))))
         })));
         /** @type {?} */
         const headerGroup = _raw.headerGroup.map((/**
@@ -4004,7 +4168,8 @@ function columnFactory() {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/col-width-logic/static-column-width.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * A column width object representing the relative column using a combination of percentage and pixels.
@@ -4141,7 +4306,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/columns/column-store.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @record
@@ -4646,7 +4812,8 @@ function clamp(value, max) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/columns/column-size-info.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class ColumnSizeInfo {
     /**
@@ -4728,12 +4895,14 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/columns/index.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/services/grid-registry.service.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @record
@@ -4799,30 +4968,6 @@ if (false) {
  *
  * If a registry does not contain the template the search will move to the next one.
  */
-let PblNgridRegistryService = /**
- * A Registry for templates of table parts.
- *
- * The registry is hierarchical, where each instance of a registry has a parent which allows cascading templates.
- * The hierarchy is manged by angular DI.
- *
- * > The root registry does not have a parent.
- *
- * Each instance of a registry (including root) is a hierarchy by itself, composed of 2 internal levels.
- * The first level (L1 below) is used for fixed templates, the second level (L2 below) is used for dynamic templates.
- *
- * - Root Registry
- *   - Child Registry
- *     - ChildOfChild Registry
- *
- * In the example above there are 3 registries: Root, Child and ChildOfChild.
- *
- * When searching for a template in `ChildOfChild` it will search in the following order (top to bottom):
- *   - ChildOfChild
- *   - Child
- *   - Root
- *
- * If a registry does not contain the template the search will move to the next one.
- */
 class PblNgridRegistryService {
     /**
      * @param {?=} _parent
@@ -4835,7 +4980,7 @@ class PblNgridRegistryService {
         this.changes$ = new Subject();
         this.changes = this.changes$.asObservable();
         if (this._parent) {
-            this._parent.changes.pipe(UnRx(this)).subscribe(this.changes$);
+            this._parent.changes.pipe(unrx(this)).subscribe(this.changes$);
             this.root = this._parent.root;
         }
         else {
@@ -4978,6 +5123,7 @@ class PblNgridRegistryService {
      */
     ngOnDestroy() {
         this.changes$.complete();
+        unrx.kill(this);
     }
     /**
      * Delay all notifications sent through `changes` and buffer then until next call to `bufferEnd()`.
@@ -5018,10 +5164,7 @@ class PblNgridRegistryService {
             this.changes$.next(e);
         }
     }
-};
-PblNgridRegistryService.ctorParameters = () => [
-    { type: PblNgridRegistryService }
-];
+}
 PblNgridRegistryService.decorators = [
     { type: Injectable, args: [{ providedIn: 'root' },] }
 ];
@@ -5029,35 +5172,7 @@ PblNgridRegistryService.decorators = [
 PblNgridRegistryService.ctorParameters = () => [
     { type: PblNgridRegistryService, decorators: [{ type: Optional }, { type: SkipSelf }] }
 ];
-/** @nocollapse */ PblNgridRegistryService.ngInjectableDef = ɵɵdefineInjectable({ factory: function PblNgridRegistryService_Factory() { return new PblNgridRegistryService(ɵɵinject(PblNgridRegistryService, 12)); }, token: PblNgridRegistryService, providedIn: "root" });
-/**
- * A Registry for templates of table parts.
- *
- * The registry is hierarchical, where each instance of a registry has a parent which allows cascading templates.
- * The hierarchy is manged by angular DI.
- *
- * > The root registry does not have a parent.
- *
- * Each instance of a registry (including root) is a hierarchy by itself, composed of 2 internal levels.
- * The first level (L1 below) is used for fixed templates, the second level (L2 below) is used for dynamic templates.
- *
- * - Root Registry
- *   - Child Registry
- *     - ChildOfChild Registry
- *
- * In the example above there are 3 registries: Root, Child and ChildOfChild.
- *
- * When searching for a template in `ChildOfChild` it will search in the following order (top to bottom):
- *   - ChildOfChild
- *   - Child
- *   - Root
- *
- * If a registry does not contain the template the search will move to the next one.
- */
-PblNgridRegistryService = __decorate([
-    UnRx(),
-    __metadata("design:paramtypes", [PblNgridRegistryService])
-], PblNgridRegistryService);
+/** @nocollapse */ PblNgridRegistryService.ɵprov = ɵɵdefineInjectable({ factory: function PblNgridRegistryService_Factory() { return new PblNgridRegistryService(ɵɵinject(PblNgridRegistryService, 12)); }, token: PblNgridRegistryService, providedIn: "root" });
 if (false) {
     /** @type {?} */
     PblNgridRegistryService.prototype.changes;
@@ -5095,7 +5210,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/directives/cell-def.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @record
@@ -5190,7 +5306,9 @@ class PblNgridHeaderCellDefDirective extends PblNgridBaseCellDef {
      * @param {?} tRef
      * @param {?} registry
      */
-    constructor(tRef, registry) { super(tRef, registry); }
+    constructor(tRef, registry) {
+        super(tRef, registry);
+    }
 }
 PblNgridHeaderCellDefDirective.decorators = [
     { type: Directive, args: [{
@@ -5226,7 +5344,9 @@ class PblNgridCellDefDirective extends PblNgridBaseCellDef {
      * @param {?} tRef
      * @param {?} registry
      */
-    constructor(tRef, registry) { super(tRef, registry); }
+    constructor(tRef, registry) {
+        super(tRef, registry);
+    }
 }
 PblNgridCellDefDirective.decorators = [
     { type: Directive, args: [{
@@ -5254,7 +5374,9 @@ class PblNgridEditorCellDefDirective extends PblNgridBaseCellDef {
      * @param {?} tRef
      * @param {?} registry
      */
-    constructor(tRef, registry) { super(tRef, registry); }
+    constructor(tRef, registry) {
+        super(tRef, registry);
+    }
 }
 PblNgridEditorCellDefDirective.decorators = [
     { type: Directive, args: [{
@@ -5282,7 +5404,9 @@ class PblNgridFooterCellDefDirective extends PblNgridBaseCellDef {
      * @param {?} tRef
      * @param {?} registry
      */
-    constructor(tRef, registry) { super(tRef, registry); }
+    constructor(tRef, registry) {
+        super(tRef, registry);
+    }
 }
 PblNgridFooterCellDefDirective.decorators = [
     { type: Directive, args: [{
@@ -5365,7 +5489,8 @@ function findCellDef(registry, colDef, kind, searchParent) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/context/types.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @record
@@ -5683,7 +5808,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/context/cell.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @template T, TCol
@@ -5909,7 +6035,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/context/row.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @template T
@@ -6128,7 +6255,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/context/utils.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * IE 11 compatible matches implementation.
@@ -6250,7 +6378,8 @@ function isCellContext(obj) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/context/api.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @template T
@@ -7002,12 +7131,14 @@ function processOutOfView(viewRef, viewPortRect, location) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/context/index.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/col-width-logic/dynamic-column-width.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @record
@@ -7193,7 +7324,8 @@ const DYNAMIC_PADDING_BOX_MODEL_SPACE_STRATEGY = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/column-api.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @record
@@ -7421,14 +7553,14 @@ class ColumnApi {
             /** @type {?} */
             const widthBreakout = wLogic.widthBreakout(column.sizeInfo);
             /** @type {?} */
-            const instructions = Object.assign({}, (columnBehavior(column) || {}), options);
+            const instructions = Object.assign(Object.assign({}, (columnBehavior(column) || {})), options);
             overflowTotalWidth += widthBreakout.content;
             totalWidth -= widthBreakout.nonContent;
             if (instructions.keepMinWidth && column.minWidth) {
                 totalMinWidth += column.minWidth;
                 withMinWidth.push(index);
             }
-            return Object.assign({}, widthBreakout, { instructions });
+            return Object.assign(Object.assign({}, widthBreakout), { instructions });
         }));
         /** @type {?} */
         const p = totalMinWidth / totalWidth;
@@ -7582,7 +7714,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/meta-rows/meta-row.service.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @return {?}
@@ -7781,9 +7914,10 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/meta-rows/meta-row-container.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-let PblNgridMetaRowContainerComponent = class PblNgridMetaRowContainerComponent {
+class PblNgridMetaRowContainerComponent {
     /**
      * @param {?} metaRows
      * @param {?} elRef
@@ -7793,12 +7927,12 @@ let PblNgridMetaRowContainerComponent = class PblNgridMetaRowContainerComponent 
         this._width$ = new Subject();
         this._totalColumnWidth = 0;
         this.element = elRef.nativeElement;
-        metaRows.sync.pipe(UnRx(this)).subscribe((/**
+        metaRows.sync.pipe(unrx(this)).subscribe((/**
          * @return {?}
          */
         () => this.syncRowDefinitions()));
         this.metaRows.extApi.events
-            .pipe(UnRx(this))
+            .pipe(unrx(this))
             .subscribe((/**
          * @param {?} event
          * @return {?}
@@ -7809,7 +7943,7 @@ let PblNgridMetaRowContainerComponent = class PblNgridMetaRowContainerComponent 
             }
         }));
         this.metaRows.extApi.grid.columnApi.totalColumnWidthChange
-            .pipe(UnRx(this))
+            .pipe(unrx(this))
             .subscribe((/**
          * @param {?} width
          * @return {?}
@@ -7820,20 +7954,37 @@ let PblNgridMetaRowContainerComponent = class PblNgridMetaRowContainerComponent 
         }));
     }
     /**
-     * @param {?} value
+     * @param {?} changes
      * @return {?}
      */
-    set type(value) {
-        if (this._type !== value) {
-            this.init(value);
+    ngOnChanges(changes) {
+        if ('type' in changes) {
+            /** @type {?} */
+            const scrollContainerElement = this.element;
+            scrollContainerElement.scrollLeft = this.metaRows.extApi.grid.viewport.measureScrollOffset('start');
+            if (changes.type.isFirstChange) {
+                this.metaRows.hzScroll
+                    .pipe(unrx(this))
+                    .subscribe((/**
+                 * @param {?} offset
+                 * @return {?}
+                 */
+                offset => scrollContainerElement.scrollLeft = offset));
+                this.metaRows.extApi.cdkTable.onRenderRows
+                    .pipe(unrx(this))
+                    .subscribe((/**
+                 * @return {?}
+                 */
+                () => { this.updateWidths(); }));
+            }
         }
     }
-    ;
     /**
      * @return {?}
      */
     ngOnDestroy() {
         this._width$.complete();
+        unrx.kill(this);
     }
     /**
      * @private
@@ -7847,40 +7998,11 @@ let PblNgridMetaRowContainerComponent = class PblNgridMetaRowContainerComponent 
     }
     /**
      * @private
-     * @param {?} type
-     * @return {?}
-     */
-    init(type) {
-        if (type === 'header') {
-            this._type = type;
-        }
-        else {
-            this._type = 'footer';
-        }
-        /** @type {?} */
-        const scrollContainerElement = this.element;
-        scrollContainerElement.scrollLeft = this.metaRows.extApi.grid.viewport.measureScrollOffset('start');
-        this.metaRows.hzScroll
-            .pipe(UnRx(this))
-            .subscribe((/**
-         * @param {?} offset
-         * @return {?}
-         */
-        offset => scrollContainerElement.scrollLeft = offset));
-        this.metaRows.extApi.cdkTable.onRenderRows
-            .pipe(UnRx(this))
-            .subscribe((/**
-         * @return {?}
-         */
-        () => { this.updateWidths(); }));
-    }
-    /**
-     * @private
      * @return {?}
      */
     syncRowDefinitions() {
         /** @type {?} */
-        const isHeader = this._type === 'header';
+        const isHeader = this.type === 'header';
         /** @type {?} */
         const section = isHeader ? this.metaRows.header : this.metaRows.footer;
         /** @type {?} */
@@ -7894,11 +8016,7 @@ let PblNgridMetaRowContainerComponent = class PblNgridMetaRowContainerComponent 
             container.appendChild(def.el);
         }
     }
-};
-PblNgridMetaRowContainerComponent.ctorParameters = () => [
-    { type: PblNgridMetaRowService },
-    { type: ElementRef }
-];
+}
 PblNgridMetaRowContainerComponent.decorators = [
     { type: Component, args: [{
                 selector: 'div[pbl-ngrid-fixed-meta-row-container]',
@@ -7918,11 +8036,9 @@ PblNgridMetaRowContainerComponent.ctorParameters = () => [
 PblNgridMetaRowContainerComponent.propDecorators = {
     type: [{ type: Input, args: ['pbl-ngrid-fixed-meta-row-container',] }]
 };
-PblNgridMetaRowContainerComponent = __decorate([
-    UnRx(),
-    __metadata("design:paramtypes", [PblNgridMetaRowService, ElementRef])
-], PblNgridMetaRowContainerComponent);
 if (false) {
+    /** @type {?} */
+    PblNgridMetaRowContainerComponent.prototype.type;
     /**
      * The inner width of the grid, the viewport width of a row.
      * The width of the grid minus scroll bar.
@@ -7944,22 +8060,17 @@ if (false) {
      * @type {?}
      * @private
      */
-    PblNgridMetaRowContainerComponent.prototype._type;
-    /**
-     * @type {?}
-     * @private
-     */
     PblNgridMetaRowContainerComponent.prototype.element;
     /** @type {?} */
     PblNgridMetaRowContainerComponent.prototype.metaRows;
-    /* Skipping unhandled member: ;*/
 }
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/meta-rows/meta-row.directive.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-let PblMetaRowDirective = class PblMetaRowDirective {
+class PblMetaRowDirective {
     /**
      * @param {?} metaRows
      * @param {?} elRef
@@ -8012,12 +8123,7 @@ let PblMetaRowDirective = class PblMetaRowDirective {
             this.metaRows.addMetaRow(this);
         }
     }
-};
-PblMetaRowDirective.ctorParameters = () => [
-    { type: PblNgridMetaRowService },
-    { type: ElementRef },
-    { type: undefined }
-];
+}
 PblMetaRowDirective.decorators = [
     { type: Directive, args: [{
                 selector: '[pblMetaRow]',
@@ -8032,11 +8138,6 @@ PblMetaRowDirective.ctorParameters = () => [
 PblMetaRowDirective.propDecorators = {
     meta: [{ type: Input, args: ['pblMetaRow',] }]
 };
-PblMetaRowDirective = __decorate([
-    UnRx(),
-    __metadata("design:paramtypes", [PblNgridMetaRowService,
-        ElementRef, Object])
-], PblMetaRowDirective);
 if (false) {
     /** @type {?} */
     PblMetaRowDirective.prototype.gridWidthRow;
@@ -8053,12 +8154,14 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/meta-rows/index.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/bind-to-datasource.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @param {?} plugin
@@ -8091,7 +8194,8 @@ function bindToDataSource(plugin) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/ngrid.deprecate-at-1.0.0.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @param {?} store
@@ -8140,7 +8244,11 @@ USING "${identityProp}" AS THE IDENTITY COLUMN.`);
     }
 }
 
-var PblNgridComponent_1;
+/**
+ * @fileoverview added by tsickle
+ * Generated from: lib/grid/ngrid.component.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 /**
  * @param {?} grid
  * @return {?}
@@ -8157,9 +8265,6 @@ function pluginControllerFactory(grid) { return grid._plugin.controller; }
  */
 function metaRowServiceFactory(grid) { return grid._extApi.metaRowService; }
 /**
- * @template T
- */
-let PblNgridComponent = PblNgridComponent_1 = /**
  * @template T
  */
 class PblNgridComponent {
@@ -8542,6 +8647,7 @@ class PblNgridComponent {
             if (this._viewport) {
                 this._cdkTable.detachViewPort();
             }
+            unrx.kill(this);
         });
         /** @type {?} */
         let p;
@@ -8636,7 +8742,7 @@ class PblNgridComponent {
         if (this._dataSource !== value) {
             // KILL ALL subscriptions for the previous datasource.
             if (this._dataSource) {
-                UnRx.kill(this, this._dataSource);
+                unrx.kill(this, this._dataSource);
             }
             /** @type {?} */
             const prev = this._dataSource;
@@ -8653,13 +8759,13 @@ class PblNgridComponent {
             });
             if (value) {
                 if (isDevMode()) {
-                    value.onError.pipe(UnRx(this, value)).subscribe(console.error.bind(console));
+                    value.onError.pipe(unrx(this, value)).subscribe(console.error.bind(console));
                 }
                 // We register to this event because it fires before the entire data-changing process starts.
                 // This is required because `onRenderDataChanging` is fired async, just before the data is emitted.
                 // Its not enough to clear the context when `setDataSource` is called, we also need to handle `refresh` calls which will not
                 // trigger this method.
-                value.onSourceChanging.pipe(UnRx(this, value)).subscribe((/**
+                value.onSourceChanging.pipe(unrx(this, value)).subscribe((/**
                  * @return {?}
                  */
                 () => this._extApi.contextApi.clear()));
@@ -8679,7 +8785,7 @@ class PblNgridComponent {
                 () => !this._store.primary && this._extApi.contextApi.clear())), switchMap((/**
                  * @return {?}
                  */
-                () => value.onRenderedDataChanged.pipe(take(1), mapTo(this.ds.renderLength)))), observeOn(asapScheduler), UnRx(this, value))
+                () => value.onRenderedDataChanged.pipe(take(1), mapTo(this.ds.renderLength)))), observeOn(asapScheduler), unrx(this, value))
                     .subscribe((/**
                  * @param {?} previousRenderLength
                  * @return {?}
@@ -8713,7 +8819,7 @@ class PblNgridComponent {
                         this.setupNoData();
                     }
                 })), observeOn(animationFrameScheduler), // ww want to give the browser time to remove/add rows
-                UnRx(this, value))
+                unrx(this, value))
                     .subscribe((/**
                  * @return {?}
                  */
@@ -9048,7 +9154,7 @@ class PblNgridComponent {
         /** @type {?} */
         let skipValue = document.body.contains(this.elRef.nativeElement) ? 1 : 0;
         ro$
-            .pipe(skip(skipValue), debounceTime(0, animationFrameScheduler), UnRx(this))
+            .pipe(skip(skipValue), debounceTime(0, animationFrameScheduler), unrx(this))
             .subscribe((/**
          * @param {?} args
          * @return {?}
@@ -9210,7 +9316,7 @@ class PblNgridComponent {
             }
         }
         if (this.isInit) {
-            UnRx.kill(this, paginationKillKey);
+            unrx.kill(this, paginationKillKey);
             if (this._paginatorEmbeddedVRef) {
                 this.removeView(this._paginatorEmbeddedVRef, 'beforeContent');
                 this._paginatorEmbeddedVRef = undefined;
@@ -9320,18 +9426,7 @@ class PblNgridComponent {
             }
         }
     }
-};
-PblNgridComponent.ctorParameters = () => [
-    { type: Injector },
-    { type: ViewContainerRef },
-    { type: ElementRef },
-    { type: IterableDiffers },
-    { type: NgZone },
-    { type: ChangeDetectorRef },
-    { type: PblNgridConfigService },
-    { type: PblNgridRegistryService },
-    { type: String }
-];
+}
 PblNgridComponent.decorators = [
     { type: Component, args: [{
                 selector: 'pbl-ngrid',
@@ -9344,7 +9439,7 @@ PblNgridComponent.decorators = [
                         deps: [forwardRef((/**
                              * @return {?}
                              */
-                            () => PblNgridComponent_1))],
+                            () => PblNgridComponent))],
                     },
                     {
                         provide: EXT_API_TOKEN,
@@ -9352,7 +9447,7 @@ PblNgridComponent.decorators = [
                         deps: [forwardRef((/**
                              * @return {?}
                              */
-                            () => PblNgridComponent_1))],
+                            () => PblNgridComponent))],
                     },
                     {
                         provide: PblNgridMetaRowService,
@@ -9360,12 +9455,12 @@ PblNgridComponent.decorators = [
                         deps: [forwardRef((/**
                              * @return {?}
                              */
-                            () => PblNgridComponent_1))],
+                            () => PblNgridComponent))],
                     }
                 ],
                 changeDetection: ChangeDetectionStrategy.OnPush,
                 encapsulation: ViewEncapsulation.None,
-                styles: ["pbl-ngrid{display:block}.pbl-ngrid-row-visually-hidden{border-top:0;border-bottom:0;clip:rect(0 0 0 0);height:0;min-height:0;max-height:0;overflow:hidden!important;visibility:collapse!important;outline:0;-webkit-appearance:none;-moz-appearance:none}.pbl-ngrid-row-hidden{display:none!important}.pbl-ngrid-container{position:relative;height:100%;width:100%;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-direction:column;box-sizing:border-box;display:-webkit-box;display:flex;overflow:auto;min-height:inherit}.pbl-ngrid-scroll-container{-webkit-box-flex:1;flex:1 1 auto;box-sizing:border-box;min-height:auto}.pbl-ngrid-scroll-container.cdk-virtual-scroll-disabled{-webkit-box-flex:1;flex:1 0 auto}.pbl-ngrid-sticky-row-scroll-container{position:fixed;overflow:hidden}.pbl-ngrid-empty-spacer{display:none}.pbl-ngrid-empty .cdk-virtual-scroll-content-wrapper{min-height:100%;display:-webkit-box;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-direction:column}.pbl-ngrid-empty .cdk-virtual-scroll-content-wrapper .pbl-cdk-table{display:-webkit-box;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-direction:column;-webkit-box-flex:1;flex:1 1 100%}.pbl-ngrid-empty .cdk-virtual-scroll-content-wrapper .pbl-cdk-table>*{-webkit-box-flex:0;flex:0 0 auto}.pbl-ngrid-empty .cdk-virtual-scroll-content-wrapper .pbl-cdk-table>.pbl-ngrid-empty-spacer{display:block;-webkit-box-flex:1;flex:1 1 auto}.pbl-ngrid-scrolling pbl-cdk-table{pointer-events:none}"]
+                styles: ["pbl-ngrid{display:block}.pbl-ngrid-row-visually-hidden{border-top:0;border-bottom:0;clip:rect(0 0 0 0);height:0;min-height:0;max-height:0;overflow:hidden!important;visibility:collapse!important;outline:0;-webkit-appearance:none;-moz-appearance:none}.pbl-ngrid-row-hidden{display:none!important}.pbl-ngrid-container{position:relative;height:100%;width:100%;flex-direction:column;box-sizing:border-box;display:flex;overflow:auto;min-height:inherit}.pbl-ngrid-scroll-container{flex:1 1 auto;box-sizing:border-box;min-height:auto}.pbl-ngrid-scroll-container.cdk-virtual-scroll-disabled{flex:1 0 auto}.pbl-ngrid-sticky-row-scroll-container{position:fixed;overflow:hidden}.pbl-ngrid-empty-spacer{display:none}.pbl-ngrid-empty .cdk-virtual-scroll-content-wrapper{min-height:100%;display:flex;flex-direction:column}.pbl-ngrid-empty .cdk-virtual-scroll-content-wrapper .pbl-cdk-table{display:flex;flex-direction:column;flex:1 1 100%}.pbl-ngrid-empty .cdk-virtual-scroll-content-wrapper .pbl-cdk-table>*{flex:0 0 auto}.pbl-ngrid-empty .cdk-virtual-scroll-content-wrapper .pbl-cdk-table>.pbl-ngrid-empty-spacer{display:block;flex:1 1 auto}.pbl-ngrid-scrolling pbl-cdk-table{pointer-events:none}"]
             }] }
 ];
 /** @nocollapse */
@@ -9404,19 +9499,6 @@ PblNgridComponent.propDecorators = {
     _headerRowDefs: [{ type: ViewChildren, args: [CdkHeaderRowDef,] }],
     _footerRowDefs: [{ type: ViewChildren, args: [CdkFooterRowDef,] }]
 };
-/**
- * @template T
- */
-PblNgridComponent = PblNgridComponent_1 = __decorate([
-    UnRx(),
-    __metadata("design:paramtypes", [Injector, ViewContainerRef,
-        ElementRef,
-        IterableDiffers,
-        NgZone,
-        ChangeDetectorRef,
-        PblNgridConfigService,
-        PblNgridRegistryService, String])
-], PblNgridComponent);
 if (false) {
     /** @type {?} */
     PblNgridComponent.prototype._showHeader;
@@ -9585,7 +9667,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/directives/cell-style-class/styling_differ.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 // https://github.com/angular/angular/blob/0bf810022a80ba1cbcff8aa471063a6f1352abbe/packages/common/src/directives/styling_differ.ts
 /**
@@ -9977,7 +10060,8 @@ function arrayEqualsArray(a, b) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/directives/row.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const PBL_NGRID_ROW_TEMPLATE = `<ng-content select=".pbl-ngrid-row-prefix"></ng-content>${CDK_ROW_TEMPLATE}<ng-content select=".pbl-ngrid-row-suffix"></ng-content>`;
@@ -10172,7 +10256,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/directives/registry.directives.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @abstract
@@ -10455,7 +10540,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/directives/directives.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * A directive that marks the template as a projected section inside the grid.
@@ -10508,7 +10594,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/circular-dep-bridge.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * This file contains constants shared between modules (files) that if not extract will cause a circular dependency
@@ -10536,7 +10623,8 @@ function uniqueColumnTypeCss(type) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/directives/column-def.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @record
@@ -10888,7 +10976,8 @@ function setWidth(el, widths) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/directives/cell.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const HEADER_GROUP_CSS = `pbl-header-group-cell`;
@@ -10939,15 +11028,6 @@ function applySourceWidth() {
     this.columnDef.applySourceWidth(this.el);
 }
 /**
- * Header cell component.
- * The header cell component will render the header cell template and add the proper classes and role.
- *
- * It is also responsible for creating and managing the any `dataHeaderExtensions` registered in the registry.
- * These extensions add features to the cells either as a template instance or as a component instance.
- * Examples: Sorting behavior, drag&drop/resize handlers, menus etc...
- * @template T
- */
-let PblNgridHeaderCellComponent = /**
  * Header cell component.
  * The header cell component will render the header cell template and add the proper classes and role.
  *
@@ -11014,11 +11094,17 @@ class PblNgridHeaderCellComponent extends CdkHeaderCell {
             view = this.initMetaHeaderColumnView(col);
         }
         this.columnDef.widthChange
-            .pipe(filter$1(predicate), UnRx(this))
+            .pipe(filter$1(predicate), unrx(this))
             .subscribe(widthUpdater.bind(this));
         view && view.detectChanges();
         widthUpdater.call(this);
         initCellElement(this.el, col);
+    }
+    /**
+     * @return {?}
+     */
+    ngOnDestroy() {
+        unrx.kill(this);
     }
     /**
      * @protected
@@ -11118,7 +11204,7 @@ class PblNgridHeaderCellComponent extends CdkHeaderCell {
             projectedContent.push(rootNodes);
         }
         /** @type {?} */
-        const cmpRef = this.vcRef.createComponent(factory, 0, null, projectedContent);
+        const cmpRef = this.vcRef.createComponent(factory, this.vcRef.length, null, projectedContent);
         if (ext.projectContent) {
             rootNodes = [cmpRef.location.nativeElement];
         }
@@ -11127,13 +11213,7 @@ class PblNgridHeaderCellComponent extends CdkHeaderCell {
         }
         return rootNodes;
     }
-};
-PblNgridHeaderCellComponent.ctorParameters = () => [
-    { type: PblNgridColumnDef },
-    { type: PblNgridComponent },
-    { type: ElementRef },
-    { type: NgZone }
-];
+}
 PblNgridHeaderCellComponent.decorators = [
     { type: Component, args: [{
                 selector: 'pbl-ngrid-header-cell',
@@ -11157,22 +11237,6 @@ PblNgridHeaderCellComponent.ctorParameters = () => [
 PblNgridHeaderCellComponent.propDecorators = {
     vcRef: [{ type: ViewChild, args: ['vcRef', { read: ViewContainerRef, static: true },] }]
 };
-/**
- * Header cell component.
- * The header cell component will render the header cell template and add the proper classes and role.
- *
- * It is also responsible for creating and managing the any `dataHeaderExtensions` registered in the registry.
- * These extensions add features to the cells either as a template instance or as a component instance.
- * Examples: Sorting behavior, drag&drop/resize handlers, menus etc...
- * @template T
- */
-PblNgridHeaderCellComponent = __decorate([
-    UnRx(),
-    __metadata("design:paramtypes", [PblNgridColumnDef,
-        PblNgridComponent,
-        ElementRef,
-        NgZone])
-], PblNgridHeaderCellComponent);
 if (false) {
     /** @type {?} */
     PblNgridHeaderCellComponent.prototype.vcRef;
@@ -11203,9 +11267,6 @@ if (false) {
 /**
  * Cell template container that adds the right classes and role.
  */
-let PblNgridCellDirective = /**
- * Cell template container that adds the right classes and role.
- */
 class PblNgridCellDirective extends CdkCell {
     /**
      * @param {?} colDef
@@ -11228,7 +11289,7 @@ class PblNgridCellDirective extends CdkCell {
          * @param {?} event
          * @return {?}
          */
-        event => event.reason !== 'update')), UnRx(this))
+        event => event.reason !== 'update')), unrx(this))
             .subscribe((/**
          * @param {?} event
          * @return {?}
@@ -11270,11 +11331,13 @@ class PblNgridCellDirective extends CdkCell {
             }
         }
     }
-};
-PblNgridCellDirective.ctorParameters = () => [
-    { type: PblNgridColumnDef },
-    { type: ElementRef }
-];
+    /**
+     * @return {?}
+     */
+    ngOnDestroy() {
+        unrx.kill(this);
+    }
+}
 PblNgridCellDirective.decorators = [
     { type: Directive, args: [{
                 selector: 'pbl-ngrid-cell',
@@ -11293,13 +11356,6 @@ PblNgridCellDirective.ctorParameters = () => [
 PblNgridCellDirective.propDecorators = {
     rowCtx: [{ type: Input }]
 };
-/**
- * Cell template container that adds the right classes and role.
- */
-PblNgridCellDirective = __decorate([
-    UnRx(),
-    __metadata("design:paramtypes", [PblNgridColumnDef, ElementRef])
-], PblNgridCellDirective);
 if (false) {
     /**
      * @type {?}
@@ -11335,7 +11391,7 @@ if (false) {
      */
     PblNgridCellDirective.prototype.colDef;
 }
-let PblNgridFooterCellDirective = class PblNgridFooterCellDirective extends CdkFooterCell {
+class PblNgridFooterCellDirective extends CdkFooterCell {
     /**
      * @param {?} columnDef
      * @param {?} grid
@@ -11356,7 +11412,7 @@ let PblNgridFooterCellDirective = class PblNgridFooterCellDirective extends CdkF
          * @param {?} event
          * @return {?}
          */
-        event => event.reason !== 'update')), UnRx(this))
+        event => event.reason !== 'update')), unrx(this))
             .subscribe(applyWidth.bind(this));
     }
     /**
@@ -11365,12 +11421,13 @@ let PblNgridFooterCellDirective = class PblNgridFooterCellDirective extends CdkF
     ngOnInit() {
         this.cellCtx = MetaCellContext.create(this.columnDef.column, this.grid);
     }
-};
-PblNgridFooterCellDirective.ctorParameters = () => [
-    { type: PblNgridColumnDef },
-    { type: PblNgridComponent },
-    { type: ElementRef }
-];
+    /**
+     * @return {?}
+     */
+    ngOnDestroy() {
+        unrx.kill(this);
+    }
+}
 PblNgridFooterCellDirective.decorators = [
     { type: Directive, args: [{
                 selector: 'pbl-ngrid-footer-cell',
@@ -11387,12 +11444,6 @@ PblNgridFooterCellDirective.ctorParameters = () => [
     { type: PblNgridComponent },
     { type: ElementRef }
 ];
-PblNgridFooterCellDirective = __decorate([
-    UnRx(),
-    __metadata("design:paramtypes", [PblNgridColumnDef,
-        PblNgridComponent,
-        ElementRef])
-], PblNgridFooterCellDirective);
 if (false) {
     /** @type {?} */
     PblNgridFooterCellDirective.prototype.cellCtx;
@@ -11417,7 +11468,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/directives/cell-style-class/index.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /*
     We're using `StylingDiffer`, which is an exact copy of the style differ used for `ngStyle` and `ngClass`.
@@ -11588,7 +11640,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/directives/editing.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class PblNgridCellEditAutoFocusDirective {
     /**
@@ -11675,12 +11728,14 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/directives/index.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/features/virtual-scroll/utils.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * Returns the split range from an aggregated range.
@@ -11801,7 +11856,8 @@ function getSize(orientation, node) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/features/virtual-scroll/meta-row-sticky-scroll.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * A class that manages the life cycle of sticky meta rows (header & footer) while scrolling.
@@ -12081,7 +12137,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/features/virtual-scroll/virtual-scroll-for-of.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const FIXED_HEADER_MODE = true;
@@ -12591,7 +12648,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/pbl-cdk-table/pbl-cdk-table.component.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * Wrapper for the CdkTable that extends it's functionality to support various table features.
@@ -12942,7 +13000,7 @@ PblCdkTableComponent.decorators = [
                 },
                 encapsulation: ViewEncapsulation.None,
                 changeDetection: ChangeDetectionStrategy.OnPush,
-                styles: [".pbl-cdk-table{display:block}.pbl-ngrid-footer-row,.pbl-ngrid-header-row,.pbl-ngrid-row{display:-webkit-box;display:flex;border-width:0 0 1px;border-style:solid;-webkit-box-align:center;align-items:center;box-sizing:border-box;position:relative}.pbl-ngrid-footer-row::after,.pbl-ngrid-header-row::after,.pbl-ngrid-row::after{display:inline-block;min-height:inherit;content:''}.pbl-ngrid-cell,.pbl-ngrid-footer-cell,.pbl-ngrid-header-cell{-webkit-box-flex:1;flex:1;display:-webkit-box;display:flex;-webkit-box-align:center;align-items:center;overflow:hidden;word-wrap:break-word;min-height:inherit}.pbl-ngrid-header-cell.pbl-header-group-cell{display:-webkit-box;display:flex;-webkit-box-align:center;align-items:center}.pbl-ngrid-header-cell.pbl-header-group-cell.pbl-header-group-cell-placeholder{border:none}.pbl-ngrid-footer-cell,.pbl-ngrid-header-cell{position:relative}.pbl-ngrid-cell{cursor:default;outline:0}.pbl-ngrid-editable-cell{cursor:text}"]
+                styles: [".pbl-cdk-table{display:block}.pbl-ngrid-footer-row,.pbl-ngrid-header-row,.pbl-ngrid-row{display:flex;border-width:0 0 1px;border-style:solid;align-items:center;box-sizing:border-box;position:relative}.pbl-ngrid-footer-row::after,.pbl-ngrid-header-row::after,.pbl-ngrid-row::after{display:inline-block;min-height:inherit;content:''}.pbl-ngrid-cell,.pbl-ngrid-footer-cell,.pbl-ngrid-header-cell{flex:1;display:flex;align-items:center;overflow:hidden;word-wrap:break-word;min-height:inherit}.pbl-ngrid-header-cell.pbl-header-group-cell{display:flex;align-items:center}.pbl-ngrid-header-cell.pbl-header-group-cell.pbl-header-group-cell-placeholder{border:none}.pbl-ngrid-footer-cell,.pbl-ngrid-header-cell{position:relative}.pbl-ngrid-cell{cursor:default;outline:0}.pbl-ngrid-editable-cell{cursor:text}"]
             }] }
 ];
 /** @nocollapse */
@@ -13013,7 +13071,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/features/column-size-observer/column-size-observer.directive.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const PBL_NGRID_MAP = new Map();
@@ -13224,7 +13283,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/features/virtual-scroll/strategies.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const noop = (/**
@@ -13647,7 +13707,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/features/virtual-scroll/virtual-scroll-viewport.component.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @param {?} config
@@ -13664,7 +13725,7 @@ function resolveScrollStrategy(config, scrollStrategy) {
     }
     return scrollStrategy || new TableAutoSizeVirtualScrollStrategy(100, 200);
 }
-let PblCdkVirtualScrollViewportComponent = class PblCdkVirtualScrollViewportComponent extends CdkVirtualScrollViewport {
+class PblCdkVirtualScrollViewportComponent extends CdkVirtualScrollViewport {
     /**
      * @param {?} elementRef
      * @param {?} cdr
@@ -13746,7 +13807,7 @@ let PblCdkVirtualScrollViewportComponent = class PblCdkVirtualScrollViewportComp
         if (config.has('virtualScroll')) {
             this.wheelModeDefault = config.get('virtualScroll').wheelMode;
         }
-        config.onUpdate('virtualScroll').pipe(UnRx(this)).subscribe((/**
+        config.onUpdate('virtualScroll').pipe(unrx(this)).subscribe((/**
          * @param {?} change
          * @return {?}
          */
@@ -13834,7 +13895,7 @@ let PblCdkVirtualScrollViewportComponent = class PblCdkVirtualScrollViewportComp
             grid._cdkTable.attachViewPort();
         }
         this.scrolling
-            .pipe(UnRx(this))
+            .pipe(unrx(this))
             .subscribe((/**
          * @param {?} isScrolling
          * @return {?}
@@ -13855,6 +13916,7 @@ let PblCdkVirtualScrollViewportComponent = class PblCdkVirtualScrollViewportComp
     ngOnDestroy() {
         super.ngOnDestroy();
         this.offsetChange$.complete();
+        unrx.kill(this);
     }
     /**
      * @param {?} size
@@ -14050,18 +14112,7 @@ let PblCdkVirtualScrollViewportComponent = class PblCdkVirtualScrollViewportComp
             scrolling++;
         }));
     }
-};
-PblCdkVirtualScrollViewportComponent.ctorParameters = () => [
-    { type: ElementRef },
-    { type: ChangeDetectorRef },
-    { type: NgZone },
-    { type: PblNgridConfigService },
-    { type: undefined },
-    { type: Directionality },
-    { type: ScrollDispatcher },
-    { type: PblNgridPluginController },
-    { type: PblNgridComponent }
-];
+}
 PblCdkVirtualScrollViewportComponent.decorators = [
     { type: Component, args: [{
                 selector: 'pbl-cdk-virtual-scroll-viewport',
@@ -14075,7 +14126,7 @@ PblCdkVirtualScrollViewportComponent.decorators = [
                 },
                 encapsulation: ViewEncapsulation.None,
                 changeDetection: ChangeDetectionStrategy.OnPush,
-                styles: ["pbl-cdk-virtual-scroll-viewport{display:block;position:relative;overflow:auto;contain:strict;-webkit-transform:translateZ(0);transform:translateZ(0);will-change:scroll-position;-webkit-overflow-scrolling:touch}pbl-cdk-virtual-scroll-viewport .cdk-virtual-scroll-content-wrapper{position:absolute;top:0;left:0;contain:content}[dir=rtl] pbl-cdk-virtual-scroll-viewport .cdk-virtual-scroll-content-wrapper{right:0;left:auto}.cdk-virtual-scroll-inner-width{width:100%;height:100%;position:absolute;margin:0!important;padding:0!important}.cdk-virtual-scroll-orientation-horizontal .cdk-virtual-scroll-content-wrapper{min-height:100%}.cdk-virtual-scroll-orientation-horizontal .cdk-virtual-scroll-content-wrapper>dl:not([cdkVirtualFor]),.cdk-virtual-scroll-orientation-horizontal .cdk-virtual-scroll-content-wrapper>ol:not([cdkVirtualFor]),.cdk-virtual-scroll-orientation-horizontal .cdk-virtual-scroll-content-wrapper>table:not([cdkVirtualFor]),.cdk-virtual-scroll-orientation-horizontal .cdk-virtual-scroll-content-wrapper>ul:not([cdkVirtualFor]){padding-left:0;padding-right:0;margin-left:0;margin-right:0;border-left-width:0;border-right-width:0;outline:0}.cdk-virtual-scroll-orientation-vertical .cdk-virtual-scroll-content-wrapper{min-width:100%}.cdk-virtual-scroll-orientation-vertical .cdk-virtual-scroll-content-wrapper>dl:not([cdkVirtualFor]),.cdk-virtual-scroll-orientation-vertical .cdk-virtual-scroll-content-wrapper>ol:not([cdkVirtualFor]),.cdk-virtual-scroll-orientation-vertical .cdk-virtual-scroll-content-wrapper>table:not([cdkVirtualFor]),.cdk-virtual-scroll-orientation-vertical .cdk-virtual-scroll-content-wrapper>ul:not([cdkVirtualFor]){padding-top:0;padding-bottom:0;margin-top:0;margin-bottom:0;border-top-width:0;border-bottom-width:0;outline:0}.cdk-virtual-scroll-spacer{position:absolute;top:0;left:0;height:1px;width:1px;-webkit-transform-origin:0 0;transform-origin:0 0}[dir=rtl] .cdk-virtual-scroll-spacer{right:0;left:auto;-webkit-transform-origin:100% 0;transform-origin:100% 0}.pbl-ngrid-space-fill{position:absolute;left:0;width:100%}"]
+                styles: ["pbl-cdk-virtual-scroll-viewport{display:block;position:relative;overflow:auto;contain:strict;transform:translateZ(0);will-change:scroll-position;-webkit-overflow-scrolling:touch}pbl-cdk-virtual-scroll-viewport .cdk-virtual-scroll-content-wrapper{position:absolute;top:0;left:0;contain:content}[dir=rtl] pbl-cdk-virtual-scroll-viewport .cdk-virtual-scroll-content-wrapper{right:0;left:auto}.cdk-virtual-scroll-inner-width{width:100%;height:100%;position:absolute;margin:0!important;padding:0!important}.cdk-virtual-scroll-orientation-horizontal .cdk-virtual-scroll-content-wrapper{min-height:100%}.cdk-virtual-scroll-orientation-horizontal .cdk-virtual-scroll-content-wrapper>dl:not([cdkVirtualFor]),.cdk-virtual-scroll-orientation-horizontal .cdk-virtual-scroll-content-wrapper>ol:not([cdkVirtualFor]),.cdk-virtual-scroll-orientation-horizontal .cdk-virtual-scroll-content-wrapper>table:not([cdkVirtualFor]),.cdk-virtual-scroll-orientation-horizontal .cdk-virtual-scroll-content-wrapper>ul:not([cdkVirtualFor]){padding-left:0;padding-right:0;margin-left:0;margin-right:0;border-left-width:0;border-right-width:0;outline:0}.cdk-virtual-scroll-orientation-vertical .cdk-virtual-scroll-content-wrapper{min-width:100%}.cdk-virtual-scroll-orientation-vertical .cdk-virtual-scroll-content-wrapper>dl:not([cdkVirtualFor]),.cdk-virtual-scroll-orientation-vertical .cdk-virtual-scroll-content-wrapper>ol:not([cdkVirtualFor]),.cdk-virtual-scroll-orientation-vertical .cdk-virtual-scroll-content-wrapper>table:not([cdkVirtualFor]),.cdk-virtual-scroll-orientation-vertical .cdk-virtual-scroll-content-wrapper>ul:not([cdkVirtualFor]){padding-top:0;padding-bottom:0;margin-top:0;margin-bottom:0;border-top-width:0;border-bottom-width:0;outline:0}.cdk-virtual-scroll-spacer{position:absolute;top:0;left:0;height:1px;width:1px;transform-origin:0 0}[dir=rtl] .cdk-virtual-scroll-spacer{right:0;left:auto;transform-origin:100% 0}.pbl-ngrid-space-fill{position:absolute;left:0;width:100%}"]
             }] }
 ];
 /** @nocollapse */
@@ -14096,16 +14147,6 @@ PblCdkVirtualScrollViewportComponent.propDecorators = {
     scrolling: [{ type: Output }],
     scrollFrameRate: [{ type: Output }]
 };
-PblCdkVirtualScrollViewportComponent = __decorate([
-    UnRx(),
-    __metadata("design:paramtypes", [ElementRef,
-        ChangeDetectorRef,
-        NgZone,
-        PblNgridConfigService, Object, Directionality,
-        ScrollDispatcher,
-        PblNgridPluginController,
-        PblNgridComponent])
-], PblCdkVirtualScrollViewportComponent);
 if (false) {
     /** @type {?} */
     PblCdkVirtualScrollViewportComponent.prototype.enabled;
@@ -14231,7 +14272,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/features/virtual-scroll/scrolling-plugin.directive.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @template T
@@ -14313,17 +14355,20 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/features/virtual-scroll/index.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/grid/index.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/ngrid.module.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const COMMON_TABLE_TEMPLATE_INIT = new InjectionToken('COMMON TABLE TEMPLATE INIT');
@@ -14347,7 +14392,6 @@ if (false) {
  */
 function provideCommon(components) {
     return [
-        { provide: ANALYZE_FOR_ENTRY_COMPONENTS, multi: true, useValue: components },
         { provide: COMMON_TABLE_TEMPLATE_INIT, multi: true, useValue: components },
     ];
 }
@@ -14358,6 +14402,17 @@ class PblNgridModule {
      * @param {?} components
      */
     constructor(ngRef, registry, components) {
+        // TODO: Remove this once issue fixed: https://github.com/angular/angular/issues/35580
+        try {
+            if (ngRef.componentFactoryResolver) {
+                registry.getRoot(); // this line will keep the try/catch block in place when doing minification
+            }
+        }
+        catch (err) {
+            /** @type {?} */
+            const parent = ((/** @type {?} */ (ngRef)))._parent;
+            ((/** @type {?} */ (ngRef)))._r3Injector = parent;
+        }
         if (components) {
             for (const multi of components) {
                 for (const c of multi) {
@@ -14484,19 +14539,22 @@ PblNgridModule.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: index.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const utils = {
     isPblColumn,
     isPblMetaColumn,
     isPblColumnGroup,
+    unrx,
 };
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: pebula-ngrid.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { ColumnApi, EXT_API_TOKEN, NgridPlugin, NoVirtualScrollStrategy, PBL_NGRID_ROW_TEMPLATE, PEB_NGRID_CONFIG, PblColumn, PblColumnFactory, PblColumnGroup, PblDataSource, PblDataSourceAdapter, PblDataSourceFactory, PblMetaColumn, PblNgridCellDefDirective, PblNgridCellStyling, PblNgridComponent, PblNgridConfigService, PblNgridDataHeaderExtensionContext, PblNgridFooterCellDefDirective, PblNgridHeaderCellDefDirective, PblNgridModule, PblNgridMultiComponentRegistry, PblNgridMultiTemplateRegistry, PblNgridNoDataRefDirective, PblNgridPluginController, PblNgridRegistryService, PblNgridRowComponent, PblNgridSingleTemplateRegistry, PblPagingPaginator, PblRowContext, PblTokenPaginator, TableAutoSizeVirtualScrollStrategy, applySort, columnFactory, createDS, isPblColumn, isPblColumnGroup, isPblMetaColumn, provideCommon, utils, PblNgridHeaderExtensionRefDirective as ɵa, PblNgridPaginatorRefDirective as ɵb, PblNgridOuterSectionDirective as ɵc, PblNgridHeaderCellComponent as ɵd, PblNgridCellDirective as ɵe, PblNgridFooterCellDirective as ɵf, PblNgridBaseCellDef as ɵg, PblNgridEditorCellDefDirective as ɵh, PblNgridColumnDef as ɵi, PblNgridCellEditAutoFocusDirective as ɵj, PblNgridMetaRowContainerComponent as ɵk, PblMetaRowDirective as ɵl, PblNgridMetaRowService as ɵm, PblColumnGroupStore as ɵn, ColumnSizeInfo as ɵo, MetaCellContext as ɵp, PblCdkTableComponent as ɵq, internalApiFactory as ɵr, pluginControllerFactory as ɵs, metaRowServiceFactory as ɵt, PblColumnSizeObserver as ɵu, PblCdkVirtualScrollViewportComponent as ɵv, PblCdkVirtualScrollDirective as ɵw, PblNgridScrolling as ɵx, PblNgridPluginContext as ɵy, COMMON_TABLE_TEMPLATE_INIT as ɵz };
+export { ColumnApi, EXT_API_TOKEN, NoVirtualScrollStrategy, PBL_NGRID_ROW_TEMPLATE, PEB_NGRID_CONFIG, PblColumn, PblColumnFactory, PblColumnGroup, PblDataSource, PblDataSourceAdapter, PblDataSourceFactory, PblMetaColumn, PblNgridCellDefDirective, PblNgridCellStyling, PblNgridComponent, PblNgridConfigService, PblNgridDataHeaderExtensionContext, PblNgridFooterCellDefDirective, PblNgridHeaderCellDefDirective, PblNgridModule, PblNgridMultiComponentRegistry, PblNgridMultiTemplateRegistry, PblNgridNoDataRefDirective, PblNgridPluginController, PblNgridRegistryService, PblNgridRowComponent, PblNgridSingleTemplateRegistry, PblPagingPaginator, PblRowContext, PblTokenPaginator, TableAutoSizeVirtualScrollStrategy, applySort, columnFactory, createDS, isPblColumn, isPblColumnGroup, isPblMetaColumn, ngridPlugin, provideCommon, utils, PblNgridHeaderExtensionRefDirective as ɵa, PblNgridPaginatorRefDirective as ɵb, COMMON_TABLE_TEMPLATE_INIT as ɵba, PblNgridOuterSectionDirective as ɵc, PblNgridHeaderCellComponent as ɵd, PblNgridCellDirective as ɵe, PblNgridFooterCellDirective as ɵf, PblNgridBaseCellDef as ɵg, PblNgridEditorCellDefDirective as ɵh, PblNgridColumnDef as ɵi, PblNgridCellEditAutoFocusDirective as ɵj, PblNgridMetaRowContainerComponent as ɵk, PblMetaRowDirective as ɵl, PblNgridMetaRowService as ɵm, PblColumnGroupStore as ɵn, ColumnSizeInfo as ɵo, MetaCellContext as ɵp, PblCdkTableComponent as ɵq, internalApiFactory as ɵr, pluginControllerFactory as ɵs, metaRowServiceFactory as ɵt, PblColumnSizeObserver as ɵu, PblCdkVirtualScrollViewportComponent as ɵv, PblCdkVirtualScrollDirective as ɵw, PblNgridScrolling as ɵx, unrx as ɵy, PblNgridPluginContext as ɵz };
 //# sourceMappingURL=pebula-ngrid.js.map

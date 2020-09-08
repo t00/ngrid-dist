@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/common'), require('@angular/cdk/overlay'), require('@angular/material/tooltip'), require('@pebula/ngrid'), require('@pebula/ngrid/target-events'), require('@angular/cdk/coercion'), require('@angular/cdk/a11y'), require('@angular/cdk/bidi'), require('@angular/cdk/scrolling'), require('@angular/cdk/platform'), require('@pebula/utils')) :
-    typeof define === 'function' && define.amd ? define('@pebula/ngrid-material/cell-tooltip', ['exports', '@angular/core', '@angular/common', '@angular/cdk/overlay', '@angular/material/tooltip', '@pebula/ngrid', '@pebula/ngrid/target-events', '@angular/cdk/coercion', '@angular/cdk/a11y', '@angular/cdk/bidi', '@angular/cdk/scrolling', '@angular/cdk/platform', '@pebula/utils'], factory) :
-    (global = global || self, factory((global.pebula = global.pebula || {}, global.pebula['ngrid-material'] = global.pebula['ngrid-material'] || {}, global.pebula['ngrid-material']['cell-tooltip'] = {}), global.ng.core, global.ng.common, global.ng.cdk.overlay, global.ng.material.tooltip, global.pebula.ngrid, global.pebula.ngrid['target-events'], global.ng.cdk.coercion, global.ng.cdk.a11y, global.ng.cdk.bidi, global.ng.cdk.scrolling, global.ng.cdk.platform, global.pebula.utils));
-}(this, (function (exports, core, common, overlay, tooltip, ngrid, targetEvents, coercion, a11y, bidi, scrolling, platform, utils) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/common'), require('@angular/cdk/overlay'), require('@angular/material/tooltip'), require('@pebula/ngrid'), require('@pebula/ngrid/target-events'), require('@angular/cdk/coercion'), require('@angular/cdk/a11y'), require('@angular/cdk/bidi'), require('@angular/cdk/scrolling'), require('@angular/cdk/platform')) :
+    typeof define === 'function' && define.amd ? define('@pebula/ngrid-material/cell-tooltip', ['exports', '@angular/core', '@angular/common', '@angular/cdk/overlay', '@angular/material/tooltip', '@pebula/ngrid', '@pebula/ngrid/target-events', '@angular/cdk/coercion', '@angular/cdk/a11y', '@angular/cdk/bidi', '@angular/cdk/scrolling', '@angular/cdk/platform'], factory) :
+    (global = global || self, factory((global.pebula = global.pebula || {}, global.pebula['ngrid-material'] = global.pebula['ngrid-material'] || {}, global.pebula['ngrid-material']['cell-tooltip'] = {}), global.ng.core, global.ng.common, global.ng.cdk.overlay, global.ng.material.tooltip, global.pebula.ngrid, global.pebula.ngrid['target-events'], global.ng.cdk.coercion, global.ng.cdk.a11y, global.ng.cdk.bidi, global.ng.cdk.scrolling, global.ng.cdk.platform));
+}(this, (function (exports, core, common, overlay, tooltip, ngrid, targetEvents, coercion, a11y, bidi, scrolling, platform) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -203,7 +203,8 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/cell-tooltip.directive.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
     var PLUGIN_KEY = 'cellTooltip';
@@ -262,7 +263,7 @@
                 injector.get(tooltip.MAT_TOOLTIP_DEFAULT_OPTIONS),
             ];
             configService.onUpdate('cellTooltip')
-                .pipe(utils.UnRx(this))
+                .pipe(ngrid.utils.unrx(this))
                 .subscribe((/**
              * @param {?} cfg
              * @return {?}
@@ -287,7 +288,6 @@
                 }));
             }
         }
-        PblNgridCellTooltipDirective_1 = PblNgridCellTooltipDirective;
         Object.defineProperty(PblNgridCellTooltipDirective.prototype, "canShow", {
             // tslint:disable-next-line:no-input-rename
             set: 
@@ -331,7 +331,7 @@
          * @return {?}
          */
         function (table, injector) {
-            return new PblNgridCellTooltipDirective_1(table, injector, ngrid.PblNgridPluginController.find(table));
+            return new PblNgridCellTooltipDirective(table, injector, ngrid.PblNgridPluginController.find(table));
         };
         /**
          * @return {?}
@@ -342,6 +342,7 @@
         function () {
             this._removePlugin(this.table);
             this.killTooltip();
+            ngrid.utils.unrx.kill(this);
         };
         /**
          * @private
@@ -360,14 +361,14 @@
             /** @type {?} */
             var targetEventsPlugin = pluginCtrl.getPlugin('targetEvents') || pluginCtrl.createPlugin('targetEvents');
             targetEventsPlugin.cellEnter
-                .pipe(utils.UnRx(this))
+                .pipe(ngrid.utils.unrx(this))
                 .subscribe((/**
              * @param {?} event
              * @return {?}
              */
             function (event) { return _this.cellEnter(event); }));
             targetEventsPlugin.cellLeave
-                .pipe(utils.UnRx(this))
+                .pipe(ngrid.utils.unrx(this))
                 .subscribe((/**
              * @param {?} event
              * @return {?}
@@ -442,13 +443,7 @@
                 this.toolTip = undefined;
             }
         };
-        var PblNgridCellTooltipDirective_1;
         PblNgridCellTooltipDirective.PLUGIN_KEY = PLUGIN_KEY;
-        PblNgridCellTooltipDirective.ctorParameters = function () { return [
-            { type: ngrid.PblNgridComponent },
-            { type: core.Injector },
-            { type: ngrid.PblNgridPluginController }
-        ]; };
         PblNgridCellTooltipDirective.decorators = [
             { type: core.Directive, args: [{ selector: '[cellTooltip]', exportAs: 'pblOverflowTooltip' },] }
         ];
@@ -466,14 +461,6 @@
             showDelay: [{ type: core.Input }],
             hideDelay: [{ type: core.Input }]
         };
-        /**
-         * @template T
-         */
-        PblNgridCellTooltipDirective = PblNgridCellTooltipDirective_1 = __decorate([
-            ngrid.NgridPlugin({ id: PLUGIN_KEY, factory: 'create' }),
-            utils.UnRx(),
-            __metadata("design:paramtypes", [ngrid.PblNgridComponent, core.Injector, ngrid.PblNgridPluginController])
-        ], PblNgridCellTooltipDirective);
         return PblNgridCellTooltipDirective;
     }());
     if (false) {
@@ -540,7 +527,8 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/cell-tooltip.module.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var PblNgridCellTooltipModule = /** @class */ (function () {
         function PblNgridCellTooltipModule(parentModule, configService) {
@@ -581,6 +569,7 @@
                 }
             }));
         }
+        PblNgridCellTooltipModule.NGRID_PLUGIN = ngrid.ngridPlugin({ id: PLUGIN_KEY, factory: 'create' }, PblNgridCellTooltipDirective);
         PblNgridCellTooltipModule.decorators = [
             { type: core.NgModule, args: [{
                         imports: [common.CommonModule, tooltip.MatTooltipModule, overlay.OverlayModule, ngrid.PblNgridModule, targetEvents.PblNgridTargetEventsModule],
@@ -595,9 +584,14 @@
         ]; };
         return PblNgridCellTooltipModule;
     }());
+    if (false) {
+        /** @type {?} */
+        PblNgridCellTooltipModule.NGRID_PLUGIN;
+    }
 
     exports.PblNgridCellTooltipDirective = PblNgridCellTooltipDirective;
     exports.PblNgridCellTooltipModule = PblNgridCellTooltipModule;
+    exports.ɵa = PLUGIN_KEY;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

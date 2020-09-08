@@ -42,4 +42,4 @@ declare module '@pebula/ngrid/lib/grid/columns/types' {
         lockColumns?: boolean;
     }
 }
-export declare function extendGrid(): void;
+export declare function colReorderExtendGrid(): void;

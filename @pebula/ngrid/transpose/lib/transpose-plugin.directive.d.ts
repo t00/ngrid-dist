@@ -14,6 +14,7 @@ declare module '@pebula/ngrid/lib/ext/types' {
         transpose?: PblNgridTransposePluginDirective;
     }
 }
+export declare const PLUGIN_KEY: 'transpose';
 /**
  * Transpose plugin.
  *
@@ -35,7 +36,8 @@ declare module '@pebula/ngrid/lib/ext/types' {
 export declare class PblNgridTransposePluginDirective implements OnDestroy {
     private grid;
     private pluginCtrl;
-    transpose: boolean;
+    get transpose(): boolean;
+    set transpose(value: boolean);
     /**
      * Column definitions for the new header column, this is the column the first column that
      * will display all the headers.
@@ -56,7 +58,7 @@ export declare class PblNgridTransposePluginDirective implements OnDestroy {
      * When using this approach the column defined on the grid is used as is (no merging). Just make sure you use the right `prop` value for it.
      * e.g. if `header` is not set here its `__transpose__` otherwise, the actual `prop` value.
      */
-    header: Partial<PblColumnDefinition>;
+    set header(value: Partial<PblColumnDefinition>);
     /**
      * Column definitions to be used as the base default definitions for the new transposed columns.
      * This is an optional value, when not set no default's are applied.
@@ -79,5 +81,6 @@ export declare class PblNgridTransposePluginDirective implements OnDestroy {
     ngOnDestroy(): void;
     disable(updateTable: boolean): void;
     enable(refreshDataSource?: boolean): void;
+    private updateState;
     private updateColumns;
 }

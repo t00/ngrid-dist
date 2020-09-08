@@ -53,7 +53,8 @@ export declare class PblCdkVirtualScrollDirective implements OnInit, OnChanges, 
    *
    * Default: 20
    */
-    vScrollAuto: number;
+    get vScrollAuto(): number;
+    set vScrollAuto(value: number);
     _vScrollAuto: number;
     /**
      * The size of the items in the list (in pixels).
@@ -61,7 +62,8 @@ export declare class PblCdkVirtualScrollDirective implements OnInit, OnChanges, 
      *
      * Default: 20
      */
-    vScrollFixed: number;
+    get vScrollFixed(): number;
+    set vScrollFixed(value: number);
     _vScrollFixed: number;
     /**
      * The minimum amount of buffer rendered beyond the viewport (in pixels).
@@ -70,7 +72,8 @@ export declare class PblCdkVirtualScrollDirective implements OnInit, OnChanges, 
      * Valid for `vScrollAuto` and `vScrollFixed` only!
      * Default: 100
      */
-    minBufferPx: number;
+    get minBufferPx(): number;
+    set minBufferPx(value: number);
     _minBufferPx: number;
     /**
      * The number of pixels worth of buffer to render for when rendering new items. Defaults to 200px.
@@ -78,18 +81,21 @@ export declare class PblCdkVirtualScrollDirective implements OnInit, OnChanges, 
      * Valid for `vScrollAuto` and `vScrollFixed` only!
      * Default: 100
      */
-    maxBufferPx: number;
+    get maxBufferPx(): number;
+    set maxBufferPx(value: number);
     _maxBufferPx: number;
-    wheelMode: 'passive' | 'blocking' | number;
+    get wheelMode(): 'passive' | 'blocking' | number;
+    set wheelMode(value: 'passive' | 'blocking' | number);
     _wheelMode: 'passive' | 'blocking' | number;
     /** The scroll strategy used by this directive. */
     _scrollStrategy: VirtualScrollStrategy;
-    readonly type: 'vScrollFixed' | 'vScrollAuto' | 'vScrollNone';
+    get type(): 'vScrollFixed' | 'vScrollAuto' | 'vScrollNone';
     private _type;
     constructor(el: ElementRef<HTMLElement>, grid: PblNgridComponent<any>);
     ngOnInit(): void;
     ngOnChanges(): void;
-    scrolledIndexChange: Observable<number>;
+    get scrolledIndexChange(): Observable<number>;
+    set scrolledIndexChange(value: Observable<number>);
     attach(viewport: CdkVirtualScrollViewport): void;
     detach(): void;
     onContentScrolled(): void;

@@ -3,7 +3,7 @@ import { CdkDropList, CdkDrag, CdkDragHandle } from '@angular/cdk/drag-drop';
 import { PblDropListRef } from './drop-list-ref';
 import { PblDragRef } from './drag-ref';
 export declare class CdkLazyDropList<T = any, DRef = any> extends CdkDropList<T> implements OnInit {
-    readonly pblDropListRef: PblDropListRef<DRef>;
+    get pblDropListRef(): PblDropListRef<DRef>;
     /**
      * Selector that will be used to determine the direct container element, starting from
      * the `cdkDropList` element and going down the DOM. Passing an alternate direct container element
@@ -23,9 +23,10 @@ export declare class CdkLazyDrag<T = any, Z extends CdkLazyDropList<T> = CdkLazy
     /**
      * A class to set when the root element is not the host element. (i.e. when `cdkDragRootElement` is used).
      */
-    rootElementSelectorClass: string;
-    readonly pblDragRef: PblDragRef<DRef>;
-    cdkDropList: Z;
+    set rootElementSelectorClass(value: string);
+    get pblDragRef(): PblDragRef<DRef>;
+    get cdkDropList(): Z;
+    set cdkDropList(value: Z);
     _rootClass: string;
     _hostNotRoot: boolean;
     ngOnInit(): void;

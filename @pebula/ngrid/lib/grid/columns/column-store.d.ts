@@ -27,10 +27,10 @@ export declare class PblColumnStore {
     allColumns: PblColumn[];
     headerColumnDef: PblMetaRowDefinitions;
     footerColumnDef: PblMetaRowDefinitions;
-    readonly primary: PblColumn | undefined;
-    hidden: string[];
-    readonly groupBy: PblColumn[];
-    readonly groupStore: PblColumnGroupStore;
+    get primary(): PblColumn | undefined;
+    set hidden(value: string[]);
+    get groupBy(): PblColumn[];
+    get groupStore(): PblColumnGroupStore;
     private _primary;
     private _metaRows;
     private _hidden;

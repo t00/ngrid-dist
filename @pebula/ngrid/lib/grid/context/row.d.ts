@@ -4,7 +4,7 @@ import { PblNgridExtensionApi } from '../../ext/grid-ext-api';
 import { PblNgridComponent } from '../ngrid.component';
 import { RowContextState, PblNgridRowContext } from './types';
 import { PblCellContext } from './cell';
-declare module '@angular/cdk/table/typings/row.d' {
+declare module '@angular/cdk/table/row.d' {
     interface CdkCellOutletRowContext<T> {
         pblRowContext: PblNgridRowContext<T>;
     }
@@ -41,8 +41,9 @@ export declare class PblRowContext<T> implements PblNgridRowContext<T> {
     /**
      * Returns the length of cells context stored in this row
      */
-    readonly length: number;
-    pblRowContext: PblNgridRowContext<T>;
+    get length(): number;
+    get pblRowContext(): PblNgridRowContext<T>;
+    set pblRowContext(value: PblNgridRowContext<T>);
     private cells;
     constructor(identity: any, dataIndex: number, extApi: PblNgridExtensionApi<T>);
     static defaultState<T = any>(identity: any, dataIndex: number, cellsCount: number): RowContextState<T>;

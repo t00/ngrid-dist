@@ -101,7 +101,7 @@ export declare class PblNgridTargetEventsPlugin<T = any> {
         root?: (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "data">) | (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta">) | (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta-group">) | Events.PblNgridDataCellEvent<T, MouseEvent | KeyboardEvent>;
     } & Events.PblNgridMatrixRow<"footer" | "header", "meta-group">)>;
     /** @deprecated use `gird` instead */
-    readonly table: PblNgridComponent<any>;
+    get table(): PblNgridComponent<any>;
     protected readonly destroyed: ReplaySubject<void>;
     private _removePlugin;
     constructor(grid: PblNgridComponent<any>, injector: Injector, pluginCtrl: PblNgridPluginController);

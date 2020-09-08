@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/common'), require('@angular/material/checkbox'), require('@pebula/ngrid'), require('@angular/cdk/coercion'), require('@pebula/utils'), require('rxjs'), require('rxjs/operators')) :
-    typeof define === 'function' && define.amd ? define('@pebula/ngrid/transpose', ['exports', '@angular/core', '@angular/common', '@angular/material/checkbox', '@pebula/ngrid', '@angular/cdk/coercion', '@pebula/utils', 'rxjs', 'rxjs/operators'], factory) :
-    (global = global || self, factory((global.pebula = global.pebula || {}, global.pebula.ngrid = global.pebula.ngrid || {}, global.pebula.ngrid.transpose = {}), global.ng.core, global.ng.common, global.ng.material.checkbox, global.pebula.ngrid, global.ng.cdk.coercion, global.pebula.utils, global.rxjs, global.rxjs.operators));
-}(this, (function (exports, core, common, checkbox, ngrid, coercion, utils, rxjs, operators) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/common'), require('@pebula/ngrid'), require('rxjs/operators'), require('@angular/cdk/coercion'), require('rxjs')) :
+    typeof define === 'function' && define.amd ? define('@pebula/ngrid/transpose', ['exports', '@angular/core', '@angular/common', '@pebula/ngrid', 'rxjs/operators', '@angular/cdk/coercion', 'rxjs'], factory) :
+    (global = global || self, factory((global.pebula = global.pebula || {}, global.pebula.ngrid = global.pebula.ngrid || {}, global.pebula.ngrid.transpose = {}), global.ng.core, global.ng.common, global.pebula.ngrid, global.rxjs.operators, global.ng.cdk.coercion, global.rxjs));
+}(this, (function (exports, core, common, ngrid, operators, coercion, rxjs) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -203,7 +203,8 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/transpose-table-session.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
     var LOCAL_COLUMN_DEF = Symbol('LOCAL_COLUMN_DEF');
@@ -232,7 +233,7 @@
         function (updateTable) {
             if (!this.destroyed) {
                 this.destroyed = true;
-                utils.UnRx.kill(this, this.grid);
+                ngrid.utils.unrx.kill(this, this.grid);
                 this.grid.showHeader = this.headerRow;
                 this.grid.columns = this.columnsInput;
                 if (updateTable) {
@@ -254,14 +255,14 @@
             this.headerRow = this.grid.showHeader;
             this.grid.showHeader = false;
             this.pluginCtrl.events
-                .pipe(utils.UnRx(this, this.grid))
+                .pipe(ngrid.utils.unrx(this, this.grid))
                 .subscribe((/**
              * @param {?} e
              * @return {?}
              */
             function (e) { return e.kind === 'onInvalidateHeaders' && _this.onInvalidateHeaders(); }));
             this.pluginCtrl.events
-                .pipe(utils.UnRx(this, this.grid))
+                .pipe(ngrid.utils.unrx(this, this.grid))
                 .subscribe((/**
              * @param {?} e
              * @return {?}
@@ -390,7 +391,8 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/utils.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
     var TRANSFORM_ROW_REF = Symbol('TRANSFORM_ROW_REF');
@@ -421,7 +423,8 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/transpose-plugin.directive.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
     var DEFAULT_HEADER_COLUMN = { prop: '__transpose__', css: 'pbl-ngrid-header-cell pbl-ngrid-transposed-header-cell' };
@@ -447,6 +450,7 @@
      */
     var PblNgridTransposePluginDirective = /** @class */ (function () {
         function PblNgridTransposePluginDirective(grid, pluginCtrl, config) {
+            var _this = this;
             this.grid = grid;
             this.pluginCtrl = pluginCtrl;
             this._header = DEFAULT_HEADER_COLUMN;
@@ -458,6 +462,21 @@
                 this.defaultCol = transposePlugin.defaultCol || {};
                 this.matchTemplates = transposePlugin.matchTemplates || false;
             }
+            pluginCtrl.events
+                .pipe(operators.filter((/**
+             * @param {?} e
+             * @return {?}
+             */
+            function (e) { return e.kind === 'onInit'; })), operators.take(1), ngrid.utils.unrx(this, this.grid))
+                .subscribe((/**
+             * @param {?} e
+             * @return {?}
+             */
+            function (e) {
+                if (_this.enabled !== undefined) {
+                    _this.updateState(undefined, _this.enabled);
+                }
+            }));
         }
         Object.defineProperty(PblNgridTransposePluginDirective.prototype, "transpose", {
             get: /**
@@ -470,17 +489,10 @@
              */
             function (value) {
                 value = coercion.coerceBooleanProperty(value);
-                if (value !== this.enabled) {
-                    /** @type {?} */
-                    var isFirst = this.enabled === undefined;
-                    this.enabled = value;
-                    if (!value) {
-                        this.disable(true);
-                    }
-                    else {
-                        this.enable(!isFirst);
-                    }
+                if (value !== this.enabled && this.grid.isInit) {
+                    this.updateState(this.enabled, value);
                 }
+                this.enabled = value;
             },
             enumerable: true,
             configurable: true
@@ -544,6 +556,7 @@
         function () {
             this._removePlugin(this.grid);
             this.disable(false);
+            ngrid.utils.unrx.kill(this);
         };
         /**
          * @param {?} updateTable
@@ -555,9 +568,9 @@
          */
         function (updateTable) {
             if (this.gridState) {
-                var tableState = this.gridState;
+                var gridState = this.gridState;
                 this.columns = this.selfColumn = this.gridState = this.columns = this.selfColumn = undefined;
-                tableState.destroy(updateTable);
+                gridState.destroy(updateTable);
             }
         };
         /**
@@ -647,7 +660,7 @@
                                         function (value) { }) });
                                 };
                                 try {
-                                    for (var columnKeysToProxy_1 = __values(columnKeysToProxy), columnKeysToProxy_1_1 = columnKeysToProxy_1.next(); !columnKeysToProxy_1_1.done; columnKeysToProxy_1_1 = columnKeysToProxy_1.next()) {
+                                    for (var columnKeysToProxy_1 = (e_2 = void 0, __values(columnKeysToProxy)), columnKeysToProxy_1_1 = columnKeysToProxy_1.next(); !columnKeysToProxy_1_1.done; columnKeysToProxy_1_1 = columnKeysToProxy_1.next()) {
                                         var key = columnKeysToProxy_1_1.value;
                                         _loop_1(key);
                                     }
@@ -687,6 +700,28 @@
         };
         /**
          * @private
+         * @param {?} prev
+         * @param {?} curr
+         * @return {?}
+         */
+        PblNgridTransposePluginDirective.prototype.updateState = /**
+         * @private
+         * @param {?} prev
+         * @param {?} curr
+         * @return {?}
+         */
+        function (prev, curr) {
+            /** @type {?} */
+            var isFirst = prev === undefined;
+            if (!curr) {
+                this.disable(true);
+            }
+            else {
+                this.enable(!isFirst);
+            }
+        };
+        /**
+         * @private
          * @param {?} columns
          * @return {?}
          */
@@ -722,11 +757,6 @@
                 this.selfColumn = new ngrid.PblColumn(this._header, this.pluginCtrl.extApi.columnStore.groupStore);
             }
         };
-        PblNgridTransposePluginDirective.ctorParameters = function () { return [
-            { type: ngrid.PblNgridComponent },
-            { type: ngrid.PblNgridPluginController },
-            { type: ngrid.PblNgridConfigService }
-        ]; };
         PblNgridTransposePluginDirective.decorators = [
             { type: core.Directive, args: [{ selector: 'pbl-ngrid[transpose]' },] }
         ];
@@ -742,29 +772,6 @@
             defaultCol: [{ type: core.Input, args: ['transposeDefaultCol',] }],
             matchTemplates: [{ type: core.Input }]
         };
-        /**
-         * Transpose plugin.
-         *
-         * This plugin will swaps around the rows and columns of the grid.
-         *
-         * A **regular grid** (not transposed) represents rows horizontally:
-         *
-         * - Each horizontal row represents an item in the collection.
-         * - Each vertical column represents the same property of all rows in the collection.
-         *
-         * A **transposed** grid represents row vertically:
-         *
-         * - Each horizontal row represents the same property of all rows in the collection.
-         * - Each vertical row represents an item in the collection.
-         *
-         * > Note that transposing a grid might not play nice with other plugins and/or features.
-         * For example, using pagination with transpose make no sense.
-         */
-        PblNgridTransposePluginDirective = __decorate([
-            ngrid.NgridPlugin({ id: PLUGIN_KEY }),
-            utils.UnRx(),
-            __metadata("design:paramtypes", [ngrid.PblNgridComponent, ngrid.PblNgridPluginController, ngrid.PblNgridConfigService])
-        ], PblNgridTransposePluginDirective);
         return PblNgridTransposePluginDirective;
     }());
     if (false) {
@@ -827,23 +834,30 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/transpose.module.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var PblNgridTransposeModule = /** @class */ (function () {
         function PblNgridTransposeModule() {
         }
+        PblNgridTransposeModule.NGRID_PLUGIN = ngrid.ngridPlugin({ id: PLUGIN_KEY }, PblNgridTransposePluginDirective);
         PblNgridTransposeModule.decorators = [
             { type: core.NgModule, args: [{
-                        imports: [common.CommonModule, checkbox.MatCheckboxModule, ngrid.PblNgridModule],
+                        imports: [common.CommonModule, ngrid.PblNgridModule],
                         declarations: [PblNgridTransposePluginDirective],
                         exports: [PblNgridTransposePluginDirective],
                     },] }
         ];
         return PblNgridTransposeModule;
     }());
+    if (false) {
+        /** @type {?} */
+        PblNgridTransposeModule.NGRID_PLUGIN;
+    }
 
     exports.PblNgridTransposeModule = PblNgridTransposeModule;
-    exports.ɵa = PblNgridTransposePluginDirective;
+    exports.ɵa = PLUGIN_KEY;
+    exports.ɵb = PblNgridTransposePluginDirective;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

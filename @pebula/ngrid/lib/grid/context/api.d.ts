@@ -32,7 +32,7 @@ export declare class ContextApi<T = any> {
      * > Note that when virtual scroll is enabled the currently focused cell does not have to exist in the view.
      * If this is the case `findRowInView` will return undefined, use `findRowInCache` instead.
      */
-    readonly focusedCell: GridDataPoint | undefined;
+    get focusedCell(): GridDataPoint | undefined;
     /**
      * The reference to currently selected range of cell's context.
      * You can retrieve the actual context or context cell using `findRowInView` and / or `findRowInCache`.
@@ -40,7 +40,7 @@ export declare class ContextApi<T = any> {
      * > Note that when virtual scroll is enabled the currently selected cells does not have to exist in the view.
      * If this is the case `findRowInView` will return undefined, use `findRowInCache` instead.
      */
-    readonly selectedCells: GridDataPoint[];
+    get selectedCells(): GridDataPoint[];
     constructor(extApi: PblNgridExtensionApi<T>);
     /**
      * Focus the provided cell.

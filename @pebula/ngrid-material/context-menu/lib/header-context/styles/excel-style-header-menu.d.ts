@@ -4,14 +4,14 @@ import { PblNgridComponent, PblColumn, PblNgridDataHeaderExtensionContext } from
 import { PblNgridOverlayPanelRef } from '@pebula/ngrid/overlay-panel';
 export declare class MatExcelStyleHeaderMenu {
     private ref;
-    private vcRef;
     column: PblColumn;
     grid: PblNgridComponent;
     matMenu: MatMenu;
+    menuViewLocation: ViewContainerRef;
     currentSort: 'asc' | 'desc' | undefined;
     currentPin: 'start' | 'end' | undefined;
     currentFilter: any;
-    constructor(ref: PblNgridOverlayPanelRef<PblNgridDataHeaderExtensionContext>, vcRef: ViewContainerRef);
+    constructor(ref: PblNgridOverlayPanelRef<PblNgridDataHeaderExtensionContext>);
     ngAfterViewInit(): void;
     hide(): void;
     onSortToggle(sort: 'asc' | 'desc'): void;

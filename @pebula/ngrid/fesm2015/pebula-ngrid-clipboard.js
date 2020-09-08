@@ -1,14 +1,13 @@
-import { __decorate, __metadata } from 'tslib';
 import { filter, first } from 'rxjs/operators';
-import { Injectable, Inject, ɵɵdefineInjectable, ɵɵinject, Injector, Directive, Input, NgModule, Optional, SkipSelf } from '@angular/core';
+import { Injectable, Inject, ɵɵdefineInjectable, ɵɵinject, Directive, Injector, Input, NgModule, Optional, SkipSelf } from '@angular/core';
 import { DOCUMENT, CommonModule } from '@angular/common';
-import { UnRx } from '@pebula/utils';
-import { PblNgridConfigService, PblNgridPluginController, PblNgridComponent, NgridPlugin, PblNgridModule } from '@pebula/ngrid';
+import { PblNgridConfigService, PblNgridPluginController, utils, PblNgridComponent, ngridPlugin, PblNgridModule } from '@pebula/ngrid';
 import { PblNgridTargetEventsModule } from '@pebula/ngrid/target-events';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/clipboard.service.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * A service for copying text to the clipboard.
@@ -58,7 +57,7 @@ Clipboard.decorators = [
 Clipboard.ctorParameters = () => [
     { type: undefined, decorators: [{ type: Inject, args: [DOCUMENT,] }] }
 ];
-/** @nocollapse */ Clipboard.ngInjectableDef = ɵɵdefineInjectable({ factory: function Clipboard_Factory() { return new Clipboard(ɵɵinject(DOCUMENT)); }, token: Clipboard, providedIn: "root" });
+/** @nocollapse */ Clipboard.ɵprov = ɵɵdefineInjectable({ factory: function Clipboard_Factory() { return new Clipboard(ɵɵinject(DOCUMENT)); }, token: Clipboard, providedIn: "root" });
 if (false) {
     /**
      * @type {?}
@@ -144,7 +143,11 @@ if (false) {
     PendingCopy.prototype._document;
 }
 
-var PblNgridClipboardPlugin_1;
+/**
+ * @fileoverview added by tsickle
+ * Generated from: lib/clipboard.plugin.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 /** @type {?} */
 const IS_OSX = /^mac/.test(navigator.platform.toLowerCase());
 /** @type {?} */
@@ -153,7 +156,7 @@ const DEFAULT_CELL_SEP = '\t';
 const DEFAULT_ROW_SEP = '\n';
 /** @type {?} */
 const PLUGIN_KEY = 'clipboard';
-let PblNgridClipboardPlugin = PblNgridClipboardPlugin_1 = class PblNgridClipboardPlugin {
+class PblNgridClipboardPlugin {
     /**
      * @param {?} grid
      * @param {?} injector
@@ -175,12 +178,13 @@ let PblNgridClipboardPlugin = PblNgridClipboardPlugin_1 = class PblNgridClipboar
     static create(grid, injector) {
         /** @type {?} */
         const pluginCtrl = PblNgridPluginController.find(grid);
-        return new PblNgridClipboardPlugin_1(grid, injector, pluginCtrl);
+        return new PblNgridClipboardPlugin(grid, injector, pluginCtrl);
     }
     /**
      * @return {?}
      */
     ngOnDestroy() {
+        utils.unrx.kill(this);
         this._removePlugin(this.grid);
     }
     /**
@@ -297,19 +301,14 @@ let PblNgridClipboardPlugin = PblNgridClipboardPlugin_1 = class PblNgridClipboar
          * @param {?} event
          * @return {?}
          */
-        event => this.isCopyEvent(event.source))), UnRx(this))
+        event => this.isCopyEvent(event.source))), utils.unrx(this))
             .subscribe((/**
          * @param {?} event
          * @return {?}
          */
         event => this.doCopy()));
     }
-};
-PblNgridClipboardPlugin.ctorParameters = () => [
-    { type: PblNgridComponent },
-    { type: Injector },
-    { type: PblNgridPluginController }
-];
+}
 PblNgridClipboardPlugin.decorators = [
     { type: Directive, args: [{ selector: 'pbl-ngrid[clipboard]', exportAs: 'pblNgridClipboard' },] }
 ];
@@ -323,11 +322,6 @@ PblNgridClipboardPlugin.propDecorators = {
     clpCellSep: [{ type: Input }],
     clpRowSep: [{ type: Input }]
 };
-PblNgridClipboardPlugin = PblNgridClipboardPlugin_1 = __decorate([
-    NgridPlugin({ id: PLUGIN_KEY, factory: 'create' }),
-    UnRx(),
-    __metadata("design:paramtypes", [PblNgridComponent, Injector, PblNgridPluginController])
-], PblNgridClipboardPlugin);
 if (false) {
     /**
      * The separator to use when multiple cells are copied.
@@ -374,7 +368,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/clipboard.module.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class PblNgridClipboardPluginModule {
     /**
@@ -415,6 +410,7 @@ class PblNgridClipboardPluginModule {
         }));
     }
 }
+PblNgridClipboardPluginModule.NGRID_PLUGIN = ngridPlugin({ id: PLUGIN_KEY, factory: 'create' }, PblNgridClipboardPlugin);
 PblNgridClipboardPluginModule.decorators = [
     { type: NgModule, args: [{
                 imports: [CommonModule, PblNgridModule, PblNgridTargetEventsModule],
@@ -427,15 +423,21 @@ PblNgridClipboardPluginModule.ctorParameters = () => [
     { type: PblNgridClipboardPluginModule, decorators: [{ type: Optional }, { type: SkipSelf }] },
     { type: PblNgridConfigService }
 ];
+if (false) {
+    /** @type {?} */
+    PblNgridClipboardPluginModule.NGRID_PLUGIN;
+}
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: index.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: pebula-ngrid-clipboard.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { PLUGIN_KEY, PblNgridClipboardPlugin, PblNgridClipboardPluginModule };

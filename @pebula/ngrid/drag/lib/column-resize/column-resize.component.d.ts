@@ -1,14 +1,14 @@
 import { AfterViewInit, ElementRef, OnDestroy, NgZone } from '@angular/core';
 import { Directionality } from '@angular/cdk/bidi';
 import { ViewportRuler } from '@angular/cdk/scrolling';
-import { CdkDragConfig, DragDropRegistry } from '@angular/cdk/drag-drop';
+import { DragRefConfig, DragDropRegistry } from '@angular/cdk/drag-drop';
 import { PblNgridComponent, PblColumn, PblNgridMetaCellContext } from '@pebula/ngrid';
 declare module '@pebula/ngrid/lib/ext/types' {
     interface PblNgridPluginExtension {
         columnResize?: PblNgridDragResizeComponent;
     }
 }
-export declare const PLUGIN_KEY: 'columnResize';
+export declare const COL_RESIZE_PLUGIN_KEY: 'columnResize';
 export declare class PblNgridDragResizeComponent implements AfterViewInit, OnDestroy {
     element: ElementRef<HTMLElement>;
     private _ngZone;
@@ -16,7 +16,7 @@ export declare class PblNgridDragResizeComponent implements AfterViewInit, OnDes
     private _dragDropRegistry;
     private _config;
     private _dir;
-    context: PblNgridMetaCellContext<any>;
+    set context(value: PblNgridMetaCellContext<any>);
     /**
      * The area (in pixels) in which the handle can be grabbed and resize the cell.
      * Default: 6
@@ -24,7 +24,7 @@ export declare class PblNgridDragResizeComponent implements AfterViewInit, OnDes
     grabAreaWidth: number;
     column: PblColumn;
     /** @deprecated use grid instead */
-    readonly table: PblNgridComponent<any>;
+    get table(): PblNgridComponent<any>;
     grid: PblNgridComponent<any>;
     _hasStartedDragging: boolean;
     private _hasMoved;
@@ -36,7 +36,7 @@ export declare class PblNgridDragResizeComponent implements AfterViewInit, OnDes
     private _initialWidth;
     private _lastWidth;
     private _rootElementInitSubscription;
-    constructor(element: ElementRef<HTMLElement>, _ngZone: NgZone, _viewportRuler: ViewportRuler, _dragDropRegistry: DragDropRegistry<PblNgridDragResizeComponent, any>, _config: CdkDragConfig, _dir: Directionality);
+    constructor(element: ElementRef<HTMLElement>, _ngZone: NgZone, _viewportRuler: ViewportRuler, _dragDropRegistry: DragDropRegistry<PblNgridDragResizeComponent, any>, _config: DragRefConfig, _dir: Directionality);
     ngAfterViewInit(): void;
     ngOnDestroy(): void;
     onDoubleClick(event: MouseEvent): void;

@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('rxjs'), require('rxjs/operators'), require('@angular/core'), require('@pebula/utils'), require('@pebula/ngrid'), require('@angular/cdk/keycodes'), require('@angular/common'), require('@angular/cdk/table'), require('@angular/cdk/coercion')) :
-    typeof define === 'function' && define.amd ? define('@pebula/ngrid/target-events', ['exports', 'rxjs', 'rxjs/operators', '@angular/core', '@pebula/utils', '@pebula/ngrid', '@angular/cdk/keycodes', '@angular/common', '@angular/cdk/table', '@angular/cdk/coercion'], factory) :
-    (global = global || self, factory((global.pebula = global.pebula || {}, global.pebula.ngrid = global.pebula.ngrid || {}, global.pebula.ngrid['target-events'] = {}), global.rxjs, global.rxjs.operators, global.ng.core, global.pebula.utils, global.pebula.ngrid, global.ng.cdk.keycodes, global.ng.common, global.ng.cdk.table, global.ng.cdk.coercion));
-}(this, (function (exports, rxjs, operators, core, utils, ngrid, keycodes, common, table, coercion) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('rxjs'), require('rxjs/operators'), require('@angular/core'), require('@pebula/ngrid'), require('@angular/cdk/keycodes'), require('@angular/common'), require('@angular/cdk/table'), require('@angular/cdk/coercion')) :
+    typeof define === 'function' && define.amd ? define('@pebula/ngrid/target-events', ['exports', 'rxjs', 'rxjs/operators', '@angular/core', '@pebula/ngrid', '@angular/cdk/keycodes', '@angular/common', '@angular/cdk/table', '@angular/cdk/coercion'], factory) :
+    (global = global || self, factory((global.pebula = global.pebula || {}, global.pebula.ngrid = global.pebula.ngrid || {}, global.pebula.ngrid['target-events'] = {}), global.rxjs, global.rxjs.operators, global.ng.core, global.pebula.ngrid, global.ng.cdk.keycodes, global.ng.common, global.ng.cdk.table, global.ng.cdk.coercion));
+}(this, (function (exports, rxjs, operators, core, ngrid, keycodes, common, table, coercion) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -203,7 +203,8 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/target-events/utils.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /**
      * @template T, TEvent
@@ -351,7 +352,7 @@
             for (var yAxis_1 = __values(yAxis), yAxis_1_1 = yAxis_1.next(); !yAxis_1_1.done; yAxis_1_1 = yAxis_1.next()) {
                 var vCell = yAxis_1_1.value;
                 try {
-                    for (var xAxis_1 = __values(xAxis), xAxis_1_1 = xAxis_1.next(); !xAxis_1_1.done; xAxis_1_1 = xAxis_1.next()) {
+                    for (var xAxis_1 = (e_2 = void 0, __values(xAxis)), xAxis_1_1 = xAxis_1.next(); !xAxis_1_1.done; xAxis_1_1 = xAxis_1.next()) {
                         var hCell = xAxis_1_1.value;
                         /** @type {?} */
                         var vhContext = contextApi.findRowInCache(vCell.rowIdent).cells[hCell.colIndex];
@@ -398,7 +399,8 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/target-events/focus-and-selection.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
     var isOsx = /^mac/.test(navigator.platform.toLowerCase());
@@ -683,7 +685,8 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/target-events/target-events-plugin.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
     var PLUGIN_KEY = 'targetEvents';
@@ -717,7 +720,10 @@
     /**
      * @template T
      */
-    var PblNgridTargetEventsPlugin = /** @class */ (function () {
+    var   /**
+     * @template T
+     */
+    PblNgridTargetEventsPlugin = /** @class */ (function () {
         function PblNgridTargetEventsPlugin(grid, injector, pluginCtrl) {
             var _this = this;
             this.grid = grid;
@@ -756,7 +762,6 @@
                 }));
             }
         }
-        PblNgridTargetEventsPlugin_1 = PblNgridTargetEventsPlugin;
         Object.defineProperty(PblNgridTargetEventsPlugin.prototype, "table", {
             /** @deprecated use `gird` instead */
             get: /**
@@ -782,7 +787,7 @@
         function (table, injector) {
             /** @type {?} */
             var pluginCtrl = ngrid.PblNgridPluginController.find(table);
-            return new PblNgridTargetEventsPlugin_1(table, injector, pluginCtrl);
+            return new PblNgridTargetEventsPlugin(table, injector, pluginCtrl);
         };
         /**
          * @private
@@ -827,7 +832,7 @@
                 var matrixPoint = matrixRowFromRow(rowTarget, cdkTable._rowOutlet.viewContainer);
                 if (matrixPoint) {
                     /** @type {?} */
-                    var event_1 = (/** @type {?} */ (__assign({}, matrixPoint, { source: source, cellTarget: cellTarget, rowTarget: rowTarget })));
+                    var event_1 = (/** @type {?} */ (__assign(__assign({}, matrixPoint), { source: source, cellTarget: cellTarget, rowTarget: rowTarget })));
                     if (matrixPoint.type === 'data') {
                         ((/** @type {?} */ (event_1))).row = grid.ds.renderedData[matrixPoint.rowIndex];
                     }
@@ -923,7 +928,7 @@
                     var matrixPoint = matrixRowFromRow(rowTarget, cdkTable._rowOutlet.viewContainer);
                     if (matrixPoint) {
                         /** @type {?} */
-                        var event_3 = (/** @type {?} */ (__assign({}, matrixPoint, { source: source, rowTarget: rowTarget })));
+                        var event_3 = (/** @type {?} */ (__assign(__assign({}, matrixPoint), { source: source, rowTarget: rowTarget })));
                         if (matrixPoint.type === 'data') {
                             ((/** @type {?} */ (event_3))).context = _this.pluginCtrl.extApi.contextApi.getRow(matrixPoint.rowIndex);
                             ((/** @type {?} */ (event_3))).row = ((/** @type {?} */ (event_3))).context.$implicit;
@@ -1208,21 +1213,6 @@
         function (event) {
             this.grid._cdkTable.syncRows(event.type, event.rowIndex);
         };
-        var PblNgridTargetEventsPlugin_1;
-        PblNgridTargetEventsPlugin.ctorParameters = function () { return [
-            { type: ngrid.PblNgridComponent },
-            { type: core.Injector },
-            { type: ngrid.PblNgridPluginController }
-        ]; };
-        /**
-         * @template T
-         */
-        PblNgridTargetEventsPlugin = PblNgridTargetEventsPlugin_1 = __decorate([
-            ngrid.NgridPlugin({ id: PLUGIN_KEY, factory: 'create', runOnce: runOnce }),
-            __metadata("design:paramtypes", [ngrid.PblNgridComponent,
-                core.Injector,
-                ngrid.PblNgridPluginController])
-        ], PblNgridTargetEventsPlugin);
         return PblNgridTargetEventsPlugin;
     }());
     if (false) {
@@ -1290,11 +1280,6 @@
         function () {
             this.destroy();
         };
-        PblNgridTargetEventsPluginDirective.ctorParameters = function () { return [
-            { type: ngrid.PblNgridComponent },
-            { type: core.Injector },
-            { type: ngrid.PblNgridPluginController }
-        ]; };
         PblNgridTargetEventsPluginDirective.decorators = [
             { type: core.Directive, args: [{
                         // tslint:disable-next-line:directive-selector
@@ -1309,19 +1294,13 @@
             { type: core.Injector },
             { type: ngrid.PblNgridPluginController }
         ]; };
-        /**
-         * @template T
-         */
-        PblNgridTargetEventsPluginDirective = __decorate([
-            utils.UnRx(),
-            __metadata("design:paramtypes", [ngrid.PblNgridComponent, core.Injector, ngrid.PblNgridPluginController])
-        ], PblNgridTargetEventsPluginDirective);
         return PblNgridTargetEventsPluginDirective;
     }(PblNgridTargetEventsPlugin));
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/target-events/cell-edit.directive.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /**
      * @template T
@@ -1378,6 +1357,15 @@
             configurable: true
         });
         /**
+         * @return {?}
+         */
+        PblNgridCellEditDirective.prototype.ngOnDestroy = /**
+         * @return {?}
+         */
+        function () {
+            ngrid.utils.unrx.kill(this);
+        };
+        /**
          * @private
          * @return {?}
          */
@@ -1387,10 +1375,10 @@
          */
         function () {
             if (this.targetEventsPlugin) {
-                utils.UnRx.kill(this, this.targetEventsPlugin);
+                ngrid.utils.unrx.kill(this, this.targetEventsPlugin);
                 if (this._click) {
                     this.targetEventsPlugin.cellClick
-                        .pipe(utils.UnRx(this, this.targetEventsPlugin))
+                        .pipe(ngrid.utils.unrx(this, this.targetEventsPlugin))
                         .subscribe((/**
                      * @param {?} event
                      * @return {?}
@@ -1403,7 +1391,7 @@
                 }
                 if (this._dblClick) {
                     this.targetEventsPlugin.cellDblClick
-                        .pipe(utils.UnRx(this, this.targetEventsPlugin))
+                        .pipe(ngrid.utils.unrx(this, this.targetEventsPlugin))
                         .subscribe((/**
                      * @param {?} event
                      * @return {?}
@@ -1416,11 +1404,6 @@
                 }
             }
         };
-        PblNgridCellEditDirective.ctorParameters = function () { return [
-            { type: ngrid.PblNgridComponent },
-            { type: core.Injector },
-            { type: ngrid.PblNgridPluginController }
-        ]; };
         PblNgridCellEditDirective.decorators = [
             { type: core.Directive, args: [{
                         // tslint:disable-next-line:directive-selector
@@ -1437,13 +1420,6 @@
             cellEditClick: [{ type: core.Input }],
             cellEditDblClick: [{ type: core.Input }]
         };
-        /**
-         * @template T
-         */
-        PblNgridCellEditDirective = __decorate([
-            utils.UnRx(),
-            __metadata("design:paramtypes", [ngrid.PblNgridComponent, core.Injector, ngrid.PblNgridPluginController])
-        ], PblNgridCellEditDirective);
         return PblNgridCellEditDirective;
     }());
     if (false) {
@@ -1466,7 +1442,8 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/target-events.module.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var PblNgridTargetEventsModule = /** @class */ (function () {
         function PblNgridTargetEventsModule(parentModule, configService) {
@@ -1502,6 +1479,7 @@
                 }
             }));
         }
+        PblNgridTargetEventsModule.NGRID_PLUGIN = ngrid.ngridPlugin({ id: PLUGIN_KEY, factory: 'create', runOnce: runOnce }, PblNgridTargetEventsPlugin);
         PblNgridTargetEventsModule.decorators = [
             { type: core.NgModule, args: [{
                         imports: [common.CommonModule, table.CdkTableModule, ngrid.PblNgridModule],
@@ -1516,6 +1494,10 @@
         ]; };
         return PblNgridTargetEventsModule;
     }());
+    if (false) {
+        /** @type {?} */
+        PblNgridTargetEventsModule.NGRID_PLUGIN;
+    }
 
     exports.PblNgridTargetEventsModule = PblNgridTargetEventsModule;
     exports.PblNgridTargetEventsPlugin = PblNgridTargetEventsPlugin;

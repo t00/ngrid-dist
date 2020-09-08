@@ -1,9 +1,8 @@
-import { __values, __read, __spread, __assign, __decorate, __metadata, __extends } from 'tslib';
+import { __values, __read, __spread, __assign, __extends } from 'tslib';
 import { ReplaySubject, fromEvent, timer } from 'rxjs';
 import { filter, tap, switchMap, takeUntil, map, bufferWhen, debounce } from 'rxjs/operators';
-import { EventEmitter, Injector, Directive, Input, NgModule, Optional, SkipSelf } from '@angular/core';
-import { UnRx } from '@pebula/utils';
-import { PblColumn, PblNgridPluginController, PblNgridComponent, NgridPlugin, PblNgridModule, PblNgridConfigService } from '@pebula/ngrid';
+import { EventEmitter, Directive, Injector, Input, NgModule, Optional, SkipSelf } from '@angular/core';
+import { PblColumn, PblNgridPluginController, PblNgridComponent, utils, ngridPlugin, PblNgridModule, PblNgridConfigService } from '@pebula/ngrid';
 import { RIGHT_ARROW, LEFT_ARROW, DOWN_ARROW, UP_ARROW } from '@angular/cdk/keycodes';
 import { CommonModule } from '@angular/common';
 import { CdkTableModule } from '@angular/cdk/table';
@@ -11,7 +10,8 @@ import { coerceBooleanProperty } from '@angular/cdk/coercion';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/target-events/utils.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @template T, TEvent
@@ -159,7 +159,7 @@ function getInnerCellsInRect(contextApi, xAxis, yAxis) {
         for (var yAxis_1 = __values(yAxis), yAxis_1_1 = yAxis_1.next(); !yAxis_1_1.done; yAxis_1_1 = yAxis_1.next()) {
             var vCell = yAxis_1_1.value;
             try {
-                for (var xAxis_1 = __values(xAxis), xAxis_1_1 = xAxis_1.next(); !xAxis_1_1.done; xAxis_1_1 = xAxis_1.next()) {
+                for (var xAxis_1 = (e_2 = void 0, __values(xAxis)), xAxis_1_1 = xAxis_1.next(); !xAxis_1_1.done; xAxis_1_1 = xAxis_1.next()) {
                     var hCell = xAxis_1_1.value;
                     /** @type {?} */
                     var vhContext = contextApi.findRowInCache(vCell.rowIdent).cells[hCell.colIndex];
@@ -206,7 +206,8 @@ function rangeBetween(n1, n2) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/target-events/focus-and-selection.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 var isOsx = /^mac/.test(navigator.platform.toLowerCase());
@@ -491,7 +492,8 @@ function createHandlers(targetEvents) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/target-events/target-events-plugin.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 var PLUGIN_KEY = 'targetEvents';
@@ -525,7 +527,10 @@ function runOnce() {
 /**
  * @template T
  */
-var PblNgridTargetEventsPlugin = /** @class */ (function () {
+var  /**
+ * @template T
+ */
+PblNgridTargetEventsPlugin = /** @class */ (function () {
     function PblNgridTargetEventsPlugin(grid, injector, pluginCtrl) {
         var _this = this;
         this.grid = grid;
@@ -564,7 +569,6 @@ var PblNgridTargetEventsPlugin = /** @class */ (function () {
             }));
         }
     }
-    PblNgridTargetEventsPlugin_1 = PblNgridTargetEventsPlugin;
     Object.defineProperty(PblNgridTargetEventsPlugin.prototype, "table", {
         /** @deprecated use `gird` instead */
         get: /**
@@ -590,7 +594,7 @@ var PblNgridTargetEventsPlugin = /** @class */ (function () {
     function (table, injector) {
         /** @type {?} */
         var pluginCtrl = PblNgridPluginController.find(table);
-        return new PblNgridTargetEventsPlugin_1(table, injector, pluginCtrl);
+        return new PblNgridTargetEventsPlugin(table, injector, pluginCtrl);
     };
     /**
      * @private
@@ -635,7 +639,7 @@ var PblNgridTargetEventsPlugin = /** @class */ (function () {
             var matrixPoint = matrixRowFromRow(rowTarget, cdkTable._rowOutlet.viewContainer);
             if (matrixPoint) {
                 /** @type {?} */
-                var event_1 = (/** @type {?} */ (__assign({}, matrixPoint, { source: source, cellTarget: cellTarget, rowTarget: rowTarget })));
+                var event_1 = (/** @type {?} */ (__assign(__assign({}, matrixPoint), { source: source, cellTarget: cellTarget, rowTarget: rowTarget })));
                 if (matrixPoint.type === 'data') {
                     ((/** @type {?} */ (event_1))).row = grid.ds.renderedData[matrixPoint.rowIndex];
                 }
@@ -731,7 +735,7 @@ var PblNgridTargetEventsPlugin = /** @class */ (function () {
                 var matrixPoint = matrixRowFromRow(rowTarget, cdkTable._rowOutlet.viewContainer);
                 if (matrixPoint) {
                     /** @type {?} */
-                    var event_3 = (/** @type {?} */ (__assign({}, matrixPoint, { source: source, rowTarget: rowTarget })));
+                    var event_3 = (/** @type {?} */ (__assign(__assign({}, matrixPoint), { source: source, rowTarget: rowTarget })));
                     if (matrixPoint.type === 'data') {
                         ((/** @type {?} */ (event_3))).context = _this.pluginCtrl.extApi.contextApi.getRow(matrixPoint.rowIndex);
                         ((/** @type {?} */ (event_3))).row = ((/** @type {?} */ (event_3))).context.$implicit;
@@ -1016,21 +1020,6 @@ var PblNgridTargetEventsPlugin = /** @class */ (function () {
     function (event) {
         this.grid._cdkTable.syncRows(event.type, event.rowIndex);
     };
-    var PblNgridTargetEventsPlugin_1;
-    PblNgridTargetEventsPlugin.ctorParameters = function () { return [
-        { type: PblNgridComponent },
-        { type: Injector },
-        { type: PblNgridPluginController }
-    ]; };
-    /**
-     * @template T
-     */
-    PblNgridTargetEventsPlugin = PblNgridTargetEventsPlugin_1 = __decorate([
-        NgridPlugin({ id: PLUGIN_KEY, factory: 'create', runOnce: runOnce }),
-        __metadata("design:paramtypes", [PblNgridComponent,
-            Injector,
-            PblNgridPluginController])
-    ], PblNgridTargetEventsPlugin);
     return PblNgridTargetEventsPlugin;
 }());
 if (false) {
@@ -1098,11 +1087,6 @@ var PblNgridTargetEventsPluginDirective = /** @class */ (function (_super) {
     function () {
         this.destroy();
     };
-    PblNgridTargetEventsPluginDirective.ctorParameters = function () { return [
-        { type: PblNgridComponent },
-        { type: Injector },
-        { type: PblNgridPluginController }
-    ]; };
     PblNgridTargetEventsPluginDirective.decorators = [
         { type: Directive, args: [{
                     // tslint:disable-next-line:directive-selector
@@ -1117,19 +1101,13 @@ var PblNgridTargetEventsPluginDirective = /** @class */ (function (_super) {
         { type: Injector },
         { type: PblNgridPluginController }
     ]; };
-    /**
-     * @template T
-     */
-    PblNgridTargetEventsPluginDirective = __decorate([
-        UnRx(),
-        __metadata("design:paramtypes", [PblNgridComponent, Injector, PblNgridPluginController])
-    ], PblNgridTargetEventsPluginDirective);
     return PblNgridTargetEventsPluginDirective;
 }(PblNgridTargetEventsPlugin));
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/target-events/cell-edit.directive.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @template T
@@ -1186,6 +1164,15 @@ var PblNgridCellEditDirective = /** @class */ (function () {
         configurable: true
     });
     /**
+     * @return {?}
+     */
+    PblNgridCellEditDirective.prototype.ngOnDestroy = /**
+     * @return {?}
+     */
+    function () {
+        utils.unrx.kill(this);
+    };
+    /**
      * @private
      * @return {?}
      */
@@ -1195,10 +1182,10 @@ var PblNgridCellEditDirective = /** @class */ (function () {
      */
     function () {
         if (this.targetEventsPlugin) {
-            UnRx.kill(this, this.targetEventsPlugin);
+            utils.unrx.kill(this, this.targetEventsPlugin);
             if (this._click) {
                 this.targetEventsPlugin.cellClick
-                    .pipe(UnRx(this, this.targetEventsPlugin))
+                    .pipe(utils.unrx(this, this.targetEventsPlugin))
                     .subscribe((/**
                  * @param {?} event
                  * @return {?}
@@ -1211,7 +1198,7 @@ var PblNgridCellEditDirective = /** @class */ (function () {
             }
             if (this._dblClick) {
                 this.targetEventsPlugin.cellDblClick
-                    .pipe(UnRx(this, this.targetEventsPlugin))
+                    .pipe(utils.unrx(this, this.targetEventsPlugin))
                     .subscribe((/**
                  * @param {?} event
                  * @return {?}
@@ -1224,11 +1211,6 @@ var PblNgridCellEditDirective = /** @class */ (function () {
             }
         }
     };
-    PblNgridCellEditDirective.ctorParameters = function () { return [
-        { type: PblNgridComponent },
-        { type: Injector },
-        { type: PblNgridPluginController }
-    ]; };
     PblNgridCellEditDirective.decorators = [
         { type: Directive, args: [{
                     // tslint:disable-next-line:directive-selector
@@ -1245,13 +1227,6 @@ var PblNgridCellEditDirective = /** @class */ (function () {
         cellEditClick: [{ type: Input }],
         cellEditDblClick: [{ type: Input }]
     };
-    /**
-     * @template T
-     */
-    PblNgridCellEditDirective = __decorate([
-        UnRx(),
-        __metadata("design:paramtypes", [PblNgridComponent, Injector, PblNgridPluginController])
-    ], PblNgridCellEditDirective);
     return PblNgridCellEditDirective;
 }());
 if (false) {
@@ -1274,7 +1249,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/target-events.module.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var PblNgridTargetEventsModule = /** @class */ (function () {
     function PblNgridTargetEventsModule(parentModule, configService) {
@@ -1310,6 +1286,7 @@ var PblNgridTargetEventsModule = /** @class */ (function () {
             }
         }));
     }
+    PblNgridTargetEventsModule.NGRID_PLUGIN = ngridPlugin({ id: PLUGIN_KEY, factory: 'create', runOnce: runOnce }, PblNgridTargetEventsPlugin);
     PblNgridTargetEventsModule.decorators = [
         { type: NgModule, args: [{
                     imports: [CommonModule, CdkTableModule, PblNgridModule],
@@ -1324,15 +1301,21 @@ var PblNgridTargetEventsModule = /** @class */ (function () {
     ]; };
     return PblNgridTargetEventsModule;
 }());
+if (false) {
+    /** @type {?} */
+    PblNgridTargetEventsModule.NGRID_PLUGIN;
+}
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: index.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: pebula-ngrid-target-events.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { PblNgridTargetEventsModule, PblNgridTargetEventsPlugin, isCellEvent, isDataCellEvent, PLUGIN_KEY as ɵa, runOnce as ɵb, PblNgridTargetEventsPluginDirective as ɵc, PblNgridCellEditDirective as ɵd };

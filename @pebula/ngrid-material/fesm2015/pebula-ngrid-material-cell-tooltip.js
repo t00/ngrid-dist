@@ -1,18 +1,20 @@
-import { ViewContainerRef, NgZone, ElementRef, Injector, Directive, Input, NgModule, Optional, SkipSelf } from '@angular/core';
+import { ViewContainerRef, NgZone, ElementRef, Directive, Injector, Input, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Overlay, OverlayModule } from '@angular/cdk/overlay';
 import { MAT_TOOLTIP_SCROLL_STRATEGY, MAT_TOOLTIP_DEFAULT_OPTIONS, MatTooltip, MatTooltipModule } from '@angular/material/tooltip';
-import { PblNgridConfigService, PblNgridPluginController, PblNgridComponent, NgridPlugin, PblNgridModule } from '@pebula/ngrid';
+import { PblNgridConfigService, utils, PblNgridPluginController, PblNgridComponent, ngridPlugin, PblNgridModule } from '@pebula/ngrid';
 import { PblNgridTargetEventsModule } from '@pebula/ngrid/target-events';
-import { __decorate, __metadata } from 'tslib';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { AriaDescriber, FocusMonitor } from '@angular/cdk/a11y';
 import { Directionality } from '@angular/cdk/bidi';
 import { ScrollDispatcher } from '@angular/cdk/scrolling';
 import { Platform } from '@angular/cdk/platform';
-import { UnRx } from '@pebula/utils';
 
-var PblNgridCellTooltipDirective_1;
+/**
+ * @fileoverview added by tsickle
+ * Generated from: lib/cell-tooltip.directive.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 /** @type {?} */
 const PLUGIN_KEY = 'cellTooltip';
 const ɵ0 = /**
@@ -48,9 +50,6 @@ if (false) {
 /**
  * @template T
  */
-let PblNgridCellTooltipDirective = PblNgridCellTooltipDirective_1 = /**
- * @template T
- */
 class PblNgridCellTooltipDirective {
     /**
      * @param {?} table
@@ -77,7 +76,7 @@ class PblNgridCellTooltipDirective {
             injector.get(MAT_TOOLTIP_DEFAULT_OPTIONS),
         ];
         configService.onUpdate('cellTooltip')
-            .pipe(UnRx(this))
+            .pipe(utils.unrx(this))
             .subscribe((/**
          * @param {?} cfg
          * @return {?}
@@ -133,7 +132,7 @@ class PblNgridCellTooltipDirective {
      * @return {?}
      */
     static create(table, injector) {
-        return new PblNgridCellTooltipDirective_1(table, injector, PblNgridPluginController.find(table));
+        return new PblNgridCellTooltipDirective(table, injector, PblNgridPluginController.find(table));
     }
     /**
      * @return {?}
@@ -141,6 +140,7 @@ class PblNgridCellTooltipDirective {
     ngOnDestroy() {
         this._removePlugin(this.table);
         this.killTooltip();
+        utils.unrx.kill(this);
     }
     /**
      * @private
@@ -153,14 +153,14 @@ class PblNgridCellTooltipDirective {
         /** @type {?} */
         const targetEventsPlugin = pluginCtrl.getPlugin('targetEvents') || pluginCtrl.createPlugin('targetEvents');
         targetEventsPlugin.cellEnter
-            .pipe(UnRx(this))
+            .pipe(utils.unrx(this))
             .subscribe((/**
          * @param {?} event
          * @return {?}
          */
         event => this.cellEnter(event)));
         targetEventsPlugin.cellLeave
-            .pipe(UnRx(this))
+            .pipe(utils.unrx(this))
             .subscribe((/**
          * @param {?} event
          * @return {?}
@@ -221,13 +221,8 @@ class PblNgridCellTooltipDirective {
             this.toolTip = undefined;
         }
     }
-};
+}
 PblNgridCellTooltipDirective.PLUGIN_KEY = PLUGIN_KEY;
-PblNgridCellTooltipDirective.ctorParameters = () => [
-    { type: PblNgridComponent },
-    { type: Injector },
-    { type: PblNgridPluginController }
-];
 PblNgridCellTooltipDirective.decorators = [
     { type: Directive, args: [{ selector: '[cellTooltip]', exportAs: 'pblOverflowTooltip' },] }
 ];
@@ -245,14 +240,6 @@ PblNgridCellTooltipDirective.propDecorators = {
     showDelay: [{ type: Input }],
     hideDelay: [{ type: Input }]
 };
-/**
- * @template T
- */
-PblNgridCellTooltipDirective = PblNgridCellTooltipDirective_1 = __decorate([
-    NgridPlugin({ id: PLUGIN_KEY, factory: 'create' }),
-    UnRx(),
-    __metadata("design:paramtypes", [PblNgridComponent, Injector, PblNgridPluginController])
-], PblNgridCellTooltipDirective);
 if (false) {
     /** @type {?} */
     PblNgridCellTooltipDirective.PLUGIN_KEY;
@@ -317,7 +304,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/cell-tooltip.module.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class PblNgridCellTooltipModule {
     /**
@@ -363,6 +351,7 @@ class PblNgridCellTooltipModule {
         }));
     }
 }
+PblNgridCellTooltipModule.NGRID_PLUGIN = ngridPlugin({ id: PLUGIN_KEY, factory: 'create' }, PblNgridCellTooltipDirective);
 PblNgridCellTooltipModule.decorators = [
     { type: NgModule, args: [{
                 imports: [CommonModule, MatTooltipModule, OverlayModule, PblNgridModule, PblNgridTargetEventsModule],
@@ -375,16 +364,22 @@ PblNgridCellTooltipModule.ctorParameters = () => [
     { type: PblNgridCellTooltipModule, decorators: [{ type: Optional }, { type: SkipSelf }] },
     { type: PblNgridConfigService }
 ];
+if (false) {
+    /** @type {?} */
+    PblNgridCellTooltipModule.NGRID_PLUGIN;
+}
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: index.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: pebula-ngrid-material-cell-tooltip.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { PblNgridCellTooltipDirective, PblNgridCellTooltipModule };
+export { PblNgridCellTooltipDirective, PblNgridCellTooltipModule, PLUGIN_KEY as ɵa };
 //# sourceMappingURL=pebula-ngrid-material-cell-tooltip.js.map

@@ -1,18 +1,17 @@
-import { __decorate, __metadata } from 'tslib';
 import { Directive, NgModule, ComponentFactoryResolver } from '@angular/core';
 import { MatSort, MatSortHeader, MatSortModule } from '@angular/material/sort';
-import { UnRx } from '@pebula/utils';
-import { PblNgridComponent, PblNgridPluginController, NgridPlugin, PblNgridMultiComponentRegistry, PblNgridModule, PblNgridRegistryService } from '@pebula/ngrid';
+import { utils, PblNgridComponent, PblNgridPluginController, PblNgridMultiComponentRegistry, ngridPlugin, PblNgridModule, PblNgridRegistryService } from '@pebula/ngrid';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/mat-sort.directive.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const PLUGIN_KEY = 'matSort';
-let PblNgridMatSortDirective = class PblNgridMatSortDirective {
+class PblNgridMatSortDirective {
     /**
      * @param {?} table
      * @param {?} pluginCtrl
@@ -26,7 +25,7 @@ let PblNgridMatSortDirective = class PblNgridMatSortDirective {
         /** @type {?} */
         let origin = 'click';
         this.sort.sortChange
-            .pipe(UnRx(this))
+            .pipe(utils.unrx(this))
             .subscribe((/**
          * @param {?} s
          * @return {?}
@@ -96,12 +95,12 @@ let PblNgridMatSortDirective = class PblNgridMatSortDirective {
                 }
             }
             if (e.kind === 'onDataSource') {
-                UnRx.kill(this, e.prev);
+                utils.unrx.kill(this, e.prev);
                 if (this.sort && this.sort.active) {
                     this.onSort({ active: this.sort.active, direction: this.sort.direction || 'asc' }, origin);
                 }
                 table.ds.sortChange
-                    .pipe(UnRx(this, e.curr))
+                    .pipe(utils.unrx(this, e.curr))
                     .subscribe((/**
                  * @param {?} event
                  * @return {?}
@@ -115,6 +114,7 @@ let PblNgridMatSortDirective = class PblNgridMatSortDirective {
      */
     ngOnDestroy() {
         this._removePlugin(this.table);
+        utils.unrx.kill(this);
     }
     /**
      * @private
@@ -157,12 +157,7 @@ let PblNgridMatSortDirective = class PblNgridMatSortDirective {
             table.ds.setSort(column, newSort);
         }
     }
-};
-PblNgridMatSortDirective.ctorParameters = () => [
-    { type: PblNgridComponent },
-    { type: PblNgridPluginController },
-    { type: MatSort }
-];
+}
 PblNgridMatSortDirective.decorators = [
     { type: Directive, args: [{ selector: 'pbl-ngrid[matSort]', exportAs: 'pblMatSort' },] }
 ];
@@ -172,11 +167,6 @@ PblNgridMatSortDirective.ctorParameters = () => [
     { type: PblNgridPluginController },
     { type: MatSort }
 ];
-PblNgridMatSortDirective = __decorate([
-    NgridPlugin({ id: PLUGIN_KEY }),
-    UnRx(),
-    __metadata("design:paramtypes", [PblNgridComponent, PblNgridPluginController, MatSort])
-], PblNgridMatSortDirective);
 if (false) {
     /**
      * @type {?}
@@ -196,7 +186,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/mat-sort-component-extension.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class MatSortExtension extends PblNgridMultiComponentRegistry {
     /**
@@ -267,7 +258,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/mat-sort.module.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class PblNgridMatSortModule {
     /**
@@ -279,11 +271,13 @@ class PblNgridMatSortModule {
         registry.addMulti('dataHeaderExtensions', new MatSortExtension(cfr));
     }
 }
+PblNgridMatSortModule.NGRID_PLUGIN = ngridPlugin({ id: PLUGIN_KEY }, PblNgridMatSortDirective);
 PblNgridMatSortModule.decorators = [
     { type: NgModule, args: [{
                 imports: [CommonModule, MatButtonModule, MatSortModule, PblNgridModule],
                 declarations: [PblNgridMatSortDirective],
                 exports: [PblNgridMatSortDirective, MatSortModule],
+                // TODO: remove when ViewEngine is no longer supported by angular (V11 ???)
                 entryComponents: [MatSortHeader],
             },] }
 ];
@@ -293,6 +287,8 @@ PblNgridMatSortModule.ctorParameters = () => [
     { type: ComponentFactoryResolver }
 ];
 if (false) {
+    /** @type {?} */
+    PblNgridMatSortModule.NGRID_PLUGIN;
     /**
      * @type {?}
      * @private
@@ -302,13 +298,15 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: index.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: pebula-ngrid-material-sort.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { PblNgridMatSortDirective, PblNgridMatSortModule };
+export { PblNgridMatSortDirective, PblNgridMatSortModule, PLUGIN_KEY as ɵa };
 //# sourceMappingURL=pebula-ngrid-material-sort.js.map

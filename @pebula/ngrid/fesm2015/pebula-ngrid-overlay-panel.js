@@ -9,7 +9,8 @@ import { CommonModule } from '@angular/common';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/component-registry-extension.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @template T
@@ -64,7 +65,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/overlay-panel-ref.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @template T
@@ -133,7 +135,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/overlay-panel.service.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @record
@@ -332,10 +335,13 @@ class PblNgridOverlayPanel {
      * @return {?} OverlayConfig
      */
     _getOverlayConfig(element, config) {
+        /** @type {?} */
+        const positionStrategy = this._overlay
+            .position()
+            .flexibleConnectedTo(element)
+            .withLockedPosition();
         return new OverlayConfig({
-            positionStrategy: this._overlay.position()
-                .flexibleConnectedTo(element)
-                .withLockedPosition(),
+            positionStrategy,
             backdropClass: config.backdropClass || 'cdk-overlay-transparent-backdrop',
             // TODO: don't use the cdk's class, create it
             scrollStrategy: this._scrollStrategy(),
@@ -471,7 +477,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/overlay-panel-def.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @record
@@ -514,7 +521,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/overlay-panel.module.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class PblNgridOverlayPanelModule {
 }
@@ -534,18 +542,19 @@ PblNgridOverlayPanelModule.decorators = [
                 providers: [
                     PblNgridOverlayPanelFactory,
                 ],
-                entryComponents: [],
             },] }
 ];
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: index.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: pebula-ngrid-overlay-panel.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { PblNgridOverlayPanel, PblNgridOverlayPanelComponentExtension, PblNgridOverlayPanelDef, PblNgridOverlayPanelFactory, PblNgridOverlayPanelModule, PblNgridOverlayPanelRef };

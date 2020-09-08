@@ -1,16 +1,14 @@
 import { Directive, Input, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { columnFactory, PblColumn, PblNgridComponent, PblNgridPluginController, PblNgridConfigService, NgridPlugin, PblNgridModule } from '@pebula/ngrid';
-import { __decorate, __metadata } from 'tslib';
+import { utils, columnFactory, PblColumn, PblNgridComponent, PblNgridPluginController, PblNgridConfigService, ngridPlugin, PblNgridModule } from '@pebula/ngrid';
+import { tap, map, filter, take } from 'rxjs/operators';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
-import { UnRx } from '@pebula/utils';
 import { isObservable, of, from } from 'rxjs';
-import { tap, map } from 'rxjs/operators';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/transpose-table-session.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const LOCAL_COLUMN_DEF = Symbol('LOCAL_COLUMN_DEF');
@@ -41,7 +39,7 @@ class TransposeTableSession {
     destroy(updateTable) {
         if (!this.destroyed) {
             this.destroyed = true;
-            UnRx.kill(this, this.grid);
+            utils.unrx.kill(this, this.grid);
             this.grid.showHeader = this.headerRow;
             this.grid.columns = this.columnsInput;
             if (updateTable) {
@@ -58,14 +56,14 @@ class TransposeTableSession {
         this.headerRow = this.grid.showHeader;
         this.grid.showHeader = false;
         this.pluginCtrl.events
-            .pipe(UnRx(this, this.grid))
+            .pipe(utils.unrx(this, this.grid))
             .subscribe((/**
          * @param {?} e
          * @return {?}
          */
         e => e.kind === 'onInvalidateHeaders' && this.onInvalidateHeaders()));
         this.pluginCtrl.events
-            .pipe(UnRx(this, this.grid))
+            .pipe(utils.unrx(this, this.grid))
             .subscribe((/**
          * @param {?} e
          * @return {?}
@@ -179,7 +177,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/utils.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const TRANSFORM_ROW_REF = Symbol('TRANSFORM_ROW_REF');
@@ -209,31 +208,14 @@ function createTransformedColumn(row, index) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/transpose-plugin.directive.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const DEFAULT_HEADER_COLUMN = { prop: '__transpose__', css: 'pbl-ngrid-header-cell pbl-ngrid-transposed-header-cell' };
 /** @type {?} */
 const PLUGIN_KEY = 'transpose';
 /**
- * Transpose plugin.
- *
- * This plugin will swaps around the rows and columns of the grid.
- *
- * A **regular grid** (not transposed) represents rows horizontally:
- *
- * - Each horizontal row represents an item in the collection.
- * - Each vertical column represents the same property of all rows in the collection.
- *
- * A **transposed** grid represents row vertically:
- *
- * - Each horizontal row represents the same property of all rows in the collection.
- * - Each vertical row represents an item in the collection.
- *
- * > Note that transposing a grid might not play nice with other plugins and/or features.
- * For example, using pagination with transpose make no sense.
- */
-let PblNgridTransposePluginDirective = /**
  * Transpose plugin.
  *
  * This plugin will swaps around the rows and columns of the grid.
@@ -269,6 +251,21 @@ class PblNgridTransposePluginDirective {
             this.defaultCol = transposePlugin.defaultCol || {};
             this.matchTemplates = transposePlugin.matchTemplates || false;
         }
+        pluginCtrl.events
+            .pipe(filter((/**
+         * @param {?} e
+         * @return {?}
+         */
+        e => e.kind === 'onInit')), take(1), utils.unrx(this, this.grid))
+            .subscribe((/**
+         * @param {?} e
+         * @return {?}
+         */
+        e => {
+            if (this.enabled !== undefined) {
+                this.updateState(undefined, this.enabled);
+            }
+        }));
     }
     /**
      * @return {?}
@@ -281,17 +278,10 @@ class PblNgridTransposePluginDirective {
      */
     set transpose(value) {
         value = coerceBooleanProperty(value);
-        if (value !== this.enabled) {
-            /** @type {?} */
-            const isFirst = this.enabled === undefined;
-            this.enabled = value;
-            if (!value) {
-                this.disable(true);
-            }
-            else {
-                this.enable(!isFirst);
-            }
+        if (value !== this.enabled && this.grid.isInit) {
+            this.updateState(this.enabled, value);
         }
+        this.enabled = value;
     }
     /**
      * Column definitions for the new header column, this is the column the first column that
@@ -324,6 +314,7 @@ class PblNgridTransposePluginDirective {
     ngOnDestroy() {
         this._removePlugin(this.grid);
         this.disable(false);
+        utils.unrx.kill(this);
     }
     /**
      * @param {?} updateTable
@@ -331,9 +322,9 @@ class PblNgridTransposePluginDirective {
      */
     disable(updateTable) {
         if (this.gridState) {
-            const { gridState: tableState } = this;
+            const { gridState } = this;
             this.columns = this.selfColumn = this.gridState = this.columns = this.selfColumn = undefined;
-            tableState.destroy(updateTable);
+            gridState.destroy(updateTable);
         }
     }
     /**
@@ -435,6 +426,22 @@ class PblNgridTransposePluginDirective {
     }
     /**
      * @private
+     * @param {?} prev
+     * @param {?} curr
+     * @return {?}
+     */
+    updateState(prev, curr) {
+        /** @type {?} */
+        const isFirst = prev === undefined;
+        if (!curr) {
+            this.disable(true);
+        }
+        else {
+            this.enable(!isFirst);
+        }
+    }
+    /**
+     * @private
      * @param {?} columns
      * @return {?}
      */
@@ -454,12 +461,7 @@ class PblNgridTransposePluginDirective {
             this.selfColumn = new PblColumn(this._header, this.pluginCtrl.extApi.columnStore.groupStore);
         }
     }
-};
-PblNgridTransposePluginDirective.ctorParameters = () => [
-    { type: PblNgridComponent },
-    { type: PblNgridPluginController },
-    { type: PblNgridConfigService }
-];
+}
 PblNgridTransposePluginDirective.decorators = [
     { type: Directive, args: [{ selector: 'pbl-ngrid[transpose]' },] }
 ];
@@ -475,29 +477,6 @@ PblNgridTransposePluginDirective.propDecorators = {
     defaultCol: [{ type: Input, args: ['transposeDefaultCol',] }],
     matchTemplates: [{ type: Input }]
 };
-/**
- * Transpose plugin.
- *
- * This plugin will swaps around the rows and columns of the grid.
- *
- * A **regular grid** (not transposed) represents rows horizontally:
- *
- * - Each horizontal row represents an item in the collection.
- * - Each vertical column represents the same property of all rows in the collection.
- *
- * A **transposed** grid represents row vertically:
- *
- * - Each horizontal row represents the same property of all rows in the collection.
- * - Each vertical row represents an item in the collection.
- *
- * > Note that transposing a grid might not play nice with other plugins and/or features.
- * For example, using pagination with transpose make no sense.
- */
-PblNgridTransposePluginDirective = __decorate([
-    NgridPlugin({ id: PLUGIN_KEY }),
-    UnRx(),
-    __metadata("design:paramtypes", [PblNgridComponent, PblNgridPluginController, PblNgridConfigService])
-], PblNgridTransposePluginDirective);
 if (false) {
     /**
      * Column definitions to be used as the base default definitions for the new transposed columns.
@@ -558,27 +537,35 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/transpose.module.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class PblNgridTransposeModule {
 }
+PblNgridTransposeModule.NGRID_PLUGIN = ngridPlugin({ id: PLUGIN_KEY }, PblNgridTransposePluginDirective);
 PblNgridTransposeModule.decorators = [
     { type: NgModule, args: [{
-                imports: [CommonModule, MatCheckboxModule, PblNgridModule],
+                imports: [CommonModule, PblNgridModule],
                 declarations: [PblNgridTransposePluginDirective],
                 exports: [PblNgridTransposePluginDirective],
             },] }
 ];
+if (false) {
+    /** @type {?} */
+    PblNgridTransposeModule.NGRID_PLUGIN;
+}
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: index.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: pebula-ngrid-transpose.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { PblNgridTransposeModule, PblNgridTransposePluginDirective as ɵa };
+export { PblNgridTransposeModule, PLUGIN_KEY as ɵa, PblNgridTransposePluginDirective as ɵb };
 //# sourceMappingURL=pebula-ngrid-transpose.js.map

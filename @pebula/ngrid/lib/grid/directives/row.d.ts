@@ -7,7 +7,7 @@ export declare const PBL_NGRID_ROW_TEMPLATE: string;
 export declare class PblNgridRowComponent<T = any> extends CdkRow implements OnChanges, DoCheck {
     protected extApi: PblNgridExtensionApi<T>;
     protected el: ElementRef<HTMLElement>;
-    row: T;
+    set row(value: T);
     /**
      * Optional grid instance, required only if the row is declared outside the scope of the grid.
      */

@@ -27,7 +27,8 @@ export declare class PblMetaColumn implements PblMetaColumnDefinition {
      * The width in px or % in the following format: ##% or ##px
      * Examples: '50%', '50px'
      */
-    width: string;
+    get width(): string;
+    set width(value: string);
     /**
      * This minimum width in pixels
      * This is an absolute value, thus a number.
@@ -52,7 +53,7 @@ export declare class PblMetaColumn implements PblMetaColumnDefinition {
      * row do not set a rowIndex.
      */
     rowIndex: number;
-    readonly parsedWidth: {
+    get parsedWidth(): {
         value: number;
         type: 'px' | '%';
     } | undefined;
@@ -69,7 +70,7 @@ export declare class PblMetaColumn implements PblMetaColumnDefinition {
     /**
      * The column def for this column.
      */
-    readonly columnDef: PblNgridColumnDef<PblMetaColumn>;
+    get columnDef(): PblNgridColumnDef<PblMetaColumn>;
     private _width?;
     private _parsedWidth;
     private _columnDef;

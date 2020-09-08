@@ -4,7 +4,7 @@ import { PblMetaColumn } from './meta-column';
 import { PblColumn } from './column';
 export declare function isPblColumnGroup(def: any): def is PblColumnGroup;
 export declare class PblColumnGroupStore {
-    readonly all: PblColumnGroup[];
+    get all(): PblColumnGroup[];
     private store;
     private _all;
     /**
@@ -45,7 +45,7 @@ export declare class PblColumnGroup extends PblMetaColumn implements PblColumnGr
      * Returns the visible state of the column.
      * The column is visible if AT LEAST ONE child column is visible (i.e. not hidden)
      */
-    readonly isVisible: boolean;
+    get isVisible(): boolean;
     /**
    * The column def for this column.
    */

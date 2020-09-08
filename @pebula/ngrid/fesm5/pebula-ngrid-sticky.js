@@ -1,13 +1,14 @@
-import { __values, __read, __decorate, __metadata } from 'tslib';
+import { __values, __read } from 'tslib';
 import { filter, first } from 'rxjs/operators';
-import { IterableDiffers, Directive, Input, NgModule, Optional, SkipSelf } from '@angular/core';
-import { PblNgridComponent, PblNgridPluginController, NgridPlugin, PblNgridModule, PblNgridConfigService } from '@pebula/ngrid';
+import { Directive, IterableDiffers, Input, NgModule, Optional, SkipSelf } from '@angular/core';
+import { PblNgridComponent, PblNgridPluginController, ngridPlugin, PblNgridModule, PblNgridConfigService } from '@pebula/ngrid';
 import { CommonModule } from '@angular/common';
 import { CdkTableModule } from '@angular/cdk/table';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/sticky/sticky-plugin.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 var PLUGIN_KEY = 'sticky';
@@ -398,11 +399,6 @@ var PblNgridStickyPluginDirective = /** @class */ (function () {
             setStickyRow(this.grid, type, bulk);
         }
     };
-    PblNgridStickyPluginDirective.ctorParameters = function () { return [
-        { type: PblNgridComponent },
-        { type: IterableDiffers },
-        { type: PblNgridPluginController }
-    ]; };
     PblNgridStickyPluginDirective.decorators = [
         { type: Directive, args: [{ selector: 'pbl-ngrid[stickyColumnStart], pbl-ngrid[stickyColumnEnd], pbl-ngrid[stickyHeader], pbl-ngrid[stickyFooter]' },] }
     ];
@@ -418,12 +414,6 @@ var PblNgridStickyPluginDirective = /** @class */ (function () {
         stickyHeader: [{ type: Input }],
         stickyFooter: [{ type: Input }]
     };
-    PblNgridStickyPluginDirective = __decorate([
-        NgridPlugin({ id: PLUGIN_KEY }),
-        __metadata("design:paramtypes", [PblNgridComponent,
-            IterableDiffers,
-            PblNgridPluginController])
-    ], PblNgridStickyPluginDirective);
     return PblNgridStickyPluginDirective;
 }());
 if (false) {
@@ -476,7 +466,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/sticky.module.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 var MAPPER = (/**
@@ -530,6 +521,7 @@ var PblNgridStickyModule = /** @class */ (function () {
             }
         }));
     }
+    PblNgridStickyModule.NGRID_PLUGIN = ngridPlugin({ id: PLUGIN_KEY }, PblNgridStickyPluginDirective);
     PblNgridStickyModule.decorators = [
         { type: NgModule, args: [{
                     imports: [CommonModule, CdkTableModule, PblNgridModule],
@@ -544,15 +536,21 @@ var PblNgridStickyModule = /** @class */ (function () {
     ]; };
     return PblNgridStickyModule;
 }());
+if (false) {
+    /** @type {?} */
+    PblNgridStickyModule.NGRID_PLUGIN;
+}
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: index.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: pebula-ngrid-sticky.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { PblNgridStickyModule, setStickyColumns, setStickyRow, PLUGIN_KEY as ɵa, PblNgridStickyPluginDirective as ɵb };

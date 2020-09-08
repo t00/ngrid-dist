@@ -8,8 +8,8 @@ export declare class PblColumnFactory {
     private _defaults;
     private _currentHeaderRow;
     private _currentFooterRow;
-    readonly currentHeaderRow: number;
-    readonly currentFooterRow: number;
+    get currentHeaderRow(): number;
+    get currentFooterRow(): number;
     static fromDefinitionSet(defs: PblNgridColumnDefinitionSet): PblColumnFactory;
     build(): PblNgridColumnSet;
     /**

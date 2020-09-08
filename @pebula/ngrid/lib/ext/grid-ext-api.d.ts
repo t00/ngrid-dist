@@ -8,7 +8,7 @@ import { DynamicColumnWidthLogic } from '../grid/col-width-logic/dynamic-column-
 import { PblCdkVirtualScrollViewportComponent } from '../grid/features/virtual-scroll/virtual-scroll-viewport.component';
 import { PblNgridEvents } from './types';
 import { PblNgridMetaRowService } from '../grid/meta-rows/index';
-export declare const EXT_API_TOKEN: InjectionToken<{}>;
+export declare const EXT_API_TOKEN: InjectionToken<unknown>;
 export interface PblNgridExtensionApi<T = any> {
     grid: PblNgridComponent<T>;
     element: HTMLElement;

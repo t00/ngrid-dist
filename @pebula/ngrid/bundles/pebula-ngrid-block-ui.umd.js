@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/common'), require('@angular/cdk/table'), require('@pebula/ngrid'), require('rxjs'), require('@angular/cdk/coercion'), require('@pebula/utils')) :
-    typeof define === 'function' && define.amd ? define('@pebula/ngrid/block-ui', ['exports', '@angular/core', '@angular/common', '@angular/cdk/table', '@pebula/ngrid', 'rxjs', '@angular/cdk/coercion', '@pebula/utils'], factory) :
-    (global = global || self, factory((global.pebula = global.pebula || {}, global.pebula.ngrid = global.pebula.ngrid || {}, global.pebula.ngrid['block-ui'] = {}), global.ng.core, global.ng.common, global.ng.cdk.table, global.pebula.ngrid, global.rxjs, global.ng.cdk.coercion, global.pebula.utils));
-}(this, (function (exports, core, common, table, ngrid, rxjs, coercion, utils) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/common'), require('@angular/cdk/table'), require('@pebula/ngrid'), require('rxjs'), require('@angular/cdk/coercion')) :
+    typeof define === 'function' && define.amd ? define('@pebula/ngrid/block-ui', ['exports', '@angular/core', '@angular/common', '@angular/cdk/table', '@pebula/ngrid', 'rxjs', '@angular/cdk/coercion'], factory) :
+    (global = global || self, factory((global.pebula = global.pebula || {}, global.pebula.ngrid = global.pebula.ngrid || {}, global.pebula.ngrid['block-ui'] = {}), global.ng.core, global.ng.common, global.ng.cdk.table, global.pebula.ngrid, global.rxjs, global.ng.cdk.coercion));
+}(this, (function (exports, core, common, table, ngrid, rxjs, coercion) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -203,7 +203,8 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/block-ui/directives.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /**
      * Marks the element as the display element when the form is busy.
@@ -232,7 +233,8 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/block-ui/block-ui-plugin.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
     var PLUGIN_KEY = 'blockUi';
@@ -278,10 +280,10 @@
                 if (event.kind === 'onDataSource') {
                     var prev = event.prev, curr = event.curr;
                     if (prev) {
-                        utils.UnRx.kill(_this, prev);
+                        ngrid.utils.unrx.kill(_this, prev);
                     }
                     curr.onSourceChanging
-                        .pipe(utils.UnRx(_this, curr))
+                        .pipe(ngrid.utils.unrx(_this, curr))
                         .subscribe((/**
                      * @return {?}
                      */
@@ -292,7 +294,7 @@
                         }
                     }));
                     curr.onSourceChanged
-                        .pipe(utils.UnRx(_this, curr))
+                        .pipe(ngrid.utils.unrx(_this, curr))
                         .subscribe((/**
                      * @return {?}
                      */
@@ -373,10 +375,10 @@
                 }
                 if (rxjs.isObservable(value) && this._blockUi !== value) {
                     if (rxjs.isObservable(this._blockUi)) {
-                        utils.UnRx.kill(this, this._blockUi);
+                        ngrid.utils.unrx.kill(this, this._blockUi);
                     }
                     this._blockUi = value;
-                    value.pipe(utils.UnRx(this, this._blockUi)).subscribe((/**
+                    value.pipe(ngrid.utils.unrx(this, this._blockUi)).subscribe((/**
                      * @param {?} state
                      * @return {?}
                      */
@@ -403,6 +405,7 @@
          * @return {?}
          */
         function () {
+            ngrid.utils.unrx.kill(this);
             this._removePlugin(this.grid);
         };
         /**
@@ -431,10 +434,6 @@
                 this._blockerEmbeddedVRef = undefined;
             }
         };
-        PblNgridBlockUiPluginDirective.ctorParameters = function () { return [
-            { type: ngrid.PblNgridComponent },
-            { type: ngrid.PblNgridPluginController }
-        ]; };
         PblNgridBlockUiPluginDirective.decorators = [
             { type: core.Directive, args: [{ selector: 'pbl-ngrid[blockUi]', exportAs: 'blockUi' },] }
         ];
@@ -446,14 +445,6 @@
         PblNgridBlockUiPluginDirective.propDecorators = {
             blockUi: [{ type: core.Input }]
         };
-        /**
-         * @template T
-         */
-        PblNgridBlockUiPluginDirective = __decorate([
-            ngrid.NgridPlugin({ id: PLUGIN_KEY }),
-            utils.UnRx(),
-            __metadata("design:paramtypes", [ngrid.PblNgridComponent, ngrid.PblNgridPluginController])
-        ], PblNgridBlockUiPluginDirective);
         return PblNgridBlockUiPluginDirective;
     }());
     if (false) {
@@ -486,11 +477,13 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/table-block-ui.module.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var PblNgridBlockUiModule = /** @class */ (function () {
         function PblNgridBlockUiModule() {
         }
+        PblNgridBlockUiModule.NGRID_PLUGIN = ngrid.ngridPlugin({ id: PLUGIN_KEY }, PblNgridBlockUiPluginDirective);
         PblNgridBlockUiModule.decorators = [
             { type: core.NgModule, args: [{
                         imports: [common.CommonModule, table.CdkTableModule, ngrid.PblNgridModule],
@@ -500,10 +493,15 @@
         ];
         return PblNgridBlockUiModule;
     }());
+    if (false) {
+        /** @type {?} */
+        PblNgridBlockUiModule.NGRID_PLUGIN;
+    }
 
     exports.PblNgridBlockUiModule = PblNgridBlockUiModule;
     exports.ɵa = PblNgridBlockUiDefDirective;
-    exports.ɵb = PblNgridBlockUiPluginDirective;
+    exports.ɵb = PLUGIN_KEY;
+    exports.ɵc = PblNgridBlockUiPluginDirective;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

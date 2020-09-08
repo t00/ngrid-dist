@@ -11,7 +11,8 @@ import { PblColumn, ColumnSizeInfo } from '../../columns/index';
  * an entire row should emit once, with all columns.
  */
 export declare class PblColumnSizeObserver extends ColumnSizeInfo implements AfterViewInit, OnDestroy {
-    column: PblColumn;
+    get column(): PblColumn;
+    set column(value: PblColumn);
     private controller;
     constructor(el: ElementRef, table: PblNgridComponent<any>);
     attachColumn(column: PblColumn): void;

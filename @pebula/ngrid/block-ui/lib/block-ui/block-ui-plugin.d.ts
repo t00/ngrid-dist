@@ -8,6 +8,7 @@ declare module '@pebula/ngrid/lib/ext/types' {
         };
     }
 }
+export declare const PLUGIN_KEY: 'blockUi';
 export declare class PblNgridBlockUiPluginDirective<T> implements OnDestroy {
     private grid;
     /**
@@ -36,7 +37,8 @@ export declare class PblNgridBlockUiPluginDirective<T> implements OnDestroy {
      * For example, sending the returned value from `HttpClient` will probably result in 2 HTTP calls, if you already subscribed to it
      * > The default value is `auto` which means that `<pbl-ngrid blockUi>` is similar to `<pbl-ngrid blockUi="auto">`
      */
-    blockUi: boolean | 'auto' | Observable<boolean>;
+    get blockUi(): boolean | 'auto' | Observable<boolean>;
+    set blockUi(value: boolean | 'auto' | Observable<boolean>);
     private _blockInProgress;
     private _blockUi;
     private _blockerEmbeddedVRef;

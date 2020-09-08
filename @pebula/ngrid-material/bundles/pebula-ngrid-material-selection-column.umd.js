@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/common'), require('@angular/material/checkbox'), require('@pebula/ngrid'), require('@pebula/utils'), require('@angular/cdk/collections')) :
-    typeof define === 'function' && define.amd ? define('@pebula/ngrid-material/selection-column', ['exports', '@angular/core', '@angular/common', '@angular/material/checkbox', '@pebula/ngrid', '@pebula/utils', '@angular/cdk/collections'], factory) :
-    (global = global || self, factory((global.pebula = global.pebula || {}, global.pebula['ngrid-material'] = global.pebula['ngrid-material'] || {}, global.pebula['ngrid-material']['selection-column'] = {}), global.ng.core, global.ng.common, global.ng.material.checkbox, global.pebula.ngrid, global.pebula.utils));
-}(this, (function (exports, core, common, checkbox, ngrid, utils) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/common'), require('@angular/material/checkbox'), require('@pebula/ngrid'), require('@angular/cdk/collections')) :
+    typeof define === 'function' && define.amd ? define('@pebula/ngrid-material/selection-column', ['exports', '@angular/core', '@angular/common', '@angular/material/checkbox', '@pebula/ngrid', '@angular/cdk/collections'], factory) :
+    (global = global || self, factory((global.pebula = global.pebula || {}, global.pebula['ngrid-material'] = global.pebula['ngrid-material'] || {}, global.pebula['ngrid-material']['selection-column'] = {}), global.ng.core, global.ng.common, global.ng.material.checkbox, global.pebula.ngrid));
+}(this, (function (exports, core, common, checkbox, ngrid) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -203,7 +203,8 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/table-checkbox.component.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
     var ALWAYS_FALSE_FN = (/**
@@ -213,10 +214,24 @@
     var ɵ0 = ALWAYS_FALSE_FN;
     var PblNgridCheckboxComponent = /** @class */ (function () {
         function PblNgridCheckboxComponent(table, cdr) {
+            var _this = this;
             this.table = table;
             this.cdr = cdr;
             this.allSelected = false;
             this._isCheckboxDisabled = ALWAYS_FALSE_FN;
+            /** @type {?} */
+            var pluginCtrl = ngrid.PblNgridPluginController.find(table);
+            pluginCtrl.events
+                .pipe(ngrid.utils.unrx(this))
+                .subscribe((/**
+             * @param {?} e
+             * @return {?}
+             */
+            function (e) {
+                if (e.kind === 'onDataSource') {
+                    _this.selection = e.curr.selection;
+                }
+            }));
         }
         Object.defineProperty(PblNgridCheckboxComponent.prototype, "bulkSelectMode", {
             /**
@@ -311,8 +326,10 @@
             function (value) {
                 if (value !== this._color) {
                     this._color = value;
-                    this.cdr.markForCheck();
-                    this.cdr.detectChanges();
+                    if (this.table.isInit) {
+                        this.cdr.markForCheck();
+                        this.cdr.detectChanges();
+                    }
                 }
             },
             enumerable: true,
@@ -325,7 +342,7 @@
          * @return {?}
          */
         function () {
-            if (!this.selection) {
+            if (!this.selection && this.table.ds) {
                 this.selection = this.table.ds.selection;
             }
             /** @type {?} */
@@ -337,12 +354,21 @@
         /**
          * @return {?}
          */
+        PblNgridCheckboxComponent.prototype.ngOnDestroy = /**
+         * @return {?}
+         */
+        function () {
+            ngrid.utils.unrx.kill(this);
+        };
+        /**
+         * @return {?}
+         */
         PblNgridCheckboxComponent.prototype.masterToggle = /**
          * @return {?}
          */
         function () {
-            var _this = this;
             var _a;
+            var _this = this;
             if (this.allSelected) {
                 this.selection.clear();
             }
@@ -366,6 +392,8 @@
          */
         function (row) {
             this.selection.toggle(row);
+            this.cdr.markForCheck();
+            this.cdr.detectChanges();
         };
         /**
          * @private
@@ -389,11 +417,11 @@
          */
         function () {
             var _this = this;
-            utils.UnRx.kill(this, this.table);
+            ngrid.utils.unrx.kill(this, this.table);
             if (this._selection) {
                 this.length = this.selection.selected.length;
                 this.selection.changed
-                    .pipe(utils.UnRx(this, this.table))
+                    .pipe(ngrid.utils.unrx(this, this.table))
                     .subscribe((/**
                  * @return {?}
                  */
@@ -403,7 +431,7 @@
                 /** @type {?} */
                 var changeSource = this.bulkSelectMode === 'view' ? this.table.ds.onRenderedDataChanged : this.table.ds.onSourceChanged;
                 changeSource
-                    .pipe(utils.UnRx(this, this.table))
+                    .pipe(ngrid.utils.unrx(this, this.table))
                     .subscribe((/**
                  * @return {?}
                  */
@@ -435,22 +463,18 @@
             this.cdr.markForCheck();
             this.cdr.detectChanges();
         };
-        PblNgridCheckboxComponent.ctorParameters = function () { return [
-            { type: ngrid.PblNgridComponent },
-            { type: core.ChangeDetectorRef }
-        ]; };
         PblNgridCheckboxComponent.decorators = [
             { type: core.Component, args: [{
                         selector: 'pbl-ngrid-checkbox',
                         template: "<ng-container *pblNgridHeaderCellDef=\"name; col as col;\">\n  <mat-checkbox *ngIf=\"bulkSelectMode !== 'none'\"\n                style=\"overflow: initial\"\n                [color]=\"color\"\n                (click)=\"$event.stopPropagation()\"\n                (change)=\"$event ? masterToggle() : null\"\n                [checked]=\"allSelected\"\n                [indeterminate]=\"length > 0 && !allSelected\">\n  </mat-checkbox>\n</ng-container>\n<mat-checkbox *pblNgridCellDef=\"name; row as row;\"\n              style=\"overflow: initial\"\n              [color]=\"color\"\n              [disabled]=isCheckboxDisabled(row)\n              (click)=\"$event.stopPropagation()\"\n              (change)=\"rowItemChange(row)\"\n              [checked]=\"selection.isSelected(row)\">\n</mat-checkbox>\n<span *pblNgridFooterCellDef=\"name; col as col;\">{{ length ? length : '' }}</span>\n",
                         changeDetection: core.ChangeDetectionStrategy.OnPush,
                         encapsulation: core.ViewEncapsulation.None,
-                        styles: [".mat-cell.pbl-ngrid-checkbox,.mat-header-cell.pbl-ngrid-checkbox{box-sizing:content-box;-webkit-box-flex:0;flex:0 0 24px;overflow:visible}"]
+                        styles: [".mat-cell.pbl-ngrid-checkbox,.mat-header-cell.pbl-ngrid-checkbox{box-sizing:content-box;flex:0 0 24px;overflow:visible}"]
                     }] }
         ];
         /** @nocollapse */
         PblNgridCheckboxComponent.ctorParameters = function () { return [
-            { type: ngrid.PblNgridComponent, decorators: [{ type: core.Optional }] },
+            { type: ngrid.PblNgridComponent },
             { type: core.ChangeDetectorRef }
         ]; };
         PblNgridCheckboxComponent.propDecorators = {
@@ -463,10 +487,6 @@
             cellDef: [{ type: core.ViewChild, args: [ngrid.PblNgridCellDefDirective, { static: true },] }],
             footerDef: [{ type: core.ViewChild, args: [ngrid.PblNgridFooterCellDefDirective, { static: true },] }]
         };
-        PblNgridCheckboxComponent = __decorate([
-            utils.UnRx(),
-            __metadata("design:paramtypes", [ngrid.PblNgridComponent, core.ChangeDetectorRef])
-        ], PblNgridCheckboxComponent);
         return PblNgridCheckboxComponent;
     }());
     if (false) {
@@ -519,7 +539,8 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/checkbox-plugin.directive.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
     var PLUGIN_KEY = 'matCheckboxSelection';
@@ -528,6 +549,7 @@
             this.table = table;
             this.cfr = cfr;
             this.injector = injector;
+            this._color = 'primary';
             this._removePlugin = pluginCtrl.setPlugin(PLUGIN_KEY, this);
         }
         Object.defineProperty(PblNgridMatCheckboxSelectionDirective.prototype, "isCheckboxDisabled", {
@@ -661,12 +683,6 @@
             }
             this._removePlugin(this.table);
         };
-        PblNgridMatCheckboxSelectionDirective.ctorParameters = function () { return [
-            { type: ngrid.PblNgridComponent },
-            { type: core.ComponentFactoryResolver },
-            { type: core.Injector },
-            { type: ngrid.PblNgridPluginController }
-        ]; };
         PblNgridMatCheckboxSelectionDirective.decorators = [
             { type: core.Directive, args: [{ selector: 'pbl-ngrid[matCheckboxSelection]' },] }
         ];
@@ -683,14 +699,6 @@
             bulkSelectMode: [{ type: core.Input }],
             matCheckboxSelectionColor: [{ type: core.Input }]
         };
-        PblNgridMatCheckboxSelectionDirective = __decorate([
-            ngrid.NgridPlugin({ id: PLUGIN_KEY }),
-            utils.UnRx(),
-            __metadata("design:paramtypes", [ngrid.PblNgridComponent,
-                core.ComponentFactoryResolver,
-                core.Injector,
-                ngrid.PblNgridPluginController])
-        ], PblNgridMatCheckboxSelectionDirective);
         return PblNgridMatCheckboxSelectionDirective;
     }());
     if (false) {
@@ -743,25 +751,33 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/table-checkbox.module.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var PblNgridCheckboxModule = /** @class */ (function () {
         function PblNgridCheckboxModule() {
         }
+        PblNgridCheckboxModule.NGRID_PLUGIN = ngrid.ngridPlugin({ id: PLUGIN_KEY }, PblNgridMatCheckboxSelectionDirective);
         PblNgridCheckboxModule.decorators = [
             { type: core.NgModule, args: [{
                         imports: [common.CommonModule, checkbox.MatCheckboxModule, ngrid.PblNgridModule],
                         declarations: [PblNgridMatCheckboxSelectionDirective, PblNgridCheckboxComponent],
                         exports: [PblNgridMatCheckboxSelectionDirective, PblNgridCheckboxComponent],
+                        // TODO: remove when ViewEngine is no longer supported by angular (V11 ???)
                         entryComponents: [PblNgridCheckboxComponent]
                     },] }
         ];
         return PblNgridCheckboxModule;
     }());
+    if (false) {
+        /** @type {?} */
+        PblNgridCheckboxModule.NGRID_PLUGIN;
+    }
 
     exports.PblNgridCheckboxModule = PblNgridCheckboxModule;
-    exports.ɵa = PblNgridMatCheckboxSelectionDirective;
-    exports.ɵb = PblNgridCheckboxComponent;
+    exports.ɵa = PLUGIN_KEY;
+    exports.ɵb = PblNgridMatCheckboxSelectionDirective;
+    exports.ɵc = PblNgridCheckboxComponent;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

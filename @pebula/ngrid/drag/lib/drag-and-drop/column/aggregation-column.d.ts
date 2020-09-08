@@ -1,6 +1,6 @@
-import { ChangeDetectorRef, ElementRef, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, ElementRef, OnDestroy, QueryList } from '@angular/core';
 import { Directionality } from '@angular/cdk/bidi';
-import { DragDrop, CdkDropListGroup, CdkDropList, CdkDrag, DragDropRegistry } from '@angular/cdk/drag-drop';
+import { DragDrop, CdkDropListGroup, CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
 import { PblNgridComponent, PblNgridPluginController, PblColumn } from '@pebula/ngrid';
 import { CdkLazyDropList } from '../core/lazy-drag-drop';
 import { PblDropListRef } from '../core/drop-list-ref';
@@ -9,8 +9,8 @@ export declare class PblNgridAggregationContainerDirective<T = any> extends CdkD
     id: string;
     orientation: 'horizontal' | 'vertical';
     pending: PblColumn;
-    constructor(grid: PblNgridComponent<T>, pluginCtrl: PblNgridPluginController, element: ElementRef<HTMLElement>, dragDrop: DragDrop, changeDetectorRef: ChangeDetectorRef, dir?: Directionality, group?: CdkDropListGroup<CdkDropList>, dragDropRegistry?: DragDropRegistry<any, any>, // for v7 compat
-    _document?: any);
+    _draggables: QueryList<CdkDrag>;
+    constructor(grid: PblNgridComponent<T>, pluginCtrl: PblNgridPluginController, element: ElementRef<HTMLElement>, dragDrop: DragDrop, changeDetectorRef: ChangeDetectorRef, dir?: Directionality, group?: CdkDropListGroup<CdkDropList>);
     /**
      * Selector that will be used to determine the direct container element, starting from
      * the `cdkDropList` element and going down the DOM. Passing an alternate direct container element
@@ -18,7 +18,7 @@ export declare class PblNgridAggregationContainerDirective<T = any> extends CdkD
      * of the draggable elements.
      */
     directContainerElement: string;
-    readonly pblDropListRef: PblDropListRef<any>;
+    get pblDropListRef(): PblDropListRef<any>;
     originalElement: ElementRef<HTMLElement>;
     _draggablesSet: Set<CdkDrag<any>>;
     ngOnInit(): void;

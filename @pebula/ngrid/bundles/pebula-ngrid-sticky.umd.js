@@ -203,7 +203,8 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/sticky/sticky-plugin.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
     var PLUGIN_KEY = 'sticky';
@@ -594,11 +595,6 @@
                 setStickyRow(this.grid, type, bulk);
             }
         };
-        PblNgridStickyPluginDirective.ctorParameters = function () { return [
-            { type: ngrid.PblNgridComponent },
-            { type: core.IterableDiffers },
-            { type: ngrid.PblNgridPluginController }
-        ]; };
         PblNgridStickyPluginDirective.decorators = [
             { type: core.Directive, args: [{ selector: 'pbl-ngrid[stickyColumnStart], pbl-ngrid[stickyColumnEnd], pbl-ngrid[stickyHeader], pbl-ngrid[stickyFooter]' },] }
         ];
@@ -614,12 +610,6 @@
             stickyHeader: [{ type: core.Input }],
             stickyFooter: [{ type: core.Input }]
         };
-        PblNgridStickyPluginDirective = __decorate([
-            ngrid.NgridPlugin({ id: PLUGIN_KEY }),
-            __metadata("design:paramtypes", [ngrid.PblNgridComponent,
-                core.IterableDiffers,
-                ngrid.PblNgridPluginController])
-        ], PblNgridStickyPluginDirective);
         return PblNgridStickyPluginDirective;
     }());
     if (false) {
@@ -672,7 +662,8 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/sticky.module.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
     var MAPPER = (/**
@@ -726,6 +717,7 @@
                 }
             }));
         }
+        PblNgridStickyModule.NGRID_PLUGIN = ngrid.ngridPlugin({ id: PLUGIN_KEY }, PblNgridStickyPluginDirective);
         PblNgridStickyModule.decorators = [
             { type: core.NgModule, args: [{
                         imports: [common.CommonModule, table.CdkTableModule, ngrid.PblNgridModule],
@@ -740,6 +732,10 @@
         ]; };
         return PblNgridStickyModule;
     }());
+    if (false) {
+        /** @type {?} */
+        PblNgridStickyModule.NGRID_PLUGIN;
+    }
 
     exports.PblNgridStickyModule = PblNgridStickyModule;
     exports.setStickyColumns = setStickyColumns;

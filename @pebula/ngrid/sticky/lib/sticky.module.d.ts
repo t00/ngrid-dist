@@ -10,5 +10,6 @@ declare module '@pebula/ngrid/lib/grid/services/config' {
     }
 }
 export declare class PblNgridStickyModule {
+    static readonly NGRID_PLUGIN: never;
     constructor(parentModule: PblNgridStickyModule, configService: PblNgridConfigService);
 }

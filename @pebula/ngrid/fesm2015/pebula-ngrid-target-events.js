@@ -1,9 +1,7 @@
-import { __decorate, __metadata } from 'tslib';
 import { ReplaySubject, fromEvent, timer } from 'rxjs';
 import { filter, tap, switchMap, takeUntil, map, bufferWhen, debounce } from 'rxjs/operators';
-import { EventEmitter, Injector, Directive, Input, NgModule, Optional, SkipSelf } from '@angular/core';
-import { UnRx } from '@pebula/utils';
-import { PblColumn, PblNgridPluginController, PblNgridComponent, NgridPlugin, PblNgridModule, PblNgridConfigService } from '@pebula/ngrid';
+import { EventEmitter, Directive, Injector, Input, NgModule, Optional, SkipSelf } from '@angular/core';
+import { PblColumn, PblNgridPluginController, PblNgridComponent, utils, ngridPlugin, PblNgridModule, PblNgridConfigService } from '@pebula/ngrid';
 import { RIGHT_ARROW, LEFT_ARROW, DOWN_ARROW, UP_ARROW } from '@angular/cdk/keycodes';
 import { CommonModule } from '@angular/common';
 import { CdkTableModule } from '@angular/cdk/table';
@@ -11,7 +9,8 @@ import { coerceBooleanProperty } from '@angular/cdk/coercion';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/target-events/utils.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @template T, TEvent
@@ -185,7 +184,8 @@ function rangeBetween(n1, n2) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/target-events/focus-and-selection.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const isOsx = /^mac/.test(navigator.platform.toLowerCase());
@@ -457,7 +457,11 @@ function createHandlers(targetEvents) {
     };
 }
 
-var PblNgridTargetEventsPlugin_1;
+/**
+ * @fileoverview added by tsickle
+ * Generated from: lib/target-events/target-events-plugin.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 /** @type {?} */
 const PLUGIN_KEY = 'targetEvents';
 /**
@@ -488,9 +492,6 @@ function runOnce() {
     PblColumn.extendProperty('editable');
 }
 /**
- * @template T
- */
-let PblNgridTargetEventsPlugin = PblNgridTargetEventsPlugin_1 = /**
  * @template T
  */
 class PblNgridTargetEventsPlugin {
@@ -550,7 +551,7 @@ class PblNgridTargetEventsPlugin {
     static create(table, injector) {
         /** @type {?} */
         const pluginCtrl = PblNgridPluginController.find(table);
-        return new PblNgridTargetEventsPlugin_1(table, injector, pluginCtrl);
+        return new PblNgridTargetEventsPlugin(table, injector, pluginCtrl);
     }
     /**
      * @private
@@ -585,7 +586,7 @@ class PblNgridTargetEventsPlugin {
             const matrixPoint = matrixRowFromRow(rowTarget, cdkTable._rowOutlet.viewContainer);
             if (matrixPoint) {
                 /** @type {?} */
-                const event = (/** @type {?} */ (Object.assign({}, matrixPoint, { source, cellTarget, rowTarget })));
+                const event = (/** @type {?} */ (Object.assign(Object.assign({}, matrixPoint), { source, cellTarget, rowTarget })));
                 if (matrixPoint.type === 'data') {
                     ((/** @type {?} */ (event))).row = grid.ds.renderedData[matrixPoint.rowIndex];
                 }
@@ -671,7 +672,7 @@ class PblNgridTargetEventsPlugin {
                 const matrixPoint = matrixRowFromRow(rowTarget, cdkTable._rowOutlet.viewContainer);
                 if (matrixPoint) {
                     /** @type {?} */
-                    const event = (/** @type {?} */ (Object.assign({}, matrixPoint, { source, rowTarget })));
+                    const event = (/** @type {?} */ (Object.assign(Object.assign({}, matrixPoint), { source, rowTarget })));
                     if (matrixPoint.type === 'data') {
                         ((/** @type {?} */ (event))).context = this.pluginCtrl.extApi.contextApi.getRow(matrixPoint.rowIndex);
                         ((/** @type {?} */ (event))).row = ((/** @type {?} */ (event))).context.$implicit;
@@ -947,21 +948,7 @@ class PblNgridTargetEventsPlugin {
     syncRow(event) {
         this.grid._cdkTable.syncRows(event.type, event.rowIndex);
     }
-};
-PblNgridTargetEventsPlugin.ctorParameters = () => [
-    { type: PblNgridComponent },
-    { type: Injector },
-    { type: PblNgridPluginController }
-];
-/**
- * @template T
- */
-PblNgridTargetEventsPlugin = PblNgridTargetEventsPlugin_1 = __decorate([
-    NgridPlugin({ id: PLUGIN_KEY, factory: 'create', runOnce }),
-    __metadata("design:paramtypes", [PblNgridComponent,
-        Injector,
-        PblNgridPluginController])
-], PblNgridTargetEventsPlugin);
+}
 if (false) {
     /** @type {?} */
     PblNgridTargetEventsPlugin.prototype.rowClick;
@@ -1013,9 +1000,6 @@ if (false) {
 /**
  * @template T
  */
-let PblNgridTargetEventsPluginDirective = /**
- * @template T
- */
 class PblNgridTargetEventsPluginDirective extends PblNgridTargetEventsPlugin {
     /**
      * @param {?} table
@@ -1031,12 +1015,7 @@ class PblNgridTargetEventsPluginDirective extends PblNgridTargetEventsPlugin {
     ngOnDestroy() {
         this.destroy();
     }
-};
-PblNgridTargetEventsPluginDirective.ctorParameters = () => [
-    { type: PblNgridComponent },
-    { type: Injector },
-    { type: PblNgridPluginController }
-];
+}
 PblNgridTargetEventsPluginDirective.decorators = [
     { type: Directive, args: [{
                 // tslint:disable-next-line:directive-selector
@@ -1051,22 +1030,13 @@ PblNgridTargetEventsPluginDirective.ctorParameters = () => [
     { type: Injector },
     { type: PblNgridPluginController }
 ];
-/**
- * @template T
- */
-PblNgridTargetEventsPluginDirective = __decorate([
-    UnRx(),
-    __metadata("design:paramtypes", [PblNgridComponent, Injector, PblNgridPluginController])
-], PblNgridTargetEventsPluginDirective);
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/target-events/cell-edit.directive.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
- * @template T
- */
-let PblNgridCellEditDirective = /**
  * @template T
  */
 class PblNgridCellEditDirective {
@@ -1117,15 +1087,21 @@ class PblNgridCellEditDirective {
         }
     }
     /**
+     * @return {?}
+     */
+    ngOnDestroy() {
+        utils.unrx.kill(this);
+    }
+    /**
      * @private
      * @return {?}
      */
     update() {
         if (this.targetEventsPlugin) {
-            UnRx.kill(this, this.targetEventsPlugin);
+            utils.unrx.kill(this, this.targetEventsPlugin);
             if (this._click) {
                 this.targetEventsPlugin.cellClick
-                    .pipe(UnRx(this, this.targetEventsPlugin))
+                    .pipe(utils.unrx(this, this.targetEventsPlugin))
                     .subscribe((/**
                  * @param {?} event
                  * @return {?}
@@ -1138,7 +1114,7 @@ class PblNgridCellEditDirective {
             }
             if (this._dblClick) {
                 this.targetEventsPlugin.cellDblClick
-                    .pipe(UnRx(this, this.targetEventsPlugin))
+                    .pipe(utils.unrx(this, this.targetEventsPlugin))
                     .subscribe((/**
                  * @param {?} event
                  * @return {?}
@@ -1151,12 +1127,7 @@ class PblNgridCellEditDirective {
             }
         }
     }
-};
-PblNgridCellEditDirective.ctorParameters = () => [
-    { type: PblNgridComponent },
-    { type: Injector },
-    { type: PblNgridPluginController }
-];
+}
 PblNgridCellEditDirective.decorators = [
     { type: Directive, args: [{
                 // tslint:disable-next-line:directive-selector
@@ -1173,13 +1144,6 @@ PblNgridCellEditDirective.propDecorators = {
     cellEditClick: [{ type: Input }],
     cellEditDblClick: [{ type: Input }]
 };
-/**
- * @template T
- */
-PblNgridCellEditDirective = __decorate([
-    UnRx(),
-    __metadata("design:paramtypes", [PblNgridComponent, Injector, PblNgridPluginController])
-], PblNgridCellEditDirective);
 if (false) {
     /**
      * @type {?}
@@ -1200,7 +1164,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/target-events.module.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class PblNgridTargetEventsModule {
     /**
@@ -1241,6 +1206,7 @@ class PblNgridTargetEventsModule {
         }));
     }
 }
+PblNgridTargetEventsModule.NGRID_PLUGIN = ngridPlugin({ id: PLUGIN_KEY, factory: 'create', runOnce }, PblNgridTargetEventsPlugin);
 PblNgridTargetEventsModule.decorators = [
     { type: NgModule, args: [{
                 imports: [CommonModule, CdkTableModule, PblNgridModule],
@@ -1253,15 +1219,21 @@ PblNgridTargetEventsModule.ctorParameters = () => [
     { type: PblNgridTargetEventsModule, decorators: [{ type: Optional }, { type: SkipSelf }] },
     { type: PblNgridConfigService }
 ];
+if (false) {
+    /** @type {?} */
+    PblNgridTargetEventsModule.NGRID_PLUGIN;
+}
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: index.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: pebula-ngrid-target-events.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { PblNgridTargetEventsModule, PblNgridTargetEventsPlugin, isCellEvent, isDataCellEvent, PLUGIN_KEY as ɵa, runOnce as ɵb, PblNgridTargetEventsPluginDirective as ɵc, PblNgridCellEditDirective as ɵd };

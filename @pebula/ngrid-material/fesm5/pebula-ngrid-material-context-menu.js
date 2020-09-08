@@ -1,17 +1,18 @@
-import { Directive, Input, Component, ViewEncapsulation, ElementRef, ViewContainerRef, ViewChild, NgModule, Optional, SkipSelf, ComponentFactoryResolver } from '@angular/core';
+import { Directive, Input, Component, ViewEncapsulation, ElementRef, ViewChild, ViewContainerRef, NgModule, Optional, SkipSelf, ComponentFactoryResolver } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenu, MatMenuModule } from '@angular/material/menu';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { PblNgridPluginController, NgridPlugin, PblNgridMultiComponentRegistry, PblNgridModule, PblNgridRegistryService, PblNgridConfigService } from '@pebula/ngrid';
+import { PblNgridPluginController, PblNgridMultiComponentRegistry, ngridPlugin, PblNgridModule, PblNgridRegistryService, PblNgridConfigService } from '@pebula/ngrid';
 import { PblNgridOverlayPanelFactory, PblNgridOverlayPanelRef, PblNgridOverlayPanelComponentExtension, PblNgridOverlayPanelModule } from '@pebula/ngrid/overlay-panel';
-import { __decorate, __metadata, __extends, __values } from 'tslib';
+import { __extends, __values } from 'tslib';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/header-context/header-context-menu.directive.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 var PLUGIN_KEY = 'matHeaderContextMenu';
@@ -20,12 +21,8 @@ var PblNgridMatHeaderContextMenuPlugin = /** @class */ (function () {
         this.pluginCtrl = pluginCtrl;
         this.overlayPanel = overlayPanelFactory.create(pluginCtrl.extApi.grid);
     }
-    PblNgridMatHeaderContextMenuPlugin.ctorParameters = function () { return [
-        { type: PblNgridOverlayPanelFactory },
-        { type: PblNgridPluginController }
-    ]; };
     PblNgridMatHeaderContextMenuPlugin.decorators = [
-        { type: Directive, args: [{ selector: 'pbl-ngrid[matHeaderContextMenu]' },] }
+        { type: Directive, args: [{ selector: 'pbl-ngrid[matHeaderContextMenu]', providers: [PblNgridOverlayPanelFactory] },] }
     ];
     /** @nocollapse */
     PblNgridMatHeaderContextMenuPlugin.ctorParameters = function () { return [
@@ -36,11 +33,6 @@ var PblNgridMatHeaderContextMenuPlugin = /** @class */ (function () {
         style: [{ type: Input, args: ['matHeaderContextMenu',] }],
         config: [{ type: Input }]
     };
-    PblNgridMatHeaderContextMenuPlugin = __decorate([
-        NgridPlugin({ id: PLUGIN_KEY }),
-        __metadata("design:paramtypes", [PblNgridOverlayPanelFactory,
-            PblNgridPluginController])
-    ], PblNgridMatHeaderContextMenuPlugin);
     return PblNgridMatHeaderContextMenuPlugin;
 }());
 if (false) {
@@ -56,7 +48,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/header-context/header-context-menu-trigger.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 var DEFAULT_CONFIG = { hasBackdrop: true, xPos: 'after', yPos: 'below' };
@@ -80,11 +73,12 @@ var MatHeaderContextMenuTrigger = /** @class */ (function () {
         { type: Component, args: [{
                     selector: 'div[mat-header-context-menu-trigger]',
                     host: {
+                        class: 'mat-header-context-menu-trigger',
                         '(click)': 'openOverlayPanel()',
                     },
                     template: "<mat-icon style=\"height: 16px; width: 16px; font-size: 16px; line-height: 16px;\">more_vert</mat-icon>\n",
                     encapsulation: ViewEncapsulation.None,
-                    styles: ["div[mat-header-context-menu-trigger]{position:absolute;display:-webkit-box;display:flex;-webkit-box-align:center;align-items:center;right:0;height:100%;cursor:pointer;margin-right:12px;z-index:100}"]
+                    styles: ["div.mat-header-context-menu-trigger{position:absolute;display:flex;align-items:center;right:0;height:100%;cursor:pointer;margin-right:12px;z-index:100}"]
                 }] }
     ];
     /** @nocollapse */
@@ -111,7 +105,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/header-context/header-context-menu-extension.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var MatHeaderContextMenuExtension = /** @class */ (function (_super) {
     __extends(MatHeaderContextMenuExtension, _super);
@@ -177,12 +172,12 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/header-context/styles/excel-style-header-menu.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var MatExcelStyleHeaderMenu = /** @class */ (function () {
-    function MatExcelStyleHeaderMenu(ref, vcRef) {
+    function MatExcelStyleHeaderMenu(ref) {
         this.ref = ref;
-        this.vcRef = vcRef;
         this.currentFilter = '';
         this.column = ref.data.col;
         this.grid = ref.data.grid;
@@ -212,7 +207,7 @@ var MatExcelStyleHeaderMenu = /** @class */ (function () {
             _this.ref.close();
         }));
         /** @type {?} */
-        var view = this.vcRef.createEmbeddedView(this.matMenu.templateRef);
+        var view = this.menuViewLocation.createEmbeddedView(this.matMenu.templateRef);
         this.matMenu.setElevation(0);
         this.matMenu.focusFirstItem('program');
         this.matMenu._resetAnimation();
@@ -311,18 +306,18 @@ var MatExcelStyleHeaderMenu = /** @class */ (function () {
     MatExcelStyleHeaderMenu.decorators = [
         { type: Component, args: [{
                     selector: 'mat-excel-style-header-menu',
-                    template: "<mat-menu #columnMenu=\"matMenu\" class=\"pbl-mat-menu-panel\">\n\n  <button *ngIf=\"column.sort\" mat-menu-item [matMenuTriggerFor]=\"sortMenu\">\n    <mat-icon>sort</mat-icon>Sort\n  </button>\n  <button mat-menu-item [matMenuTriggerFor]=\"pinMenu\">\n    <mat-icon>place</mat-icon>Pin\n  </button>\n  <button mat-menu-item (click)=\"grid.columnApi.autoSizeColumn(column)\">\n    <mat-icon>keyboard_tab</mat-icon>Auto Fit\n  </button>\n  <button mat-menu-item (click)=\"hide()\">\n    <mat-icon>visibility_off</mat-icon>Hide Column\n  </button>\n\n  <mat-menu #sortMenu=\"matMenu\">\n    <button mat-menu-item (click)=\"onSortToggle('asc')\" [class.menu-item-selected]=\"currentSort === 'asc'\">\n      <mat-icon [color]=\"currentSort === 'asc' ? 'primary' : ''\">arrow_upward</mat-icon>\n      <span>Ascending</span>\n    </button>\n    <button mat-menu-item (click)=\"onSortToggle('desc')\" [class.menu-item-selected]=\"currentSort === 'desc'\">\n      <mat-icon [color]=\"currentSort === 'desc' ? 'primary' : ''\">arrow_downward</mat-icon>\n      <span>Descending</span>\n    </button>\n  </mat-menu>\n\n  <mat-menu #pinMenu=\"matMenu\">\n    <button mat-menu-item (click)=\"onPinToggle('start')\" [class.menu-item-selected]=\"currentPin === 'start'\">\n      <span>Start</span>\n    </button>\n    <button mat-menu-item (click)=\"onPinToggle('end')\" [class.menu-item-selected]=\"currentPin === 'end'\">\n      <span>End</span>\n    </button>\n  </mat-menu>\n\n  <div class=\"mat-menu-item pbl-mat-menu-row\" (click)=\"clickTrap($event)\">\n    <mat-form-field>\n      <mat-label>Search</mat-label>\n      <input matInput (keyup)=\"filterColumn($event.target.value)\" [value]=\"currentFilter\">\n      <mat-icon matPrefix>search</mat-icon>\n      <button mat-button [style.visibility]=\"currentFilter ? 'visible' : 'hidden'\" matSuffix mat-icon-button aria-label=\"Clear\"\n              (click)=\"filterColumn('')\">\n        <mat-icon>close</mat-icon>\n      </button>\n    </mat-form-field>\n  </div>\n</mat-menu>\n",
+                    template: "<mat-menu #columnMenu=\"matMenu\" class=\"pbl-mat-menu-panel\">\n\n  <button *ngIf=\"column.sort\" mat-menu-item [matMenuTriggerFor]=\"sortMenu\">\n    <mat-icon>sort</mat-icon>Sort\n  </button>\n  <button mat-menu-item [matMenuTriggerFor]=\"pinMenu\">\n    <mat-icon>place</mat-icon>Pin\n  </button>\n  <button mat-menu-item (click)=\"grid.columnApi.autoSizeColumn(column)\">\n    <mat-icon>keyboard_tab</mat-icon>Auto Fit\n  </button>\n  <button mat-menu-item (click)=\"hide()\">\n    <mat-icon>visibility_off</mat-icon>Hide Column\n  </button>\n\n  <mat-menu #sortMenu=\"matMenu\">\n    <button mat-menu-item (click)=\"onSortToggle('asc')\" [class.menu-item-selected]=\"currentSort === 'asc'\">\n      <mat-icon [color]=\"currentSort === 'asc' ? 'primary' : ''\">arrow_upward</mat-icon>\n      <span>Ascending</span>\n    </button>\n    <button mat-menu-item (click)=\"onSortToggle('desc')\" [class.menu-item-selected]=\"currentSort === 'desc'\">\n      <mat-icon [color]=\"currentSort === 'desc' ? 'primary' : ''\">arrow_downward</mat-icon>\n      <span>Descending</span>\n    </button>\n  </mat-menu>\n\n  <mat-menu #pinMenu=\"matMenu\">\n    <button mat-menu-item (click)=\"onPinToggle('start')\" [class.menu-item-selected]=\"currentPin === 'start'\">\n      <span>Start</span>\n    </button>\n    <button mat-menu-item (click)=\"onPinToggle('end')\" [class.menu-item-selected]=\"currentPin === 'end'\">\n      <span>End</span>\n    </button>\n  </mat-menu>\n\n  <div class=\"mat-menu-item pbl-mat-menu-row\" (click)=\"clickTrap($event)\">\n    <mat-form-field>\n      <mat-label>Search</mat-label>\n      <input matInput (keyup)=\"filterColumn($event.target.value)\" [value]=\"currentFilter\">\n      <mat-icon matPrefix>search</mat-icon>\n      <button mat-button [style.visibility]=\"currentFilter ? 'visible' : 'hidden'\" matSuffix mat-icon-button aria-label=\"Clear\"\n              (click)=\"filterColumn('')\">\n        <mat-icon>close</mat-icon>\n      </button>\n    </mat-form-field>\n  </div>\n</mat-menu>\n<ng-container #menuViewLocation></ng-container>\n",
                     encapsulation: ViewEncapsulation.None,
                     styles: [".mat-menu-panel.pbl-mat-menu-panel{max-width:400px}.mat-menu-item.pbl-mat-menu-row{width:100%;box-sizing:border-box;line-height:inherit;height:auto;margin:6px 0;cursor:inherit}.mat-menu-item.pbl-mat-menu-row:hover{background:inherit}"]
                 }] }
     ];
     /** @nocollapse */
     MatExcelStyleHeaderMenu.ctorParameters = function () { return [
-        { type: PblNgridOverlayPanelRef },
-        { type: ViewContainerRef }
+        { type: PblNgridOverlayPanelRef }
     ]; };
     MatExcelStyleHeaderMenu.propDecorators = {
-        matMenu: [{ type: ViewChild, args: ['columnMenu', { read: MatMenu, static: true },] }]
+        matMenu: [{ type: ViewChild, args: ['columnMenu', { read: MatMenu, static: true },] }],
+        menuViewLocation: [{ type: ViewChild, args: ['menuViewLocation', { read: ViewContainerRef, static: true },] }]
     };
     return MatExcelStyleHeaderMenu;
 }());
@@ -334,6 +329,8 @@ if (false) {
     /** @type {?} */
     MatExcelStyleHeaderMenu.prototype.matMenu;
     /** @type {?} */
+    MatExcelStyleHeaderMenu.prototype.menuViewLocation;
+    /** @type {?} */
     MatExcelStyleHeaderMenu.prototype.currentSort;
     /** @type {?} */
     MatExcelStyleHeaderMenu.prototype.currentPin;
@@ -344,16 +341,12 @@ if (false) {
      * @private
      */
     MatExcelStyleHeaderMenu.prototype.ref;
-    /**
-     * @type {?}
-     * @private
-     */
-    MatExcelStyleHeaderMenu.prototype.vcRef;
 }
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/context-menu.module.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var PblNgridContextMenuModule = /** @class */ (function () {
     function PblNgridContextMenuModule(parentModule, registry, cfr, configService) {
@@ -363,6 +356,7 @@ var PblNgridContextMenuModule = /** @class */ (function () {
         registry.addMulti('dataHeaderExtensions', new MatHeaderContextMenuExtension(cfr));
         registry.addMulti('overlayPanels', new PblNgridOverlayPanelComponentExtension('excelMenu', MatExcelStyleHeaderMenu, cfr));
     }
+    PblNgridContextMenuModule.NGRID_PLUGIN = ngridPlugin({ id: PLUGIN_KEY }, PblNgridMatHeaderContextMenuPlugin);
     PblNgridContextMenuModule.decorators = [
         { type: NgModule, args: [{
                     imports: [
@@ -373,7 +367,7 @@ var PblNgridContextMenuModule = /** @class */ (function () {
                         MatFormFieldModule,
                         MatInputModule,
                         PblNgridModule,
-                        PblNgridOverlayPanelModule
+                        PblNgridOverlayPanelModule,
                     ],
                     declarations: [
                         MatHeaderContextMenuTrigger,
@@ -384,6 +378,7 @@ var PblNgridContextMenuModule = /** @class */ (function () {
                         PblNgridMatHeaderContextMenuPlugin,
                     ],
                     entryComponents: [
+                        // TODO: remove when ViewEngine is no longer supported by angular (V11 ???)
                         MatHeaderContextMenuTrigger,
                         MatExcelStyleHeaderMenu,
                     ],
@@ -398,16 +393,22 @@ var PblNgridContextMenuModule = /** @class */ (function () {
     ]; };
     return PblNgridContextMenuModule;
 }());
+if (false) {
+    /** @type {?} */
+    PblNgridContextMenuModule.NGRID_PLUGIN;
+}
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: index.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: pebula-ngrid-material-context-menu.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { PblNgridContextMenuModule, MatHeaderContextMenuTrigger as ɵa, PblNgridMatHeaderContextMenuPlugin as ɵb, MatExcelStyleHeaderMenu as ɵc };
+export { PblNgridContextMenuModule, MatHeaderContextMenuTrigger as ɵa, PLUGIN_KEY as ɵb, PblNgridMatHeaderContextMenuPlugin as ɵc, MatExcelStyleHeaderMenu as ɵd };
 //# sourceMappingURL=pebula-ngrid-material-context-menu.js.map

@@ -16,9 +16,10 @@ export declare class PblCdkTableComponent<T> extends CdkTable<T> implements OnDe
     protected injector: Injector;
     protected grid: PblNgridComponent<T>;
     protected extApi: PblNgridExtensionApi<T>;
-    readonly _element: HTMLElement;
-    readonly onRenderRows: Observable<DataRowOutlet>;
-    minWidth: number | null;
+    get _element(): HTMLElement;
+    get onRenderRows(): Observable<DataRowOutlet>;
+    get minWidth(): number | null;
+    set minWidth(value: number | null);
     private _minWidth;
     private onRenderRows$;
     private _lastSticky;

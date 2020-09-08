@@ -2,7 +2,8 @@ import { PblColumnSizeInfo } from '../types';
 import { PblColumn } from './column';
 export declare class ColumnSizeInfo implements PblColumnSizeInfo {
     readonly target: HTMLElement;
-    column: PblColumn;
+    get column(): PblColumn;
+    set column(value: PblColumn);
     /**
      * The height of the column (subpixel resolution)
      */

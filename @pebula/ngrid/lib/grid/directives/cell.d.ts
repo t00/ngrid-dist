@@ -1,4 +1,4 @@
-import { OnInit, ElementRef, DoCheck, ViewContainerRef, NgZone, EmbeddedViewRef } from '@angular/core';
+import { OnInit, OnDestroy, ElementRef, DoCheck, ViewContainerRef, NgZone, EmbeddedViewRef } from '@angular/core';
 import { CdkHeaderCell, CdkCell, CdkFooterCell } from '@angular/cdk/table';
 import { PblNgridComponent } from '../ngrid.component';
 import { COLUMN, PblMetaColumn, PblColumn, PblColumnGroup } from '../columns';
@@ -13,7 +13,7 @@ import { PblNgridDataHeaderExtensionContext, PblNgridMultiComponentRegistry } fr
  * These extensions add features to the cells either as a template instance or as a component instance.
  * Examples: Sorting behavior, drag&drop/resize handlers, menus etc...
  */
-export declare class PblNgridHeaderCellComponent<T extends COLUMN = COLUMN> extends CdkHeaderCell implements OnInit {
+export declare class PblNgridHeaderCellComponent<T extends COLUMN = COLUMN> extends CdkHeaderCell implements OnInit, OnDestroy {
     readonly columnDef: PblNgridColumnDef<T>;
     readonly grid: PblNgridComponent<any>;
     readonly elementRef: ElementRef;
@@ -25,15 +25,16 @@ export declare class PblNgridHeaderCellComponent<T extends COLUMN = COLUMN> exte
     readonly table: PblNgridComponent<T>;
     constructor(columnDef: PblNgridColumnDef<T>, grid: PblNgridComponent<any>, elementRef: ElementRef, zone: NgZone);
     ngOnInit(): void;
-    protected initMainHeaderColumnView(col: PblColumn): EmbeddedViewRef<PblNgridMetaCellContext<any, PblMetaColumn | PblColumn>>;
-    protected initMetaHeaderColumnView(col: PblMetaColumn | PblColumnGroup): EmbeddedViewRef<PblNgridMetaCellContext<any, PblMetaColumn | PblColumn>>;
+    ngOnDestroy(): void;
+    protected initMainHeaderColumnView(col: PblColumn): EmbeddedViewRef<PblNgridMetaCellContext<any, PblColumn | PblMetaColumn>>;
+    protected initMetaHeaderColumnView(col: PblMetaColumn | PblColumnGroup): EmbeddedViewRef<PblNgridMetaCellContext<any, PblColumn | PblMetaColumn>>;
     protected runHeaderExtensions(context: PblNgridDataHeaderExtensionContext, view: EmbeddedViewRef<PblNgridMetaCellContext<any, PblColumn>>): void;
     protected createComponent(ext: PblNgridMultiComponentRegistry<any, "dataHeaderExtensions">, context: PblNgridDataHeaderExtensionContext, rootNodes: any[]): any[];
 }
 /** Cell template container that adds the right classes and role. */
-export declare class PblNgridCellDirective extends CdkCell implements DoCheck {
+export declare class PblNgridCellDirective extends CdkCell implements DoCheck, OnDestroy {
     private colDef;
-    rowCtx: PblRowContext<any>;
+    set rowCtx(value: PblRowContext<any>);
     private _rowCtx;
     cellCtx: PblCellContext | undefined;
     /**
@@ -45,8 +46,9 @@ export declare class PblNgridCellDirective extends CdkCell implements DoCheck {
     private selected;
     constructor(colDef: PblNgridColumnDef<PblColumn>, elementRef: ElementRef);
     ngDoCheck(): void;
+    ngOnDestroy(): void;
 }
-export declare class PblNgridFooterCellDirective extends CdkFooterCell implements OnInit {
+export declare class PblNgridFooterCellDirective extends CdkFooterCell implements OnInit, OnDestroy {
     private columnDef;
     grid: PblNgridComponent;
     cellCtx: MetaCellContext;
@@ -55,4 +57,5 @@ export declare class PblNgridFooterCellDirective extends CdkFooterCell implement
     private el;
     constructor(columnDef: PblNgridColumnDef<PblMetaColumn | PblColumnGroup>, grid: PblNgridComponent, elementRef: ElementRef);
     ngOnInit(): void;
+    ngOnDestroy(): void;
 }

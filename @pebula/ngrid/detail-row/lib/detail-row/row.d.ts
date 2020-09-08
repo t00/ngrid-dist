@@ -2,9 +2,9 @@ import { ElementRef, OnInit, OnDestroy, ViewContainerRef } from '@angular/core';
 import { PblNgridRowComponent, PblNgridExtensionApi } from '@pebula/ngrid';
 export declare class PblNgridDetailRowComponent extends PblNgridRowComponent implements OnInit, OnDestroy {
     private vcRef;
-    readonly expended: boolean;
-    row: any;
-    private readonly _element;
+    get expended(): boolean;
+    set row(value: any);
+    private get _element();
     private opened;
     private plugin;
     constructor(extApi: PblNgridExtensionApi<any>, el: ElementRef<HTMLElement>, vcRef: ViewContainerRef);

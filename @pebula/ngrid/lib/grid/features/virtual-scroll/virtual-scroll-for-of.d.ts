@@ -11,12 +11,12 @@ export declare class PblVirtualScrollForOf<T> implements CollectionViewer, NgeVi
     private ngZone;
     viewChange: Observable<ListRange>;
     dataStream: Observable<T[] | ReadonlyArray<T>>;
-    readonly headerLength: number;
-    readonly rowLength: number;
-    readonly footerLength: number;
+    get headerLength(): number;
+    get rowLength(): number;
+    get footerLength(): number;
     private destroyed;
     private ds;
-    private readonly vcRefs;
+    private get vcRefs();
     private renderedContentOffset;
     /** A tuple containing the last known ranges [header, data, footer] */
     private _renderedRanges;

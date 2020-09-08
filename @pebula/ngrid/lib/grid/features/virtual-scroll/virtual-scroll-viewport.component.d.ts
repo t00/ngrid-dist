@@ -19,7 +19,7 @@ export declare class PblCdkVirtualScrollViewportComponent extends CdkVirtualScro
     private cdr;
     pblScrollStrategy: VirtualScrollStrategy;
     private grid;
-    readonly isScrolling: boolean;
+    get isScrolling(): boolean;
     readonly enabled: boolean;
     /**
      * Emits the offset (in pixels) of the rendered content every time it changes.
@@ -75,12 +75,12 @@ export declare class PblCdkVirtualScrollViewportComponent extends CdkVirtualScro
     scrollHeight: number;
     ngeRenderedContentSize: number;
     pblFillerHeight: string;
-    readonly wheelMode: PblCdkVirtualScrollDirective['wheelMode'];
-    readonly innerWidth: number;
-    readonly outerWidth: number;
-    readonly innerHeight: number;
-    readonly outerHeight: number;
-    readonly scrollWidth: number;
+    get wheelMode(): PblCdkVirtualScrollDirective['wheelMode'];
+    get innerWidth(): number;
+    get outerWidth(): number;
+    get innerHeight(): number;
+    get outerHeight(): number;
+    get scrollWidth(): number;
     /** A string representing the `style.width` property value to be used for the spacer element. */
     _totalContentWidth: string;
     /** A string representing the `style.height` property value to be used for the spacer element. */

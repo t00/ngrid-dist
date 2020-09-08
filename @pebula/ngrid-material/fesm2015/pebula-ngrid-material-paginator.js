@@ -1,21 +1,20 @@
-import { ChangeDetectorRef, Component, ChangeDetectionStrategy, ViewEncapsulation, Optional, Input, NgModule, ComponentFactoryResolver, Injector } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewEncapsulation, Optional, ChangeDetectorRef, Input, NgModule, ComponentFactoryResolver, Injector } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatPaginatorIntl, MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
-import { PblNgridComponent, PblNgridModule } from '@pebula/ngrid';
-import { __decorate, __metadata } from 'tslib';
+import { utils, PblNgridComponent, PblNgridModule } from '@pebula/ngrid';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
-import { UnRx } from '@pebula/utils';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/table-paginator.component.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const DEFAULT_PAGE_SIZE_OPTIONS = [5, 10, 20, 50, 100];
-let PblPaginatorComponent = class PblPaginatorComponent {
+class PblPaginatorComponent {
     /**
      * @param {?} table
      * @param {?} _intl
@@ -32,7 +31,7 @@ let PblPaginatorComponent = class PblPaginatorComponent {
             this.table = table;
         }
         _intl.changes
-            .pipe(UnRx(this))
+            .pipe(utils.unrx(this))
             .subscribe((/**
          * @return {?}
          */
@@ -64,13 +63,13 @@ let PblPaginatorComponent = class PblPaginatorComponent {
             return;
         }
         if (this._paginator) {
-            UnRx.kill(this, this._paginator);
+            utils.unrx.kill(this, this._paginator);
         }
         this._paginator = value;
         if (value) {
             // pagination.onChange is BehaviorSubject so handlePageChange will trigger
             value.onChange
-                .pipe(UnRx(this, value))
+                .pipe(utils.unrx(this, value))
                 .subscribe((/**
              * @param {?} event
              * @return {?}
@@ -97,6 +96,12 @@ let PblPaginatorComponent = class PblPaginatorComponent {
      * @return {?}
      */
     set hideRangeSelect(value) { this._hideRangeSelect = coerceBooleanProperty(value); }
+    /**
+     * @return {?}
+     */
+    ngOnDestroy() {
+        utils.unrx.kill(this);
+    }
     /**
      * @private
      * @return {?}
@@ -130,12 +135,7 @@ let PblPaginatorComponent = class PblPaginatorComponent {
         this.cdr.detectChanges();
         this.cdr.markForCheck();
     }
-};
-PblPaginatorComponent.ctorParameters = () => [
-    { type: PblNgridComponent },
-    { type: MatPaginatorIntl },
-    { type: ChangeDetectorRef }
-];
+}
 PblPaginatorComponent.decorators = [
     { type: Component, args: [{
                 selector: 'pbl-ngrid-paginator',
@@ -145,7 +145,7 @@ PblPaginatorComponent.decorators = [
                 },
                 changeDetection: ChangeDetectionStrategy.OnPush,
                 encapsulation: ViewEncapsulation.None,
-                styles: [".mat-paginator-range-label{-webkit-box-flex:1;flex-grow:1}.mat-paginator-container{box-sizing:border-box}"]
+                styles: [".mat-paginator-range-label{flex-grow:1}.mat-paginator-container{box-sizing:border-box}"]
             }] }
 ];
 /** @nocollapse */
@@ -161,12 +161,6 @@ PblPaginatorComponent.propDecorators = {
     hidePageSize: [{ type: Input }],
     hideRangeSelect: [{ type: Input }]
 };
-PblPaginatorComponent = __decorate([
-    UnRx(),
-    __metadata("design:paramtypes", [PblNgridComponent,
-        MatPaginatorIntl,
-        ChangeDetectorRef])
-], PblPaginatorComponent);
 if (false) {
     /** @type {?} */
     PblPaginatorComponent.prototype.pages;
@@ -205,7 +199,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/table-paginator.module.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 // TODO: Remove MatPaginatorModule and the initial code in the constructor
 // set the styles in the SCSS.
@@ -224,6 +219,7 @@ PblNgridPaginatorModule.decorators = [
                 imports: [CommonModule, MatPaginatorModule, MatSelectModule, MatTooltipModule, MatButtonModule, PblNgridModule],
                 declarations: [PblPaginatorComponent],
                 exports: [PblPaginatorComponent],
+                // TODO: remove when ViewEngine is no longer supported by angular (V11 ???)
                 entryComponents: [PblPaginatorComponent, MatPaginator]
             },] }
 ];
@@ -235,12 +231,14 @@ PblNgridPaginatorModule.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: index.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: pebula-ngrid-material-paginator.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { PblNgridPaginatorModule, PblPaginatorComponent as ɵa };

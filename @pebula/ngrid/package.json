@@ -1,13 +1,12 @@
 {
   "name": "@pebula/ngrid",
-  "version": "1.0.0-rc.17",
+  "version": "2.0.0-rc.2",
   "license": "MIT",
   "peerDependencies": {
-    "@angular/common": "^8.0.0",
-    "@angular/core": "^8.0.0",
-    "@angular/cdk": "^8.0.0",
-    "resize-observer-polyfill": "^1.5.0",
-    "@pebula/utils": "1.0.0"
+    "@angular/common": "^9.0.6",
+    "@angular/core": "^9.0.6",
+    "@angular/cdk": "^9.0.0",
+    "resize-observer-polyfill": "^1.5.0"
   },
   "description": "Angular Grid",
   "repository": {
@@ -35,6 +34,6 @@
   "metadata": "pebula-ngrid.metadata.json",
   "sideEffects": false,
   "dependencies": {
-    "tslib": "^1.9.0"
+    "tslib": "^1.10.0"
   }
 }

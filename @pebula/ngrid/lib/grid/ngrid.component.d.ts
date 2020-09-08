@@ -35,18 +35,21 @@ export declare class PblNgridComponent<T = any> implements AfterContentInit, Aft
      * Show/Hide the header row.
      * Default: true
      */
-    showHeader: boolean;
+    get showHeader(): boolean;
+    set showHeader(value: boolean);
     _showHeader: boolean;
     /**
      * Show/Hide the footer row.
      * Default: false
      */
-    showFooter: boolean;
+    get showFooter(): boolean;
+    set showFooter(value: boolean);
     _showFooter: boolean;
     /**
      * When true, the filler is disabled.
      */
-    noFiller: boolean;
+    get noFiller(): boolean;
+    set noFiller(value: boolean);
     _noFiller: boolean;
     /**
      * Set's the behavior of the grid when tabbing.
@@ -59,7 +62,8 @@ export declare class PblNgridComponent<T = any> implements AfterContentInit, Aft
     /**
      * @deprecated Use `pIndex` in the column definition. (Removed in 1.0.0)
      */
-    identityProp: string;
+    get identityProp(): string;
+    set identityProp(value: string);
     private __identityProp;
     /**
      * The grid's source of data
@@ -93,15 +97,17 @@ export declare class PblNgridComponent<T = any> implements AfterContentInit, Aft
      *
      * > This is a write-only (setter) property that triggers the `setDataSource` method.
      */
-    dataSource: PblDataSource<T> | DataSourceOf<T>;
-    readonly ds: PblDataSource<T>;
-    usePagination: PblNgridPaginatorKind | false;
-    noCachePaginator: boolean;
+    set dataSource(value: PblDataSource<T> | DataSourceOf<T>);
+    get ds(): PblDataSource<T>;
+    get usePagination(): PblNgridPaginatorKind | false;
+    set usePagination(value: PblNgridPaginatorKind | false);
+    get noCachePaginator(): boolean;
+    set noCachePaginator(value: boolean);
     /**
      * The column definitions for this grid.
      */
     columns: PblNgridColumnSet | PblNgridColumnDefinitionSet;
-    hideColumns: string[];
+    set hideColumns(value: string[]);
     /**
      * A fallback height for "the inner scroll container".
      * The fallback is used only when it LOWER than the rendered height, so no empty gaps are created when setting the fallback.
@@ -123,7 +129,8 @@ export declare class PblNgridComponent<T = any> implements AfterContentInit, Aft
      *
      * To avoid this, don't use fallbackMinHeight together with a fixed height for the grid. Instead use fallbackMinHeight together with a min height for the grid.
      */
-    fallbackMinHeight: number;
+    get fallbackMinHeight(): number;
+    set fallbackMinHeight(value: number);
     rowClassUpdate: undefined | ((context: PblNgridRowContext<T>) => (string | string[] | Set<string> | {
         [klass: string]: any;
     }));
@@ -141,9 +148,9 @@ export declare class PblNgridComponent<T = any> implements AfterContentInit, Aft
     _tableRowDef: CdkRowDef<T>;
     _headerRowDefs: QueryList<CdkHeaderRowDef>;
     _footerRowDefs: QueryList<CdkFooterRowDef>;
-    readonly metaColumnIds: PblColumnStore['metaColumnIds'];
-    readonly metaColumns: PblColumnStore['metaColumns'];
-    readonly columnRowDef: {
+    get metaColumnIds(): PblColumnStore['metaColumnIds'];
+    get metaColumns(): PblColumnStore['metaColumns'];
+    get columnRowDef(): {
         header: import("./columns").PblMetaRowDefinitions;
         footer: import("./columns").PblMetaRowDefinitions;
     };
@@ -152,8 +159,8 @@ export declare class PblNgridComponent<T = any> implements AfterContentInit, Aft
      */
     readonly isInit: boolean;
     readonly columnApi: ColumnApi<T>;
-    readonly contextApi: PblNgridContextApi<T>;
-    readonly viewport: PblCdkVirtualScrollViewportComponent | undefined;
+    get contextApi(): PblNgridContextApi<T>;
+    get viewport(): PblCdkVirtualScrollViewportComponent | undefined;
     _cdkTable: PblCdkTableComponent<T>;
     private _store;
     private _hideColumnsDirty;

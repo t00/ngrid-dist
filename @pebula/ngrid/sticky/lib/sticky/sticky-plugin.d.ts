@@ -23,7 +23,7 @@ export declare class PblNgridStickyPluginDirective implements OnDestroy {
      * For performance considerations only new values will trigger a change (i.e. the array should be treated as immutable).
      * Manipulating the array will not trigger a change (the sticky state will not change) unless sending a copy of it (replacing it, e.g. Array.slice())
      */
-    stickyColumnStart: Array<string | number>;
+    set stickyColumnStart(value: Array<string | number>);
     /**
      * Set the footer rows you want to apply sticky positioning to.
      * Valid values are:
@@ -33,7 +33,7 @@ export declare class PblNgridStickyPluginDirective implements OnDestroy {
      * For performance considerations only new values will trigger a change (i.e. the array should be treated as immutable).
      * Manipulating the array will not trigger a change (the sticky state will not change) unless sending a copy of it (replacing it, e.g. Array.slice())
      */
-    stickyColumnEnd: Array<string | number>;
+    set stickyColumnEnd(value: Array<string | number>);
     /**
    * Set the header rows you want to apply sticky positioning to.
    * Valid values are:
@@ -43,7 +43,7 @@ export declare class PblNgridStickyPluginDirective implements OnDestroy {
    * For performance considerations only new values will trigger a change (i.e. the array should be treated as immutable).
    * Manipulating the array will not trigger a change (the sticky state will not change) unless sending a copy of it (replacing it, e.g. Array.slice())
    */
-    stickyHeader: Array<'table' | number>;
+    set stickyHeader(value: Array<'table' | number>);
     /**
      * Set the footer rows you want to apply sticky positioning to.
      * Valid values are:
@@ -53,7 +53,7 @@ export declare class PblNgridStickyPluginDirective implements OnDestroy {
      * For performance considerations only new values will trigger a change (i.e. the array should be treated as immutable).
      * Manipulating the array will not trigger a change (the sticky state will not change) unless sending a copy of it (replacing it, e.g. Array.slice())
      */
-    stickyFooter: Array<'table' | number>;
+    set stickyFooter(value: Array<'table' | number>);
     private _startDiffer;
     private _endDiffer;
     private _headerDiffer;

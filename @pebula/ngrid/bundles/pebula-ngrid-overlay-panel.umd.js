@@ -203,7 +203,8 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/component-registry-extension.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /**
      * @template T
@@ -267,7 +268,8 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/overlay-panel-ref.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /**
      * @template T
@@ -346,7 +348,8 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/overlay-panel.service.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /**
      * @record
@@ -601,10 +604,13 @@
          * @return {?} OverlayConfig
          */
         function (element, config) {
+            /** @type {?} */
+            var positionStrategy = this._overlay
+                .position()
+                .flexibleConnectedTo(element)
+                .withLockedPosition();
             return new overlay.OverlayConfig({
-                positionStrategy: this._overlay.position()
-                    .flexibleConnectedTo(element)
-                    .withLockedPosition(),
+                positionStrategy: positionStrategy,
                 backdropClass: config.backdropClass || 'cdk-overlay-transparent-backdrop',
                 // TODO: don't use the cdk's class, create it
                 scrollStrategy: this._scrollStrategy(),
@@ -775,7 +781,8 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/overlay-panel-def.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /**
      * @record
@@ -817,7 +824,8 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/overlay-panel.module.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var PblNgridOverlayPanelModule = /** @class */ (function () {
         function PblNgridOverlayPanelModule() {
@@ -838,7 +846,6 @@
                         providers: [
                             PblNgridOverlayPanelFactory,
                         ],
-                        entryComponents: [],
                     },] }
         ];
         return PblNgridOverlayPanelModule;

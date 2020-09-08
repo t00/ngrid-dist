@@ -18,6 +18,7 @@ declare module '@pebula/ngrid/lib/ext/types' {
         cellTooltip: keyof typeof PblNgridCellTooltipDirective;
     }
 }
+export declare const PLUGIN_KEY: 'cellTooltip';
 export interface CellTooltipOptions {
     canShow?: boolean | ((event: PblNgridCellEvent<any>) => boolean);
     message?: (event: PblNgridCellEvent<any>) => string;
@@ -26,7 +27,7 @@ export declare class PblNgridCellTooltipDirective<T> implements CellTooltipOptio
     private table;
     private injector;
     static readonly PLUGIN_KEY: 'cellTooltip';
-    canShow: boolean | ((event: PblNgridCellEvent<T>) => boolean);
+    set canShow(value: boolean | ((event: PblNgridCellEvent<T>) => boolean));
     message: (event: PblNgridCellEvent<T>) => string;
     /** See Material docs for MatTooltip */
     position: TooltipPosition;

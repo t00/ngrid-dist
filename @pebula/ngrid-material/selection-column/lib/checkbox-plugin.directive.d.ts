@@ -6,15 +6,18 @@ declare module '@pebula/ngrid/lib/ext/types' {
         matCheckboxSelection?: PblNgridMatCheckboxSelectionDirective;
     }
 }
+export declare const PLUGIN_KEY: 'matCheckboxSelection';
 export declare class PblNgridMatCheckboxSelectionDirective implements OnDestroy {
     private table;
     private cfr;
     private injector;
-    isCheckboxDisabled: (row: any) => boolean;
+    get isCheckboxDisabled(): (row: any) => boolean;
+    set isCheckboxDisabled(value: (row: any) => boolean);
     /**
      * Add's a selection column using material's `mat-checkbox` in the column specified.
      */
-    matCheckboxSelection: string;
+    get matCheckboxSelection(): string;
+    set matCheckboxSelection(value: string);
     /**
      * Defines the behavior when clicking on the bulk select checkbox (header).
      * There are 2 options:
@@ -24,8 +27,10 @@ export declare class PblNgridMatCheckboxSelectionDirective implements OnDestroy 
      *
      * The default value is `all`
      */
-    bulkSelectMode: 'all' | 'view' | 'none';
-    matCheckboxSelectionColor: ThemePalette;
+    get bulkSelectMode(): 'all' | 'view' | 'none';
+    set bulkSelectMode(value: 'all' | 'view' | 'none');
+    get matCheckboxSelectionColor(): ThemePalette;
+    set matCheckboxSelectionColor(value: ThemePalette);
     private _name;
     private _bulkSelectMode;
     private _color;

@@ -1,16 +1,15 @@
 import { Directive, Input, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { columnFactory, PblColumn, PblNgridComponent, PblNgridPluginController, PblNgridConfigService, NgridPlugin, PblNgridModule } from '@pebula/ngrid';
-import { __spread, __values, __decorate, __metadata } from 'tslib';
+import { utils, columnFactory, PblColumn, PblNgridComponent, PblNgridPluginController, PblNgridConfigService, ngridPlugin, PblNgridModule } from '@pebula/ngrid';
+import { __spread, __values } from 'tslib';
+import { tap, map, filter, take } from 'rxjs/operators';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
-import { UnRx } from '@pebula/utils';
 import { isObservable, of, from } from 'rxjs';
-import { tap, map } from 'rxjs/operators';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/transpose-table-session.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 var LOCAL_COLUMN_DEF = Symbol('LOCAL_COLUMN_DEF');
@@ -39,7 +38,7 @@ var TransposeTableSession = /** @class */ (function () {
     function (updateTable) {
         if (!this.destroyed) {
             this.destroyed = true;
-            UnRx.kill(this, this.grid);
+            utils.unrx.kill(this, this.grid);
             this.grid.showHeader = this.headerRow;
             this.grid.columns = this.columnsInput;
             if (updateTable) {
@@ -61,14 +60,14 @@ var TransposeTableSession = /** @class */ (function () {
         this.headerRow = this.grid.showHeader;
         this.grid.showHeader = false;
         this.pluginCtrl.events
-            .pipe(UnRx(this, this.grid))
+            .pipe(utils.unrx(this, this.grid))
             .subscribe((/**
          * @param {?} e
          * @return {?}
          */
         function (e) { return e.kind === 'onInvalidateHeaders' && _this.onInvalidateHeaders(); }));
         this.pluginCtrl.events
-            .pipe(UnRx(this, this.grid))
+            .pipe(utils.unrx(this, this.grid))
             .subscribe((/**
          * @param {?} e
          * @return {?}
@@ -197,7 +196,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/utils.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 var TRANSFORM_ROW_REF = Symbol('TRANSFORM_ROW_REF');
@@ -228,7 +228,8 @@ function createTransformedColumn(row, index) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/transpose-plugin.directive.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 var DEFAULT_HEADER_COLUMN = { prop: '__transpose__', css: 'pbl-ngrid-header-cell pbl-ngrid-transposed-header-cell' };
@@ -254,6 +255,7 @@ var PLUGIN_KEY = 'transpose';
  */
 var PblNgridTransposePluginDirective = /** @class */ (function () {
     function PblNgridTransposePluginDirective(grid, pluginCtrl, config) {
+        var _this = this;
         this.grid = grid;
         this.pluginCtrl = pluginCtrl;
         this._header = DEFAULT_HEADER_COLUMN;
@@ -265,6 +267,21 @@ var PblNgridTransposePluginDirective = /** @class */ (function () {
             this.defaultCol = transposePlugin.defaultCol || {};
             this.matchTemplates = transposePlugin.matchTemplates || false;
         }
+        pluginCtrl.events
+            .pipe(filter((/**
+         * @param {?} e
+         * @return {?}
+         */
+        function (e) { return e.kind === 'onInit'; })), take(1), utils.unrx(this, this.grid))
+            .subscribe((/**
+         * @param {?} e
+         * @return {?}
+         */
+        function (e) {
+            if (_this.enabled !== undefined) {
+                _this.updateState(undefined, _this.enabled);
+            }
+        }));
     }
     Object.defineProperty(PblNgridTransposePluginDirective.prototype, "transpose", {
         get: /**
@@ -277,17 +294,10 @@ var PblNgridTransposePluginDirective = /** @class */ (function () {
          */
         function (value) {
             value = coerceBooleanProperty(value);
-            if (value !== this.enabled) {
-                /** @type {?} */
-                var isFirst = this.enabled === undefined;
-                this.enabled = value;
-                if (!value) {
-                    this.disable(true);
-                }
-                else {
-                    this.enable(!isFirst);
-                }
+            if (value !== this.enabled && this.grid.isInit) {
+                this.updateState(this.enabled, value);
             }
+            this.enabled = value;
         },
         enumerable: true,
         configurable: true
@@ -351,6 +361,7 @@ var PblNgridTransposePluginDirective = /** @class */ (function () {
     function () {
         this._removePlugin(this.grid);
         this.disable(false);
+        utils.unrx.kill(this);
     };
     /**
      * @param {?} updateTable
@@ -362,9 +373,9 @@ var PblNgridTransposePluginDirective = /** @class */ (function () {
      */
     function (updateTable) {
         if (this.gridState) {
-            var tableState = this.gridState;
+            var gridState = this.gridState;
             this.columns = this.selfColumn = this.gridState = this.columns = this.selfColumn = undefined;
-            tableState.destroy(updateTable);
+            gridState.destroy(updateTable);
         }
     };
     /**
@@ -454,7 +465,7 @@ var PblNgridTransposePluginDirective = /** @class */ (function () {
                                     function (value) { }) });
                             };
                             try {
-                                for (var columnKeysToProxy_1 = __values(columnKeysToProxy), columnKeysToProxy_1_1 = columnKeysToProxy_1.next(); !columnKeysToProxy_1_1.done; columnKeysToProxy_1_1 = columnKeysToProxy_1.next()) {
+                                for (var columnKeysToProxy_1 = (e_2 = void 0, __values(columnKeysToProxy)), columnKeysToProxy_1_1 = columnKeysToProxy_1.next(); !columnKeysToProxy_1_1.done; columnKeysToProxy_1_1 = columnKeysToProxy_1.next()) {
                                     var key = columnKeysToProxy_1_1.value;
                                     _loop_1(key);
                                 }
@@ -494,6 +505,28 @@ var PblNgridTransposePluginDirective = /** @class */ (function () {
     };
     /**
      * @private
+     * @param {?} prev
+     * @param {?} curr
+     * @return {?}
+     */
+    PblNgridTransposePluginDirective.prototype.updateState = /**
+     * @private
+     * @param {?} prev
+     * @param {?} curr
+     * @return {?}
+     */
+    function (prev, curr) {
+        /** @type {?} */
+        var isFirst = prev === undefined;
+        if (!curr) {
+            this.disable(true);
+        }
+        else {
+            this.enable(!isFirst);
+        }
+    };
+    /**
+     * @private
      * @param {?} columns
      * @return {?}
      */
@@ -529,11 +562,6 @@ var PblNgridTransposePluginDirective = /** @class */ (function () {
             this.selfColumn = new PblColumn(this._header, this.pluginCtrl.extApi.columnStore.groupStore);
         }
     };
-    PblNgridTransposePluginDirective.ctorParameters = function () { return [
-        { type: PblNgridComponent },
-        { type: PblNgridPluginController },
-        { type: PblNgridConfigService }
-    ]; };
     PblNgridTransposePluginDirective.decorators = [
         { type: Directive, args: [{ selector: 'pbl-ngrid[transpose]' },] }
     ];
@@ -549,29 +577,6 @@ var PblNgridTransposePluginDirective = /** @class */ (function () {
         defaultCol: [{ type: Input, args: ['transposeDefaultCol',] }],
         matchTemplates: [{ type: Input }]
     };
-    /**
-     * Transpose plugin.
-     *
-     * This plugin will swaps around the rows and columns of the grid.
-     *
-     * A **regular grid** (not transposed) represents rows horizontally:
-     *
-     * - Each horizontal row represents an item in the collection.
-     * - Each vertical column represents the same property of all rows in the collection.
-     *
-     * A **transposed** grid represents row vertically:
-     *
-     * - Each horizontal row represents the same property of all rows in the collection.
-     * - Each vertical row represents an item in the collection.
-     *
-     * > Note that transposing a grid might not play nice with other plugins and/or features.
-     * For example, using pagination with transpose make no sense.
-     */
-    PblNgridTransposePluginDirective = __decorate([
-        NgridPlugin({ id: PLUGIN_KEY }),
-        UnRx(),
-        __metadata("design:paramtypes", [PblNgridComponent, PblNgridPluginController, PblNgridConfigService])
-    ], PblNgridTransposePluginDirective);
     return PblNgridTransposePluginDirective;
 }());
 if (false) {
@@ -634,30 +639,38 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/transpose.module.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var PblNgridTransposeModule = /** @class */ (function () {
     function PblNgridTransposeModule() {
     }
+    PblNgridTransposeModule.NGRID_PLUGIN = ngridPlugin({ id: PLUGIN_KEY }, PblNgridTransposePluginDirective);
     PblNgridTransposeModule.decorators = [
         { type: NgModule, args: [{
-                    imports: [CommonModule, MatCheckboxModule, PblNgridModule],
+                    imports: [CommonModule, PblNgridModule],
                     declarations: [PblNgridTransposePluginDirective],
                     exports: [PblNgridTransposePluginDirective],
                 },] }
     ];
     return PblNgridTransposeModule;
 }());
+if (false) {
+    /** @type {?} */
+    PblNgridTransposeModule.NGRID_PLUGIN;
+}
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: index.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: pebula-ngrid-transpose.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { PblNgridTransposeModule, PblNgridTransposePluginDirective as ɵa };
+export { PblNgridTransposeModule, PLUGIN_KEY as ɵa, PblNgridTransposePluginDirective as ɵb };
 //# sourceMappingURL=pebula-ngrid-transpose.js.map

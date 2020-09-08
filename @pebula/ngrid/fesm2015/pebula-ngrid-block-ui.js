@@ -1,15 +1,14 @@
 import { Directive, TemplateRef, Input, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CdkTableModule } from '@angular/cdk/table';
-import { PblNgridSingleTemplateRegistry, PblNgridRegistryService, PblNgridComponent, PblNgridPluginController, NgridPlugin, PblNgridModule } from '@pebula/ngrid';
-import { __decorate, __metadata } from 'tslib';
+import { PblNgridSingleTemplateRegistry, PblNgridRegistryService, utils, PblNgridComponent, PblNgridPluginController, ngridPlugin, PblNgridModule } from '@pebula/ngrid';
 import { isObservable } from 'rxjs';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
-import { UnRx } from '@pebula/utils';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/block-ui/directives.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * Marks the element as the display element when the form is busy.
@@ -39,14 +38,12 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/block-ui/block-ui-plugin.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const PLUGIN_KEY = 'blockUi';
 /**
- * @template T
- */
-let PblNgridBlockUiPluginDirective = /**
  * @template T
  */
 class PblNgridBlockUiPluginDirective {
@@ -80,10 +77,10 @@ class PblNgridBlockUiPluginDirective {
             if (event.kind === 'onDataSource') {
                 const { prev, curr } = event;
                 if (prev) {
-                    UnRx.kill(this, prev);
+                    utils.unrx.kill(this, prev);
                 }
                 curr.onSourceChanging
-                    .pipe(UnRx(this, curr))
+                    .pipe(utils.unrx(this, curr))
                     .subscribe((/**
                  * @return {?}
                  */
@@ -94,7 +91,7 @@ class PblNgridBlockUiPluginDirective {
                     }
                 }));
                 curr.onSourceChanged
-                    .pipe(UnRx(this, curr))
+                    .pipe(utils.unrx(this, curr))
                     .subscribe((/**
                  * @return {?}
                  */
@@ -147,10 +144,10 @@ class PblNgridBlockUiPluginDirective {
         }
         if (isObservable(value) && this._blockUi !== value) {
             if (isObservable(this._blockUi)) {
-                UnRx.kill(this, this._blockUi);
+                utils.unrx.kill(this, this._blockUi);
             }
             this._blockUi = value;
-            value.pipe(UnRx(this, this._blockUi)).subscribe((/**
+            value.pipe(utils.unrx(this, this._blockUi)).subscribe((/**
              * @param {?} state
              * @return {?}
              */
@@ -171,6 +168,7 @@ class PblNgridBlockUiPluginDirective {
      * @return {?}
      */
     ngOnDestroy() {
+        utils.unrx.kill(this);
         this._removePlugin(this.grid);
     }
     /**
@@ -195,11 +193,7 @@ class PblNgridBlockUiPluginDirective {
             this._blockerEmbeddedVRef = undefined;
         }
     }
-};
-PblNgridBlockUiPluginDirective.ctorParameters = () => [
-    { type: PblNgridComponent },
-    { type: PblNgridPluginController }
-];
+}
 PblNgridBlockUiPluginDirective.decorators = [
     { type: Directive, args: [{ selector: 'pbl-ngrid[blockUi]', exportAs: 'blockUi' },] }
 ];
@@ -211,14 +205,6 @@ PblNgridBlockUiPluginDirective.ctorParameters = () => [
 PblNgridBlockUiPluginDirective.propDecorators = {
     blockUi: [{ type: Input }]
 };
-/**
- * @template T
- */
-PblNgridBlockUiPluginDirective = __decorate([
-    NgridPlugin({ id: PLUGIN_KEY }),
-    UnRx(),
-    __metadata("design:paramtypes", [PblNgridComponent, PblNgridPluginController])
-], PblNgridBlockUiPluginDirective);
 if (false) {
     /**
      * @type {?}
@@ -249,10 +235,12 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/table-block-ui.module.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class PblNgridBlockUiModule {
 }
+PblNgridBlockUiModule.NGRID_PLUGIN = ngridPlugin({ id: PLUGIN_KEY }, PblNgridBlockUiPluginDirective);
 PblNgridBlockUiModule.decorators = [
     { type: NgModule, args: [{
                 imports: [CommonModule, CdkTableModule, PblNgridModule],
@@ -260,16 +248,22 @@ PblNgridBlockUiModule.decorators = [
                 exports: [PblNgridBlockUiDefDirective, PblNgridBlockUiPluginDirective]
             },] }
 ];
+if (false) {
+    /** @type {?} */
+    PblNgridBlockUiModule.NGRID_PLUGIN;
+}
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: index.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: pebula-ngrid-block-ui.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { PblNgridBlockUiModule, PblNgridBlockUiDefDirective as ɵa, PblNgridBlockUiPluginDirective as ɵb };
+export { PblNgridBlockUiModule, PblNgridBlockUiDefDirective as ɵa, PLUGIN_KEY as ɵb, PblNgridBlockUiPluginDirective as ɵc };
 //# sourceMappingURL=pebula-ngrid-block-ui.js.map

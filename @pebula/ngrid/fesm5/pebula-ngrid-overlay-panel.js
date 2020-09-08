@@ -10,7 +10,8 @@ import { CommonModule } from '@angular/common';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/component-registry-extension.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @template T
@@ -74,7 +75,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/overlay-panel-ref.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @template T
@@ -153,7 +155,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/overlay-panel.service.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @record
@@ -408,10 +411,13 @@ PblNgridOverlayPanel = /** @class */ (function () {
      * @return {?} OverlayConfig
      */
     function (element, config) {
+        /** @type {?} */
+        var positionStrategy = this._overlay
+            .position()
+            .flexibleConnectedTo(element)
+            .withLockedPosition();
         return new OverlayConfig({
-            positionStrategy: this._overlay.position()
-                .flexibleConnectedTo(element)
-                .withLockedPosition(),
+            positionStrategy: positionStrategy,
             backdropClass: config.backdropClass || 'cdk-overlay-transparent-backdrop',
             // TODO: don't use the cdk's class, create it
             scrollStrategy: this._scrollStrategy(),
@@ -582,7 +588,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/overlay-panel-def.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @record
@@ -624,7 +631,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/overlay-panel.module.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var PblNgridOverlayPanelModule = /** @class */ (function () {
     function PblNgridOverlayPanelModule() {
@@ -645,7 +653,6 @@ var PblNgridOverlayPanelModule = /** @class */ (function () {
                     providers: [
                         PblNgridOverlayPanelFactory,
                     ],
-                    entryComponents: [],
                 },] }
     ];
     return PblNgridOverlayPanelModule;
@@ -653,12 +660,14 @@ var PblNgridOverlayPanelModule = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: index.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: pebula-ngrid-overlay-panel.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { PblNgridOverlayPanel, PblNgridOverlayPanelComponentExtension, PblNgridOverlayPanelDef, PblNgridOverlayPanelFactory, PblNgridOverlayPanelModule, PblNgridOverlayPanelRef };

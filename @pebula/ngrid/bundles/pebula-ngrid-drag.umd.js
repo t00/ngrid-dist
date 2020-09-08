@@ -1,7 +1,7 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('rxjs/operators'), require('@angular/core'), require('@angular/cdk/drag-drop'), require('rxjs'), require('@angular/cdk/coercion'), require('@angular/common'), require('@angular/cdk/scrolling'), require('@angular/cdk/bidi'), require('@pebula/ngrid'), require('@angular/cdk/platform')) :
     typeof define === 'function' && define.amd ? define('@pebula/ngrid/drag', ['exports', 'rxjs/operators', '@angular/core', '@angular/cdk/drag-drop', 'rxjs', '@angular/cdk/coercion', '@angular/common', '@angular/cdk/scrolling', '@angular/cdk/bidi', '@pebula/ngrid', '@angular/cdk/platform'], factory) :
-    (global = global || self, factory((global.pebula = global.pebula || {}, global.pebula.ngrid = global.pebula.ngrid || {}, global.pebula.ngrid.drag = {}), global.rxjs.operators, global.ng.core, global.ng.cdk['drag-drop'], global.rxjs, global.ng.cdk.coercion, global.ng.common, global.ng.cdk.scrolling, global.ng.cdk.bidi, global.pebula.ngrid, global.ng.cdk.platform));
+    (global = global || self, factory((global.pebula = global.pebula || {}, global.pebula.ngrid = global.pebula.ngrid || {}, global.pebula.ngrid.drag = {}), global.rxjs.operators, global.ng.core, global.ng.cdk.dragDrop, global.rxjs, global.ng.cdk.coercion, global.ng.common, global.ng.cdk.scrolling, global.ng.cdk.bidi, global.pebula.ngrid, global.ng.cdk.platform));
 }(this, (function (exports, operators, core, dragDrop, rxjs, coercion, common, scrolling, bidi, ngrid, platform) { 'use strict';
 
     /*! *****************************************************************************
@@ -203,7 +203,8 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/drag-and-drop/core/drop-list-ref.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /**
      * @template T
@@ -260,7 +261,8 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/drag-and-drop/core/drag-ref.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /**
      * @template T
@@ -353,7 +355,8 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/drag-and-drop/core/drag-drop.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /**
      * Default configuration to be used when creating a `DragRef`.
@@ -425,7 +428,7 @@
             { type: scrolling.ViewportRuler },
             { type: dragDrop.DragDropRegistry }
         ]; };
-        /** @nocollapse */ PblDragDrop.ngInjectableDef = core.ɵɵdefineInjectable({ factory: function PblDragDrop_Factory() { return new PblDragDrop(core.ɵɵinject(common.DOCUMENT), core.ɵɵinject(core.NgZone), core.ɵɵinject(scrolling.ViewportRuler), core.ɵɵinject(dragDrop.DragDropRegistry)); }, token: PblDragDrop, providedIn: "root" });
+        /** @nocollapse */ PblDragDrop.ɵprov = core.ɵɵdefineInjectable({ factory: function PblDragDrop_Factory() { return new PblDragDrop(core.ɵɵinject(common.DOCUMENT), core.ɵɵinject(core.NgZone), core.ɵɵinject(scrolling.ViewportRuler), core.ɵɵinject(dragDrop.DragDropRegistry)); }, token: PblDragDrop, providedIn: "root" });
         return PblDragDrop;
     }());
     if (false) {
@@ -453,7 +456,8 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/drag-and-drop/core/lazy-drag-drop.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /**
      * @template T, DRef
@@ -792,55 +796,11 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/drag-and-drop/row/row-reorder-plugin.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
-    var isMaterial7 = dragDrop.CdkDropList.length === 7;
-    /**
-     * @param {?} element
-     * @param {?} dragDrop
-     * @param {?} changeDetectorRef
-     * @param {?=} dir
-     * @param {?=} group
-     * @param {?=} dragDropRegistry
-     * @param {?=} document
-     * @return {?}
-     */
-    function cdkDropList(element, dragDrop, changeDetectorRef, dir, group, 
-    // for v7 compat
-    dragDropRegistry, document) {
-        return isMaterial7
-            ? (/** @type {?} */ ([element, (/** @type {?} */ (dragDropRegistry)), changeDetectorRef, dir, group, document, dragDrop]))
-            : [element, dragDrop, changeDetectorRef, dir, group];
-    }
-    /**
-     * @param {?} element
-     * @param {?} dropContainer
-     * @param {?} _document
-     * @param {?} _ngZone
-     * @param {?} _viewContainerRef
-     * @param {?} config
-     * @param {?} _dir
-     * @param {?} dragDrop
-     * @param {?} _changeDetectorRef
-     * @param {?} viewportRuler
-     * @param {?=} dragDropRegistry
-     * @return {?}
-     */
-    function cdkDrag(element, dropContainer, _document, _ngZone, _viewContainerRef, config, _dir, dragDrop, _changeDetectorRef, 
-    // for v7 compat
-    viewportRuler, dragDropRegistry) {
-        return isMaterial7
-            ? (/** @type {?} */ ([element, dropContainer, _document, _ngZone, _viewContainerRef, viewportRuler, dragDropRegistry, config, _dir, dragDrop]))
-            : [element, dropContainer, _document, _ngZone, _viewContainerRef, config, _dir, dragDrop, _changeDetectorRef];
-    }
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /** @type {?} */
-    var PLUGIN_KEY = 'rowReorder';
+    var ROW_REORDER_PLUGIN_KEY = 'rowReorder';
     /** @type {?} */
     var _uniqueIdCounter = 0;
     var ɵ0 = undefined;
@@ -849,9 +809,8 @@
      */
     var PblNgridRowReorderPluginDirective = /** @class */ (function (_super) {
         __extends(PblNgridRowReorderPluginDirective, _super);
-        function PblNgridRowReorderPluginDirective(grid, pluginCtrl, element, dragDrop, changeDetectorRef, dir, group, dragDropRegistry, // for v7 compat
-        _document) {
-            var _this = _super.apply(this, __spread(cdkDropList(element, dragDrop, changeDetectorRef, dir, group, dragDropRegistry, _document))) || this;
+        function PblNgridRowReorderPluginDirective(grid, pluginCtrl, element, dragDrop, changeDetectorRef, dir, group) {
+            var _this = _super.call(this, element, dragDrop, changeDetectorRef, dir, group) || this;
             _this.grid = grid;
             _this.id = "pbl-ngrid-row-reorder-list-" + _uniqueIdCounter++;
             _this._rowReorder = false;
@@ -864,8 +823,7 @@
              */
             _this.directContainerElement = '.pbl-ngrid-scroll-container'; // we need this to allow auto-scroll
             _this._draggablesSet = new Set();
-            // super(element, dragDrop, changeDetectorRef, dir, group);
-            _this._removePlugin = pluginCtrl.setPlugin(PLUGIN_KEY, _this);
+            _this._removePlugin = pluginCtrl.setPlugin(ROW_REORDER_PLUGIN_KEY, _this);
             _this.dropped.subscribe((/**
              * @param {?} event
              * @return {?}
@@ -883,7 +841,6 @@
             }));
             return _this;
         }
-        PblNgridRowReorderPluginDirective_1 = PblNgridRowReorderPluginDirective;
         Object.defineProperty(PblNgridRowReorderPluginDirective.prototype, "rowReorder", {
             get: /**
              * @return {?}
@@ -956,18 +913,6 @@
             _super.prototype.ngOnDestroy.call(this);
             this._removePlugin(this.grid);
         };
-        var PblNgridRowReorderPluginDirective_1;
-        PblNgridRowReorderPluginDirective.ctorParameters = function () { return [
-            { type: ngrid.PblNgridComponent },
-            { type: ngrid.PblNgridPluginController },
-            { type: core.ElementRef },
-            { type: dragDrop.DragDrop },
-            { type: core.ChangeDetectorRef },
-            { type: bidi.Directionality },
-            { type: dragDrop.CdkDropListGroup },
-            { type: dragDrop.DragDropRegistry },
-            { type: undefined }
-        ]; };
         PblNgridRowReorderPluginDirective.decorators = [
             { type: core.Directive, args: [{
                         selector: 'pbl-ngrid[rowReorder]',
@@ -986,7 +931,7 @@
                         providers: [
                             { provide: dragDrop.DragDrop, useExisting: PblDragDrop },
                             { provide: dragDrop.CdkDropListGroup, useValue: ɵ0 },
-                            { provide: dragDrop.CDK_DROP_LIST, useExisting: PblNgridRowReorderPluginDirective_1 },
+                            { provide: dragDrop.CDK_DROP_LIST, useExisting: PblNgridRowReorderPluginDirective },
                         ],
                     },] }
         ];
@@ -998,32 +943,18 @@
             { type: dragDrop.DragDrop },
             { type: core.ChangeDetectorRef },
             { type: bidi.Directionality, decorators: [{ type: core.Optional }] },
-            { type: dragDrop.CdkDropListGroup, decorators: [{ type: core.Optional }, { type: core.SkipSelf }] },
-            { type: dragDrop.DragDropRegistry, decorators: [{ type: core.Optional }] },
-            { type: undefined, decorators: [{ type: core.Optional }, { type: core.Inject, args: [common.DOCUMENT,] }] }
+            { type: dragDrop.CdkDropListGroup, decorators: [{ type: core.Optional }, { type: core.SkipSelf }] }
         ]; };
         PblNgridRowReorderPluginDirective.propDecorators = {
             rowReorder: [{ type: core.Input }]
         };
-        /**
-         * @template T
-         */
-        PblNgridRowReorderPluginDirective = PblNgridRowReorderPluginDirective_1 = __decorate([
-            ngrid.NgridPlugin({ id: PLUGIN_KEY }),
-            __metadata("design:paramtypes", [ngrid.PblNgridComponent,
-                ngrid.PblNgridPluginController,
-                core.ElementRef,
-                dragDrop.DragDrop,
-                core.ChangeDetectorRef,
-                bidi.Directionality,
-                dragDrop.CdkDropListGroup,
-                dragDrop.DragDropRegistry, Object])
-        ], PblNgridRowReorderPluginDirective);
         return PblNgridRowReorderPluginDirective;
     }(dragDrop.CdkDropList));
     if (false) {
         /** @type {?} */
         PblNgridRowReorderPluginDirective.prototype.id;
+        /** @type {?} */
+        PblNgridRowReorderPluginDirective.prototype._draggables;
         /**
          * @type {?}
          * @private
@@ -1057,22 +988,10 @@
         __extends(PblNgridRowDragDirective, _super);
         // CTOR IS REQUIRED OR IT WONT WORK IN AOT
         // TODO: Try to remove when supporting IVY
-        function PblNgridRowDragDirective(element, dropContainer, _document, _ngZone, _viewContainerRef, config, _dir, dragDrop, _changeDetectorRef, viewportRuler, // for v7 compat
-        dragDropRegistry) {
-            var _this = _super.apply(this, __spread(cdkDrag(element, dropContainer, _document, _ngZone, _viewContainerRef, config, _dir, dragDrop, _changeDetectorRef, viewportRuler, dragDropRegistry))) || this;
+        function PblNgridRowDragDirective(element, dropContainer, _document, _ngZone, _viewContainerRef, config, _dir, dragDrop, _changeDetectorRef) {
+            var _this = _super.call(this, element, dropContainer, _document, _ngZone, _viewContainerRef, config, _dir, dragDrop, _changeDetectorRef) || this;
             _this.rootElementSelector = 'pbl-ngrid-row';
             _this._hostNotRoot = false;
-            // super(
-            //   element,
-            //   dropContainer,
-            //   _document,
-            //   _ngZone,
-            //   _viewContainerRef,
-            //   config,
-            //   _dir,
-            //   dragDrop,
-            //   _changeDetectorRef,
-            // );
             _this.started.subscribe((/**
              * @param {?} event
              * @return {?}
@@ -1099,7 +1018,7 @@
                 /** @type {?} */
                 var pluginCtrl = this.pluginCtrl = value && ngrid.PblNgridPluginController.find(value.grid);
                 /** @type {?} */
-                var plugin = pluginCtrl && pluginCtrl.getPlugin(PLUGIN_KEY);
+                var plugin = pluginCtrl && pluginCtrl.getPlugin(ROW_REORDER_PLUGIN_KEY);
                 this.cdkDropList = plugin || undefined;
             },
             enumerable: true,
@@ -1230,9 +1149,7 @@
             { type: undefined, decorators: [{ type: core.Inject, args: [dragDrop.CDK_DRAG_CONFIG,] }] },
             { type: bidi.Directionality },
             { type: dragDrop.DragDrop },
-            { type: core.ChangeDetectorRef },
-            { type: scrolling.ViewportRuler, decorators: [{ type: core.Optional }] },
-            { type: dragDrop.DragDropRegistry, decorators: [{ type: core.Optional }] }
+            { type: core.ChangeDetectorRef }
         ]; };
         PblNgridRowDragDirective.propDecorators = {
             context: [{ type: core.Input, args: ['pblNgridRowDrag',] }],
@@ -1267,62 +1184,11 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /**
-     * @this {?}
-     * @param {?} column
-     * @return {?}
-     */
-    function checkGroupLockConstraint(column) {
-        var e_1, _a;
-        try {
-            for (var _b = __values(this.groups), _c = _b.next(); !_c.done; _c = _b.next()) {
-                var id = _c.value;
-                /** @type {?} */
-                var g = this.groupStore.find(id);
-                if (g && g.lockColumns && !column.isInGroup(g)) {
-                    return false;
-                }
-            }
-        }
-        catch (e_1_1) { e_1 = { error: e_1_1 }; }
-        finally {
-            try {
-                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
-            }
-            finally { if (e_1) throw e_1.error; }
-        }
-        return true;
-    }
-    /**
-     * @return {?}
-     */
-    function extendGrid() {
-        ngrid.PblColumn.extendProperty('reorder');
-        ngrid.PblColumn.extendProperty('wontBudge');
-        ngrid.PblColumnGroup.extendProperty('lockColumns');
-        ngrid.PblColumn.prototype.checkGroupLockConstraint = (/**
-         * @this {?}
-         * @param {?} column
-         * @return {?}
-         */
-        function (column) {
-            return checkGroupLockConstraint.call(this, column) && checkGroupLockConstraint.call(column, this);
-        });
-    }
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/drag-and-drop/column/column-reorder-plugin.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
-    var PLUGIN_KEY$1 = 'columnReorder';
+    var COL_REORDER_PLUGIN_KEY = 'columnReorder';
     /** @type {?} */
     var _uniqueIdCounter$1 = 0;
     /**
@@ -1330,9 +1196,8 @@
      */
     var PblNgridColumnReorderPluginDirective = /** @class */ (function (_super) {
         __extends(PblNgridColumnReorderPluginDirective, _super);
-        function PblNgridColumnReorderPluginDirective(table, pluginCtrl, element, dragDrop, changeDetectorRef, dir, group, dragDropRegistry, // for v7 compat
-        _document) {
-            var _this = _super.apply(this, __spread(cdkDropList(element, dragDrop, changeDetectorRef, dir, group, dragDropRegistry, _document))) || this;
+        function PblNgridColumnReorderPluginDirective(table, pluginCtrl, element, dragDrop, changeDetectorRef, dir, group) {
+            var _this = _super.call(this, element, dragDrop, changeDetectorRef, dir, group) || this;
             _this.table = table;
             _this.id = "pbl-ngrid-column-reorder-list-" + _uniqueIdCounter$1++;
             _this.orientation = 'horizontal';
@@ -1340,8 +1205,7 @@
             _this._columnReorder = false;
             _this._manualOverride = false;
             _this._draggablesSet = new Set();
-            // super(element, dragDrop, changeDetectorRef, dir, group);
-            _this._removePlugin = pluginCtrl.setPlugin(PLUGIN_KEY$1, _this);
+            _this._removePlugin = pluginCtrl.setPlugin(COL_REORDER_PLUGIN_KEY, _this);
             _this.directContainerElement = '.pbl-ngrid-header-row-main';
             _this.dropped.subscribe((/**
              * @param {?} event
@@ -1370,7 +1234,6 @@
             _this.monkeyPatchDropListRef();
             return _this;
         }
-        PblNgridColumnReorderPluginDirective_1 = PblNgridColumnReorderPluginDirective;
         Object.defineProperty(PblNgridColumnReorderPluginDirective.prototype, "columnReorder", {
             get: /**
              * @return {?}
@@ -1667,18 +1530,6 @@
                 }
             });
         };
-        var PblNgridColumnReorderPluginDirective_1;
-        PblNgridColumnReorderPluginDirective.ctorParameters = function () { return [
-            { type: ngrid.PblNgridComponent },
-            { type: ngrid.PblNgridPluginController },
-            { type: core.ElementRef },
-            { type: dragDrop.DragDrop },
-            { type: core.ChangeDetectorRef },
-            { type: bidi.Directionality },
-            { type: dragDrop.CdkDropListGroup },
-            { type: dragDrop.DragDropRegistry },
-            { type: undefined }
-        ]; };
         PblNgridColumnReorderPluginDirective.decorators = [
             { type: core.Directive, args: [{
                         selector: 'pbl-ngrid[columnReorder]',
@@ -1695,7 +1546,7 @@
                         },
                         providers: [
                             { provide: dragDrop.DragDrop, useExisting: PblDragDrop },
-                            { provide: dragDrop.CDK_DROP_LIST, useExisting: PblNgridColumnReorderPluginDirective_1 },
+                            { provide: dragDrop.CDK_DROP_LIST, useExisting: PblNgridColumnReorderPluginDirective },
                         ],
                     },] }
         ];
@@ -1707,29 +1558,13 @@
             { type: dragDrop.DragDrop },
             { type: core.ChangeDetectorRef },
             { type: bidi.Directionality, decorators: [{ type: core.Optional }] },
-            { type: dragDrop.CdkDropListGroup, decorators: [{ type: core.Optional }, { type: core.SkipSelf }] },
-            { type: dragDrop.DragDropRegistry, decorators: [{ type: core.Optional }] },
-            { type: undefined, decorators: [{ type: core.Optional }, { type: core.Inject, args: [common.DOCUMENT,] }] }
+            { type: dragDrop.CdkDropListGroup, decorators: [{ type: core.Optional }, { type: core.SkipSelf }] }
         ]; };
         PblNgridColumnReorderPluginDirective.propDecorators = {
             columnReorder: [{ type: core.Input }],
             manualOverride: [{ type: core.Input }],
             dragging: [{ type: core.Output, args: ['cdkDropDragging',] }]
         };
-        /**
-         * @template T
-         */
-        PblNgridColumnReorderPluginDirective = PblNgridColumnReorderPluginDirective_1 = __decorate([
-            ngrid.NgridPlugin({ id: PLUGIN_KEY$1, runOnce: extendGrid }),
-            __metadata("design:paramtypes", [ngrid.PblNgridComponent,
-                ngrid.PblNgridPluginController,
-                core.ElementRef,
-                dragDrop.DragDrop,
-                core.ChangeDetectorRef,
-                bidi.Directionality,
-                dragDrop.CdkDropListGroup,
-                dragDrop.DragDropRegistry, Object])
-        ], PblNgridColumnReorderPluginDirective);
         return PblNgridColumnReorderPluginDirective;
     }(dragDrop.CdkDropList));
     if (false) {
@@ -1739,6 +1574,8 @@
         PblNgridColumnReorderPluginDirective.prototype.orientation;
         /** @type {?} */
         PblNgridColumnReorderPluginDirective.prototype.dragging;
+        /** @type {?} */
+        PblNgridColumnReorderPluginDirective.prototype._draggables;
         /**
          * @type {?}
          * @private
@@ -1788,23 +1625,11 @@
         __extends(PblNgridColumnDragDirective, _super);
         // CTOR IS REQUIRED OR IT WONT WORK IN AOT
         // TODO: Try to remove when supporting IVY
-        function PblNgridColumnDragDirective(element, dropContainer, _document, _ngZone, _viewContainerRef, config, _dir, dragDrop, _changeDetectorRef, viewportRuler, // for v7 compat
-        dragDropRegistry) {
-            var _this = _super.apply(this, __spread(cdkDrag(element, dropContainer, _document, _ngZone, _viewContainerRef, config, _dir, dragDrop, _changeDetectorRef, viewportRuler, dragDropRegistry))) || this;
+        function PblNgridColumnDragDirective(element, dropContainer, _document, _ngZone, _viewContainerRef, config, _dir, dragDrop, _changeDetectorRef) {
+            var _this = _super.call(this, element, dropContainer, _document, _ngZone, _viewContainerRef, config, _dir, dragDrop, _changeDetectorRef) || this;
             _this.rootElementSelector = 'pbl-ngrid-header-cell';
             _this._hostNotRoot = false;
             return _this;
-            // super(
-            //   element,
-            //   dropContainer,
-            //   _document,
-            //   _ngZone,
-            //   _viewContainerRef,
-            //   config,
-            //   _dir,
-            //   dragDrop,
-            //   _changeDetectorRef,
-            // );
         }
         Object.defineProperty(PblNgridColumnDragDirective.prototype, "context", {
             set: /**
@@ -1817,7 +1642,7 @@
                 /** @type {?} */
                 var pluginCtrl = this.pluginCtrl = value && ngrid.PblNgridPluginController.find(value.grid);
                 /** @type {?} */
-                var plugin = pluginCtrl && pluginCtrl.getPlugin(PLUGIN_KEY$1);
+                var plugin = pluginCtrl && pluginCtrl.getPlugin(COL_REORDER_PLUGIN_KEY);
                 this.cdkDropList = plugin || undefined;
                 this.disabled = this.column && this.column.reorder ? false : true;
             },
@@ -2000,9 +1825,7 @@
             { type: undefined, decorators: [{ type: core.Inject, args: [dragDrop.CDK_DRAG_CONFIG,] }] },
             { type: bidi.Directionality },
             { type: dragDrop.DragDrop },
-            { type: core.ChangeDetectorRef },
-            { type: scrolling.ViewportRuler, decorators: [{ type: core.Optional }] },
-            { type: dragDrop.DragDropRegistry, decorators: [{ type: core.Optional }] }
+            { type: core.ChangeDetectorRef }
         ]; };
         PblNgridColumnDragDirective.propDecorators = {
             context: [{ type: core.Input, args: ['pblNgridColumnDrag',] }],
@@ -2039,7 +1862,8 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/column-resize/cdk-encapsulated-code.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /**
      * Code from angular/material2 repository
@@ -2077,7 +1901,7 @@
     function extendStyles(dest, source) {
         for (var key in source) {
             if (source.hasOwnProperty(key)) {
-                dest[(/** @type {?} */ (key))] = source[(/** @type {?} */ (key))];
+                dest[key] = source[(/** @type {?} */ (key))];
             }
         }
         return dest;
@@ -2105,21 +1929,11 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /**
-     * @return {?}
-     */
-    function extendGrid$1() {
-        ngrid.PblColumn.extendProperty('resize');
-    }
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/column-resize/column-resize.component.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
-    var PLUGIN_KEY$2 = 'columnResize';
+    var COL_RESIZE_PLUGIN_KEY = 'columnResize';
     /**
      * Options that can be used to bind a passive event listener.
      * @type {?}
@@ -2412,14 +2226,6 @@
             this._pointerMoveSubscription.unsubscribe();
             this._pointerUpSubscription.unsubscribe();
         };
-        PblNgridDragResizeComponent.ctorParameters = function () { return [
-            { type: core.ElementRef },
-            { type: core.NgZone },
-            { type: scrolling.ViewportRuler },
-            { type: dragDrop.DragDropRegistry },
-            { type: undefined },
-            { type: bidi.Directionality }
-        ]; };
         PblNgridDragResizeComponent.decorators = [
             { type: core.Component, args: [{
                         selector: 'pbl-ngrid-drag-resize',
@@ -2449,13 +2255,6 @@
             grabAreaWidth: [{ type: core.Input }],
             onDoubleClick: [{ type: core.HostListener, args: ['dblclick', ['$event'],] }]
         };
-        PblNgridDragResizeComponent = __decorate([
-            ngrid.NgridPlugin({ id: PLUGIN_KEY$2, runOnce: extendGrid$1 }),
-            __metadata("design:paramtypes", [core.ElementRef,
-                core.NgZone,
-                scrolling.ViewportRuler,
-                dragDrop.DragDropRegistry, Object, bidi.Directionality])
-        ], PblNgridDragResizeComponent);
         return PblNgridDragResizeComponent;
     }());
     if (false) {
@@ -2571,7 +2370,8 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/drag-and-drop/column/cell-dragger-ref.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /**
      * Marks the element as the resizer template for cells.
@@ -2605,7 +2405,7 @@
             // However, when the plugin does not exists for this table we don't need to render...
             /** @type {?} */
             var pluginCtrl = ngrid.PblNgridPluginController.find(context.grid);
-            return pluginCtrl.hasPlugin(PLUGIN_KEY$1);
+            return pluginCtrl.hasPlugin(COL_REORDER_PLUGIN_KEY);
         };
         PblNgridCellDraggerRefDirective.decorators = [
             { type: core.Directive, args: [{ selector: '[pblNgridCellDraggerRef]' },] }
@@ -2626,7 +2426,56 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/drag-and-drop/column/extend-grid.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    /**
+     * @this {?}
+     * @param {?} column
+     * @return {?}
+     */
+    function checkGroupLockConstraint(column) {
+        var e_1, _a;
+        try {
+            for (var _b = __values(this.groups), _c = _b.next(); !_c.done; _c = _b.next()) {
+                var id = _c.value;
+                /** @type {?} */
+                var g = this.groupStore.find(id);
+                if (g && g.lockColumns && !column.isInGroup(g)) {
+                    return false;
+                }
+            }
+        }
+        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+        finally {
+            try {
+                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+            }
+            finally { if (e_1) throw e_1.error; }
+        }
+        return true;
+    }
+    /**
+     * @return {?}
+     */
+    function colReorderExtendGrid() {
+        ngrid.PblColumn.extendProperty('reorder');
+        ngrid.PblColumn.extendProperty('wontBudge');
+        ngrid.PblColumnGroup.extendProperty('lockColumns');
+        ngrid.PblColumn.prototype.checkGroupLockConstraint = (/**
+         * @this {?}
+         * @param {?} column
+         * @return {?}
+         */
+        function (column) {
+            return checkGroupLockConstraint.call(this, column) && checkGroupLockConstraint.call(column, this);
+        });
+    }
+
+    /**
+     * @fileoverview added by tsickle
+     * Generated from: lib/drag-and-drop/column/aggregation-column.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
     var _uniqueIdCounter$2 = 0;
@@ -2635,14 +2484,12 @@
      */
     var PblNgridAggregationContainerDirective = /** @class */ (function (_super) {
         __extends(PblNgridAggregationContainerDirective, _super);
-        function PblNgridAggregationContainerDirective(grid, pluginCtrl, element, dragDrop, changeDetectorRef, dir, group, dragDropRegistry, // for v7 compat
-        _document) {
-            var _this = _super.apply(this, __spread(cdkDropList(element, dragDrop, changeDetectorRef, dir, group, dragDropRegistry, _document))) || this;
+        function PblNgridAggregationContainerDirective(grid, pluginCtrl, element, dragDrop, changeDetectorRef, dir, group) {
+            var _this = _super.call(this, element, dragDrop, changeDetectorRef, dir, group) || this;
             _this.grid = grid;
             _this.id = "pbl-ngrid-column-aggregation-container-" + _uniqueIdCounter$2++;
             _this.orientation = 'horizontal';
             _this._draggablesSet = new Set();
-            // super(element, dragDrop, changeDetectorRef, dir, group);
             /** @type {?} */
             var reorder = pluginCtrl.getPlugin('columnReorder');
             reorder.connectedTo = _this.id;
@@ -2775,9 +2622,7 @@
             { type: dragDrop.DragDrop },
             { type: core.ChangeDetectorRef },
             { type: bidi.Directionality, decorators: [{ type: core.Optional }] },
-            { type: dragDrop.CdkDropListGroup, decorators: [{ type: core.Optional }, { type: core.SkipSelf }] },
-            { type: dragDrop.DragDropRegistry, decorators: [{ type: core.Optional }] },
-            { type: undefined, decorators: [{ type: core.Optional }, { type: core.Inject, args: [common.DOCUMENT,] }] }
+            { type: dragDrop.CdkDropListGroup, decorators: [{ type: core.Optional }, { type: core.SkipSelf }] }
         ]; };
         return PblNgridAggregationContainerDirective;
     }(dragDrop.CdkDropList));
@@ -2788,6 +2633,8 @@
         PblNgridAggregationContainerDirective.prototype.orientation;
         /** @type {?} */
         PblNgridAggregationContainerDirective.prototype.pending;
+        /** @type {?} */
+        PblNgridAggregationContainerDirective.prototype._draggables;
         /**
          * Selector that will be used to determine the direct container element, starting from
          * the `cdkDropList` element and going down the DOM. Passing an alternate direct container element
@@ -2806,7 +2653,8 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/column-resize/cell-resizer-ref.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /**
      * Marks the element as the resizer template for cells.
@@ -2849,7 +2697,20 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/column-resize/extend-grid.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    /**
+     * @return {?}
+     */
+    function colResizeExtendGrid() {
+        ngrid.PblColumn.extendProperty('resize');
+    }
+
+    /**
+     * @fileoverview added by tsickle
+     * Generated from: lib/default-settings.component.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var DragPluginDefaultTemplatesComponent = /** @class */ (function () {
         function DragPluginDefaultTemplatesComponent() {
@@ -2867,8 +2728,19 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/table-drag.module.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
+    /**
+     * @return {?}
+     */
+    function ngridPlugins() {
+        return [
+            ngrid.ngridPlugin({ id: ROW_REORDER_PLUGIN_KEY }, PblNgridRowReorderPluginDirective),
+            ngrid.ngridPlugin({ id: COL_REORDER_PLUGIN_KEY, runOnce: colReorderExtendGrid }, PblNgridColumnReorderPluginDirective),
+            ngrid.ngridPlugin({ id: COL_RESIZE_PLUGIN_KEY, runOnce: colResizeExtendGrid }, PblNgridDragResizeComponent),
+        ];
+    }
     var PblNgridDragModule = /** @class */ (function () {
         function PblNgridDragModule() {
         }
@@ -2884,6 +2756,7 @@
                 providers: ngrid.provideCommon([{ component: DragPluginDefaultTemplatesComponent }]),
             };
         };
+        PblNgridDragModule.NGRID_PLUGIN = ngridPlugins();
         PblNgridDragModule.decorators = [
             { type: core.NgModule, args: [{
                         imports: [
@@ -2907,14 +2780,16 @@
                             PblNgridAggregationContainerDirective,
                             PblNgridDragResizeComponent, PblNgridCellResizerRefDirective,
                         ],
-                        providers: [
-                            PblDragDrop,
-                        ],
-                        entryComponents: [DragPluginDefaultTemplatesComponent],
+                        // TODO: remove when ViewEngine is no longer supported by angular (V11 ???)
+                        entryComponents: [DragPluginDefaultTemplatesComponent]
                     },] }
         ];
         return PblNgridDragModule;
     }());
+    if (false) {
+        /** @type {?} */
+        PblNgridDragModule.NGRID_PLUGIN;
+    }
 
     exports.CdkLazyDrag = CdkLazyDrag;
     exports.CdkLazyDropList = CdkLazyDropList;
@@ -2925,16 +2800,17 @@
     exports.PblNgridDragResizeComponent = PblNgridDragResizeComponent;
     exports.PblNgridRowDragDirective = PblNgridRowDragDirective;
     exports.PblNgridRowReorderPluginDirective = PblNgridRowReorderPluginDirective;
-    exports.ɵa = PLUGIN_KEY$1;
-    exports.ɵb = PLUGIN_KEY$2;
-    exports.ɵc = PblDragDrop;
-    exports.ɵd = extendGrid;
+    exports.ɵa = ROW_REORDER_PLUGIN_KEY;
+    exports.ɵb = COL_REORDER_PLUGIN_KEY;
+    exports.ɵc = COL_RESIZE_PLUGIN_KEY;
+    exports.ɵd = ngridPlugins;
     exports.ɵe = PblDragDrop;
-    exports.ɵf = extendGrid$1;
-    exports.ɵg = DragPluginDefaultTemplatesComponent;
-    exports.ɵh = PblNgridCellDraggerRefDirective;
-    exports.ɵi = PblNgridAggregationContainerDirective;
-    exports.ɵj = PblNgridCellResizerRefDirective;
+    exports.ɵf = DragPluginDefaultTemplatesComponent;
+    exports.ɵg = PblNgridCellDraggerRefDirective;
+    exports.ɵh = PblNgridAggregationContainerDirective;
+    exports.ɵi = PblNgridCellResizerRefDirective;
+    exports.ɵj = colReorderExtendGrid;
+    exports.ɵk = colResizeExtendGrid;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

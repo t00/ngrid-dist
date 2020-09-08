@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('rxjs/operators'), require('@angular/core'), require('@angular/common'), require('@pebula/utils'), require('@pebula/ngrid'), require('@pebula/ngrid/target-events')) :
-    typeof define === 'function' && define.amd ? define('@pebula/ngrid/clipboard', ['exports', 'rxjs/operators', '@angular/core', '@angular/common', '@pebula/utils', '@pebula/ngrid', '@pebula/ngrid/target-events'], factory) :
-    (global = global || self, factory((global.pebula = global.pebula || {}, global.pebula.ngrid = global.pebula.ngrid || {}, global.pebula.ngrid.clipboard = {}), global.rxjs.operators, global.ng.core, global.ng.common, global.pebula.utils, global.pebula.ngrid, global.pebula.ngrid['target-events']));
-}(this, (function (exports, operators, core, common, utils, ngrid, targetEvents) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('rxjs/operators'), require('@angular/core'), require('@angular/common'), require('@pebula/ngrid'), require('@pebula/ngrid/target-events')) :
+    typeof define === 'function' && define.amd ? define('@pebula/ngrid/clipboard', ['exports', 'rxjs/operators', '@angular/core', '@angular/common', '@pebula/ngrid', '@pebula/ngrid/target-events'], factory) :
+    (global = global || self, factory((global.pebula = global.pebula || {}, global.pebula.ngrid = global.pebula.ngrid || {}, global.pebula.ngrid.clipboard = {}), global.rxjs.operators, global.ng.core, global.ng.common, global.pebula.ngrid, global.pebula.ngrid['target-events']));
+}(this, (function (exports, operators, core, common, ngrid, targetEvents) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -203,7 +203,8 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/clipboard.service.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /**
      * A service for copying text to the clipboard.
@@ -279,7 +280,7 @@
         Clipboard.ctorParameters = function () { return [
             { type: undefined, decorators: [{ type: core.Inject, args: [common.DOCUMENT,] }] }
         ]; };
-        /** @nocollapse */ Clipboard.ngInjectableDef = core.ɵɵdefineInjectable({ factory: function Clipboard_Factory() { return new Clipboard(core.ɵɵinject(common.DOCUMENT)); }, token: Clipboard, providedIn: "root" });
+        /** @nocollapse */ Clipboard.ɵprov = core.ɵɵdefineInjectable({ factory: function Clipboard_Factory() { return new Clipboard(core.ɵɵinject(common.DOCUMENT)); }, token: Clipboard, providedIn: "root" });
         return Clipboard;
     }());
     if (false) {
@@ -389,7 +390,8 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/clipboard.plugin.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
     var IS_OSX = /^mac/.test(navigator.platform.toLowerCase());
@@ -408,7 +410,6 @@
             this.clipboard = injector.get(Clipboard);
             this.init();
         }
-        PblNgridClipboardPlugin_1 = PblNgridClipboardPlugin;
         /**
          * @param {?} grid
          * @param {?} injector
@@ -422,7 +423,7 @@
         function (grid, injector) {
             /** @type {?} */
             var pluginCtrl = ngrid.PblNgridPluginController.find(grid);
-            return new PblNgridClipboardPlugin_1(grid, injector, pluginCtrl);
+            return new PblNgridClipboardPlugin(grid, injector, pluginCtrl);
         };
         /**
          * @return {?}
@@ -431,6 +432,7 @@
          * @return {?}
          */
         function () {
+            ngrid.utils.unrx.kill(this);
             this._removePlugin(this.grid);
         };
         /**
@@ -578,19 +580,13 @@
              * @param {?} event
              * @return {?}
              */
-            function (event) { return _this.isCopyEvent(event.source); })), utils.UnRx(this))
+            function (event) { return _this.isCopyEvent(event.source); })), ngrid.utils.unrx(this))
                 .subscribe((/**
              * @param {?} event
              * @return {?}
              */
             function (event) { return _this.doCopy(); }));
         };
-        var PblNgridClipboardPlugin_1;
-        PblNgridClipboardPlugin.ctorParameters = function () { return [
-            { type: ngrid.PblNgridComponent },
-            { type: core.Injector },
-            { type: ngrid.PblNgridPluginController }
-        ]; };
         PblNgridClipboardPlugin.decorators = [
             { type: core.Directive, args: [{ selector: 'pbl-ngrid[clipboard]', exportAs: 'pblNgridClipboard' },] }
         ];
@@ -604,11 +600,6 @@
             clpCellSep: [{ type: core.Input }],
             clpRowSep: [{ type: core.Input }]
         };
-        PblNgridClipboardPlugin = PblNgridClipboardPlugin_1 = __decorate([
-            ngrid.NgridPlugin({ id: PLUGIN_KEY, factory: 'create' }),
-            utils.UnRx(),
-            __metadata("design:paramtypes", [ngrid.PblNgridComponent, core.Injector, ngrid.PblNgridPluginController])
-        ], PblNgridClipboardPlugin);
         return PblNgridClipboardPlugin;
     }());
     if (false) {
@@ -657,7 +648,8 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/clipboard.module.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var PblNgridClipboardPluginModule = /** @class */ (function () {
         function PblNgridClipboardPluginModule(parentModule, configService) {
@@ -693,6 +685,7 @@
                 }
             }));
         }
+        PblNgridClipboardPluginModule.NGRID_PLUGIN = ngrid.ngridPlugin({ id: PLUGIN_KEY, factory: 'create' }, PblNgridClipboardPlugin);
         PblNgridClipboardPluginModule.decorators = [
             { type: core.NgModule, args: [{
                         imports: [common.CommonModule, ngrid.PblNgridModule, targetEvents.PblNgridTargetEventsModule],
@@ -707,6 +700,10 @@
         ]; };
         return PblNgridClipboardPluginModule;
     }());
+    if (false) {
+        /** @type {?} */
+        PblNgridClipboardPluginModule.NGRID_PLUGIN;
+    }
 
     exports.PLUGIN_KEY = PLUGIN_KEY;
     exports.PblNgridClipboardPlugin = PblNgridClipboardPlugin;

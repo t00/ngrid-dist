@@ -17,19 +17,20 @@ export interface WidthChangeEvent {
  */
 export declare class PblNgridColumnDef<T extends COLUMN = COLUMN> extends CdkColumnDef implements OnDestroy {
     protected extApi: PblNgridExtensionApi<any>;
-    column: T;
+    get column(): T;
+    set column(value: T);
     /**
      * The absolute width definitions, as currently set in the DOM (getBoundingClientRect()).
      * If no measurements exists yet, return the user defined width's.
      *
      * The tuple represents them in that order, i.e: [ MIN-WIDTH, WIDTH, MAX-WIDTH ]
      */
-    readonly widths: WidthSet;
+    get widths(): WidthSet;
     /**
      * The last net width of the column.
      * The net width is the absolute width of the column, without padding, border etc...
      */
-    readonly netWidth: number;
+    get netWidth(): number;
     isDragging: boolean;
     /** @deprecated use grid instead */
     readonly table: PblNgridComponent<T>;

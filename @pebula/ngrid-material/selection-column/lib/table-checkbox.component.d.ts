@@ -1,8 +1,8 @@
-import { AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { AfterViewInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { ThemePalette } from '@angular/material/core';
 import { PblNgridComponent, PblNgridHeaderCellDefDirective, PblNgridCellDefDirective, PblNgridFooterCellDefDirective } from '@pebula/ngrid';
-export declare class PblNgridCheckboxComponent implements AfterViewInit {
+export declare class PblNgridCheckboxComponent implements AfterViewInit, OnDestroy {
     table: PblNgridComponent<any>;
     private cdr;
     /**
@@ -20,14 +20,18 @@ export declare class PblNgridCheckboxComponent implements AfterViewInit {
      *
      * The default value is `all`
      */
-    bulkSelectMode: 'all' | 'view' | 'none';
+    get bulkSelectMode(): 'all' | 'view' | 'none';
+    set bulkSelectMode(value: 'all' | 'view' | 'none');
     /**
      * A Custom selection model, optional.
      * If not set, the selection model from the DataSource is used.
      */
-    selection: SelectionModel<any>;
-    isCheckboxDisabled: (row: any) => boolean;
-    color: ThemePalette;
+    get selection(): SelectionModel<any>;
+    set selection(value: SelectionModel<any>);
+    get isCheckboxDisabled(): (row: any) => boolean;
+    set isCheckboxDisabled(value: (row: any) => boolean);
+    get color(): ThemePalette;
+    set color(value: ThemePalette);
     headerDef: PblNgridHeaderCellDefDirective<any>;
     cellDef: PblNgridCellDefDirective<any>;
     footerDef: PblNgridFooterCellDefDirective<any>;
@@ -39,6 +43,7 @@ export declare class PblNgridCheckboxComponent implements AfterViewInit {
     private _color;
     constructor(table: PblNgridComponent<any>, cdr: ChangeDetectorRef);
     ngAfterViewInit(): void;
+    ngOnDestroy(): void;
     masterToggle(): void;
     rowItemChange(row: any): void;
     private getCollection;

@@ -23,7 +23,7 @@ export declare class PblNgridPluginController<T = any> {
         table: PblNgridComponent<any>;
         controller: PblNgridPluginController<any>;
     }>;
-    readonly injector: Injector;
+    get injector(): Injector;
     readonly extApi: PblNgridExtensionApi;
     readonly events: Observable<PblNgridEvents>;
     private readonly grid;

@@ -1,14 +1,14 @@
-import { __decorate, __metadata, __extends } from 'tslib';
 import { Directive, NgModule, ComponentFactoryResolver } from '@angular/core';
 import { MatSort, MatSortHeader, MatSortModule } from '@angular/material/sort';
-import { UnRx } from '@pebula/utils';
-import { PblNgridComponent, PblNgridPluginController, NgridPlugin, PblNgridMultiComponentRegistry, PblNgridModule, PblNgridRegistryService } from '@pebula/ngrid';
+import { utils, PblNgridComponent, PblNgridPluginController, PblNgridMultiComponentRegistry, ngridPlugin, PblNgridModule, PblNgridRegistryService } from '@pebula/ngrid';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
+import { __extends } from 'tslib';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/mat-sort.directive.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 var PLUGIN_KEY = 'matSort';
@@ -22,7 +22,7 @@ var PblNgridMatSortDirective = /** @class */ (function () {
         /** @type {?} */
         var origin = 'click';
         this.sort.sortChange
-            .pipe(UnRx(this))
+            .pipe(utils.unrx(this))
             .subscribe((/**
          * @param {?} s
          * @return {?}
@@ -92,12 +92,12 @@ var PblNgridMatSortDirective = /** @class */ (function () {
                 }
             }
             if (e.kind === 'onDataSource') {
-                UnRx.kill(_this, e.prev);
+                utils.unrx.kill(_this, e.prev);
                 if (_this.sort && _this.sort.active) {
                     _this.onSort({ active: _this.sort.active, direction: _this.sort.direction || 'asc' }, origin);
                 }
                 table.ds.sortChange
-                    .pipe(UnRx(_this, e.curr))
+                    .pipe(utils.unrx(_this, e.curr))
                     .subscribe((/**
                  * @param {?} event
                  * @return {?}
@@ -114,6 +114,7 @@ var PblNgridMatSortDirective = /** @class */ (function () {
      */
     function () {
         this._removePlugin(this.table);
+        utils.unrx.kill(this);
     };
     /**
      * @private
@@ -162,11 +163,6 @@ var PblNgridMatSortDirective = /** @class */ (function () {
             table.ds.setSort(column, newSort);
         }
     };
-    PblNgridMatSortDirective.ctorParameters = function () { return [
-        { type: PblNgridComponent },
-        { type: PblNgridPluginController },
-        { type: MatSort }
-    ]; };
     PblNgridMatSortDirective.decorators = [
         { type: Directive, args: [{ selector: 'pbl-ngrid[matSort]', exportAs: 'pblMatSort' },] }
     ];
@@ -176,11 +172,6 @@ var PblNgridMatSortDirective = /** @class */ (function () {
         { type: PblNgridPluginController },
         { type: MatSort }
     ]; };
-    PblNgridMatSortDirective = __decorate([
-        NgridPlugin({ id: PLUGIN_KEY }),
-        UnRx(),
-        __metadata("design:paramtypes", [PblNgridComponent, PblNgridPluginController, MatSort])
-    ], PblNgridMatSortDirective);
     return PblNgridMatSortDirective;
 }());
 if (false) {
@@ -202,7 +193,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/mat-sort-component-extension.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var MatSortExtension = /** @class */ (function (_super) {
     __extends(MatSortExtension, _super);
@@ -296,18 +288,21 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/mat-sort.module.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var PblNgridMatSortModule = /** @class */ (function () {
     function PblNgridMatSortModule(registry, cfr) {
         this.registry = registry;
         registry.addMulti('dataHeaderExtensions', new MatSortExtension(cfr));
     }
+    PblNgridMatSortModule.NGRID_PLUGIN = ngridPlugin({ id: PLUGIN_KEY }, PblNgridMatSortDirective);
     PblNgridMatSortModule.decorators = [
         { type: NgModule, args: [{
                     imports: [CommonModule, MatButtonModule, MatSortModule, PblNgridModule],
                     declarations: [PblNgridMatSortDirective],
                     exports: [PblNgridMatSortDirective, MatSortModule],
+                    // TODO: remove when ViewEngine is no longer supported by angular (V11 ???)
                     entryComponents: [MatSortHeader],
                 },] }
     ];
@@ -319,6 +314,8 @@ var PblNgridMatSortModule = /** @class */ (function () {
     return PblNgridMatSortModule;
 }());
 if (false) {
+    /** @type {?} */
+    PblNgridMatSortModule.NGRID_PLUGIN;
     /**
      * @type {?}
      * @private
@@ -328,13 +325,15 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: index.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: pebula-ngrid-material-sort.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { PblNgridMatSortDirective, PblNgridMatSortModule };
+export { PblNgridMatSortDirective, PblNgridMatSortModule, PLUGIN_KEY as ɵa };
 //# sourceMappingURL=pebula-ngrid-material-sort.js.map

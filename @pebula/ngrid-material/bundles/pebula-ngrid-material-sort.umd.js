@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/material/sort'), require('@pebula/utils'), require('@pebula/ngrid'), require('@angular/common'), require('@angular/material/button')) :
-    typeof define === 'function' && define.amd ? define('@pebula/ngrid-material/sort', ['exports', '@angular/core', '@angular/material/sort', '@pebula/utils', '@pebula/ngrid', '@angular/common', '@angular/material/button'], factory) :
-    (global = global || self, factory((global.pebula = global.pebula || {}, global.pebula['ngrid-material'] = global.pebula['ngrid-material'] || {}, global.pebula['ngrid-material'].sort = {}), global.ng.core, global.ng.material.sort, global.pebula.utils, global.pebula.ngrid, global.ng.common, global.ng.material.button));
-}(this, (function (exports, core, sort, utils, ngrid, common, button) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/material/sort'), require('@pebula/ngrid'), require('@angular/common'), require('@angular/material/button')) :
+    typeof define === 'function' && define.amd ? define('@pebula/ngrid-material/sort', ['exports', '@angular/core', '@angular/material/sort', '@pebula/ngrid', '@angular/common', '@angular/material/button'], factory) :
+    (global = global || self, factory((global.pebula = global.pebula || {}, global.pebula['ngrid-material'] = global.pebula['ngrid-material'] || {}, global.pebula['ngrid-material'].sort = {}), global.ng.core, global.ng.material.sort, global.pebula.ngrid, global.ng.common, global.ng.material.button));
+}(this, (function (exports, core, sort, ngrid, common, button) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -203,7 +203,8 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/mat-sort.directive.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
     var PLUGIN_KEY = 'matSort';
@@ -217,7 +218,7 @@
             /** @type {?} */
             var origin = 'click';
             this.sort.sortChange
-                .pipe(utils.UnRx(this))
+                .pipe(ngrid.utils.unrx(this))
                 .subscribe((/**
              * @param {?} s
              * @return {?}
@@ -287,12 +288,12 @@
                     }
                 }
                 if (e.kind === 'onDataSource') {
-                    utils.UnRx.kill(_this, e.prev);
+                    ngrid.utils.unrx.kill(_this, e.prev);
                     if (_this.sort && _this.sort.active) {
                         _this.onSort({ active: _this.sort.active, direction: _this.sort.direction || 'asc' }, origin);
                     }
                     table.ds.sortChange
-                        .pipe(utils.UnRx(_this, e.curr))
+                        .pipe(ngrid.utils.unrx(_this, e.curr))
                         .subscribe((/**
                      * @param {?} event
                      * @return {?}
@@ -309,6 +310,7 @@
          */
         function () {
             this._removePlugin(this.table);
+            ngrid.utils.unrx.kill(this);
         };
         /**
          * @private
@@ -357,11 +359,6 @@
                 table.ds.setSort(column, newSort);
             }
         };
-        PblNgridMatSortDirective.ctorParameters = function () { return [
-            { type: ngrid.PblNgridComponent },
-            { type: ngrid.PblNgridPluginController },
-            { type: sort.MatSort }
-        ]; };
         PblNgridMatSortDirective.decorators = [
             { type: core.Directive, args: [{ selector: 'pbl-ngrid[matSort]', exportAs: 'pblMatSort' },] }
         ];
@@ -371,11 +368,6 @@
             { type: ngrid.PblNgridPluginController },
             { type: sort.MatSort }
         ]; };
-        PblNgridMatSortDirective = __decorate([
-            ngrid.NgridPlugin({ id: PLUGIN_KEY }),
-            utils.UnRx(),
-            __metadata("design:paramtypes", [ngrid.PblNgridComponent, ngrid.PblNgridPluginController, sort.MatSort])
-        ], PblNgridMatSortDirective);
         return PblNgridMatSortDirective;
     }());
     if (false) {
@@ -397,7 +389,8 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/mat-sort-component-extension.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var MatSortExtension = /** @class */ (function (_super) {
         __extends(MatSortExtension, _super);
@@ -491,18 +484,21 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/mat-sort.module.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var PblNgridMatSortModule = /** @class */ (function () {
         function PblNgridMatSortModule(registry, cfr) {
             this.registry = registry;
             registry.addMulti('dataHeaderExtensions', new MatSortExtension(cfr));
         }
+        PblNgridMatSortModule.NGRID_PLUGIN = ngrid.ngridPlugin({ id: PLUGIN_KEY }, PblNgridMatSortDirective);
         PblNgridMatSortModule.decorators = [
             { type: core.NgModule, args: [{
                         imports: [common.CommonModule, button.MatButtonModule, sort.MatSortModule, ngrid.PblNgridModule],
                         declarations: [PblNgridMatSortDirective],
                         exports: [PblNgridMatSortDirective, sort.MatSortModule],
+                        // TODO: remove when ViewEngine is no longer supported by angular (V11 ???)
                         entryComponents: [sort.MatSortHeader],
                     },] }
         ];
@@ -514,6 +510,8 @@
         return PblNgridMatSortModule;
     }());
     if (false) {
+        /** @type {?} */
+        PblNgridMatSortModule.NGRID_PLUGIN;
         /**
          * @type {?}
          * @private
@@ -523,6 +521,7 @@
 
     exports.PblNgridMatSortDirective = PblNgridMatSortDirective;
     exports.PblNgridMatSortModule = PblNgridMatSortModule;
+    exports.ɵa = PLUGIN_KEY;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

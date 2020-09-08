@@ -22,7 +22,8 @@ export declare class PblColumn implements PblColumnDefinition {
      * The width in px or % in the following format: ##% or ##px
      * Examples: '50%', '50px'
      */
-    width: string;
+    get width(): string;
+    set width(value: string);
     /**
      * This minimum width in pixels
      * This is an absolute value, thus a number.
@@ -38,7 +39,7 @@ export declare class PblColumn implements PblColumnDefinition {
      * This must be an object, values are shadow-copied so persist data between multiple plugins.
      */
     data: any;
-    readonly parsedWidth: {
+    get parsedWidth(): {
         value: number;
         type: 'px' | '%';
     } | undefined;
@@ -85,7 +86,8 @@ export declare class PblColumn implements PblColumnDefinition {
     editable: boolean;
     pin: 'start' | 'end' | undefined;
     /** @deprecated BREAKING CHANGE 1.0.0 - Use `alias` instead. */
-    sortAlias: string | undefined;
+    get sortAlias(): string | undefined;
+    set sortAlias(value: string);
     /**
      * An alias used to identify the column.
      * Useful when the server provides sort/filter metadata that does not have a 1:1 match with the column names.
@@ -144,8 +146,8 @@ export declare class PblColumn implements PblColumnDefinition {
     /**
      * The column def for this column.
      */
-    readonly columnDef: PblNgridColumnDef<PblColumn>;
-    readonly groups: string[];
+    get columnDef(): PblNgridColumnDef<PblColumn>;
+    get groups(): string[];
     /** @internal */
     readonly groupStore: PblColumnGroupStore;
     private _width?;

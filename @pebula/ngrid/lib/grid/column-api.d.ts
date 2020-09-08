@@ -34,11 +34,11 @@ export interface AutoSizeToFitOptions {
 }
 export declare class ColumnApi<T> {
     static create<T>(grid: PblNgridComponent<T>, store: PblColumnStore, extApi: PblNgridExtensionApi): ColumnApi<T>;
-    readonly groupByColumns: PblColumn[];
-    readonly visibleColumnIds: string[];
-    readonly visibleColumns: PblColumn[];
-    readonly columns: PblColumn[];
-    readonly totalColumnWidthChange: Observable<number>;
+    get groupByColumns(): PblColumn[];
+    get visibleColumnIds(): string[];
+    get visibleColumns(): PblColumn[];
+    get columns(): PblColumn[];
+    get totalColumnWidthChange(): Observable<number>;
     private grid;
     private store;
     private extApi;

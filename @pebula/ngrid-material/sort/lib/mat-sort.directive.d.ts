@@ -6,6 +6,7 @@ declare module '@pebula/ngrid/lib/ext/types' {
         matSort?: PblNgridMatSortDirective;
     }
 }
+export declare const PLUGIN_KEY: 'matSort';
 export declare class PblNgridMatSortDirective implements OnDestroy {
     table: PblNgridComponent<any>;
     private pluginCtrl;

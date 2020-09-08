@@ -35,12 +35,12 @@ import { ElementRef } from '@angular/core';
  */
 export declare class PblNgridCellStyling {
     private elRef;
-    style: {
+    set style(value: {
         [key: string]: string;
-    };
-    klass: string | string[] | Set<string> | {
+    });
+    set klass(value: string | string[] | Set<string> | {
         [klass: string]: any;
-    };
+    });
     private _styleDiffer;
     private _classDiffer;
     private _parent;

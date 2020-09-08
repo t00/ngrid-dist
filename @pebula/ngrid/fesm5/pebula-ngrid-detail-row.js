@@ -1,8 +1,7 @@
-import { __extends, __values, __decorate, __metadata } from 'tslib';
-import { Directive, TemplateRef, IterableDiffers, Component, EventEmitter, ComponentFactoryResolver, Injector, Input, Output, ElementRef, ViewContainerRef, ChangeDetectionStrategy, ViewEncapsulation, Optional, Inject, NgModule } from '@angular/core';
+import { __extends, __values } from 'tslib';
+import { Directive, TemplateRef, IterableDiffers, Component, EventEmitter, ComponentFactoryResolver, Injector, Input, Output, ChangeDetectionStrategy, ViewEncapsulation, Optional, Inject, ElementRef, ViewContainerRef, NgModule } from '@angular/core';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
-import { UnRx } from '@pebula/utils';
-import { PblNgridRegistryService, PblNgridSingleTemplateRegistry, PblNgridPluginController, PblNgridComponent, NgridPlugin, EXT_API_TOKEN, PblNgridRowComponent, PblNgridModule } from '@pebula/ngrid';
+import { PblNgridRegistryService, PblNgridSingleTemplateRegistry, PblNgridPluginController, PblNgridComponent, utils, EXT_API_TOKEN, PblNgridRowComponent, ngridPlugin, PblNgridModule } from '@pebula/ngrid';
 import { CdkRowDef, CDK_ROW_TEMPLATE, CdkRow, CdkTableModule } from '@angular/cdk/table';
 import { CommonModule } from '@angular/common';
 import { PblNgridTargetEventsModule } from '@pebula/ngrid/target-events';
@@ -10,7 +9,8 @@ import { ENTER, SPACE } from '@angular/cdk/keycodes';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/detail-row/directives.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * Marks the element as the display element for the detail row itself.
@@ -115,7 +115,8 @@ var PblNgridDefaultDetailRowParentComponent = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/detail-row/detail-row-plugin.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 var PLUGIN_KEY = 'detailRow';
@@ -513,11 +514,6 @@ var PblNgridDetailRowPluginDirective = /** @class */ (function () {
         // for example, if material will chack for change in `multiTemplateDataRows` setter from previous value...
         this.grid._cdkTable.multiTemplateDataRows = !!this._detailRow;
     };
-    PblNgridDetailRowPluginDirective.ctorParameters = function () { return [
-        { type: PblNgridComponent },
-        { type: PblNgridPluginController },
-        { type: Injector }
-    ]; };
     PblNgridDetailRowPluginDirective.decorators = [
         { type: Directive, args: [{ selector: 'pbl-ngrid[detailRow]', exportAs: 'pblNgridDetailRow' },] }
     ];
@@ -535,14 +531,6 @@ var PblNgridDetailRowPluginDirective = /** @class */ (function () {
         toggleChange: [{ type: Output }],
         toggledRowContextChange: [{ type: Output }]
     };
-    /**
-     * @template T
-     */
-    PblNgridDetailRowPluginDirective = __decorate([
-        NgridPlugin({ id: PLUGIN_KEY }),
-        UnRx(),
-        __metadata("design:paramtypes", [PblNgridComponent, PblNgridPluginController, Injector])
-    ], PblNgridDetailRowPluginDirective);
     return PblNgridDetailRowPluginDirective;
 }());
 if (false) {
@@ -648,7 +636,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/detail-row/row.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var PblNgridDetailRowComponent = /** @class */ (function (_super) {
     __extends(PblNgridDetailRowComponent, _super);
@@ -658,7 +647,6 @@ var PblNgridDetailRowComponent = /** @class */ (function (_super) {
         _this.opened = false;
         return _this;
     }
-    PblNgridDetailRowComponent_1 = PblNgridDetailRowComponent;
     Object.defineProperty(PblNgridDetailRowComponent.prototype, "expended", {
         get: /**
          * @return {?}
@@ -702,7 +690,7 @@ var PblNgridDetailRowComponent = /** @class */ (function (_super) {
         /** @type {?} */
         var tradeEvents = controller.getPlugin('targetEvents');
         tradeEvents.cellClick
-            .pipe(UnRx(this))
+            .pipe(utils.unrx(this))
             .subscribe((/**
          * @param {?} event
          * @return {?}
@@ -720,7 +708,7 @@ var PblNgridDetailRowComponent = /** @class */ (function (_super) {
             }
         }));
         tradeEvents.rowClick
-            .pipe(UnRx(this))
+            .pipe(utils.unrx(this))
             .subscribe((/**
          * @param {?} event
          * @return {?}
@@ -738,6 +726,7 @@ var PblNgridDetailRowComponent = /** @class */ (function (_super) {
      * @return {?}
      */
     function () {
+        utils.unrx.kill(this);
         this.plugin.removeDetailRow(this);
     };
     /**
@@ -847,12 +836,6 @@ var PblNgridDetailRowComponent = /** @class */ (function (_super) {
             }
         }
     };
-    var PblNgridDetailRowComponent_1;
-    PblNgridDetailRowComponent.ctorParameters = function () { return [
-        { type: undefined },
-        { type: ElementRef },
-        { type: ViewContainerRef }
-    ]; };
     PblNgridDetailRowComponent.decorators = [
         { type: Component, args: [{
                     selector: 'pbl-ngrid-row[detailRow]',
@@ -866,7 +849,7 @@ var PblNgridDetailRowComponent = /** @class */ (function (_super) {
                     },
                     template: CDK_ROW_TEMPLATE,
                     providers: [
-                        { provide: CdkRow, useExisting: PblNgridDetailRowComponent_1 }
+                        { provide: CdkRow, useExisting: PblNgridDetailRowComponent }
                     ],
                     changeDetection: ChangeDetectionStrategy.OnPush,
                     encapsulation: ViewEncapsulation.None,
@@ -882,11 +865,6 @@ var PblNgridDetailRowComponent = /** @class */ (function (_super) {
     PblNgridDetailRowComponent.propDecorators = {
         row: [{ type: Input, args: ['detailRow',] }]
     };
-    PblNgridDetailRowComponent = PblNgridDetailRowComponent_1 = __decorate([
-        UnRx(),
-        __metadata("design:paramtypes", [Object, ElementRef,
-            ViewContainerRef])
-    ], PblNgridDetailRowComponent);
     return PblNgridDetailRowComponent;
 }(PblNgridRowComponent));
 if (false) {
@@ -909,7 +887,8 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/table-detail-row.module.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 var DETAIL_ROW = [
@@ -921,25 +900,33 @@ var DETAIL_ROW = [
 var PblNgridDetailRowModule = /** @class */ (function () {
     function PblNgridDetailRowModule() {
     }
+    PblNgridDetailRowModule.NGRID_PLUGIN = ngridPlugin({ id: PLUGIN_KEY }, PblNgridDetailRowPluginDirective);
     PblNgridDetailRowModule.decorators = [
         { type: NgModule, args: [{
                     imports: [CommonModule, CdkTableModule, PblNgridModule, PblNgridTargetEventsModule],
                     declarations: [DETAIL_ROW, PblNgridDefaultDetailRowParentComponent],
                     exports: [DETAIL_ROW],
-                    entryComponents: [PblNgridDetailRowComponent, PblNgridDefaultDetailRowParentComponent]
+                    // TODO: remove when ViewEngine is no longer supported by angular (V11 ???)
+                    entryComponents: [PblNgridDetailRowComponent, PblNgridDefaultDetailRowParentComponent],
                 },] }
     ];
     return PblNgridDetailRowModule;
 }());
+if (false) {
+    /** @type {?} */
+    PblNgridDetailRowModule.NGRID_PLUGIN;
+}
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: index.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: pebula-ngrid-detail-row.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { PblNgridDetailRowModule, toggleDetailRow, PLUGIN_KEY as ɵa, PblNgridDetailRowPluginDirective as ɵb, PblNgridDetailRowComponent as ɵc, PblNgridDetailRowDefDirective as ɵd, PblNgridDetailRowParentRefDirective as ɵe, PblNgridDefaultDetailRowParentComponent as ɵf };

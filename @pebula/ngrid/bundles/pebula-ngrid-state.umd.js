@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@pebula/ngrid'), require('rxjs'), require('rxjs/operators'), require('@angular/core'), require('@pebula/utils'), require('@angular/common')) :
-    typeof define === 'function' && define.amd ? define('@pebula/ngrid/state', ['exports', '@pebula/ngrid', 'rxjs', 'rxjs/operators', '@angular/core', '@pebula/utils', '@angular/common'], factory) :
-    (global = global || self, factory((global.pebula = global.pebula || {}, global.pebula.ngrid = global.pebula.ngrid || {}, global.pebula.ngrid.state = {}), global.pebula.ngrid, global.rxjs, global.rxjs.operators, global.ng.core, global.pebula.utils, global.ng.common));
-}(this, (function (exports, ngrid, rxjs, operators, core, utils, common) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@pebula/ngrid'), require('rxjs'), require('rxjs/operators'), require('@angular/core'), require('@angular/common')) :
+    typeof define === 'function' && define.amd ? define('@pebula/ngrid/state', ['exports', '@pebula/ngrid', 'rxjs', 'rxjs/operators', '@angular/core', '@angular/common'], factory) :
+    (global = global || self, factory((global.pebula = global.pebula || {}, global.pebula.ngrid = global.pebula.ngrid || {}, global.pebula.ngrid.state = {}), global.pebula.ngrid, global.rxjs, global.rxjs.operators, global.ng.core, global.ng.common));
+}(this, (function (exports, ngrid, rxjs, operators, core, common) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -203,7 +203,8 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/core/state-visor.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
 
@@ -309,7 +310,8 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/core/persistance/local-storage.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var PblNgridLocalStoragePersistAdapter = /** @class */ (function () {
         function PblNgridLocalStoragePersistAdapter() {
@@ -403,12 +405,14 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/core/persistance/index.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/core/models/state.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /**
      * @record
@@ -488,7 +492,8 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/core/models/options.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /**
      * An interface for datasource specific logical units that can load and save state objects.
@@ -625,12 +630,14 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/core/models/index.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/core/handling/base.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /**
      * @template T, Z
@@ -832,12 +839,14 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/core/handling/index.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/core/identification/index.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var PblNgridIdAttributeIdentResolver = /** @class */ (function () {
         function PblNgridIdAttributeIdentResolver() {
@@ -858,7 +867,8 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/core/utils.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /**
      * @param {?} grid
@@ -978,7 +988,7 @@
      * @return {?}
      */
     function createChunkContext(sectionContext, chunkConfig, mode) {
-        return __assign({}, sectionContext, { source: chunkConfig.sourceMatcher(sectionContext), runChildChunk: /**
+        return __assign(__assign({}, sectionContext), { source: chunkConfig.sourceMatcher(sectionContext), runChildChunk: /**
              * @template TChild
              * @param {?} childChunkId
              * @param {?} state
@@ -989,7 +999,7 @@
             function (childChunkId, state, source, data) {
                 var e_3, _a;
                 /** @type {?} */
-                var childContext = __assign({}, sectionContext, { source: source, data: data });
+                var childContext = __assign(__assign({}, sectionContext), { source: source, data: data });
                 /** @type {?} */
                 var defs = stateVisor.getDefinitionsForSection(childChunkId);
                 /** @type {?} */
@@ -1077,7 +1087,8 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/core/state.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /**
      * @param {?} grid
@@ -1128,7 +1139,7 @@
                         /** @type {?} */
                         var defs = stateVisor.getDefinitionsForSection(chunkId);
                         try {
-                            for (var defs_1 = __values(defs), defs_1_1 = defs_1.next(); !defs_1_1.done; defs_1_1 = defs_1.next()) {
+                            for (var defs_1 = (e_2 = void 0, __values(defs)), defs_1_1 = defs_1.next(); !defs_1_1.done; defs_1_1 = defs_1.next()) {
                                 var def = defs_1_1.value;
                                 serialize(def, sectionState, chunkContext);
                             }
@@ -1189,7 +1200,7 @@
                             /** @type {?} */
                             var defs = stateVisor.getDefinitionsForSection(chunkId);
                             try {
-                                for (var defs_2 = __values(defs), defs_2_1 = defs_2.next(); !defs_2_1.done; defs_2_1 = defs_2.next()) {
+                                for (var defs_2 = (e_4 = void 0, __values(defs)), defs_2_1 = defs_2.next(); !defs_2_1.done; defs_2_1 = defs_2.next()) {
                                     var def = defs_2_1.value;
                                     deserialize(def, sectionState, chunkContext);
                                 }
@@ -1218,7 +1229,8 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/core/built-in-handlers/grid-primitives/index.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /**
      * @record
@@ -1264,7 +1276,8 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/core/built-in-handlers/column-def/children.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /**
      * @return {?}
@@ -1465,7 +1478,8 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/core/built-in-handlers/column-def/index.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /**
      * @template TCol, TChild
@@ -1749,7 +1763,7 @@
                                     }
                                 };
                                 try {
-                                    for (var _b = __values(rowState.cols), _c = _b.next(); !_c.done; _c = _b.next()) {
+                                    for (var _b = (e_7 = void 0, __values(rowState.cols)), _c = _b.next(); !_c.done; _c = _b.next()) {
                                         var colState = _c.value;
                                         _loop_4(colState);
                                     }
@@ -1788,7 +1802,8 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/core/built-in-handlers/column-order/index.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /**
      * @return {?}
@@ -1857,7 +1872,8 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/core/built-in-handlers/index.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /**
      * @record
@@ -1983,12 +1999,14 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/core/index.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/presets.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /**
      * Return's the `User Preferences` preset which focuses on saving and restoring state that the user
@@ -2077,20 +2095,8 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /**
-     * @return {?}
-     */
-    function registerBuiltInHandlers() {
-        registerGridHandlers();
-        registerColumnOrderHandlers();
-        registerColumnDefHandlers();
-    }
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/state-plugin.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /**
      * @record
@@ -2145,7 +2151,7 @@
              */
             function (event) {
                 /** @type {?} */
-                var initialLoadOptions = __assign({}, (_this.loadOptions || {}), { avoidRedraw: true });
+                var initialLoadOptions = __assign(__assign({}, (_this.loadOptions || {})), { avoidRedraw: true });
                 hasState(grid, initialLoadOptions)
                     .then((/**
                  * @param {?} value
@@ -2185,7 +2191,6 @@
                 }
             }));
         }
-        PblNgridStatePlugin_1 = PblNgridStatePlugin;
         /**
          * @param {?} table
          * @param {?} injector
@@ -2199,7 +2204,7 @@
         function (table, injector) {
             /** @type {?} */
             var pluginCtrl = ngrid.PblNgridPluginController.find(table);
-            return new PblNgridStatePlugin_1(table, injector, pluginCtrl);
+            return new PblNgridStatePlugin(table, injector, pluginCtrl);
         };
         /**
          * @return {?}
@@ -2261,17 +2266,6 @@
              */
             function (error) { return _this._events.next({ phase: 'load', position: 'after', error: error }); }));
         };
-        var PblNgridStatePlugin_1;
-        PblNgridStatePlugin.ctorParameters = function () { return [
-            { type: ngrid.PblNgridComponent },
-            { type: core.Injector },
-            { type: ngrid.PblNgridPluginController }
-        ]; };
-        PblNgridStatePlugin = PblNgridStatePlugin_1 = __decorate([
-            ngrid.NgridPlugin({ id: PLUGIN_KEY, factory: 'create', runOnce: registerBuiltInHandlers }),
-            utils.UnRx(),
-            __metadata("design:paramtypes", [ngrid.PblNgridComponent, core.Injector, ngrid.PblNgridPluginController])
-        ], PblNgridStatePlugin);
         return PblNgridStatePlugin;
     }());
     if (false) {
@@ -2325,11 +2319,6 @@
         function () {
             this.destroy();
         };
-        PblNgridStatePluginDirective.ctorParameters = function () { return [
-            { type: ngrid.PblNgridComponent },
-            { type: core.Injector },
-            { type: ngrid.PblNgridPluginController }
-        ]; };
         PblNgridStatePluginDirective.decorators = [
             { type: core.Directive, args: [{
                         selector: 'pbl-ngrid[persistState]',
@@ -2347,10 +2336,6 @@
             loadOptions: [{ type: core.Input }],
             saveOptions: [{ type: core.Input }]
         };
-        PblNgridStatePluginDirective = __decorate([
-            utils.UnRx(),
-            __metadata("design:paramtypes", [ngrid.PblNgridComponent, core.Injector, ngrid.PblNgridPluginController])
-        ], PblNgridStatePluginDirective);
         return PblNgridStatePluginDirective;
     }(PblNgridStatePlugin));
     if (false) {
@@ -2362,7 +2347,22 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated from: lib/core/built-in-handlers/_register.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    /**
+     * @return {?}
+     */
+    function registerBuiltInHandlers() {
+        registerGridHandlers();
+        registerColumnOrderHandlers();
+        registerColumnDefHandlers();
+    }
+
+    /**
+     * @fileoverview added by tsickle
+     * Generated from: lib/ngrid-state.module.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var PblNgridStatePluginModule = /** @class */ (function () {
         function PblNgridStatePluginModule(parentModule, configService) {
@@ -2403,6 +2403,7 @@
                 }
             }));
         }
+        PblNgridStatePluginModule.NGRID_PLUGIN = ngrid.ngridPlugin({ id: PLUGIN_KEY, factory: 'create', runOnce: registerBuiltInHandlers }, PblNgridStatePlugin);
         PblNgridStatePluginModule.decorators = [
             { type: core.NgModule, args: [{
                         imports: [
@@ -2416,7 +2417,6 @@
                             PblNgridStatePluginDirective,
                         ],
                         providers: [],
-                        entryComponents: [],
                     },] }
         ];
         /** @nocollapse */
@@ -2426,6 +2426,10 @@
         ]; };
         return PblNgridStatePluginModule;
     }());
+    if (false) {
+        /** @type {?} */
+        PblNgridStatePluginModule.NGRID_PLUGIN;
+    }
 
     exports.PblNgridLocalStoragePersistAdapter = PblNgridLocalStoragePersistAdapter;
     exports.PblNgridStatePlugin = PblNgridStatePlugin;

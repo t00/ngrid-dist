@@ -31,7 +31,7 @@ export interface ColumnWidth {
  */
 export declare class StaticColumnWidthLogic {
     private _agg;
-    readonly minimumRowWidth: number;
+    get minimumRowWidth(): number;
     /**
      * Returns the calculated default width for a column.
      * This is the width for columns that does not have a specific width, adjusting them to fit the table.
@@ -57,6 +57,6 @@ export declare class StaticColumnWidthLogic {
      *
      * This value is calculated every time it is called, use it once all columns are added.
      */
-    readonly defaultColumnWidth: ColumnWidth;
+    get defaultColumnWidth(): ColumnWidth;
     addColumn(column: PblColumn): void;
 }

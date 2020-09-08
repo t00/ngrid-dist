@@ -8,4 +8,4 @@ declare module '@pebula/ngrid/lib/grid/columns/types' {
         resize?: boolean;
     }
 }
-export declare function extendGrid(): void;
+export declare function colResizeExtendGrid(): void;

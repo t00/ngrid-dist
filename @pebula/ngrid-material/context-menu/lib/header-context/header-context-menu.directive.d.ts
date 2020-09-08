@@ -5,6 +5,7 @@ declare module '@pebula/ngrid/lib/ext/types' {
         matHeaderContextMenu?: PblNgridMatHeaderContextMenuPlugin;
     }
 }
+export declare const PLUGIN_KEY: 'matHeaderContextMenu';
 export declare class PblNgridMatHeaderContextMenuPlugin {
     readonly pluginCtrl: PblNgridPluginController;
     style: any;

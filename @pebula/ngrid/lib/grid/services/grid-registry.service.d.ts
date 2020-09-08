@@ -50,7 +50,7 @@ export interface PblNgridMultiRegistryMap {
 export declare class PblNgridRegistryService implements OnDestroy {
     private _parent?;
     readonly changes: Observable<RegistryChangedEvent[]>;
-    readonly parent: PblNgridRegistryService | undefined;
+    get parent(): PblNgridRegistryService | undefined;
     protected root: PblNgridRegistryService & {
         bufferedData?: RegistryChangedEvent[];
     };
