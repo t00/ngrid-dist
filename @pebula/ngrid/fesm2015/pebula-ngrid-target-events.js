@@ -1,32 +1,21 @@
 import { ReplaySubject, fromEvent, timer } from 'rxjs';
 import { filter, tap, switchMap, takeUntil, map, bufferWhen, debounce } from 'rxjs/operators';
-import { EventEmitter, Directive, Injector, Input, NgModule, Optional, SkipSelf } from '@angular/core';
-import { PblColumn, PblNgridPluginController, PblNgridComponent, utils, ngridPlugin, PblNgridModule, PblNgridConfigService } from '@pebula/ngrid';
+import * as i0 from '@angular/core';
+import { EventEmitter, Directive, Input, NgModule } from '@angular/core';
+import * as i1 from '@pebula/ngrid';
+import { PblColumn, PblNgridPluginController, ngridPlugin, PblNgridModule } from '@pebula/ngrid';
 import { RIGHT_ARROW, LEFT_ARROW, DOWN_ARROW, UP_ARROW } from '@angular/cdk/keycodes';
+import { coerceBooleanProperty } from '@angular/cdk/coercion';
+import * as i1$1 from '@pebula/ngrid/core';
+import { unrx } from '@pebula/ngrid/core';
 import { CommonModule } from '@angular/common';
 import { CdkTableModule } from '@angular/cdk/table';
-import { coerceBooleanProperty } from '@angular/cdk/coercion';
 
-/**
- * @fileoverview added by tsickle
- * Generated from: lib/target-events/utils.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @template T, TEvent
- * @param {?} event
- * @return {?}
- */
 function isCellEvent(event) {
-    return !!((/** @type {?} */ (event))).cellTarget;
+    return !!event.cellTarget;
 }
-/**
- * @template T, TEvent
- * @param {?} event
- * @return {?}
- */
 function isDataCellEvent(event) {
-    return isCellEvent(event) && !!((/** @type {?} */ (event))).context;
+    return isCellEvent(event) && !!event.context;
 }
 /**
  * Returns true if the element is a row element (`pbl-ngrid-row`, `cdk-row`).
@@ -34,8 +23,6 @@ function isDataCellEvent(event) {
  * This function works under the following assumptions:
  *
  *   - A row element MUST contain a "role" attribute with the value "row"
- * @param {?} element
- * @return {?}
  */
 function isRowContainer(element) {
     return element.getAttribute('role') === 'row';
@@ -48,8 +35,6 @@ function isRowContainer(element) {
  *
  *   - The parent of a cell element is a row element.
  *   - Each row element MUST contain a "role" attribute with the value "row"
- * @param {?} element
- * @return {?}
  */
 function findParentCell(element) {
     while (element.parentElement) {
@@ -61,11 +46,8 @@ function findParentCell(element) {
 }
 /**
  * Returns the position (index) of the cell (element) among it's siblings.
- * @param {?} cell
- * @return {?}
  */
 function findCellRenderIndex(cell) {
-    /** @type {?} */
     let colIndex = 0;
     while (cell = cell.previousElementSibling) {
         colIndex++;
@@ -86,19 +68,13 @@ function findCellRenderIndex(cell) {
  *
  * Because detection is based on DOM element position finding the original row index when multiple row containers are set (fixed/style/row) will not work.
  * The rowIndex will be relative to the container, and not the entire table.
- * @param {?} row
- * @param {?} vcRef
- * @return {?}
  */
 function matrixRowFromRow(row, vcRef) {
-    /** @type {?} */
-    const rowAttrType = (/** @type {?} */ (row.getAttribute('data-rowtype'))) || 'data';
+    const rowAttrType = row.getAttribute('data-rowtype') || 'data';
     // TODO: Error if rowAttrType is not one of the allowed values!
-    /** @type {?} */
     let rowIndex = 0;
     switch (rowAttrType) {
         case 'data':
-            /** @type {?} */
             const sourceRow = row;
             while (row.previousElementSibling) {
                 rowIndex++;
@@ -106,33 +82,33 @@ function matrixRowFromRow(row, vcRef) {
             }
             rowIndex = Math.min(rowIndex, vcRef.length - 1);
             while (rowIndex > -1) {
-                if (((/** @type {?} */ (vcRef.get(rowIndex)))).rootNodes[0] === sourceRow) {
-                    return (/** @type {?} */ ({
+                if (vcRef.get(rowIndex).rootNodes[0] === sourceRow) {
+                    return {
                         type: 'data',
                         subType: 'data',
                         rowIndex,
-                    }));
+                    };
                 }
                 rowIndex--;
             }
             return;
         case 'header':
         case 'footer':
-            return (/** @type {?} */ ({
+            return {
                 type: rowAttrType,
                 subType: 'data',
                 rowIndex,
-            }));
+            };
         default:
             while (row.previousElementSibling && row.previousElementSibling.getAttribute('data-rowtype') === rowAttrType) {
                 rowIndex++;
                 row = row.previousElementSibling;
             }
-            return (/** @type {?} */ ({
+            return {
                 type: rowAttrType === 'meta-footer' ? 'footer' : 'header',
                 subType: 'meta',
                 rowIndex,
-            }));
+            };
     }
 }
 /**
@@ -145,17 +121,14 @@ function matrixRowFromRow(row, vcRef) {
  *    Y3  Z  Z  Z
  *    Y2  Z  Z  Z
  *    XY1 X2 X3 X4
- * @param {?} contextApi
- * @param {?} xAxis
- * @param {?} yAxis
- * @return {?}
+ * @param contextApi
+ * @param xAxis
+ * @param yAxis
  */
 function getInnerCellsInRect(contextApi, xAxis, yAxis) {
-    /** @type {?} */
     const spaceInside = [];
     for (const vCell of yAxis) {
         for (const hCell of xAxis) {
-            /** @type {?} */
             const vhContext = contextApi.findRowInCache(vCell.rowIdent).cells[hCell.colIndex];
             if (vhContext) {
                 spaceInside.push({ rowIdent: vCell.rowIdent, colIndex: hCell.colIndex });
@@ -164,17 +137,9 @@ function getInnerCellsInRect(contextApi, xAxis, yAxis) {
     }
     return spaceInside;
 }
-/**
- * @param {?} n1
- * @param {?} n2
- * @return {?}
- */
 function rangeBetween(n1, n2) {
-    /** @type {?} */
     const min = Math.min(n1, n2);
-    /** @type {?} */
     const max = min === n1 ? n2 : n1;
-    /** @type {?} */
     const result = [];
     for (let i = min + 1; i < max; i++) {
         result.push(i);
@@ -182,31 +147,10 @@ function rangeBetween(n1, n2) {
     return result;
 }
 
-/**
- * @fileoverview added by tsickle
- * Generated from: lib/target-events/focus-and-selection.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const isOsx = /^mac/.test(navigator.platform.toLowerCase());
-/** @type {?} */
-const isMainMouseButtonClick = (/**
- * @param {?} event
- * @return {?}
- */
-(event) => event.source.button === 0);
-const ɵ0 = isMainMouseButtonClick;
-/**
- * @param {?} targetEvents
- * @return {?}
- */
+const isMainMouseButtonClick = (event) => event.source.button === 0;
 function handleFocusAndSelection(targetEvents) {
-    /** @type {?} */
-    const isCellFocusMode = (/**
-     * @return {?}
-     */
-    () => targetEvents.grid.focusMode === 'cell');
-    /** @type {?} */
+    const isCellFocusMode = () => targetEvents.grid.focusMode === 'cell';
     const handlers = createHandlers(targetEvents);
     // Handle array keys move (with shift for selection, without for cell focus change)
     targetEvents.keyDown
@@ -214,39 +158,18 @@ function handleFocusAndSelection(targetEvents) {
         .subscribe(handlers.handleKeyDown);
     // Handle mouse down on cell (focus) and then moving for selection.
     targetEvents.mouseDown
-        .pipe(filter(isCellFocusMode), filter(isDataCellEvent), filter(isMainMouseButtonClick), tap((/**
-     * @param {?} event
-     * @return {?}
-     */
-    event => {
+        .pipe(filter(isCellFocusMode), filter(isDataCellEvent), filter(isMainMouseButtonClick), tap(event => {
         event.source.stopPropagation();
         event.source.preventDefault();
-    })), tap(handlers.handleMouseDown), // handle mouse down focus
-    switchMap((/**
-     * @return {?}
-     */
-    () => targetEvents.cellEnter.pipe(takeUntil(targetEvents.mouseUp)))), filter(isDataCellEvent), filter(isMainMouseButtonClick))
+    }), tap(handlers.handleMouseDown), // handle mouse down focus
+    switchMap(() => targetEvents.cellEnter.pipe(takeUntil(targetEvents.mouseUp))), filter(isDataCellEvent), filter(isMainMouseButtonClick))
         .subscribe(handlers.handleSelectionChangeByMouseClickAndMove); // now handle movements until mouseup
 }
-/**
- * @param {?} targetEvents
- * @return {?}
- */
 function createHandlers(targetEvents) {
     const { contextApi } = targetEvents.grid;
-    /**
-     * @param {?} rowIdent
-     * @param {?} colIndex
-     * @param {?=} markForCheck
-     * @return {?}
-     */
     function focusCell(rowIdent, colIndex, markForCheck) {
-        contextApi.focusCell({ rowIdent, colIndex }, markForCheck);
+        contextApi.focusCell({ rowIdent, colIndex });
     }
-    /**
-     * @param {?} event
-     * @return {?}
-     */
     function handleMouseDown(event) {
         if (contextApi.focusedCell && event.source.shiftKey) {
             handleSelectionChangeByMouseClickAndMove(event);
@@ -263,46 +186,40 @@ function createHandlers(targetEvents) {
             focusCell(event.context.rowContext.identity, event.context.index);
         }
     }
-    /**
-     * @param {?} event
-     * @return {?}
-     */
     function handleKeyDown(event) {
-        /** @type {?} */
-        const source = (/** @type {?} */ (event.source));
+        const source = event.source;
         if (isCellEvent(event)) {
-            /** @type {?} */
             const sourceCell = event.cellTarget;
-            /** @type {?} */
             let coeff = 1;
-            /** @type {?} */
-            let axis;
+            let isHorizontal = false;
             switch (source.keyCode) {
                 case UP_ARROW:
                     coeff = -1;
                 case DOWN_ARROW: // tslint:disable-line: no-switch-case-fall-through
-                    axis = 'v';
                     break;
                 case LEFT_ARROW:
                     coeff = -1;
                 case RIGHT_ARROW: // tslint:disable-line: no-switch-case-fall-through
-                    axis = 'h';
+                    isHorizontal = true;
                     break;
                 default:
                     return;
             }
-            /** @type {?} */
-            const cellContext = contextApi.getCell(sourceCell);
-            /** @type {?} */
-            const activeFocus = contextApi.focusedCell || {
-                rowIdent: cellContext.rowContext.identity,
-                colIndex: cellContext.index,
-            };
+            event.source.preventDefault();
+            event.source.stopPropagation();
+            let activeFocus = contextApi.focusedCell;
+            if (!activeFocus) {
+                const cellContext = contextApi.getCell(sourceCell);
+                activeFocus = {
+                    rowIdent: cellContext.rowContext.identity,
+                    colIndex: cellContext.index,
+                };
+            }
             if (!!source.shiftKey) {
-                handleSelectionChangeByArrows(activeFocus, axis === 'h' ? [coeff, 0] : [0, coeff]);
+                handleSelectionChangeByArrows(activeFocus, isHorizontal ? [coeff, 0] : [0, coeff]);
             }
             else {
-                handleSingleItemFocus(activeFocus, axis === 'h' ? [coeff, 0] : [0, coeff]);
+                handleSingleItemFocus(activeFocus, isHorizontal ? [coeff, 0] : [0, coeff]);
             }
         }
     }
@@ -325,24 +242,18 @@ function createHandlers(targetEvents) {
      * > Note that the logic in this function is for use with arrow keys + SHIFT key, other selection logic
      * does not fit this scenario (e.g. MOUSE selection or ARROW KEYS + CTRL KEY selection)
      *
-     * @param {?} sourceCellRef A point reference to the source cell the direction is relative to
-     * @param {?} direction The direction of the new cell.
+     * @param sourceCellRef A point reference to the source cell the direction is relative to
+     * @param direction The direction of the new cell.
      * [1 | -1, 0] -> HORIZONTAL
      * [0, 1 | -1] -> VERTICAL
-     * @return {?}
      */
     function handleSelectionChangeByArrows(sourceCellRef, direction) {
         const { rowIdent, colIndex } = sourceCellRef;
-        /** @type {?} */
         const sourceCellState = contextApi.findRowInCache(rowIdent);
         const [moveH, moveV] = direction;
-        /** @type {?} */
         const hAdj = [sourceCellState.cells[colIndex - 1], sourceCellState.cells[colIndex + 1]];
-        /** @type {?} */
         const vAdj = [contextApi.findRowInCache(rowIdent, -1, true), contextApi.findRowInCache(rowIdent, 1, true)];
-        /** @type {?} */
         let h = (hAdj[0] && hAdj[0].selected ? -1 : 0) + (hAdj[1] && hAdj[1].selected ? 1 : 0);
-        /** @type {?} */
         let v = (vAdj[0] && vAdj[0].cells[colIndex].selected ? -1 : 0) + (vAdj[1] && vAdj[1].cells[colIndex].selected ? 1 : 0);
         if (h === 0) {
             h += moveH;
@@ -350,12 +261,9 @@ function createHandlers(targetEvents) {
         if (v === 0) {
             v += moveV;
         }
-        /** @type {?} */
         const hCells = [];
         if (h !== 0) {
-            /** @type {?} */
             let hContextIndex = colIndex;
-            /** @type {?} */
             let hContext = sourceCellState.cells[colIndex];
             while (hContext && hContext.selected) {
                 hCells.push({ rowIdent, colIndex: hContextIndex });
@@ -373,12 +281,9 @@ function createHandlers(targetEvents) {
                 }
             }
         }
-        /** @type {?} */
         const vCells = [];
         if (v !== 0) {
-            /** @type {?} */
             let vContextIdent = rowIdent;
-            /** @type {?} */
             let vContext = contextApi.findRowInCache(vContextIdent, v, true);
             while (vContext && vContext.cells[colIndex].selected) {
                 vContextIdent = vContext.identity;
@@ -396,58 +301,42 @@ function createHandlers(targetEvents) {
                 }
             }
         }
-        /** @type {?} */
         const innerCells = getInnerCellsInRect(contextApi, hCells, vCells);
-        contextApi.selectCells([sourceCellRef, ...hCells, ...vCells, ...innerCells], false, true);
+        contextApi.selectCells([sourceCellRef, ...hCells, ...vCells, ...innerCells], true);
     }
-    /**
-     * @param {?} event
-     * @return {?}
-     */
     function handleSelectionChangeByMouseClickAndMove(event) {
-        /** @type {?} */
         const cellContext = event.context;
-        /** @type {?} */
         const activeFocus = contextApi.focusedCell || {
             rowIdent: cellContext.rowContext.identity,
             colIndex: cellContext.index,
         };
-        /** @type {?} */
         const focusedRowState = contextApi.findRowInCache(activeFocus.rowIdent);
-        /** @type {?} */
         const hCells = [];
-        /** @type {?} */
         const vCells = [];
         for (const i of rangeBetween(activeFocus.colIndex, cellContext.index)) {
             hCells.push({ rowIdent: activeFocus.rowIdent, colIndex: i });
         }
         hCells.push({ rowIdent: activeFocus.rowIdent, colIndex: cellContext.index });
-        /** @type {?} */
-        const rowHeight = Math.abs(cellContext.rowContext.dataIndex - focusedRowState.dataIndex);
-        /** @type {?} */
-        const dir = focusedRowState.dataIndex > cellContext.rowContext.dataIndex ? -1 : 1;
+        const rowHeight = Math.abs(cellContext.rowContext.dsIndex - focusedRowState.dsIndex);
+        const dir = focusedRowState.dsIndex > cellContext.rowContext.dsIndex ? -1 : 1;
         for (let i = 1; i <= rowHeight; i++) {
-            /** @type {?} */
             const state = contextApi.findRowInCache(activeFocus.rowIdent, dir * i, true);
             vCells.push({ rowIdent: state.identity, colIndex: activeFocus.colIndex });
         }
-        /** @type {?} */
         const innerCells = getInnerCellsInRect(contextApi, hCells, vCells);
-        contextApi.selectCells([activeFocus, ...hCells, ...vCells, ...innerCells], false, true);
+        contextApi.selectCells([activeFocus, ...hCells, ...vCells, ...innerCells], true);
     }
     /**
      * Swap the focus from the source cell to a straight adjacent cell (not diagonal).
-     * @param {?} sourceCellRef A point reference to the source cell the direction is relative to
-     * @param {?} direction The direction of the new cell.
+     * @param sourceCellRef A point reference to the source cell the direction is relative to
+     * @param direction The direction of the new cell.
      * [1 | -1, 0] -> HORIZONTAL
      * [0, 1 | -1] -> VERTICAL
-     * @return {?}
      */
     function handleSingleItemFocus(sourceCellRef, direction) {
-        /** @type {?} */
         const rowState = contextApi.findRowInCache(sourceCellRef.rowIdent, direction[1], true);
         if (rowState) {
-            contextApi.focusCell({ rowIdent: rowState.identity, colIndex: sourceCellRef.colIndex + direction[0] }, true);
+            contextApi.focusCell({ rowIdent: rowState.identity, colIndex: sourceCellRef.colIndex + direction[0] });
         }
     }
     return {
@@ -457,49 +346,23 @@ function createHandlers(targetEvents) {
     };
 }
 
-/**
- * @fileoverview added by tsickle
- * Generated from: lib/target-events/target-events-plugin.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const PLUGIN_KEY = 'targetEvents';
-/**
- * @param {?} source
- * @return {?}
- */
 function hasListeners(source) {
     return source.observers.length > 0;
 }
-/**
- * @param {?} source
- * @return {?}
- */
 function findEventSource(source) {
-    /** @type {?} */
-    const cellTarget = findParentCell((/** @type {?} */ (source.target)));
+    const cellTarget = findParentCell(source.target);
     if (cellTarget) {
         return { type: 'cell', target: cellTarget };
     }
-    else if (isRowContainer((/** @type {?} */ (source.target)))) {
-        return { type: 'cell', target: (/** @type {?} */ (source.target)) };
+    else if (isRowContainer(source.target)) {
+        return { type: 'cell', target: source.target };
     }
 }
-/**
- * @return {?}
- */
 function runOnce() {
     PblColumn.extendProperty('editable');
 }
-/**
- * @template T
- */
 class PblNgridTargetEventsPlugin {
-    /**
-     * @param {?} grid
-     * @param {?} injector
-     * @param {?} pluginCtrl
-     */
     constructor(grid, injector, pluginCtrl) {
         this.grid = grid;
         this.injector = injector;
@@ -518,91 +381,35 @@ class PblNgridTargetEventsPlugin {
         this.keyDown = new EventEmitter();
         this.destroyed = new ReplaySubject();
         this._removePlugin = pluginCtrl.setPlugin(PLUGIN_KEY, this);
-        if (grid.isInit) {
-            this.init();
-        }
-        else {
-            /** @type {?} */
-            let subscription = pluginCtrl.events
-                .subscribe((/**
-             * @param {?} event
-             * @return {?}
-             */
-            event => {
-                if (event.kind === 'onInit') {
-                    this.init();
-                    subscription.unsubscribe();
-                    subscription = undefined;
-                }
-            }));
-        }
+        pluginCtrl.onInit().subscribe(() => this.init());
     }
-    /**
-     * @deprecated use `gird` instead
-     * @return {?}
-     */
-    get table() { return this.grid; }
-    /**
-     * @template T
-     * @param {?} table
-     * @param {?} injector
-     * @return {?}
-     */
     static create(table, injector) {
-        /** @type {?} */
         const pluginCtrl = PblNgridPluginController.find(table);
         return new PblNgridTargetEventsPlugin(table, injector, pluginCtrl);
     }
-    /**
-     * @private
-     * @return {?}
-     */
     init() {
         this.setupDomEvents();
         handleFocusAndSelection(this);
     }
-    /**
-     * @private
-     * @return {?}
-     */
     setupDomEvents() {
-        /** @type {?} */
         const grid = this.grid;
-        /** @type {?} */
-        const cdkTable = grid._cdkTable;
-        /** @type {?} */
-        const cdkTableElement = cdkTable['_element'];
-        /** @type {?} */
-        const createCellEvent = (/**
-         * @template TEvent
-         * @param {?} cellTarget
-         * @param {?} source
-         * @return {?}
-         */
-        (cellTarget, source) => {
-            /** @type {?} */
+        const cdkTable = this.pluginCtrl.extApi.cdkTable;
+        const cdkTableElement = cdkTable._element;
+        const createCellEvent = (cellTarget, source) => {
             const rowTarget = cellTarget.parentElement;
-            /** @type {?} */
             const matrixPoint = matrixRowFromRow(rowTarget, cdkTable._rowOutlet.viewContainer);
             if (matrixPoint) {
-                /** @type {?} */
-                const event = (/** @type {?} */ (Object.assign(Object.assign({}, matrixPoint), { source, cellTarget, rowTarget })));
+                const event = Object.assign(Object.assign({}, matrixPoint), { source, cellTarget, rowTarget });
                 if (matrixPoint.type === 'data') {
-                    ((/** @type {?} */ (event))).row = grid.ds.renderedData[matrixPoint.rowIndex];
+                    event.row = grid.ds.renderedData[matrixPoint.rowIndex];
                 }
                 else if (event.subType === 'meta') {
                     // When multiple containers exists (fixed/sticky/row) the rowIndex we get is the one relative to the container..
                     // We need to find the rowIndex relative to the definitions:
-                    const { metaRowService } = this.pluginCtrl.extApi;
-                    /** @type {?} */
+                    const { metaRowService } = this.pluginCtrl.extApi.rowsApi;
                     const db = event.type === 'header' ? metaRowService.header : metaRowService.footer;
                     for (const coll of [db.fixed, db.row, db.sticky]) {
-                        /** @type {?} */
-                        const result = coll.find((/**
-                         * @param {?} item
-                         * @return {?}
-                         */
-                        item => item.el === event.rowTarget));
+                        const result = coll.find(item => item.el === event.rowTarget);
                         if (result) {
                             event.rowIndex = result.index;
                             break;
@@ -617,19 +424,18 @@ class PblNgridTargetEventsPlugin {
                 */
                 event.colIndex = findCellRenderIndex(cellTarget);
                 if (matrixPoint.subType === 'data') {
-                    /** @type {?} */
                     const column = this.grid.columnApi.findColumnAt(event.colIndex);
-                    /** @type {?} */
                     const columnIndex = this.grid.columnApi.indexOf(column);
                     event.column = column;
-                    ((/** @type {?} */ (event))).context = this.pluginCtrl.extApi.contextApi.getCell(event.rowIndex, columnIndex);
+                    event.context = this.pluginCtrl.extApi.contextApi.getCell(event.rowIndex, columnIndex);
+                    if (!event.context) {
+                        this.pluginCtrl.extApi.contextApi.clear(true);
+                        event.context = this.pluginCtrl.extApi.contextApi.getCell(event.rowIndex, columnIndex);
+                    }
                 }
                 else {
-                    /** @type {?} */
                     const store = this.pluginCtrl.extApi.columnStore;
-                    /** @type {?} */
-                    const rowInfo = store.metaColumnIds[matrixPoint.type][event.rowIndex];
-                    /** @type {?} */
+                    const rowInfo = (matrixPoint.type === 'header' ? store.metaHeaderRows : store.metaFooterRows)[event.rowIndex];
                     const record = store.find(rowInfo.keys[event.colIndex]);
                     if (rowInfo.isGroup) {
                         event.subType = 'meta-group';
@@ -641,41 +447,34 @@ class PblNgridTargetEventsPlugin {
                 }
                 return event;
             }
-        });
-        /** @type {?} */
-        const createRowEvent = (/**
-         * @template TEvent
-         * @param {?} rowTarget
-         * @param {?} source
-         * @param {?=} root
-         * @return {?}
-         */
-        (rowTarget, source, root) => {
+        };
+        const createRowEvent = (rowTarget, source, root) => {
             if (root) {
-                /** @type {?} */
-                const event = (/** @type {?} */ ({
+                const event = {
                     source,
                     rowTarget,
                     type: root.type,
                     subType: root.subType,
                     rowIndex: root.rowIndex,
                     root
-                }));
+                };
                 if (root.type === 'data') {
-                    ((/** @type {?} */ (event))).row = root.row;
-                    ((/** @type {?} */ (event))).context = root.context.rowContext;
+                    event.row = root.row;
+                    event.context = root.context.rowContext;
                 }
                 return event;
             }
             else {
-                /** @type {?} */
                 const matrixPoint = matrixRowFromRow(rowTarget, cdkTable._rowOutlet.viewContainer);
                 if (matrixPoint) {
-                    /** @type {?} */
-                    const event = (/** @type {?} */ (Object.assign(Object.assign({}, matrixPoint), { source, rowTarget })));
+                    const event = Object.assign(Object.assign({}, matrixPoint), { source, rowTarget });
                     if (matrixPoint.type === 'data') {
-                        ((/** @type {?} */ (event))).context = this.pluginCtrl.extApi.contextApi.getRow(matrixPoint.rowIndex);
-                        ((/** @type {?} */ (event))).row = ((/** @type {?} */ (event))).context.$implicit;
+                        const row = this.pluginCtrl.extApi.contextApi.getRow(matrixPoint.rowIndex);
+                        if (!row) {
+                            return undefined;
+                        }
+                        event.context = row;
+                        event.row = row.$implicit;
                     }
                     /*  If `subType !== 'data'` it can only be `meta` because `metadataFromElement()` does not handle `meta-group` subType.
                         We need to extend this missing part, we don't have columns here so we will try to infer it using the first column.
@@ -687,8 +486,8 @@ class PblNgridTargetEventsPlugin {
                         NOTE: When subType is not 'data' the ype can only be `header` or `footer`.
                     */
                     if (matrixPoint.subType !== 'data') {
-                        /** @type {?} */
-                        const rowInfo = this.pluginCtrl.extApi.columnStore.metaColumnIds[matrixPoint.type][event.rowIndex];
+                        const store = this.pluginCtrl.extApi.columnStore;
+                        const rowInfo = (matrixPoint.type === 'header' ? store.metaHeaderRows : store.metaFooterRows)[event.rowIndex];
                         if (rowInfo.isGroup) {
                             event.subType = 'meta-group';
                         }
@@ -696,51 +495,29 @@ class PblNgridTargetEventsPlugin {
                     return event;
                 }
             }
-        });
-        /** @type {?} */
+        };
         let lastCellEnterEvent;
-        /** @type {?} */
         let lastRowEnterEvent;
-        /** @type {?} */
-        const emitCellLeave = (/**
-         * @param {?} source
-         * @return {?}
-         */
-        (source) => {
+        const emitCellLeave = (source) => {
             if (lastCellEnterEvent) {
-                /** @type {?} */
                 const lastCellEnterEventTemp = lastCellEnterEvent;
                 this.cellLeave.emit(Object.assign({}, lastCellEnterEventTemp, { source }));
                 lastCellEnterEvent = undefined;
                 return lastCellEnterEventTemp;
             }
-        });
-        /** @type {?} */
-        const emitRowLeave = (/**
-         * @param {?} source
-         * @return {?}
-         */
-        (source) => {
+        };
+        const emitRowLeave = (source) => {
             if (lastRowEnterEvent) {
-                /** @type {?} */
                 const lastRowEnterEventTemp = lastRowEnterEvent;
                 this.rowLeave.emit(Object.assign({}, lastRowEnterEventTemp, { source }));
                 lastRowEnterEvent = undefined;
                 return lastRowEnterEventTemp;
             }
-        });
-        /** @type {?} */
-        const processEvent = (/**
-         * @template TEvent
-         * @param {?} e
-         * @return {?}
-         */
-        (e) => {
-            /** @type {?} */
+        };
+        const processEvent = (e) => {
             const result = findEventSource(e);
             if (result) {
                 if (result.type === 'cell') {
-                    /** @type {?} */
                     const event = createCellEvent(result.target, e);
                     if (event) {
                         return {
@@ -751,7 +528,6 @@ class PblNgridTargetEventsPlugin {
                     }
                 }
                 else if (result.type === 'row') {
-                    /** @type {?} */
                     const event = createRowEvent(result.target, e);
                     if (event) {
                         return {
@@ -762,96 +538,40 @@ class PblNgridTargetEventsPlugin {
                     }
                 }
             }
-        });
-        /**
-         * Split the result of processEvent into cell and row events, if type is row only row event is returned, if cell then cell is returned and row is created along side.
-         * @type {?}
-         */
-        const splitProcessedEvent = (/**
-         * @template TEvent
-         * @param {?} event
-         * @return {?}
-         */
-        (event) => {
-            /** @type {?} */
-            const cellEvent = event.type === 'cell' ? (/** @type {?} */ (event.event)) : undefined;
-            /** @type {?} */
+        };
+        /** Split the result of processEvent into cell and row events, if type is row only row event is returned, if cell then cell is returned and row is created along side. */
+        const splitProcessedEvent = (event) => {
+            const cellEvent = event.type === 'cell' ? event.event : undefined;
             const rowEvent = cellEvent
                 ? createRowEvent(cellEvent.rowTarget, cellEvent.source, cellEvent)
-                : (/** @type {?} */ (event.event));
+                : event.event;
             return { cellEvent, rowEvent };
-        });
-        /** @type {?} */
-        const registerUpDownEvents = (/**
-         * @template TEvent
-         * @param {?} eventName
-         * @param {?} emitter
-         * @return {?}
-         */
-        (eventName, emitter) => {
+        };
+        const registerUpDownEvents = (eventName, emitter) => {
             fromEvent(cdkTableElement, eventName)
-                .pipe(takeUntil(this.destroyed), filter((/**
-             * @param {?} source
-             * @return {?}
-             */
-            source => hasListeners(emitter))), map(processEvent), filter((/**
-             * @param {?} result
-             * @return {?}
-             */
-            result => !!result)))
-                .subscribe((/**
-             * @param {?} result
-             * @return {?}
-             */
-            result => {
+                .pipe(takeUntil(this.destroyed), filter(source => hasListeners(emitter)), map(processEvent), filter(result => !!result))
+                .subscribe(result => {
                 const { cellEvent, rowEvent } = splitProcessedEvent(result);
                 emitter.emit(cellEvent || rowEvent);
                 this.syncRow(cellEvent || rowEvent);
-            }));
-        });
+            });
+        };
         registerUpDownEvents('mouseup', this.mouseUp);
         registerUpDownEvents('mousedown', this.mouseDown);
         registerUpDownEvents('keyup', this.keyUp);
         registerUpDownEvents('keydown', this.keyDown);
         /*
-              Handling click stream for both click and double click events.
-              We want to detect double clicks and clicks with minimal delays
-              We check if a double click has listeners, if not we won't delay the click...
-              TODO: on double click, don't wait the whole 250 ms if 2 clicks happen.
-            */
-        /** @type {?} */
-        const clickStream = fromEvent(cdkTableElement, 'click').pipe(takeUntil(this.destroyed), filter((/**
-         * @param {?} source
-         * @return {?}
-         */
-        source => hasListeners(this.cellClick) || hasListeners(this.cellDblClick) || hasListeners(this.rowClick) || hasListeners(this.rowDblClick))), map(processEvent), filter((/**
-         * @param {?} result
-         * @return {?}
-         */
-        result => !!result)));
+          Handling click stream for both click and double click events.
+          We want to detect double clicks and clicks with minimal delays
+          We check if a double click has listeners, if not we won't delay the click...
+          TODO: on double click, don't wait the whole 250 ms if 2 clicks happen.
+        */
+        const clickStream = fromEvent(cdkTableElement, 'click').pipe(takeUntil(this.destroyed), filter(source => hasListeners(this.cellClick) || hasListeners(this.cellDblClick) || hasListeners(this.rowClick) || hasListeners(this.rowDblClick)), map(processEvent), filter(result => !!result));
         clickStream
-            .pipe(bufferWhen((/**
-         * @return {?}
-         */
-        () => clickStream.pipe(debounce((/**
-         * @param {?} e
-         * @return {?}
-         */
-        e => timer(e.waitTime)))))), filter((/**
-         * @param {?} events
-         * @return {?}
-         */
-        events => events.length > 0)))
-            .subscribe((/**
-         * @param {?} events
-         * @return {?}
-         */
-        events => {
-            /** @type {?} */
+            .pipe(bufferWhen(() => clickStream.pipe(debounce(e => timer(e.waitTime)))), filter(events => events.length > 0))
+            .subscribe(events => {
             const event = events.shift();
-            /** @type {?} */
-            const isDoubleClick = events.length === 1;
-            // if we have 2 events its double click, otherwise single.
+            const isDoubleClick = events.length === 1; // if we have 2 events its double click, otherwise single.
             const { cellEvent, rowEvent } = splitProcessedEvent(event);
             if (isDoubleClick) {
                 if (cellEvent) {
@@ -866,37 +586,23 @@ class PblNgridTargetEventsPlugin {
                 this.rowClick.emit(rowEvent);
             }
             this.syncRow(cellEvent || rowEvent);
-        }));
+        });
         fromEvent(cdkTableElement, 'mouseleave')
             .pipe(takeUntil(this.destroyed))
-            .subscribe((/**
-         * @param {?} source
-         * @return {?}
-         */
-        (source) => {
-            /** @type {?} */
+            .subscribe((source) => {
             let lastEvent = emitCellLeave(source);
             lastEvent = emitRowLeave(source) || lastEvent;
             if (lastEvent) {
                 this.syncRow(lastEvent);
             }
-        }));
+        });
         fromEvent(cdkTableElement, 'mousemove')
             .pipe(takeUntil(this.destroyed))
-            .subscribe((/**
-         * @param {?} source
-         * @return {?}
-         */
-        (source) => {
-            /** @type {?} */
-            const cellTarget = findParentCell((/** @type {?} */ (source.target)));
-            /** @type {?} */
+            .subscribe((source) => {
+            const cellTarget = findParentCell(source.target);
             const lastCellTarget = lastCellEnterEvent && lastCellEnterEvent.cellTarget;
-            /** @type {?} */
             const lastRowTarget = lastRowEnterEvent && lastRowEnterEvent.rowTarget;
-            /** @type {?} */
             let cellEvent;
-            /** @type {?} */
             let lastEvent;
             if (lastCellTarget !== cellTarget) {
                 lastEvent = emitCellLeave(source) || lastEvent;
@@ -912,14 +618,12 @@ class PblNgridTargetEventsPlugin {
                     return;
                 }
             }
-            /** @type {?} */
-            const rowTarget = (cellEvent && cellEvent.rowTarget) || (isRowContainer((/** @type {?} */ (source.target))) && (/** @type {?} */ (source.target)));
+            const rowTarget = (cellEvent && cellEvent.rowTarget) || (isRowContainer(source.target) && source.target);
             if (lastRowTarget !== rowTarget) {
                 lastEvent = emitRowLeave(source) || lastEvent;
             }
             if (rowTarget) {
                 if (lastRowTarget !== rowTarget) {
-                    /** @type {?} */
                     const rowEvent = createRowEvent(rowTarget, source, cellEvent);
                     if (rowEvent) {
                         this.rowEnter.emit(lastRowEnterEvent = rowEvent);
@@ -929,145 +633,47 @@ class PblNgridTargetEventsPlugin {
             if (lastEvent) {
                 this.syncRow(lastEvent);
             }
-        }));
+        });
     }
-    /**
-     * @return {?}
-     */
     destroy() {
         this.destroyed.next();
         this.destroyed.complete();
         this._removePlugin(this.grid);
     }
-    /**
-     * @private
-     * @template TEvent
-     * @param {?} event
-     * @return {?}
-     */
     syncRow(event) {
-        this.grid._cdkTable.syncRows(event.type, event.rowIndex);
+        this.grid.rowsApi.syncRows(event.type, event.rowIndex);
     }
 }
-if (false) {
-    /** @type {?} */
-    PblNgridTargetEventsPlugin.prototype.rowClick;
-    /** @type {?} */
-    PblNgridTargetEventsPlugin.prototype.rowDblClick;
-    /** @type {?} */
-    PblNgridTargetEventsPlugin.prototype.rowEnter;
-    /** @type {?} */
-    PblNgridTargetEventsPlugin.prototype.rowLeave;
-    /** @type {?} */
-    PblNgridTargetEventsPlugin.prototype.cellClick;
-    /** @type {?} */
-    PblNgridTargetEventsPlugin.prototype.cellDblClick;
-    /** @type {?} */
-    PblNgridTargetEventsPlugin.prototype.cellEnter;
-    /** @type {?} */
-    PblNgridTargetEventsPlugin.prototype.cellLeave;
-    /** @type {?} */
-    PblNgridTargetEventsPlugin.prototype.mouseDown;
-    /** @type {?} */
-    PblNgridTargetEventsPlugin.prototype.mouseUp;
-    /** @type {?} */
-    PblNgridTargetEventsPlugin.prototype.keyUp;
-    /** @type {?} */
-    PblNgridTargetEventsPlugin.prototype.keyDown;
-    /**
-     * @type {?}
-     * @protected
-     */
-    PblNgridTargetEventsPlugin.prototype.destroyed;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridTargetEventsPlugin.prototype._removePlugin;
-    /** @type {?} */
-    PblNgridTargetEventsPlugin.prototype.grid;
-    /**
-     * @type {?}
-     * @protected
-     */
-    PblNgridTargetEventsPlugin.prototype.injector;
-    /**
-     * @type {?}
-     * @protected
-     */
-    PblNgridTargetEventsPlugin.prototype.pluginCtrl;
-}
-/**
- * @template T
- */
 class PblNgridTargetEventsPluginDirective extends PblNgridTargetEventsPlugin {
-    /**
-     * @param {?} table
-     * @param {?} injector
-     * @param {?} pluginCtrl
-     */
     constructor(table, injector, pluginCtrl) {
         super(table, injector, pluginCtrl);
     }
-    /**
-     * @return {?}
-     */
     ngOnDestroy() {
         this.destroy();
     }
 }
-PblNgridTargetEventsPluginDirective.decorators = [
-    { type: Directive, args: [{
-                // tslint:disable-next-line:directive-selector
-                selector: 'pbl-ngrid[targetEvents], pbl-ngrid[rowClick], pbl-ngrid[rowDblClick], pbl-ngrid[rowEnter], pbl-ngrid[rowLeave], pbl-ngrid[cellClick], pbl-ngrid[cellDblClick], pbl-ngrid[cellEnter], pbl-ngrid[cellLeave], pbl-ngrid[keyDown], pbl-ngrid[keyUp]',
-                // tslint:disable-next-line:use-output-property-decorator
-                outputs: ['rowClick', 'rowDblClick', 'rowEnter', 'rowLeave', 'cellClick', 'cellDblClick', 'cellEnter', 'cellLeave', 'keyDown', 'keyUp']
-            },] }
-];
-/** @nocollapse */
-PblNgridTargetEventsPluginDirective.ctorParameters = () => [
-    { type: PblNgridComponent },
-    { type: Injector },
-    { type: PblNgridPluginController }
-];
+/** @nocollapse */ PblNgridTargetEventsPluginDirective.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridTargetEventsPluginDirective, deps: [{ token: i1.PblNgridComponent }, { token: i0.Injector }, { token: i1.PblNgridPluginController }], target: i0.ɵɵFactoryTarget.Directive });
+/** @nocollapse */ PblNgridTargetEventsPluginDirective.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "12.0.0", version: "12.0.0", type: PblNgridTargetEventsPluginDirective, selector: "pbl-ngrid[targetEvents], pbl-ngrid[rowClick], pbl-ngrid[rowDblClick], pbl-ngrid[rowEnter], pbl-ngrid[rowLeave], pbl-ngrid[cellClick], pbl-ngrid[cellDblClick], pbl-ngrid[cellEnter], pbl-ngrid[cellLeave], pbl-ngrid[keyDown], pbl-ngrid[keyUp]", outputs: { rowClick: "rowClick", rowDblClick: "rowDblClick", rowEnter: "rowEnter", rowLeave: "rowLeave", cellClick: "cellClick", cellDblClick: "cellDblClick", cellEnter: "cellEnter", cellLeave: "cellLeave", keyDown: "keyDown", keyUp: "keyUp" }, usesInheritance: true, ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridTargetEventsPluginDirective, decorators: [{
+            type: Directive,
+            args: [{
+                    // tslint:disable-next-line:directive-selector
+                    selector: 'pbl-ngrid[targetEvents], pbl-ngrid[rowClick], pbl-ngrid[rowDblClick], pbl-ngrid[rowEnter], pbl-ngrid[rowLeave], pbl-ngrid[cellClick], pbl-ngrid[cellDblClick], pbl-ngrid[cellEnter], pbl-ngrid[cellLeave], pbl-ngrid[keyDown], pbl-ngrid[keyUp]',
+                    // tslint:disable-next-line:use-output-property-decorator
+                    outputs: ['rowClick', 'rowDblClick', 'rowEnter', 'rowLeave', 'cellClick', 'cellDblClick', 'cellEnter', 'cellLeave', 'keyDown', 'keyUp']
+                }]
+        }], ctorParameters: function () { return [{ type: i1.PblNgridComponent }, { type: i0.Injector }, { type: i1.PblNgridPluginController }]; } });
 
-/**
- * @fileoverview added by tsickle
- * Generated from: lib/target-events/cell-edit.directive.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @template T
- */
 class PblNgridCellEditDirective {
-    /**
-     * @param {?} grid
-     * @param {?} injector
-     * @param {?} pluginCtrl
-     */
     constructor(grid, injector, pluginCtrl) {
         this._click = false;
         this._dblClick = false;
-        /** @type {?} */
-        let subscription = pluginCtrl.events.subscribe((/**
-         * @param {?} event
-         * @return {?}
-         */
-        event => {
-            if (event.kind === 'onInit') {
-                subscription.unsubscribe();
-                subscription = undefined;
-                // Depends on target-events plugin
-                // if it's not set, create it.
-                this.targetEventsPlugin = pluginCtrl.getPlugin('targetEvents') || pluginCtrl.createPlugin('targetEvents');
-                this.update();
-            }
-        }));
+        pluginCtrl.onInit()
+            .subscribe(() => {
+            this.targetEventsPlugin = pluginCtrl.getPlugin('targetEvents') || pluginCtrl.createPlugin('targetEvents');
+            this.update();
+        });
     }
-    /**
-     * @param {?} value
-     * @return {?}
-     */
     set cellEditClick(value) {
         value = coerceBooleanProperty(value);
         if (this._click !== value) {
@@ -1075,10 +681,6 @@ class PblNgridCellEditDirective {
             this.update();
         }
     }
-    /**
-     * @param {?} value
-     * @return {?}
-     */
     set cellEditDblClick(value) {
         value = coerceBooleanProperty(value);
         if (this._dblClick !== value) {
@@ -1086,155 +688,78 @@ class PblNgridCellEditDirective {
             this.update();
         }
     }
-    /**
-     * @return {?}
-     */
     ngOnDestroy() {
-        utils.unrx.kill(this);
+        unrx.kill(this);
     }
-    /**
-     * @private
-     * @return {?}
-     */
     update() {
         if (this.targetEventsPlugin) {
-            utils.unrx.kill(this, this.targetEventsPlugin);
+            unrx.kill(this, this.targetEventsPlugin);
             if (this._click) {
                 this.targetEventsPlugin.cellClick
-                    .pipe(utils.unrx(this, this.targetEventsPlugin))
-                    .subscribe((/**
-                 * @param {?} event
-                 * @return {?}
-                 */
-                event => {
+                    .pipe(unrx(this, this.targetEventsPlugin))
+                    .subscribe(event => {
                     if (event.type === 'data' && event.column.editable) {
                         event.context.startEdit(true);
                     }
-                }));
+                });
             }
             if (this._dblClick) {
                 this.targetEventsPlugin.cellDblClick
-                    .pipe(utils.unrx(this, this.targetEventsPlugin))
-                    .subscribe((/**
-                 * @param {?} event
-                 * @return {?}
-                 */
-                event => {
+                    .pipe(unrx(this, this.targetEventsPlugin))
+                    .subscribe(event => {
                     if (event.type === 'data' && event.column.editable) {
                         event.context.startEdit(true);
                     }
-                }));
+                });
             }
         }
     }
 }
-PblNgridCellEditDirective.decorators = [
-    { type: Directive, args: [{
-                // tslint:disable-next-line:directive-selector
-                selector: 'pbl-ngrid[cellEditClick], pbl-ngrid[cellEditDblClick]',
-            },] }
-];
-/** @nocollapse */
-PblNgridCellEditDirective.ctorParameters = () => [
-    { type: PblNgridComponent },
-    { type: Injector },
-    { type: PblNgridPluginController }
-];
-PblNgridCellEditDirective.propDecorators = {
-    cellEditClick: [{ type: Input }],
-    cellEditDblClick: [{ type: Input }]
-};
-if (false) {
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridCellEditDirective.prototype._click;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridCellEditDirective.prototype._dblClick;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridCellEditDirective.prototype.targetEventsPlugin;
-}
+/** @nocollapse */ PblNgridCellEditDirective.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridCellEditDirective, deps: [{ token: i1.PblNgridComponent }, { token: i0.Injector }, { token: i1.PblNgridPluginController }], target: i0.ɵɵFactoryTarget.Directive });
+/** @nocollapse */ PblNgridCellEditDirective.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "12.0.0", version: "12.0.0", type: PblNgridCellEditDirective, selector: "pbl-ngrid[cellEditClick], pbl-ngrid[cellEditDblClick]", inputs: { cellEditClick: "cellEditClick", cellEditDblClick: "cellEditDblClick" }, ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridCellEditDirective, decorators: [{
+            type: Directive,
+            args: [{
+                    // tslint:disable-next-line:directive-selector
+                    selector: 'pbl-ngrid[cellEditClick], pbl-ngrid[cellEditDblClick]',
+                }]
+        }], ctorParameters: function () { return [{ type: i1.PblNgridComponent }, { type: i0.Injector }, { type: i1.PblNgridPluginController }]; }, propDecorators: { cellEditClick: [{
+                type: Input
+            }], cellEditDblClick: [{
+                type: Input
+            }] } });
 
-/**
- * @fileoverview added by tsickle
- * Generated from: lib/target-events.module.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class PblNgridTargetEventsModule {
-    /**
-     * @param {?} parentModule
-     * @param {?} configService
-     */
-    constructor(parentModule, configService) {
-        if (parentModule) {
-            return;
-        }
-        PblNgridPluginController.created
-            .subscribe((/**
-         * @param {?} event
-         * @return {?}
-         */
-        event => {
-            /** @type {?} */
+    constructor(configService) {
+        PblNgridPluginController.onCreatedSafe(PblNgridTargetEventsModule, (grid, controller) => {
             const targetEventsConfig = configService.get(PLUGIN_KEY);
             if (targetEventsConfig && targetEventsConfig.autoEnable === true) {
-                /** @type {?} */
-                const pluginCtrl = event.controller;
-                /** @type {?} */
-                let subscription = pluginCtrl.events
-                    .subscribe((/**
-                 * @param {?} evt
-                 * @return {?}
-                 */
-                evt => {
-                    if (evt.kind === 'onInit') {
-                        if (!pluginCtrl.hasPlugin(PLUGIN_KEY)) {
-                            pluginCtrl.createPlugin(PLUGIN_KEY);
-                        }
-                        subscription.unsubscribe();
-                        subscription = undefined;
+                controller.onInit()
+                    .subscribe(() => {
+                    if (!controller.hasPlugin(PLUGIN_KEY)) {
+                        controller.createPlugin(PLUGIN_KEY);
                     }
-                }));
+                });
             }
-        }));
+        });
     }
 }
 PblNgridTargetEventsModule.NGRID_PLUGIN = ngridPlugin({ id: PLUGIN_KEY, factory: 'create', runOnce }, PblNgridTargetEventsPlugin);
-PblNgridTargetEventsModule.decorators = [
-    { type: NgModule, args: [{
-                imports: [CommonModule, CdkTableModule, PblNgridModule],
-                declarations: [PblNgridTargetEventsPluginDirective, PblNgridCellEditDirective],
-                exports: [PblNgridTargetEventsPluginDirective, PblNgridCellEditDirective]
-            },] }
-];
-/** @nocollapse */
-PblNgridTargetEventsModule.ctorParameters = () => [
-    { type: PblNgridTargetEventsModule, decorators: [{ type: Optional }, { type: SkipSelf }] },
-    { type: PblNgridConfigService }
-];
-if (false) {
-    /** @type {?} */
-    PblNgridTargetEventsModule.NGRID_PLUGIN;
-}
+/** @nocollapse */ PblNgridTargetEventsModule.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridTargetEventsModule, deps: [{ token: i1$1.PblNgridConfigService }], target: i0.ɵɵFactoryTarget.NgModule });
+/** @nocollapse */ PblNgridTargetEventsModule.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridTargetEventsModule, declarations: [PblNgridTargetEventsPluginDirective, PblNgridCellEditDirective], imports: [CommonModule, CdkTableModule, PblNgridModule], exports: [PblNgridTargetEventsPluginDirective, PblNgridCellEditDirective] });
+/** @nocollapse */ PblNgridTargetEventsModule.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridTargetEventsModule, imports: [[CommonModule, CdkTableModule, PblNgridModule]] });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridTargetEventsModule, decorators: [{
+            type: NgModule,
+            args: [{
+                    imports: [CommonModule, CdkTableModule, PblNgridModule],
+                    declarations: [PblNgridTargetEventsPluginDirective, PblNgridCellEditDirective],
+                    exports: [PblNgridTargetEventsPluginDirective, PblNgridCellEditDirective]
+                }]
+        }], ctorParameters: function () { return [{ type: i1$1.PblNgridConfigService }]; } });
 
 /**
- * @fileoverview added by tsickle
- * Generated from: index.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated bundle index. Do not edit.
  */
 
-/**
- * @fileoverview added by tsickle
- * Generated from: pebula-ngrid-target-events.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-export { PblNgridTargetEventsModule, PblNgridTargetEventsPlugin, isCellEvent, isDataCellEvent, PLUGIN_KEY as ɵa, runOnce as ɵb, PblNgridTargetEventsPluginDirective as ɵc, PblNgridCellEditDirective as ɵd };
+export { PblNgridCellEditDirective, PblNgridTargetEventsModule, PblNgridTargetEventsPlugin, PblNgridTargetEventsPluginDirective, isCellEvent, isDataCellEvent };
 //# sourceMappingURL=pebula-ngrid-target-events.js.map

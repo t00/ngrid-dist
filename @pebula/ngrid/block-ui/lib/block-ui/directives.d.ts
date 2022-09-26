@@ -1,6 +1,7 @@
 import { TemplateRef } from '@angular/core';
 import { PblNgridComponent, PblNgridRegistryService, PblNgridSingleTemplateRegistry } from '@pebula/ngrid';
-declare module '@pebula/ngrid/lib/grid/services/grid-registry.service' {
+import * as i0 from "@angular/core";
+declare module '@pebula/ngrid/core/lib/registry/types' {
     interface PblNgridSingleRegistryMap {
         blocker?: PblNgridBlockUiDefDirective;
     }
@@ -15,4 +16,6 @@ export declare class PblNgridBlockUiDefDirective extends PblNgridSingleTemplateR
     constructor(tRef: TemplateRef<{
         $implicit: PblNgridComponent<any>;
     }>, registry: PblNgridRegistryService);
+    static ɵfac: i0.ɵɵFactoryDeclaration<PblNgridBlockUiDefDirective, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<PblNgridBlockUiDefDirective, "[pblNgridBlockUiDef]", never, {}, {}, never>;
 }

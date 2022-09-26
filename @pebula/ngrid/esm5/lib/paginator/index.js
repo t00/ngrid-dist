@@ -1,7 +1,0 @@
-/**
- * @fileoverview added by tsickle
- * Generated from: lib/paginator/index.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-export { PblTokenPaginator, PblPagingPaginator } from './paginator';
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290Ijoibmc6Ly9AcGVidWxhL25ncmlkLyIsInNvdXJjZXMiOlsibGliL3BhZ2luYXRvci9pbmRleC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7OztBQUFBLE9BQU8sRUFBdUMsaUJBQWlCLEVBQUUsa0JBQWtCLEVBQTJCLE1BQU0sYUFBYSxDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiZXhwb3J0IHsgUGJsTmdyaWRQYWdpbmF0b3JLaW5kLCBQYmxQYWdpbmF0b3IsIFBibFRva2VuUGFnaW5hdG9yLCBQYmxQYWdpbmdQYWdpbmF0b3IsIFBibFBhZ2luYXRvckNoYW5nZUV2ZW50IH0gZnJvbSAnLi9wYWdpbmF0b3InO1xuIl19

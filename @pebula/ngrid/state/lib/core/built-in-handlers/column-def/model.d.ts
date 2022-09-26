@@ -1,13 +1,13 @@
-import { PblMetaColumnDefinition, PblColumnGroupDefinition, PblColumnDefinition, PblMetaRowDefinitions, PblColumnSet, PblNgridColumnDefinitionSet } from '@pebula/ngrid';
+import { PblBaseColumnDefinition, PblMetaColumnDefinition, PblColumnGroupDefinition, PblColumnDefinition, PblMetaRowDefinitions, PblNgridColumnDefinitionSet, PblColumnSet } from '@pebula/ngrid/core';
 import { PickPNP } from '../../utils';
-export interface PblNgridBaseColumnState extends PickPNP<import('@pebula/ngrid/lib/grid/columns/types').PblBaseColumnDefinition, 'id' | 'label' | 'css' | 'type' | 'width' | 'minWidth' | 'maxWidth', never> {
+export interface PblNgridBaseColumnState extends PickPNP<PblBaseColumnDefinition, 'id' | 'label' | 'css' | 'type' | 'width' | 'minWidth' | 'maxWidth', never> {
 }
 export interface PblNgridMetaColumnState extends PblNgridBaseColumnState, PickPNP<PblMetaColumnDefinition, never, 'kind' | 'rowIndex'> {
     id: PblNgridBaseColumnState['id'];
 }
-export interface PblNgridGroupColumnState extends PblNgridBaseColumnState, PickPNP<PblColumnGroupDefinition, never, 'prop' | 'rowIndex' | 'span'> {
+export interface PblNgridGroupColumnState extends PblNgridBaseColumnState, PickPNP<PblColumnGroupDefinition, never, 'rowIndex' | 'columnIds'> {
 }
-export interface PblNgridColumnState extends PblNgridBaseColumnState, PickPNP<PblColumnDefinition, 'headerType' | 'footerType' | 'sort' | 'sortAlias' | 'editable' | 'pin', 'prop'> {
+export interface PblNgridColumnState extends PblNgridBaseColumnState, PickPNP<PblColumnDefinition, 'headerType' | 'footerType' | 'sort' | 'alias' | 'editable' | 'pin', 'prop'> {
 }
 export interface PblNgridMetaRowState extends PickPNP<PblMetaRowDefinitions, 'rowClassName' | 'type', never> {
 }

@@ -1,167 +1,18 @@
-import { filter, first } from 'rxjs/operators';
-import { Injectable, Inject, ɵɵdefineInjectable, ɵɵinject, Directive, Injector, Input, NgModule, Optional, SkipSelf } from '@angular/core';
-import { DOCUMENT, CommonModule } from '@angular/common';
-import { PblNgridConfigService, PblNgridPluginController, utils, PblNgridComponent, ngridPlugin, PblNgridModule } from '@pebula/ngrid';
+import { filter } from 'rxjs/operators';
+import * as i0 from '@angular/core';
+import { Directive, Input, NgModule } from '@angular/core';
+import { Clipboard } from '@angular/cdk/clipboard';
+import { unrx } from '@pebula/ngrid/core';
+import * as i1 from '@pebula/ngrid';
+import { PblNgridConfigService, PblNgridPluginController, ngridPlugin, PblNgridModule } from '@pebula/ngrid';
+import { CommonModule } from '@angular/common';
 import { PblNgridTargetEventsModule } from '@pebula/ngrid/target-events';
 
-/**
- * @fileoverview added by tsickle
- * Generated from: lib/clipboard.service.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * A service for copying text to the clipboard.
- *
- * Example usage:
- *
- * clipboard.copy("copy this text");
- */
-class Clipboard {
-    /**
-     * @param {?} document
-     */
-    constructor(document) {
-        this._document = document;
-    }
-    /**
-     * Copies the provided text into the user's clipboard.
-     *
-     * @param {?} text The string to copy.
-     * @return {?} Whether the operation was successful.
-     */
-    copy(text) {
-        /** @type {?} */
-        const pendingCopy = this.beginCopy(text);
-        /** @type {?} */
-        const successful = pendingCopy.copy();
-        pendingCopy.destroy();
-        return successful;
-    }
-    /**
-     * Prepares a string to be copied later. This is useful for large strings
-     * which take too long to successfully render and be copied in the same tick.
-     *
-     * The caller must call `destroy` on the returned `PendingCopy`.
-     *
-     * @param {?} text The string to copy.
-     * @return {?} the pending copy operation.
-     */
-    beginCopy(text) {
-        return new PendingCopy(text, this._document);
-    }
-}
-Clipboard.decorators = [
-    { type: Injectable, args: [{ providedIn: 'root' },] }
-];
-/** @nocollapse */
-Clipboard.ctorParameters = () => [
-    { type: undefined, decorators: [{ type: Inject, args: [DOCUMENT,] }] }
-];
-/** @nocollapse */ Clipboard.ɵprov = ɵɵdefineInjectable({ factory: function Clipboard_Factory() { return new Clipboard(ɵɵinject(DOCUMENT)); }, token: Clipboard, providedIn: "root" });
-if (false) {
-    /**
-     * @type {?}
-     * @private
-     */
-    Clipboard.prototype._document;
-}
-/**
- * A pending copy-to-clipboard operation.
- *
- * The implementation of copying text to the clipboard modifies the DOM and
- * forces a relayout. This relayout can take too long if the string is large,
- * causing the execCommand('copy') to happen too long after the user clicked.
- * This results in the browser refusing to copy. This object lets the
- * relayout happen in a separate tick from copying by providing a copy function
- * that can be called later.
- *
- * Destroy must be called when no longer in use, regardless of whether `copy` is
- * called.
- */
-class PendingCopy {
-    /**
-     * @param {?} text
-     * @param {?} _document
-     */
-    constructor(text, _document) {
-        this._document = _document;
-        /** @type {?} */
-        const textarea = this._textarea = this._document.createElement('textarea');
-        // Hide the element for display and accessibility.
-        textarea.setAttribute('style', 'opacity: 0;');
-        textarea.setAttribute('aria-hidden', 'true');
-        textarea.value = text;
-        this._document.body.appendChild(textarea);
-    }
-    /**
-     * Finishes copying the text.
-     * @return {?}
-     */
-    copy() {
-        /** @type {?} */
-        const textarea = this._textarea;
-        /** @type {?} */
-        let successful = false;
-        try { // Older browsers could throw if copy is not supported.
-            if (textarea) {
-                /** @type {?} */
-                const currentFocus = document.activeElement;
-                textarea.select();
-                successful = this._document.execCommand('copy');
-                if (currentFocus instanceof HTMLElement) {
-                    currentFocus.focus();
-                }
-            }
-        }
-        catch (_a) {
-            // Discard error.
-            // Initial setting of {@code successful} will represent failure here.
-        }
-        return successful;
-    }
-    /**
-     * Cleans up DOM changes used to perform the copy operation.
-     * @return {?}
-     */
-    destroy() {
-        if (this._textarea) {
-            this._document.body.removeChild(this._textarea);
-            this._textarea = undefined;
-        }
-    }
-}
-if (false) {
-    /**
-     * @type {?}
-     * @private
-     */
-    PendingCopy.prototype._textarea;
-    /**
-     * @type {?}
-     * @private
-     */
-    PendingCopy.prototype._document;
-}
-
-/**
- * @fileoverview added by tsickle
- * Generated from: lib/clipboard.plugin.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const IS_OSX = /^mac/.test(navigator.platform.toLowerCase());
-/** @type {?} */
 const DEFAULT_CELL_SEP = '\t';
-/** @type {?} */
 const DEFAULT_ROW_SEP = '\n';
-/** @type {?} */
 const PLUGIN_KEY = 'clipboard';
 class PblNgridClipboardPlugin {
-    /**
-     * @param {?} grid
-     * @param {?} injector
-     * @param {?} pluginCtrl
-     */
     constructor(grid, injector, pluginCtrl) {
         this.grid = grid;
         this.injector = injector;
@@ -170,28 +21,14 @@ class PblNgridClipboardPlugin {
         this.clipboard = injector.get(Clipboard);
         this.init();
     }
-    /**
-     * @param {?} grid
-     * @param {?} injector
-     * @return {?}
-     */
     static create(grid, injector) {
-        /** @type {?} */
         const pluginCtrl = PblNgridPluginController.find(grid);
         return new PblNgridClipboardPlugin(grid, injector, pluginCtrl);
     }
-    /**
-     * @return {?}
-     */
     ngOnDestroy() {
-        utils.unrx.kill(this);
+        unrx.kill(this);
         this._removePlugin(this.grid);
     }
-    /**
-     * @protected
-     * @param {?} event
-     * @return {?}
-     */
     isCopyEvent(event) {
         if (event instanceof KeyboardEvent && event.key === 'c') {
             if ((!IS_OSX && event.ctrlKey) || (IS_OSX && event.metaKey)) {
@@ -200,31 +37,16 @@ class PblNgridClipboardPlugin {
         }
         return false;
     }
-    /**
-     * @protected
-     * @return {?}
-     */
     doCopy() {
         const { cellSeparator, rowSeparator } = this.config.get('clipboard', {});
         const { rows, minIndex } = this.getSelectedRowData(this.grid);
-        /** @type {?} */
-        const createRow = (/**
-         * @param {?} row
-         * @return {?}
-         */
-        (row) => row.slice(minIndex).join(this.clpCellSep || cellSeparator || DEFAULT_CELL_SEP));
+        const createRow = (row) => row.slice(minIndex).join(this.clpCellSep || cellSeparator || DEFAULT_CELL_SEP);
         // For each row (collection of items), slice the initial items that are not copied across all selections
         this.clipboard.copy(rows.map(createRow).join(this.clpRowSep || rowSeparator || DEFAULT_ROW_SEP));
         // TODO: Consider using `beginCopy` to support large copy operations
     }
-    /**
-     * @protected
-     * @param {?} grid
-     * @return {?}
-     */
     getSelectedRowData(grid) {
         const { columnApi, contextApi } = grid;
-        /** @type {?} */
         const data = new Map();
         // The minIndex represents the first column being copied out of all visible columns (0 being the first visible column).
         // For every selected cell, the column is tracked and it's index is being set to `minIndex` if it is lower then the current `minIndex` (Math.Min).
@@ -232,20 +54,14 @@ class PblNgridClipboardPlugin {
         // Later on, each row is sliced to remove the items in indices lower then the `minIndex`.
         //
         // All of this is to make the paste start without leading cell separators.
-        /** @type {?} */
         let minIndex = Number.MAX_SAFE_INTEGER;
         for (const point of contextApi.selectedCells) {
-            /** @type {?} */
             const col = columnApi.columns[point.colIndex];
             if (col) {
-                /** @type {?} */
                 const colIndex = columnApi.renderIndexOf(col);
                 if (colIndex > -1) {
-                    /** @type {?} */
-                    const rowIndex = contextApi.findRowInCache(point.rowIdent).dataIndex;
-                    /** @type {?} */
+                    const rowIndex = contextApi.findRowInCache(point.rowIdent).dsIndex;
                     const dataItem = col.getValue(grid.ds.source[rowIndex]);
-                    /** @type {?} */
                     const row = data.get(point.rowIdent) || [];
                     row[colIndex] = dataItem;
                     data.set(point.rowIdent, row);
@@ -257,187 +73,72 @@ class PblNgridClipboardPlugin {
         // It means that the row's will not paste in the proper order unless we re-order them based on the data index.
         // This is a very native and simple implementation that will hold most copy actions 1k +-
         // TODO: Consider a better logic, taking performance into consideration.
-        /** @type {?} */
         const entries = Array.from(data.entries());
-        entries.sort((/**
-         * @param {?} a
-         * @param {?} b
-         * @return {?}
-         */
-        (a, b) => {
-            /** @type {?} */
-            const aIndex = contextApi.findRowInCache(a[0]).dataIndex;
-            /** @type {?} */
-            const bIndex = contextApi.findRowInCache(b[0]).dataIndex;
+        entries.sort((a, b) => {
+            const aIndex = contextApi.findRowInCache(a[0]).dsIndex;
+            const bIndex = contextApi.findRowInCache(b[0]).dsIndex;
             if (aIndex < bIndex) {
                 return -1;
             }
             else {
                 return 1;
             }
-        }));
+        });
         return {
             minIndex,
-            rows: entries.map((/**
-             * @param {?} e
-             * @return {?}
-             */
-            e => e[1])),
+            rows: entries.map(e => e[1]),
         };
     }
-    /**
-     * @private
-     * @return {?}
-     */
     init() {
         this._removePlugin = this.pluginCtrl.setPlugin(PLUGIN_KEY, this);
-        if (!this.pluginCtrl.hasPlugin('targetEvents')) {
-            this.pluginCtrl.createPlugin('targetEvents');
-        }
-        /** @type {?} */
+        this.pluginCtrl.ensurePlugin('targetEvents');
         const targetEvents = this.pluginCtrl.getPlugin('targetEvents');
         targetEvents.keyDown
-            .pipe(filter((/**
-         * @param {?} event
-         * @return {?}
-         */
-        event => this.isCopyEvent(event.source))), utils.unrx(this))
-            .subscribe((/**
-         * @param {?} event
-         * @return {?}
-         */
-        event => this.doCopy()));
+            .pipe(filter(event => this.isCopyEvent(event.source)), unrx(this))
+            .subscribe(event => this.doCopy());
     }
 }
-PblNgridClipboardPlugin.decorators = [
-    { type: Directive, args: [{ selector: 'pbl-ngrid[clipboard]', exportAs: 'pblNgridClipboard' },] }
-];
-/** @nocollapse */
-PblNgridClipboardPlugin.ctorParameters = () => [
-    { type: PblNgridComponent },
-    { type: Injector },
-    { type: PblNgridPluginController }
-];
-PblNgridClipboardPlugin.propDecorators = {
-    clpCellSep: [{ type: Input }],
-    clpRowSep: [{ type: Input }]
-};
-if (false) {
-    /**
-     * The separator to use when multiple cells are copied.
-     * If not set, taken from `PblNgridConfig.clipboard.cellSeparator`
-     * \@default \t
-     * @type {?}
-     */
-    PblNgridClipboardPlugin.prototype.clpCellSep;
-    /**
-     * The separator to use when multiple rows are copied
-     * If not set, taken from `PblNgridConfig.clipboard.rowSeparator`
-     * \@default \n
-     * @type {?}
-     */
-    PblNgridClipboardPlugin.prototype.clpRowSep;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridClipboardPlugin.prototype.config;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridClipboardPlugin.prototype.clipboard;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridClipboardPlugin.prototype._removePlugin;
-    /** @type {?} */
-    PblNgridClipboardPlugin.prototype.grid;
-    /**
-     * @type {?}
-     * @protected
-     */
-    PblNgridClipboardPlugin.prototype.injector;
-    /**
-     * @type {?}
-     * @protected
-     */
-    PblNgridClipboardPlugin.prototype.pluginCtrl;
-}
+/** @nocollapse */ PblNgridClipboardPlugin.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridClipboardPlugin, deps: [{ token: i1.PblNgridComponent }, { token: i0.Injector }, { token: i1.PblNgridPluginController }], target: i0.ɵɵFactoryTarget.Directive });
+/** @nocollapse */ PblNgridClipboardPlugin.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "12.0.0", version: "12.0.0", type: PblNgridClipboardPlugin, selector: "pbl-ngrid[clipboard]", inputs: { clpCellSep: "clpCellSep", clpRowSep: "clpRowSep" }, exportAs: ["pblNgridClipboard"], ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridClipboardPlugin, decorators: [{
+            type: Directive,
+            args: [{ selector: 'pbl-ngrid[clipboard]', exportAs: 'pblNgridClipboard' }]
+        }], ctorParameters: function () { return [{ type: i1.PblNgridComponent }, { type: i0.Injector }, { type: i1.PblNgridPluginController }]; }, propDecorators: { clpCellSep: [{
+                type: Input
+            }], clpRowSep: [{
+                type: Input
+            }] } });
 
-/**
- * @fileoverview added by tsickle
- * Generated from: lib/clipboard.module.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class PblNgridClipboardPluginModule {
-    /**
-     * @param {?} parentModule
-     * @param {?} configService
-     */
-    constructor(parentModule, configService) {
-        if (parentModule) {
-            return;
-        }
-        PblNgridPluginController.created
-            .subscribe((/**
-         * @param {?} event
-         * @return {?}
-         */
-        event => {
-            /** @type {?} */
+    constructor(configService) {
+        PblNgridPluginController.onCreatedSafe(PblNgridClipboardPluginModule, (grid, controller) => {
             const config = configService.get(PLUGIN_KEY, {});
             if (config.autoEnable === true) {
-                /** @type {?} */
-                const pluginCtrl = event.controller;
-                pluginCtrl.events
-                    .pipe(filter((/**
-                 * @param {?} e
-                 * @return {?}
-                 */
-                e => e.kind === 'onInit')), first())
-                    .subscribe((/**
-                 * @param {?} e
-                 * @return {?}
-                 */
-                e => {
-                    if (!pluginCtrl.hasPlugin(PLUGIN_KEY)) {
-                        pluginCtrl.createPlugin(PLUGIN_KEY);
+                controller.onInit()
+                    .subscribe(() => {
+                    if (!controller.hasPlugin(PLUGIN_KEY)) {
+                        controller.createPlugin(PLUGIN_KEY);
                     }
-                }));
+                });
             }
-        }));
+        });
     }
 }
 PblNgridClipboardPluginModule.NGRID_PLUGIN = ngridPlugin({ id: PLUGIN_KEY, factory: 'create' }, PblNgridClipboardPlugin);
-PblNgridClipboardPluginModule.decorators = [
-    { type: NgModule, args: [{
-                imports: [CommonModule, PblNgridModule, PblNgridTargetEventsModule],
-                declarations: [PblNgridClipboardPlugin],
-                exports: [PblNgridClipboardPlugin],
-            },] }
-];
-/** @nocollapse */
-PblNgridClipboardPluginModule.ctorParameters = () => [
-    { type: PblNgridClipboardPluginModule, decorators: [{ type: Optional }, { type: SkipSelf }] },
-    { type: PblNgridConfigService }
-];
-if (false) {
-    /** @type {?} */
-    PblNgridClipboardPluginModule.NGRID_PLUGIN;
-}
+/** @nocollapse */ PblNgridClipboardPluginModule.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridClipboardPluginModule, deps: [{ token: i1.PblNgridConfigService }], target: i0.ɵɵFactoryTarget.NgModule });
+/** @nocollapse */ PblNgridClipboardPluginModule.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridClipboardPluginModule, declarations: [PblNgridClipboardPlugin], imports: [CommonModule, PblNgridModule, PblNgridTargetEventsModule], exports: [PblNgridClipboardPlugin] });
+/** @nocollapse */ PblNgridClipboardPluginModule.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridClipboardPluginModule, imports: [[CommonModule, PblNgridModule, PblNgridTargetEventsModule]] });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridClipboardPluginModule, decorators: [{
+            type: NgModule,
+            args: [{
+                    imports: [CommonModule, PblNgridModule, PblNgridTargetEventsModule],
+                    declarations: [PblNgridClipboardPlugin],
+                    exports: [PblNgridClipboardPlugin],
+                }]
+        }], ctorParameters: function () { return [{ type: i1.PblNgridConfigService }]; } });
 
 /**
- * @fileoverview added by tsickle
- * Generated from: index.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * Generated from: pebula-ngrid-clipboard.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated bundle index. Do not edit.
  */
 
 export { PLUGIN_KEY, PblNgridClipboardPlugin, PblNgridClipboardPluginModule };

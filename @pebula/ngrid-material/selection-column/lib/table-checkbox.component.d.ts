@@ -2,6 +2,7 @@ import { AfterViewInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { ThemePalette } from '@angular/material/core';
 import { PblNgridComponent, PblNgridHeaderCellDefDirective, PblNgridCellDefDirective, PblNgridFooterCellDefDirective } from '@pebula/ngrid';
+import * as i0 from "@angular/core";
 export declare class PblNgridCheckboxComponent implements AfterViewInit, OnDestroy {
     table: PblNgridComponent<any>;
     private cdr;
@@ -49,4 +50,7 @@ export declare class PblNgridCheckboxComponent implements AfterViewInit, OnDestr
     private getCollection;
     private setupSelection;
     private handleSelectionChanged;
+    private markAndDetect;
+    static ɵfac: i0.ɵɵFactoryDeclaration<PblNgridCheckboxComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<PblNgridCheckboxComponent, "pbl-ngrid-checkbox", never, { "name": "name"; "bulkSelectMode": "bulkSelectMode"; "selection": "selection"; "isCheckboxDisabled": "isCheckboxDisabled"; "color": "color"; }, {}, never, never>;
 }

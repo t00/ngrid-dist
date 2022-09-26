@@ -1,8 +1,0 @@
-/**
- * @fileoverview added by tsickle
- * Generated from: index.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-export { toggleDetailRow } from './lib/detail-row/detail-row-plugin';
-export { PblNgridDetailRowModule } from './lib/table-detail-row.module';
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290Ijoibmc6Ly9AcGVidWxhL25ncmlkL2RldGFpbC1yb3cvIiwic291cmNlcyI6WyJpbmRleC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7OztBQUFBLE9BQU8sRUFBRSxlQUFlLEVBQTRCLE1BQU0sb0NBQW9DLENBQUM7QUFDL0YsT0FBTyxFQUFFLHVCQUF1QixFQUFFLE1BQU0sK0JBQStCLENBQUMiLCJzb3VyY2VzQ29udGVudCI6WyJleHBvcnQgeyB0b2dnbGVEZXRhaWxSb3csIFBibERldGFpbHNSb3dUb2dnbGVFdmVudCB9IGZyb20gJy4vbGliL2RldGFpbC1yb3cvZGV0YWlsLXJvdy1wbHVnaW4nO1xuZXhwb3J0IHsgUGJsTmdyaWREZXRhaWxSb3dNb2R1bGUgfSBmcm9tICcuL2xpYi90YWJsZS1kZXRhaWwtcm93Lm1vZHVsZSc7XG4iXX0=

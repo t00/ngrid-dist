@@ -1,11 +1,8 @@
-/**
- * @fileoverview added by tsickle
- * Generated from: lib/grid/directives/directives.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 // tslint:disable:use-host-property-decorator
 import { Directive, TemplateRef } from '@angular/core';
 import { PblNgridComponent } from '../ngrid.component';
+import * as i0 from "@angular/core";
+import * as i1 from "../ngrid.component";
 /**
  * A directive that marks the template as a projected section inside the grid.
  * The location of the project content is set by the position input.
@@ -13,45 +10,21 @@ import { PblNgridComponent } from '../ngrid.component';
  * Note that this directive can only be set as the content inside the grid.
  */
 export class PblNgridOuterSectionDirective {
-    // tslint:disable-line:no-input-rename
-    /**
-     * @param {?} grid
-     * @param {?} tRef
-     */
     constructor(grid, tRef) {
         this.grid = grid;
         this.tRef = tRef;
     }
-    /**
-     * @return {?}
-     */
     ngAfterViewInit() {
         this.grid.createView(this.position === 'bottom' ? 'beforeContent' : 'beforeTable', this.tRef);
     }
 }
-PblNgridOuterSectionDirective.decorators = [
-    { type: Directive, args: [{
-                selector: '[pblNgridOuterSection]',
-                inputs: ['position:pblNgridOuterSection'] // tslint:disable-line:use-input-property-decorator
-            },] }
-];
-/** @nocollapse */
-PblNgridOuterSectionDirective.ctorParameters = () => [
-    { type: PblNgridComponent },
-    { type: TemplateRef }
-];
-if (false) {
-    /** @type {?} */
-    PblNgridOuterSectionDirective.prototype.position;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridOuterSectionDirective.prototype.grid;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridOuterSectionDirective.prototype.tRef;
-}
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZGlyZWN0aXZlcy5qcyIsInNvdXJjZVJvb3QiOiJuZzovL0BwZWJ1bGEvbmdyaWQvIiwic291cmNlcyI6WyJsaWIvZ3JpZC9kaXJlY3RpdmVzL2RpcmVjdGl2ZXMudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7O0FBQ0EsT0FBTyxFQUFFLFNBQVMsRUFBRSxXQUFXLEVBQWlCLE1BQU0sZUFBZSxDQUFDO0FBRXRFLE9BQU8sRUFBRSxpQkFBaUIsRUFBRSxNQUFNLG9CQUFvQixDQUFDOzs7Ozs7O0FBWXZELE1BQU0sT0FBTyw2QkFBNkI7Ozs7OztJQUl4QyxZQUFvQixJQUE0QixFQUFVLElBQXdEO1FBQTlGLFNBQUksR0FBSixJQUFJLENBQXdCO1FBQVUsU0FBSSxHQUFKLElBQUksQ0FBb0Q7SUFBSSxDQUFDOzs7O0lBRXZILGVBQWU7UUFDYixJQUFJLENBQUMsSUFBSSxDQUFDLFVBQVUsQ0FBQyxJQUFJLENBQUMsUUFBUSxLQUFLLFFBQVEsQ0FBQyxDQUFDLENBQUMsZUFBZSxDQUFDLENBQUMsQ0FBQyxhQUFhLEVBQUUsSUFBSSxDQUFDLElBQUksQ0FBQyxDQUFDO0lBQ2hHLENBQUM7OztZQVpGLFNBQVMsU0FBQztnQkFDVCxRQUFRLEVBQUUsd0JBQXdCO2dCQUNsQyxNQUFNLEVBQUUsQ0FBRSwrQkFBK0IsQ0FBRSxDQUFDLG1EQUFtRDthQUNoRzs7OztZQVhRLGlCQUFpQjtZQUZOLFdBQVc7Ozs7SUFnQjdCLGlEQUEyQjs7Ozs7SUFFZiw2Q0FBb0M7Ozs7O0lBQUUsNkNBQWdFIiwic291cmNlc0NvbnRlbnQiOlsiLy8gdHNsaW50OmRpc2FibGU6dXNlLWhvc3QtcHJvcGVydHktZGVjb3JhdG9yXG5pbXBvcnQgeyBEaXJlY3RpdmUsIFRlbXBsYXRlUmVmLCBBZnRlclZpZXdJbml0IH0gZnJvbSAnQGFuZ3VsYXIvY29yZSc7XG5cbmltcG9ydCB7IFBibE5ncmlkQ29tcG9uZW50IH0gZnJvbSAnLi4vbmdyaWQuY29tcG9uZW50JztcblxuLyoqXG4gKiBBIGRpcmVjdGl2ZSB0aGF0IG1hcmtzIHRoZSB0ZW1wbGF0ZSBhcyBhIHByb2plY3RlZCBzZWN0aW9uIGluc2lkZSB0aGUgZ3JpZC5cbiAqIFRoZSBsb2NhdGlvbiBvZiB0aGUgcHJvamVjdCBjb250ZW50IGlzIHNldCBieSB0aGUgcG9zaXRpb24gaW5wdXQuXG4gKlxuICogTm90ZSB0aGF0IHRoaXMgZGlyZWN0aXZlIGNhbiBvbmx5IGJlIHNldCBhcyB0aGUgY29udGVudCBpbnNpZGUgdGhlIGdyaWQuXG4gKi9cbkBEaXJlY3RpdmUoe1xuICBzZWxlY3RvcjogJ1twYmxOZ3JpZE91dGVyU2VjdGlvbl0nLFxuICBpbnB1dHM6IFsgJ3Bvc2l0aW9uOnBibE5ncmlkT3V0ZXJTZWN0aW9uJyBdIC8vIHRzbGludDpkaXNhYmxlLWxpbmU6dXNlLWlucHV0LXByb3BlcnR5LWRlY29yYXRvclxufSlcbmV4cG9ydCBjbGFzcyBQYmxOZ3JpZE91dGVyU2VjdGlvbkRpcmVjdGl2ZSBpbXBsZW1lbnRzIEFmdGVyVmlld0luaXQge1xuXG4gIHBvc2l0aW9uOiAndG9wJyB8ICdib3R0b20nOyAvLyB0c2xpbnQ6ZGlzYWJsZS1saW5lOm5vLWlucHV0LXJlbmFtZVxuXG4gIGNvbnN0cnVjdG9yKHByaXZhdGUgZ3JpZDogUGJsTmdyaWRDb21wb25lbnQ8YW55PiwgcHJpdmF0ZSB0UmVmOiBUZW1wbGF0ZVJlZjx7ICRpbXBsaWNpdDogUGJsTmdyaWRDb21wb25lbnQ8YW55PiB9PikgeyB9XG5cbiAgbmdBZnRlclZpZXdJbml0KCk6IHZvaWQge1xuICAgIHRoaXMuZ3JpZC5jcmVhdGVWaWV3KHRoaXMucG9zaXRpb24gPT09ICdib3R0b20nID8gJ2JlZm9yZUNvbnRlbnQnIDogJ2JlZm9yZVRhYmxlJywgdGhpcy50UmVmKTtcbiAgfVxufVxuIl19
+/** @nocollapse */ PblNgridOuterSectionDirective.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridOuterSectionDirective, deps: [{ token: i1.PblNgridComponent }, { token: i0.TemplateRef }], target: i0.ɵɵFactoryTarget.Directive });
+/** @nocollapse */ PblNgridOuterSectionDirective.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "12.0.0", version: "12.0.0", type: PblNgridOuterSectionDirective, selector: "[pblNgridOuterSection]", inputs: { position: ["pblNgridOuterSection", "position"] }, ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridOuterSectionDirective, decorators: [{
+            type: Directive,
+            args: [{
+                    selector: '[pblNgridOuterSection]',
+                    inputs: ['position:pblNgridOuterSection'] // tslint:disable-line:use-input-property-decorator
+                }]
+        }], ctorParameters: function () { return [{ type: i1.PblNgridComponent }, { type: i0.TemplateRef }]; } });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZGlyZWN0aXZlcy5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uLy4uLy4uL2xpYnMvbmdyaWQvc3JjL2xpYi9ncmlkL2RpcmVjdGl2ZXMvZGlyZWN0aXZlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSw2Q0FBNkM7QUFDN0MsT0FBTyxFQUFFLFNBQVMsRUFBRSxXQUFXLEVBQWlCLE1BQU0sZUFBZSxDQUFDO0FBRXRFLE9BQU8sRUFBRSxpQkFBaUIsRUFBRSxNQUFNLG9CQUFvQixDQUFDOzs7QUFFdkQ7Ozs7O0dBS0c7QUFLSCxNQUFNLE9BQU8sNkJBQTZCO0lBSXhDLFlBQW9CLElBQTRCLEVBQVUsSUFBd0Q7UUFBOUYsU0FBSSxHQUFKLElBQUksQ0FBd0I7UUFBVSxTQUFJLEdBQUosSUFBSSxDQUFvRDtJQUFJLENBQUM7SUFFdkgsZUFBZTtRQUNiLElBQUksQ0FBQyxJQUFJLENBQUMsVUFBVSxDQUFDLElBQUksQ0FBQyxRQUFRLEtBQUssUUFBUSxDQUFDLENBQUMsQ0FBQyxlQUFlLENBQUMsQ0FBQyxDQUFDLGFBQWEsRUFBRSxJQUFJLENBQUMsSUFBSSxDQUFDLENBQUM7SUFDaEcsQ0FBQzs7NklBUlUsNkJBQTZCO2lJQUE3Qiw2QkFBNkI7MkZBQTdCLDZCQUE2QjtrQkFKekMsU0FBUzttQkFBQztvQkFDVCxRQUFRLEVBQUUsd0JBQXdCO29CQUNsQyxNQUFNLEVBQUUsQ0FBRSwrQkFBK0IsQ0FBRSxDQUFDLG1EQUFtRDtpQkFDaEciLCJzb3VyY2VzQ29udGVudCI6WyIvLyB0c2xpbnQ6ZGlzYWJsZTp1c2UtaG9zdC1wcm9wZXJ0eS1kZWNvcmF0b3JcbmltcG9ydCB7IERpcmVjdGl2ZSwgVGVtcGxhdGVSZWYsIEFmdGVyVmlld0luaXQgfSBmcm9tICdAYW5ndWxhci9jb3JlJztcblxuaW1wb3J0IHsgUGJsTmdyaWRDb21wb25lbnQgfSBmcm9tICcuLi9uZ3JpZC5jb21wb25lbnQnO1xuXG4vKipcbiAqIEEgZGlyZWN0aXZlIHRoYXQgbWFya3MgdGhlIHRlbXBsYXRlIGFzIGEgcHJvamVjdGVkIHNlY3Rpb24gaW5zaWRlIHRoZSBncmlkLlxuICogVGhlIGxvY2F0aW9uIG9mIHRoZSBwcm9qZWN0IGNvbnRlbnQgaXMgc2V0IGJ5IHRoZSBwb3NpdGlvbiBpbnB1dC5cbiAqXG4gKiBOb3RlIHRoYXQgdGhpcyBkaXJlY3RpdmUgY2FuIG9ubHkgYmUgc2V0IGFzIHRoZSBjb250ZW50IGluc2lkZSB0aGUgZ3JpZC5cbiAqL1xuQERpcmVjdGl2ZSh7XG4gIHNlbGVjdG9yOiAnW3BibE5ncmlkT3V0ZXJTZWN0aW9uXScsXG4gIGlucHV0czogWyAncG9zaXRpb246cGJsTmdyaWRPdXRlclNlY3Rpb24nIF0gLy8gdHNsaW50OmRpc2FibGUtbGluZTp1c2UtaW5wdXQtcHJvcGVydHktZGVjb3JhdG9yXG59KVxuZXhwb3J0IGNsYXNzIFBibE5ncmlkT3V0ZXJTZWN0aW9uRGlyZWN0aXZlIGltcGxlbWVudHMgQWZ0ZXJWaWV3SW5pdCB7XG5cbiAgcG9zaXRpb246ICd0b3AnIHwgJ2JvdHRvbSc7IC8vIHRzbGludDpkaXNhYmxlLWxpbmU6bm8taW5wdXQtcmVuYW1lXG5cbiAgY29uc3RydWN0b3IocHJpdmF0ZSBncmlkOiBQYmxOZ3JpZENvbXBvbmVudDxhbnk+LCBwcml2YXRlIHRSZWY6IFRlbXBsYXRlUmVmPHsgJGltcGxpY2l0OiBQYmxOZ3JpZENvbXBvbmVudDxhbnk+IH0+KSB7IH1cblxuICBuZ0FmdGVyVmlld0luaXQoKTogdm9pZCB7XG4gICAgdGhpcy5ncmlkLmNyZWF0ZVZpZXcodGhpcy5wb3NpdGlvbiA9PT0gJ2JvdHRvbScgPyAnYmVmb3JlQ29udGVudCcgOiAnYmVmb3JlVGFibGUnLCB0aGlzLnRSZWYpO1xuICB9XG59XG4iXX0=

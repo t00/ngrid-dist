@@ -1,5 +1,5 @@
 /**
  * Generated bundle index. Do not edit.
  */
+/// <amd-module name="@pebula/ngrid-material/paginator" />
 export * from './index';
-export { PblPaginatorComponent as ɵa } from './lib/table-paginator.component';

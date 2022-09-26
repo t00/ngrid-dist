@@ -1,8 +1,0 @@
-/**
- * @fileoverview added by tsickle
- * Generated from: index.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-export { PLUGIN_KEY, PblNgridClipboardPlugin } from './lib/clipboard.plugin';
-export { PblNgridClipboardPluginModule } from './lib/clipboard.module';
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290Ijoibmc6Ly9AcGVidWxhL25ncmlkL2NsaXBib2FyZC8iLCJzb3VyY2VzIjpbImluZGV4LnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7O0FBQUEsT0FBTyxFQUFFLFVBQVUsRUFBRSx1QkFBdUIsRUFBRSxNQUFNLHdCQUF3QixDQUFDO0FBQzdFLE9BQU8sRUFBRSw2QkFBNkIsRUFBRSxNQUFNLHdCQUF3QixDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiZXhwb3J0IHsgUExVR0lOX0tFWSwgUGJsTmdyaWRDbGlwYm9hcmRQbHVnaW4gfSBmcm9tICcuL2xpYi9jbGlwYm9hcmQucGx1Z2luJztcbmV4cG9ydCB7IFBibE5ncmlkQ2xpcGJvYXJkUGx1Z2luTW9kdWxlIH0gZnJvbSAnLi9saWIvY2xpcGJvYXJkLm1vZHVsZSc7XG4iXX0=

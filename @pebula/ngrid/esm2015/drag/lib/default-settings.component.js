@@ -1,18 +1,22 @@
-/**
- * @fileoverview added by tsickle
- * Generated from: lib/default-settings.component.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 import { Component, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
+import * as i0 from "@angular/core";
+import * as i1 from "./column-resize/column-resize.component";
+import * as i2 from "./column-resize/cell-resizer-ref";
+import * as i3 from "./drag-and-drop/column/cell-dragger-ref";
+import * as i4 from "./drag-and-drop/column/column-drag";
 export class DragPluginDefaultTemplatesComponent {
 }
-DragPluginDefaultTemplatesComponent.decorators = [
-    { type: Component, args: [{
-                selector: 'pbl-drag-plugin-default-templates',
-                template: `<pbl-ngrid-drag-resize *pblNgridCellResizerRef="let ctx" [context]="ctx"></pbl-ngrid-drag-resize>
-<span *pblNgridCellDraggerRef="let ctx" [pblNgridColumnDrag]="ctx" cdkDragRootElementClass="cdk-drag"></span>`,
-                changeDetection: ChangeDetectionStrategy.OnPush,
-                encapsulation: ViewEncapsulation.None
-            }] }
-];
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZGVmYXVsdC1zZXR0aW5ncy5jb21wb25lbnQuanMiLCJzb3VyY2VSb290Ijoibmc6Ly9AcGVidWxhL25ncmlkL2RyYWcvIiwic291cmNlcyI6WyJsaWIvZGVmYXVsdC1zZXR0aW5ncy5jb21wb25lbnQudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7QUFBQSxPQUFPLEVBQUUsU0FBUyxFQUFFLHVCQUF1QixFQUFFLGlCQUFpQixFQUFFLE1BQU0sZUFBZSxDQUFDO0FBVXRGLE1BQU0sT0FBTyxtQ0FBbUM7OztZQVIvQyxTQUFTLFNBQUM7Z0JBQ1QsUUFBUSxFQUFFLG1DQUFtQztnQkFDN0MsUUFBUSxFQUNWOzhHQUM4RztnQkFDNUcsZUFBZSxFQUFFLHVCQUF1QixDQUFDLE1BQU07Z0JBQy9DLGFBQWEsRUFBRSxpQkFBaUIsQ0FBQyxJQUFJO2FBQ3RDIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgQ29tcG9uZW50LCBDaGFuZ2VEZXRlY3Rpb25TdHJhdGVneSwgVmlld0VuY2Fwc3VsYXRpb24gfSBmcm9tICdAYW5ndWxhci9jb3JlJztcblxuQENvbXBvbmVudCh7XG4gIHNlbGVjdG9yOiAncGJsLWRyYWctcGx1Z2luLWRlZmF1bHQtdGVtcGxhdGVzJyxcbiAgdGVtcGxhdGU6XG5gPHBibC1uZ3JpZC1kcmFnLXJlc2l6ZSAqcGJsTmdyaWRDZWxsUmVzaXplclJlZj1cImxldCBjdHhcIiBbY29udGV4dF09XCJjdHhcIj48L3BibC1uZ3JpZC1kcmFnLXJlc2l6ZT5cbjxzcGFuICpwYmxOZ3JpZENlbGxEcmFnZ2VyUmVmPVwibGV0IGN0eFwiIFtwYmxOZ3JpZENvbHVtbkRyYWddPVwiY3R4XCIgY2RrRHJhZ1Jvb3RFbGVtZW50Q2xhc3M9XCJjZGstZHJhZ1wiPjwvc3Bhbj5gLFxuICBjaGFuZ2VEZXRlY3Rpb246IENoYW5nZURldGVjdGlvblN0cmF0ZWd5Lk9uUHVzaCxcbiAgZW5jYXBzdWxhdGlvbjogVmlld0VuY2Fwc3VsYXRpb24uTm9uZSxcbn0pXG5leHBvcnQgY2xhc3MgRHJhZ1BsdWdpbkRlZmF1bHRUZW1wbGF0ZXNDb21wb25lbnQge31cbiJdfQ==
+/** @nocollapse */ DragPluginDefaultTemplatesComponent.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: DragPluginDefaultTemplatesComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
+/** @nocollapse */ DragPluginDefaultTemplatesComponent.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "12.0.0", version: "12.0.0", type: DragPluginDefaultTemplatesComponent, selector: "pbl-drag-plugin-default-templates", ngImport: i0, template: `<pbl-ngrid-drag-resize *pblNgridCellResizerRef="let ctx" [context]="ctx"></pbl-ngrid-drag-resize>
+<span *pblNgridCellDraggerRef="let ctx" [pblNgridColumnDrag]="ctx.col" cdkDragRootElementClass="cdk-drag"></span>`, isInline: true, components: [{ type: i1.PblNgridDragResizeComponent, selector: "pbl-ngrid-drag-resize", inputs: ["context", "grabAreaWidth"] }], directives: [{ type: i2.PblNgridCellResizerRefDirective, selector: "[pblNgridCellResizerRef]" }, { type: i3.PblNgridCellDraggerRefDirective, selector: "[pblNgridCellDraggerRef]" }, { type: i4.PblNgridColumnDragDirective, selector: "[pblNgridColumnDrag]", inputs: ["pblNgridColumnDrag"], exportAs: ["pblNgridColumnDrag"] }], changeDetection: i0.ChangeDetectionStrategy.OnPush, encapsulation: i0.ViewEncapsulation.None });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: DragPluginDefaultTemplatesComponent, decorators: [{
+            type: Component,
+            args: [{
+                    selector: 'pbl-drag-plugin-default-templates',
+                    template: `<pbl-ngrid-drag-resize *pblNgridCellResizerRef="let ctx" [context]="ctx"></pbl-ngrid-drag-resize>
+<span *pblNgridCellDraggerRef="let ctx" [pblNgridColumnDrag]="ctx.col" cdkDragRootElementClass="cdk-drag"></span>`,
+                    changeDetection: ChangeDetectionStrategy.OnPush,
+                    encapsulation: ViewEncapsulation.None,
+                }]
+        }] });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZGVmYXVsdC1zZXR0aW5ncy5jb21wb25lbnQuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi8uLi8uLi9saWJzL25ncmlkL2RyYWcvc3JjL2xpYi9kZWZhdWx0LXNldHRpbmdzLmNvbXBvbmVudC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxPQUFPLEVBQUUsU0FBUyxFQUFFLHVCQUF1QixFQUFFLGlCQUFpQixFQUFFLE1BQU0sZUFBZSxDQUFDOzs7Ozs7QUFVdEYsTUFBTSxPQUFPLG1DQUFtQzs7bUpBQW5DLG1DQUFtQzt1SUFBbkMsbUNBQW1DLHlFQUxoRDtrSEFDa0g7MkZBSXJHLG1DQUFtQztrQkFSL0MsU0FBUzttQkFBQztvQkFDVCxRQUFRLEVBQUUsbUNBQW1DO29CQUM3QyxRQUFRLEVBQ1Y7a0hBQ2tIO29CQUNoSCxlQUFlLEVBQUUsdUJBQXVCLENBQUMsTUFBTTtvQkFDL0MsYUFBYSxFQUFFLGlCQUFpQixDQUFDLElBQUk7aUJBQ3RDIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgQ29tcG9uZW50LCBDaGFuZ2VEZXRlY3Rpb25TdHJhdGVneSwgVmlld0VuY2Fwc3VsYXRpb24gfSBmcm9tICdAYW5ndWxhci9jb3JlJztcblxuQENvbXBvbmVudCh7XG4gIHNlbGVjdG9yOiAncGJsLWRyYWctcGx1Z2luLWRlZmF1bHQtdGVtcGxhdGVzJyxcbiAgdGVtcGxhdGU6XG5gPHBibC1uZ3JpZC1kcmFnLXJlc2l6ZSAqcGJsTmdyaWRDZWxsUmVzaXplclJlZj1cImxldCBjdHhcIiBbY29udGV4dF09XCJjdHhcIj48L3BibC1uZ3JpZC1kcmFnLXJlc2l6ZT5cbjxzcGFuICpwYmxOZ3JpZENlbGxEcmFnZ2VyUmVmPVwibGV0IGN0eFwiIFtwYmxOZ3JpZENvbHVtbkRyYWddPVwiY3R4LmNvbFwiIGNka0RyYWdSb290RWxlbWVudENsYXNzPVwiY2RrLWRyYWdcIj48L3NwYW4+YCxcbiAgY2hhbmdlRGV0ZWN0aW9uOiBDaGFuZ2VEZXRlY3Rpb25TdHJhdGVneS5PblB1c2gsXG4gIGVuY2Fwc3VsYXRpb246IFZpZXdFbmNhcHN1bGF0aW9uLk5vbmUsXG59KVxuZXhwb3J0IGNsYXNzIERyYWdQbHVnaW5EZWZhdWx0VGVtcGxhdGVzQ29tcG9uZW50IHt9XG4iXX0=

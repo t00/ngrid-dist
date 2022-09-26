@@ -1,69 +1,37 @@
-import { take, auditTime } from 'rxjs/operators';
-import { EventEmitter, Injectable, Inject, NgZone, ɵɵdefineInjectable, ɵɵinject, ElementRef, Directive, Input, Optional, ChangeDetectorRef, SkipSelf, ViewContainerRef, Output, Component, ChangeDetectionStrategy, ViewEncapsulation, HostListener, TemplateRef, NgModule } from '@angular/core';
-import { DropListRef, DragRef, DragDropRegistry, CdkDropList, DragDrop, CDK_DROP_LIST, CdkDrag, CdkDragHandle, CdkDropListGroup, CDK_DRAG_CONFIG, DragDropModule } from '@angular/cdk/drag-drop';
+import * as i0 from '@angular/core';
+import { EventEmitter, Injectable, Inject, ElementRef, Directive, Optional, SkipSelf, Input, Output, Component, ChangeDetectionStrategy, ViewEncapsulation, HostListener, NgModule } from '@angular/core';
+import * as i4 from '@angular/cdk/bidi';
+import * as i1 from '@angular/cdk/scrolling';
+import * as i2 from '@angular/cdk/drag-drop';
+import { DropListRef, DragRef, CdkDropList, CDK_DROP_LIST_GROUP, CDK_DRAG_CONFIG, DragDrop, CDK_DROP_LIST, CdkDrag, CdkDragHandle, CDK_DRAG_PARENT, CDK_DRAG_HANDLE, CdkDropListGroup, DragDropModule } from '@angular/cdk/drag-drop';
+import * as i1$1 from '@pebula/ngrid';
+import { PblNgridPluginController, isPblColumn, PblColumn, PblColumnGroup, PblNgridMultiTemplateRegistry, ngridPlugin, provideCommon, PblNgridModule } from '@pebula/ngrid';
 import { Subject, BehaviorSubject, Subscription, animationFrameScheduler } from 'rxjs';
 import { coerceElement, coerceBooleanProperty } from '@angular/cdk/coercion';
 import { DOCUMENT, CommonModule } from '@angular/common';
-import { ViewportRuler } from '@angular/cdk/scrolling';
-import { Directionality } from '@angular/cdk/bidi';
-import { PblNgridComponent, PblNgridPluginController, isPblColumn, PblNgridMultiTemplateRegistry, PblNgridRegistryService, PblColumn, PblColumnGroup, ngridPlugin, provideCommon, PblNgridModule } from '@pebula/ngrid';
+import { take, takeUntil, auditTime } from 'rxjs/operators';
+import { unrx } from '@pebula/ngrid/core';
 import { normalizePassiveListenerOptions } from '@angular/cdk/platform';
 
-/**
- * @fileoverview added by tsickle
- * Generated from: lib/drag-and-drop/core/drop-list-ref.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @template T
- */
 class PblDropListRef extends DropListRef {
     constructor() {
         super(...arguments);
-        /**
-         * Emits right before dragging has started.
-         */
+        /** Emits right before dragging has started. */
         this.beforeExit = new Subject();
     }
-    /**
-     * @template THIS
-     * @this {THIS}
-     * @param {?} element
-     * @return {THIS}
-     */
     withElement(element) {
         // TODO: Workaround, see if we can push this through https://github.com/angular/material2/issues/15086
-        ((/** @type {?} */ ((/** @type {?} */ (this))))).element = coerceElement(element);
-        return (/** @type {?} */ (this));
+        this.element = coerceElement(element);
+        this.withScrollableParents([this.element]);
+        return this;
     }
-    /**
-     * @return {?}
-     */
     dispose() {
         this.beforeExit.complete();
         super.dispose();
     }
 }
-if (false) {
-    /**
-     * Emits right before dragging has started.
-     * @type {?}
-     */
-    PblDropListRef.prototype.beforeExit;
-}
 
-/**
- * @fileoverview added by tsickle
- * Generated from: lib/drag-and-drop/core/drag-ref.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @template T
- */
 class PblDragRef extends DragRef {
-    /**
-     * @param {...?} args
-     */
     constructor(...args) {
         super(...args);
         /**
@@ -72,65 +40,36 @@ class PblDragRef extends DragRef {
          * > Does not emit on the initial setup.
          */
         this.rootElementChanged = new EventEmitter();
-        this.exited.subscribe((/**
-         * @param {?} e
-         * @return {?}
-         */
-        e => {
+        this.exited.subscribe(e => {
             const { container } = e;
             if (container instanceof PblDropListRef) {
                 container.beforeExit.next({ item: this });
             }
-        }));
+        });
     }
     /**
      * Sets an alternate drag root element. The root element is the element that will be moved as
      * the user is dragging. Passing an alternate root element is useful when trying to enable
      * dragging on an element that you might not have access to.
-     * @template THIS
-     * @this {THIS}
-     * @param {?} rootElement
-     * @return {THIS}
      */
     withRootElement(rootElement) {
         // the first call to `withRootElement` comes from the base class, before we construct the emitter.
         // We don't need it anyway...
-        if ((/** @type {?} */ (this)).rootElementChanged) {
-            /** @type {?} */
+        if (this.rootElementChanged) {
             const element = coerceElement(rootElement);
-            if ((/** @type {?} */ (this)).getRootElement() !== element) {
-                (/** @type {?} */ (this)).rootElementChanged.next({ prev: (/** @type {?} */ (this)).getRootElement(), curr: element });
+            if (this.getRootElement() !== element) {
+                this.rootElementChanged.next({ prev: this.getRootElement(), curr: element });
             }
         }
         return super.withRootElement(rootElement);
     }
-    /**
-     * @return {?}
-     */
     dispose() {
         this.rootElementChanged.complete();
         super.dispose();
     }
 }
-if (false) {
-    /**
-     * Fires when the root element changes
-     *
-     * > Does not emit on the initial setup.
-     * @type {?}
-     */
-    PblDragRef.prototype.rootElementChanged;
-}
 
-/**
- * @fileoverview added by tsickle
- * Generated from: lib/drag-and-drop/core/drag-drop.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * Default configuration to be used when creating a `DragRef`.
- * @type {?}
- */
+/** Default configuration to be used when creating a `DragRef`. */
 const DEFAULT_CONFIG = {
     dragStartThreshold: 5,
     pointerDirectionChangeThreshold: 5
@@ -139,12 +78,6 @@ const DEFAULT_CONFIG = {
  * Service that allows for drag-and-drop functionality to be attached to DOM elements.
  */
 class PblDragDrop {
-    /**
-     * @param {?} _document
-     * @param {?} _ngZone
-     * @param {?} _viewportRuler
-     * @param {?} _dragDropRegistry
-     */
     constructor(_document, _ngZone, _viewportRuler, _dragDropRegistry) {
         this._document = _document;
         this._ngZone = _ngZone;
@@ -153,177 +86,139 @@ class PblDragDrop {
     }
     /**
      * Turns an element into a draggable item.
-     * @template T
-     * @param {?} element Element to which to attach the dragging functionality.
-     * @param {?=} config Object used to configure the dragging behavior.
-     * @return {?}
+     * @param element Element to which to attach the dragging functionality.
+     * @param config Object used to configure the dragging behavior.
      */
     createDrag(element, config = DEFAULT_CONFIG) {
         return new PblDragRef(element, config, this._document, this._ngZone, this._viewportRuler, this._dragDropRegistry);
     }
     /**
      * Turns an element into a drop list.
-     * @template T
-     * @param {?} element Element to which to attach the drop list functionality.
-     * @return {?}
+     * @param element Element to which to attach the drop list functionality.
      */
     createDropList(element) {
         return new PblDropListRef(element, this._dragDropRegistry, this._document, this._ngZone, this._viewportRuler);
     }
 }
-PblDragDrop.decorators = [
-    { type: Injectable, args: [{ providedIn: 'root' },] }
-];
-/** @nocollapse */
-PblDragDrop.ctorParameters = () => [
-    { type: undefined, decorators: [{ type: Inject, args: [DOCUMENT,] }] },
-    { type: NgZone },
-    { type: ViewportRuler },
-    { type: DragDropRegistry }
-];
-/** @nocollapse */ PblDragDrop.ɵprov = ɵɵdefineInjectable({ factory: function PblDragDrop_Factory() { return new PblDragDrop(ɵɵinject(DOCUMENT), ɵɵinject(NgZone), ɵɵinject(ViewportRuler), ɵɵinject(DragDropRegistry)); }, token: PblDragDrop, providedIn: "root" });
-if (false) {
-    /**
-     * @type {?}
-     * @private
-     */
-    PblDragDrop.prototype._document;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblDragDrop.prototype._ngZone;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblDragDrop.prototype._viewportRuler;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblDragDrop.prototype._dragDropRegistry;
-}
+/** @nocollapse */ PblDragDrop.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblDragDrop, deps: [{ token: DOCUMENT }, { token: i0.NgZone }, { token: i1.ViewportRuler }, { token: i2.DragDropRegistry }], target: i0.ɵɵFactoryTarget.Injectable });
+/** @nocollapse */ PblDragDrop.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblDragDrop, providedIn: 'root' });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblDragDrop, decorators: [{
+            type: Injectable,
+            args: [{ providedIn: 'root' }]
+        }], ctorParameters: function () { return [{ type: undefined, decorators: [{
+                    type: Inject,
+                    args: [DOCUMENT]
+                }] }, { type: i0.NgZone }, { type: i1.ViewportRuler }, { type: i2.DragDropRegistry }]; } });
 
-/**
- * @fileoverview added by tsickle
- * Generated from: lib/drag-and-drop/core/lazy-drag-drop.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @template T, DRef
- */
 class CdkLazyDropList extends CdkDropList {
-    constructor() {
-        super(...arguments);
-        /* private */ this._draggablesSet = new Set();
-    }
-    /**
-     * @return {?}
-     */
-    get pblDropListRef() { return (/** @type {?} */ (this._dropListRef)); }
-    /**
-     * @return {?}
-     */
-    ngOnInit() {
-        if (this.pblDropListRef instanceof PblDropListRef === false) {
-            throw new Error('Invalid `DropListRef` injection, the ref is not an instance of PblDropListRef');
+    constructor(grid, element, dragDrop, changeDetectorRef, _scrollDispatcher, dir, group, config) {
+        super(element, dragDrop, changeDetectorRef, _scrollDispatcher, dir, group, config);
+        if (!(this.pblDropListRef instanceof PblDropListRef)) {
+            if (typeof ngDevMode === 'undefined' || ngDevMode) {
+                throw new Error('Invalid `DropListRef` injection, the ref is not an instance of PblDropListRef');
+            }
+            return;
         }
-        this._dropListRef.beforeStarted.subscribe((/**
-         * @return {?}
-         */
-        () => this.beforeStarted()));
-    }
-    /**
-     * @param {?} drag
-     * @return {?}
-     */
-    addDrag(drag) {
-        this._draggablesSet.add(drag);
-        this._draggables.reset(Array.from(this._draggablesSet.values()));
-        this._draggables.notifyOnChanges(); // TODO: notify with asap schedular and obs$
-    }
-    /**
-     * @param {?} drag
-     * @return {?}
-     */
-    removeDrag(drag) {
-        /** @type {?} */
-        const result = this._draggablesSet.delete(drag);
-        if (result) {
-            this._draggables.reset(Array.from(this._draggablesSet.values()));
-            this._draggables.notifyOnChanges(); // TODO: notify with asap schedular and obs$
-        }
-        return result;
-    }
-    /* protected */ /**
-     * @return {?}
-     */
-    beforeStarted() {
         // This is a workaround for https://github.com/angular/material2/pull/14153
         // Working around the missing capability for selecting a container element that is not the drop container host.
-        if (!this.originalElement) {
-            this.originalElement = this.element;
+        this.originalElement = element;
+        if (grid) {
+            this.updateGrid(grid);
         }
+        this.initDropListRef();
+    }
+    get pblDropListRef() { return this._dropListRef; }
+    get grid() { var _a; return (_a = this._gridApi) === null || _a === void 0 ? void 0 : _a.grid; }
+    set grid(value) { this.updateGrid(value); }
+    get dir() { var _a; return (_a = this._gridApi) === null || _a === void 0 ? void 0 : _a.getDirection(); }
+    get gridApi() { return this._gridApi; }
+    ngOnInit() {
+        this._dropListRef.beforeStarted.subscribe(() => this.beforeStarted());
+    }
+    addDrag(drag) {
+        this.addItem(drag);
+    }
+    removeDrag(drag) {
+        this.removeItem(drag);
+    }
+    /**
+     * A chance for inheriting implementations to change/modify the drop list ref instance
+     *
+     * We can't do this via a DragDrop service replacement as we might have multiple drop-lists on the same
+     * element which mean they must share the same DragDrop factory...
+     */
+    initDropListRef() { }
+    beforeStarted() {
         if (this.directContainerElement) {
-            /** @type {?} */
-            const element = (/** @type {?} */ (this.originalElement.nativeElement.querySelector(this.directContainerElement)));
+            const element = this.originalElement.nativeElement.querySelector(this.directContainerElement);
             this.element = new ElementRef(element);
         }
         else {
             this.element = this.originalElement;
         }
         this.pblDropListRef.withElement(this.element);
+        if (this.dir) {
+            this.pblDropListRef.withDirection(this.dir);
+        }
+    }
+    gridChanged(prev) { }
+    updateGrid(grid) {
+        if (grid !== this.grid) {
+            const prev = this._gridApi;
+            this._gridApi = grid ? PblNgridPluginController.find(grid).extApi : undefined;
+            this.gridChanged(prev);
+        }
     }
 }
-CdkLazyDropList.decorators = [
-    { type: Directive, args: [{
-                selector: '[cdkLazyDropList]',
-                exportAs: 'cdkLazyDropList',
-                providers: [
-                    { provide: DragDrop, useExisting: PblDragDrop },
-                    { provide: CDK_DROP_LIST, useClass: CdkLazyDropList },
-                ],
-                host: {
-                    // tslint:disable-line:use-host-property-decorator
-                    'class': 'cdk-drop-list',
-                    '[id]': 'id',
-                    '[class.cdk-drop-list-dragging]': '_dropListRef.isDragging()',
-                    '[class.cdk-drop-list-receiving]': '_dropListRef.isReceiving()',
-                }
-            },] }
-];
-CdkLazyDropList.propDecorators = {
-    directContainerElement: [{ type: Input, args: ['cdkDropListDirectContainerElement',] }]
-};
-if (false) {
-    /**
-     * Selector that will be used to determine the direct container element, starting from
-     * the `cdkDropList` element and going down the DOM. Passing an alternate direct container element
-     * is useful when the `cdkDropList` is not the direct parent (i.e. ancestor but not father)
-     * of the draggable elements.
-     * @type {?}
-     */
-    CdkLazyDropList.prototype.directContainerElement;
-    /** @type {?} */
-    CdkLazyDropList.prototype._draggables;
-    /** @type {?} */
-    CdkLazyDropList.prototype.originalElement;
-    /** @type {?} */
-    CdkLazyDropList.prototype._draggablesSet;
-}
-/**
- * @template T, Z, DRef
- */
+/** @nocollapse */ CdkLazyDropList.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: CdkLazyDropList, deps: [{ token: i1$1.PblNgridComponent, optional: true }, { token: i0.ElementRef }, { token: i2.DragDrop }, { token: i0.ChangeDetectorRef }, { token: i1.ScrollDispatcher }, { token: i4.Directionality, optional: true }, { token: CDK_DROP_LIST_GROUP, optional: true, skipSelf: true }, { token: CDK_DRAG_CONFIG, optional: true }], target: i0.ɵɵFactoryTarget.Directive });
+/** @nocollapse */ CdkLazyDropList.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "12.0.0", version: "12.0.0", type: CdkLazyDropList, selector: "[cdkLazyDropList]", inputs: { directContainerElement: ["cdkDropListDirectContainerElement", "directContainerElement"] }, host: { properties: { "id": "id", "class.cdk-drop-list-dragging": "_dropListRef.isDragging()", "class.cdk-drop-list-receiving": "_dropListRef.isReceiving()" }, classAttribute: "cdk-drop-list" }, providers: [
+        { provide: DragDrop, useExisting: PblDragDrop },
+        { provide: CDK_DROP_LIST, useClass: CdkLazyDropList },
+    ], exportAs: ["cdkLazyDropList"], usesInheritance: true, ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: CdkLazyDropList, decorators: [{
+            type: Directive,
+            args: [{
+                    selector: '[cdkLazyDropList]',
+                    exportAs: 'cdkLazyDropList',
+                    providers: [
+                        { provide: DragDrop, useExisting: PblDragDrop },
+                        { provide: CDK_DROP_LIST, useClass: CdkLazyDropList },
+                    ],
+                    host: {
+                        'class': 'cdk-drop-list',
+                        '[id]': 'id',
+                        '[class.cdk-drop-list-dragging]': '_dropListRef.isDragging()',
+                        '[class.cdk-drop-list-receiving]': '_dropListRef.isReceiving()',
+                    }
+                }]
+        }], ctorParameters: function () { return [{ type: i1$1.PblNgridComponent, decorators: [{
+                    type: Optional
+                }] }, { type: i0.ElementRef }, { type: i2.DragDrop }, { type: i0.ChangeDetectorRef }, { type: i1.ScrollDispatcher }, { type: i4.Directionality, decorators: [{
+                    type: Optional
+                }] }, { type: i2.CdkDropListGroup, decorators: [{
+                    type: Optional
+                }, {
+                    type: Inject,
+                    args: [CDK_DROP_LIST_GROUP]
+                }, {
+                    type: SkipSelf
+                }] }, { type: undefined, decorators: [{
+                    type: Optional
+                }, {
+                    type: Inject,
+                    args: [CDK_DRAG_CONFIG]
+                }] }]; }, propDecorators: { directContainerElement: [{
+                type: Input,
+                args: ['cdkDropListDirectContainerElement']
+            }] } });
+
 class CdkLazyDrag extends CdkDrag {
     constructor() {
         super(...arguments);
-        /* private */ this._hostNotRoot = false;
+        this._hostNotRoot = false;
     }
     /**
      * A class to set when the root element is not the host element. (i.e. when `cdkDragRootElement` is used).
-     * @param {?} value
-     * @return {?}
      */
     set rootElementSelectorClass(value) {
         if (value !== this._rootClass && this._hostNotRoot) {
@@ -336,44 +231,37 @@ class CdkLazyDrag extends CdkDrag {
         }
         this._rootClass = value;
     }
-    /**
-     * @return {?}
-     */
-    get pblDragRef() { return (/** @type {?} */ (this._dragRef)); }
-    /**
-     * @return {?}
-     */
-    get cdkDropList() { return (/** @type {?} */ (this.dropContainer)); }
-    /**
-     * @param {?} value
-     * @return {?}
-     */
-    set cdkDropList(value) {
+    get pblDragRef() { return this._dragRef; }
+    get cdkDropList() { return this.dropContainer; }
+    set cdkDropList(dropList) {
         // TO SUPPORT `cdkDropList` via string input (ID) we need a reactive registry...
-        if (this.cdkDropList) {
-            this.cdkDropList.removeDrag(this);
-        }
-        this.dropContainer = value;
-        if (value) {
-            this._dragRef._withDropContainer(value._dropListRef);
-            value.addDrag(this);
+        const prev = this.cdkDropList;
+        if (dropList !== prev) {
+            if (prev) {
+                prev.removeDrag(this);
+            }
+            this.dropContainer = dropList;
+            if (dropList) {
+                this._dragRef._withDropContainer(dropList.pblDropListRef);
+                this._dragRef.beforeStarted.subscribe(() => {
+                    if (dropList.dir) {
+                        this._dragRef.withDirection(dropList.dir);
+                    }
+                });
+                dropList.addDrag(this);
+            }
+            this.dropContainerChanged(prev);
         }
     }
-    /**
-     * @return {?}
-     */
     ngOnInit() {
-        if (this.pblDragRef instanceof PblDragRef === false) {
-            throw new Error('Invalid `DragRef` injection, the ref is not an instance of PblDragRef');
+        if (!(this.pblDragRef instanceof PblDragRef)) {
+            if (typeof ngDevMode === 'undefined' || ngDevMode) {
+                throw new Error('Invalid `DragRef` injection, the ref is not an instance of PblDragRef');
+            }
+            return;
         }
-        this.pblDragRef.rootElementChanged.subscribe((/**
-         * @param {?} event
-         * @return {?}
-         */
-        event => {
-            /** @type {?} */
+        this.pblDragRef.rootElementChanged.subscribe(event => {
             const rootElementSelectorClass = this._rootClass;
-            /** @type {?} */
             const hostNotRoot = this.element.nativeElement !== event.curr;
             if (rootElementSelectorClass) {
                 if (this._hostNotRoot) {
@@ -384,319 +272,208 @@ class CdkLazyDrag extends CdkDrag {
                 }
             }
             this._hostNotRoot = hostNotRoot;
-        }));
+        });
     }
     // This is a workaround for https://github.com/angular/material2/pull/14158
     // Working around the issue of drop container is not the direct parent (father) of a drag item.
     // The entire ngAfterViewInit() overriding method can be removed if PR accepted.
-    /**
-     * @return {?}
-     */
     ngAfterViewInit() {
-        this.started.subscribe((/**
-         * @param {?} startedEvent
-         * @return {?}
-         */
-        startedEvent => {
+        this.started.subscribe(startedEvent => {
             if (this.dropContainer) {
-                /** @type {?} */
                 const element = this.getRootElement();
-                /** @type {?} */
-                const initialRootElementParent = (/** @type {?} */ (element.parentNode));
+                const initialRootElementParent = element.parentNode;
                 if (!element.nextSibling && initialRootElementParent !== this.dropContainer.element.nativeElement) {
-                    this.ended.pipe(take(1)).subscribe((/**
-                     * @param {?} endedEvent
-                     * @return {?}
-                     */
-                    endedEvent => initialRootElementParent.appendChild(element)));
+                    this.ended.pipe(take(1)).subscribe(endedEvent => initialRootElementParent.appendChild(element));
                 }
             }
-        }));
-        /* super.ngAfterViewInit(); */
+        });
+        super.ngAfterViewInit();
     }
-    /**
-     * @return {?}
-     */
     ngOnDestroy() {
-        if (this.cdkDropList) {
-            this.cdkDropList.removeDrag(this);
-        }
-        /* super.ngOnDestroy(); */
+        var _a;
+        (_a = this.cdkDropList) === null || _a === void 0 ? void 0 : _a.removeDrag(this);
+        super.ngOnDestroy();
     }
+    dropContainerChanged(prev) { }
 }
-CdkLazyDrag.decorators = [
-    { type: Directive, args: [{
-                selector: '[cdkLazyDrag]',
-                exportAs: 'cdkLazyDrag',
-                host: {
-                    // tslint:disable-line:use-host-property-decorator
-                    'class': 'cdk-drag',
-                    '[class.cdk-drag-dragging]': '_dragRef.isDragging()',
-                },
-                providers: [
-                    { provide: DragDrop, useExisting: PblDragDrop },
-                ],
-            },] }
-];
-CdkLazyDrag.propDecorators = {
-    rootElementSelectorClass: [{ type: Input, args: ['cdkDragRootElementClass',] }],
-    cdkDropList: [{ type: Input }]
-};
-if (false) {
-    /** @type {?} */
-    CdkLazyDrag.prototype._rootClass;
-    /** @type {?} */
-    CdkLazyDrag.prototype._hostNotRoot;
-}
-/**
- * Handle that can be used to drag and CdkDrag instance.
- */
+/** @nocollapse */ CdkLazyDrag.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: CdkLazyDrag, deps: null, target: i0.ɵɵFactoryTarget.Directive });
+/** @nocollapse */ CdkLazyDrag.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "12.0.0", version: "12.0.0", type: CdkLazyDrag, selector: "[cdkLazyDrag]", inputs: { rootElementSelectorClass: ["cdkDragRootElementClass", "rootElementSelectorClass"], cdkDropList: "cdkDropList" }, host: { properties: { "class.cdk-drag-dragging": "_dragRef.isDragging()" }, classAttribute: "cdk-drag" }, providers: [
+        { provide: DragDrop, useExisting: PblDragDrop },
+    ], exportAs: ["cdkLazyDrag"], usesInheritance: true, ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: CdkLazyDrag, decorators: [{
+            type: Directive,
+            args: [{
+                    selector: '[cdkLazyDrag]',
+                    exportAs: 'cdkLazyDrag',
+                    host: {
+                        'class': 'cdk-drag',
+                        '[class.cdk-drag-dragging]': '_dragRef.isDragging()',
+                    },
+                    providers: [
+                        { provide: DragDrop, useExisting: PblDragDrop },
+                    ],
+                }]
+        }], propDecorators: { rootElementSelectorClass: [{
+                type: Input,
+                args: ['cdkDragRootElementClass']
+            }], cdkDropList: [{
+                type: Input
+            }] } });
+
+/** Handle that can be used to drag and CdkDrag instance. */
 class PblDragHandle extends CdkDragHandle {
-    /**
-     * @param {?} element
-     * @param {?=} parentDrag
-     */
     constructor(element, parentDrag) {
         super(element, parentDrag);
         this.element = element;
     }
 }
-PblDragHandle.decorators = [
-    { type: Directive, args: [{
-                selector: '[pblDragHandle]',
-                host: {
-                    // tslint:disable-line:use-host-property-decorator
-                    'class': 'cdk-drag-handle'
-                },
-                providers: [
-                    {
-                        provide: CdkDragHandle,
-                        useExisting: PblDragHandle
-                    }
-                ]
-            },] }
-];
-/** @nocollapse */
-PblDragHandle.ctorParameters = () => [
-    { type: ElementRef },
-    { type: CdkDrag, decorators: [{ type: Optional }] }
-];
-if (false) {
-    /** @type {?} */
-    PblDragHandle.prototype.element;
+/** @nocollapse */ PblDragHandle.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblDragHandle, deps: [{ token: i0.ElementRef }, { token: CDK_DRAG_PARENT, optional: true, skipSelf: true }], target: i0.ɵɵFactoryTarget.Directive });
+/** @nocollapse */ PblDragHandle.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "12.0.0", version: "12.0.0", type: PblDragHandle, selector: "[pblDragHandle]", host: { classAttribute: "cdk-drag-handle" }, providers: [
+        {
+            provide: CDK_DRAG_HANDLE,
+            useExisting: PblDragHandle
+        }
+    ], usesInheritance: true, ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblDragHandle, decorators: [{
+            type: Directive,
+            args: [{
+                    selector: '[pblDragHandle]',
+                    host: {
+                        'class': 'cdk-drag-handle'
+                    },
+                    providers: [
+                        {
+                            provide: CDK_DRAG_HANDLE,
+                            useExisting: PblDragHandle
+                        }
+                    ]
+                }]
+        }], ctorParameters: function () { return [{ type: i0.ElementRef }, { type: undefined, decorators: [{
+                    type: Inject,
+                    args: [CDK_DRAG_PARENT]
+                }, {
+                    type: Optional
+                }, {
+                    type: SkipSelf
+                }] }]; } });
+
+const _PblDropListRef = () => { return PblDropListRef; };
+class PblRowDropListRef extends _PblDropListRef() {
+    constructor() {
+        super(...arguments);
+        this.scrollDif = 0;
+    }
+    _getItemIndexFromPointerPosition(item, pointerX, pointerY, delta) {
+        return super._getItemIndexFromPointerPosition(item, pointerX, pointerY - this.scrollDif, delta);
+    }
+    start() {
+        super.start();
+        this.scrollDif = 0;
+        if (this.gridApi.grid.viewport.enabled) {
+            const initialTop = this.gridApi.grid.viewport.measureScrollOffset();
+            this.gridApi.grid.viewport.elementScrolled()
+                .pipe(takeUntil(this.dropped))
+                .subscribe(() => {
+                this.scrollDif = this.gridApi.grid.viewport.measureScrollOffset() - initialTop;
+            });
+        }
+    }
+}
+function patchDropListRef$1(dropListRef, gridApi) {
+    try {
+        Object.setPrototypeOf(dropListRef, PblRowDropListRef.prototype);
+    }
+    catch (err) {
+        dropListRef._getItemIndexFromPointerPosition = PblRowDropListRef.prototype._getItemIndexFromPointerPosition;
+        dropListRef.start = PblRowDropListRef.prototype.start;
+    }
+    dropListRef.gridApi = gridApi;
 }
 
-/**
- * @fileoverview added by tsickle
- * Generated from: lib/drag-and-drop/row/row-reorder-plugin.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const ROW_REORDER_PLUGIN_KEY = 'rowReorder';
-/** @type {?} */
-let _uniqueIdCounter = 0;
-const ɵ0 = undefined;
-/**
- * @template T
- */
-class PblNgridRowReorderPluginDirective extends CdkDropList {
-    /**
-     * @param {?} grid
-     * @param {?} pluginCtrl
-     * @param {?} element
-     * @param {?} dragDrop
-     * @param {?} changeDetectorRef
-     * @param {?=} dir
-     * @param {?=} group
-     */
-    constructor(grid, pluginCtrl, element, dragDrop, changeDetectorRef, dir, group) {
-        super(element, dragDrop, changeDetectorRef, dir, group);
-        this.grid = grid;
-        this.id = `pbl-ngrid-row-reorder-list-${_uniqueIdCounter++}`;
+let _uniqueIdCounter$3 = 0;
+class PblNgridRowReorderPluginDirective extends CdkLazyDropList {
+    constructor() {
+        super(...arguments);
+        this.id = `pbl-ngrid-row-reorder-list-${_uniqueIdCounter$3++}`;
         this._rowReorder = false;
-        /* CdkLazyDropList start */
-        /**
-         * Selector that will be used to determine the direct container element, starting from
-         * the `cdkDropList` element and going down the DOM. Passing an alternate direct container element
-         * is useful when the `cdkDropList` is not the direct parent (i.e. ancestor but not father)
-         * of the draggable elements.
-         */
-        this.directContainerElement = '.pbl-ngrid-scroll-container'; // we need this to allow auto-scroll
-        this._draggablesSet = new Set();
-        this._removePlugin = pluginCtrl.setPlugin(ROW_REORDER_PLUGIN_KEY, this);
-        this.dropped.subscribe((/**
-         * @param {?} event
-         * @return {?}
-         */
-        (event) => {
-            /** @type {?} */
-            const item = (/** @type {?} */ (event.item));
-            /** @type {?} */
-            const previousIndex = grid.ds.source.indexOf(item.draggedContext.row);
-            /** @type {?} */
-            const currentIndex = event.currentIndex + grid.ds.renderStart;
-            this.grid.contextApi.clear();
-            this.grid.ds.moveItem(previousIndex, currentIndex, true);
-            this.grid._cdkTable.syncRows('data');
-        }));
     }
-    /**
-     * @return {?}
-     */
     get rowReorder() { return this._rowReorder; }
     ;
-    /**
-     * @param {?} value
-     * @return {?}
-     */
     set rowReorder(value) {
         value = coerceBooleanProperty(value);
         this._rowReorder = value;
     }
-    // we need this to allow auto-scroll
-    /**
-     * @return {?}
-     */
-    get pblDropListRef() { return (/** @type {?} */ (this._dropListRef)); }
-    /**
-     * @return {?}
-     */
-    ngOnInit() { CdkLazyDropList.prototype.ngOnInit.call(this); }
-    /**
-     * @param {?} drag
-     * @return {?}
-     */
-    addDrag(drag) { return CdkLazyDropList.prototype.addDrag.call(this, drag); }
-    /**
-     * @param {?} drag
-     * @return {?}
-     */
-    removeDrag(drag) { return CdkLazyDropList.prototype.removeDrag.call(this, drag); }
-    /**
-     * @return {?}
-     */
-    beforeStarted() { CdkLazyDropList.prototype.beforeStarted.call(this); }
-    /* CdkLazyDropList end */
-    /**
-     * @return {?}
-     */
     ngOnDestroy() {
         super.ngOnDestroy();
         this._removePlugin(this.grid);
     }
-}
-PblNgridRowReorderPluginDirective.decorators = [
-    { type: Directive, args: [{
-                selector: 'pbl-ngrid[rowReorder]',
-                exportAs: 'pblNgridRowReorder',
-                inputs: [
-                    'directContainerElement:cdkDropListDirectContainerElement'
-                ],
-                host: {
-                    // tslint:disable-line:use-host-property-decorator
-                    'class': 'cdk-drop-list',
-                    '[id]': 'id',
-                    '[class.cdk-drop-list-dragging]': '_dropListRef.isDragging()',
-                    '[class.cdk-drop-list-receiving]': '_dropListRef.isReceiving()',
-                    '[class.pbl-row-reorder]': 'rowReorder && !this.grid.ds?.sort.sort?.order && !this.grid.ds?.filter?.filter',
-                },
-                providers: [
-                    { provide: DragDrop, useExisting: PblDragDrop },
-                    { provide: CdkDropListGroup, useValue: ɵ0 },
-                    { provide: CDK_DROP_LIST, useExisting: PblNgridRowReorderPluginDirective },
-                ],
-            },] }
-];
-/** @nocollapse */
-PblNgridRowReorderPluginDirective.ctorParameters = () => [
-    { type: PblNgridComponent },
-    { type: PblNgridPluginController },
-    { type: ElementRef },
-    { type: DragDrop },
-    { type: ChangeDetectorRef },
-    { type: Directionality, decorators: [{ type: Optional }] },
-    { type: CdkDropListGroup, decorators: [{ type: Optional }, { type: SkipSelf }] }
-];
-PblNgridRowReorderPluginDirective.propDecorators = {
-    rowReorder: [{ type: Input }]
-};
-if (false) {
-    /** @type {?} */
-    PblNgridRowReorderPluginDirective.prototype.id;
-    /** @type {?} */
-    PblNgridRowReorderPluginDirective.prototype._draggables;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridRowReorderPluginDirective.prototype._rowReorder;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridRowReorderPluginDirective.prototype._removePlugin;
-    /**
-     * Selector that will be used to determine the direct container element, starting from
-     * the `cdkDropList` element and going down the DOM. Passing an alternate direct container element
-     * is useful when the `cdkDropList` is not the direct parent (i.e. ancestor but not father)
-     * of the draggable elements.
-     * @type {?}
-     */
-    PblNgridRowReorderPluginDirective.prototype.directContainerElement;
-    /** @type {?} */
-    PblNgridRowReorderPluginDirective.prototype.originalElement;
-    /** @type {?} */
-    PblNgridRowReorderPluginDirective.prototype._draggablesSet;
-    /** @type {?} */
-    PblNgridRowReorderPluginDirective.prototype.grid;
-    /* Skipping unhandled member: ;*/
-}
-/**
- * @template T
- */
-class PblNgridRowDragDirective extends CdkDrag {
-    // CTOR IS REQUIRED OR IT WONT WORK IN AOT
-    // TODO: Try to remove when supporting IVY
-    /**
-     * @param {?} element
-     * @param {?} dropContainer
-     * @param {?} _document
-     * @param {?} _ngZone
-     * @param {?} _viewContainerRef
-     * @param {?} config
-     * @param {?} _dir
-     * @param {?} dragDrop
-     * @param {?} _changeDetectorRef
-     */
-    constructor(element, dropContainer, _document, _ngZone, _viewContainerRef, config, _dir, dragDrop, _changeDetectorRef) {
-        super(element, dropContainer, _document, _ngZone, _viewContainerRef, config, _dir, dragDrop, _changeDetectorRef);
-        this.rootElementSelector = 'pbl-ngrid-row';
-        this._hostNotRoot = false;
-        this.started.subscribe((/**
-         * @param {?} event
-         * @return {?}
-         */
-        (event) => {
-            const { col, row, grid, value } = this._context;
-            this._draggedContext = { col, row, grid, value };
-        }));
+    getSortedItems() {
+        const { rowsApi } = this.gridApi;
+        // The CdkTable has a view repeater that cache view's for performance (only when virtual scroll enabled)
+        // A cached view is not showing but still "living" so it's CdkDrag element is still up in the air
+        // We need to filter them out
+        // An alternative will be to catch the events of the rows attached/detached and add/remove them from the drop list.
+        return super.getSortedItems().filter(item => {
+            var _a;
+            return (_a = rowsApi.findRowByElement(item.getRootElement())) === null || _a === void 0 ? void 0 : _a.attached;
+        });
     }
-    /**
-     * @return {?}
-     */
+    initDropListRef() {
+        patchDropListRef$1(this.pblDropListRef, this.gridApi);
+    }
+    gridChanged() {
+        this._removePlugin = this.gridApi.pluginCtrl.setPlugin(ROW_REORDER_PLUGIN_KEY, this);
+        this.directContainerElement = '.pbl-ngrid-scroll-container';
+        this.dropped.subscribe((event) => {
+            const item = event.item;
+            const previousIndex = this.grid.ds.source.indexOf(item.draggedContext.row);
+            const currentIndex = event.currentIndex + this.grid.ds.renderStart;
+            this.grid.ds.moveItem(previousIndex, currentIndex, true);
+            this.grid.rowsApi.syncRows('data');
+        });
+    }
+}
+/** @nocollapse */ PblNgridRowReorderPluginDirective.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridRowReorderPluginDirective, deps: null, target: i0.ɵɵFactoryTarget.Directive });
+/** @nocollapse */ PblNgridRowReorderPluginDirective.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "12.0.0", version: "12.0.0", type: PblNgridRowReorderPluginDirective, selector: "pbl-ngrid[rowReorder]", inputs: { rowReorder: "rowReorder" }, host: { properties: { "id": "id", "class.cdk-drop-list-dragging": "_dropListRef.isDragging()", "class.cdk-drop-list-receiving": "_dropListRef.isReceiving()", "class.pbl-row-reorder": "rowReorder && !this.grid.ds?.sort.sort?.order && !this.grid.ds?.filter?.filter" }, classAttribute: "cdk-drop-list" }, providers: [
+        { provide: DragDrop, useExisting: PblDragDrop },
+        { provide: CdkDropListGroup, useValue: undefined },
+        { provide: CDK_DROP_LIST, useExisting: PblNgridRowReorderPluginDirective },
+    ], exportAs: ["pblNgridRowReorder"], usesInheritance: true, ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridRowReorderPluginDirective, decorators: [{
+            type: Directive,
+            args: [{
+                    selector: 'pbl-ngrid[rowReorder]',
+                    exportAs: 'pblNgridRowReorder',
+                    host: {
+                        'class': 'cdk-drop-list',
+                        '[id]': 'id',
+                        '[class.cdk-drop-list-dragging]': '_dropListRef.isDragging()',
+                        '[class.cdk-drop-list-receiving]': '_dropListRef.isReceiving()',
+                        '[class.pbl-row-reorder]': 'rowReorder && !this.grid.ds?.sort.sort?.order && !this.grid.ds?.filter?.filter',
+                    },
+                    providers: [
+                        { provide: DragDrop, useExisting: PblDragDrop },
+                        { provide: CdkDropListGroup, useValue: undefined },
+                        { provide: CDK_DROP_LIST, useExisting: PblNgridRowReorderPluginDirective },
+                    ],
+                }]
+        }], propDecorators: { rowReorder: [{
+                type: Input
+            }] } });
+
+class PblNgridRowDragDirective extends CdkLazyDrag {
+    constructor() {
+        super(...arguments);
+        this.rootElementSelector = 'pbl-ngrid-row';
+    }
     get context() {
         return this._context;
     }
-    /**
-     * @param {?} value
-     * @return {?}
-     */
     set context(value) {
         this._context = value;
-        /** @type {?} */
         const pluginCtrl = this.pluginCtrl = value && PblNgridPluginController.find(value.grid);
-        /** @type {?} */
-        const plugin = pluginCtrl && pluginCtrl.getPlugin(ROW_REORDER_PLUGIN_KEY);
+        const plugin = pluginCtrl === null || pluginCtrl === void 0 ? void 0 : pluginCtrl.getPlugin(ROW_REORDER_PLUGIN_KEY);
         this.cdkDropList = plugin || undefined;
     }
     /**
@@ -705,566 +482,210 @@ class PblNgridRowDragDirective extends CdkDrag {
      * This context is not similar to the `context` property.
      * The `context` property holds the current context which is shared and updated on scroll so if a user start a drag and then scrolled
      * the context will point to the row in view and not the original cell.
-     * @return {?}
      */
     get draggedContext() {
         return this._draggedContext;
     }
-    /* CdkLazyDrag start */
-    /**
-     * A class to set when the root element is not the host element. (i.e. when `cdkDragRootElement` is used).
-     * @param {?} value
-     * @return {?}
-     */
-    set rootElementSelectorClass(value) {
-        if (value !== this._rootClass && this._hostNotRoot) {
-            if (this._rootClass) {
-                this.getRootElement().classList.remove(...this._rootClass.split(' '));
-            }
-            if (value) {
-                this.getRootElement().classList.add(...value.split(' '));
-            }
-        }
-        this._rootClass = value;
+    ngOnInit() {
+        this.started.subscribe((event) => {
+            const { col, row, grid, value } = this._context;
+            this._draggedContext = { col, row, grid, value };
+        });
+        super.ngOnInit();
     }
-    /**
-     * @return {?}
-     */
-    get pblDragRef() { return (/** @type {?} */ (this._dragRef)); }
-    /**
-     * @return {?}
-     */
-    get cdkDropList() { return (/** @type {?} */ (this.dropContainer)); }
-    /**
-     * @param {?} value
-     * @return {?}
-     */
-    set cdkDropList(value) {
-        // TO SUPPORT `cdkDropList` via string input (ID) we need a reactive registry...
-        if (this.cdkDropList) {
-            this.cdkDropList.removeDrag(this);
-        }
-        this.dropContainer = value;
-        if (value) {
-            this._dragRef._withDropContainer(value._dropListRef);
-            value.addDrag(this);
-        }
-    }
-    /**
-     * @return {?}
-     */
-    ngOnInit() { CdkLazyDrag.prototype.ngOnInit.call(this); }
-    /**
-     * @return {?}
-     */
-    ngAfterViewInit() { CdkLazyDrag.prototype.ngAfterViewInit.call(this); super.ngAfterViewInit(); }
-    /**
-     * @return {?}
-     */
-    ngOnDestroy() { CdkLazyDrag.prototype.ngOnDestroy.call(this); super.ngOnDestroy(); }
 }
-PblNgridRowDragDirective.decorators = [
-    { type: Directive, args: [{
-                selector: '[pblNgridRowDrag]',
-                exportAs: 'pblNgridRowDrag',
-                host: {
-                    // tslint:disable-line:use-host-property-decorator
-                    'class': 'cdk-drag',
-                    '[class.cdk-drag-dragging]': '_dragRef.isDragging()',
-                },
-                providers: [
-                    { provide: DragDrop, useExisting: PblDragDrop },
-                    { provide: CdkDrag, useExisting: PblNgridRowDragDirective }
-                ]
-            },] }
-];
-/** @nocollapse */
-PblNgridRowDragDirective.ctorParameters = () => [
-    { type: ElementRef },
-    { type: CdkDropList, decorators: [{ type: Inject, args: [CDK_DROP_LIST,] }, { type: Optional }, { type: SkipSelf }] },
-    { type: undefined, decorators: [{ type: Inject, args: [DOCUMENT,] }] },
-    { type: NgZone },
-    { type: ViewContainerRef },
-    { type: undefined, decorators: [{ type: Inject, args: [CDK_DRAG_CONFIG,] }] },
-    { type: Directionality },
-    { type: DragDrop },
-    { type: ChangeDetectorRef }
-];
-PblNgridRowDragDirective.propDecorators = {
-    context: [{ type: Input, args: ['pblNgridRowDrag',] }],
-    rootElementSelectorClass: [{ type: Input, args: ['cdkDragRootElementClass',] }],
-    cdkDropList: [{ type: Input }]
-};
-if (false) {
-    /** @type {?} */
-    PblNgridRowDragDirective.prototype.rootElementSelector;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridRowDragDirective.prototype._context;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridRowDragDirective.prototype._draggedContext;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridRowDragDirective.prototype.pluginCtrl;
-    /** @type {?} */
-    PblNgridRowDragDirective.prototype._rootClass;
-    /** @type {?} */
-    PblNgridRowDragDirective.prototype._hostNotRoot;
+/** @nocollapse */ PblNgridRowDragDirective.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridRowDragDirective, deps: null, target: i0.ɵɵFactoryTarget.Directive });
+/** @nocollapse */ PblNgridRowDragDirective.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "12.0.0", version: "12.0.0", type: PblNgridRowDragDirective, selector: "[pblNgridRowDrag]", inputs: { context: ["pblNgridRowDrag", "context"] }, host: { properties: { "class.cdk-drag-dragging": "_dragRef.isDragging()" }, classAttribute: "cdk-drag" }, providers: [
+        { provide: DragDrop, useExisting: PblDragDrop },
+        { provide: CDK_DRAG_PARENT, useExisting: PblNgridRowDragDirective },
+    ], exportAs: ["pblNgridRowDrag"], usesInheritance: true, ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridRowDragDirective, decorators: [{
+            type: Directive,
+            args: [{
+                    selector: '[pblNgridRowDrag]',
+                    exportAs: 'pblNgridRowDrag',
+                    host: {
+                        'class': 'cdk-drag',
+                        '[class.cdk-drag-dragging]': '_dragRef.isDragging()',
+                    },
+                    providers: [
+                        { provide: DragDrop, useExisting: PblDragDrop },
+                        { provide: CDK_DRAG_PARENT, useExisting: PblNgridRowDragDirective },
+                    ]
+                }]
+        }], propDecorators: { context: [{
+                type: Input,
+                args: ['pblNgridRowDrag']
+            }] } });
+
+class PblColumnDropListRef extends PblDropListRef {
+    _sortPredicate(newIndex, drag, drop) {
+        const siblings = this.data.getSortedItems().map(c => c._dragRef);
+        const dragAtNewPosition = siblings[newIndex];
+        if (dragAtNewPosition.data.column.wontBudge) {
+            return false;
+        }
+        // we now need to find if between current and new position there are items with `wontBudge`
+        const itemAtOriginalPosition = this.lastSwap ? this.lastSwap : drag;
+        const currentIndex = siblings.findIndex(currentItem => currentItem === itemAtOriginalPosition);
+        const start = Math.min(newIndex, currentIndex);
+        const itemsDraggedOver = siblings.slice(start, Math.abs(newIndex - currentIndex) + start);
+        for (const dragItem of itemsDraggedOver) {
+            if (dragItem.data.column.wontBudge && dragItem !== drag) {
+                return false;
+            }
+        }
+        if (!drag.data.column.checkGroupLockConstraint(dragAtNewPosition.data.column)) {
+            return false;
+        }
+        this.lastSwap = dragAtNewPosition;
+        return true;
+    }
+    _sortItem(item, pointerX, pointerY, pointerDelta) {
+        const lastSwap = this.lastSwap;
+        this.sortPredicate = (index, drag) => this._sortPredicate(index, drag, this);
+        super._sortItem(item, pointerX, pointerY, pointerDelta);
+        if (this.lastSwap && this.lastSwap !== lastSwap && this.data.orientation === 'horizontal') {
+            const siblings = this.data.getSortedItems().map(c => c._dragRef);
+            siblings.forEach((sibling, index) => {
+                // Don't do anything if the position hasn't changed.
+                // if (oldOrder[index] === sibling) {
+                //   return;
+                // }
+                const transform = sibling.getVisibleElement().style.transform;
+                for (const c of sibling.data.getCells()) {
+                    c.style.transform = transform;
+                }
+            });
+        }
+    }
+}
+function patchDropListRef(dropListRef) {
+    try {
+        Object.setPrototypeOf(dropListRef, PblColumnDropListRef.prototype);
+    }
+    catch (err) {
+        dropListRef._sortPredicate = PblColumnDropListRef.prototype._sortPredicate;
+        dropListRef._sortItem = PblColumnDropListRef.prototype._sortItem;
+    }
 }
 
-/**
- * @fileoverview added by tsickle
- * Generated from: lib/drag-and-drop/column/column-reorder-plugin.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
-const COL_REORDER_PLUGIN_KEY = 'columnReorder';
-/** @type {?} */
-let _uniqueIdCounter$1 = 0;
-/**
- * @template T
- */
-class PblNgridColumnReorderPluginDirective extends CdkDropList {
-    /**
-     * @param {?} table
-     * @param {?} pluginCtrl
-     * @param {?} element
-     * @param {?} dragDrop
-     * @param {?} changeDetectorRef
-     * @param {?=} dir
-     * @param {?=} group
-     */
-    constructor(table, pluginCtrl, element, dragDrop, changeDetectorRef, dir, group) {
-        super(element, dragDrop, changeDetectorRef, dir, group);
-        this.table = table;
-        this.id = `pbl-ngrid-column-reorder-list-${_uniqueIdCounter$1++}`;
+// tslint:disable:no-output-rename
+const COL_DRAG_CONTAINER_PLUGIN_KEY = 'columnDrag';
+let _uniqueIdCounter$2 = 0;
+class PblNgridColumnDragContainerDirective extends CdkLazyDropList {
+    constructor() {
+        super(...arguments);
+        this.id = `pbl-ngrid-column-drag-container-list-${_uniqueIdCounter$2++}`;
         this.orientation = 'horizontal';
+        this._columnDrag = false;
+        this.connections = new Set();
+    }
+    get columnDrag() { return this._columnDrag; }
+    ;
+    set columnDrag(value) {
+        this._columnDrag = coerceBooleanProperty(value);
+    }
+    hasConnections() {
+        return this.connections.size > 0;
+    }
+    canDrag(column) {
+        return this.connections.size > 0;
+    }
+    connectTo(dropList) {
+        if (!this.connections.has(dropList)) {
+            this.connections.add(dropList);
+            this.connectedTo = Array.from(this.connections);
+            this.connectionsChanged.next();
+        }
+    }
+    disconnectFrom(dropList) {
+        if (this.connections.delete(dropList)) {
+            this.connectedTo = Array.from(this.connections);
+            this.connectionsChanged.next();
+        }
+    }
+    ngOnDestroy() {
+        super.ngOnDestroy();
+        this.connectionsChanged.complete();
+        this.dragging.complete();
+        this._removePlugin(this.grid);
+    }
+    initDropListRef() {
+        patchDropListRef(this.pblDropListRef);
+    }
+    beforeStarted() {
+        super.beforeStarted();
+        this.dragging.next(true);
+    }
+    gridChanged() {
         this.dragging = new BehaviorSubject(false);
-        this._columnReorder = false;
-        this._manualOverride = false;
-        this._draggablesSet = new Set();
-        this._removePlugin = pluginCtrl.setPlugin(COL_REORDER_PLUGIN_KEY, this);
+        this.connectionsChanged = new Subject();
+        this._removePlugin = this.gridApi.pluginCtrl.setPlugin(COL_DRAG_CONTAINER_PLUGIN_KEY, this);
         this.directContainerElement = '.pbl-ngrid-header-row-main';
-        this.dropped.subscribe((/**
-         * @param {?} event
-         * @return {?}
-         */
-        (event) => {
-            if (!this.manualOverride) {
-                this.table.columnApi.moveColumn(((/** @type {?} */ (event.item))).column, event.currentIndex);
-            }
-        }));
-        this.dragging.subscribe((/**
-         * @param {?} isDragging
-         * @return {?}
-         */
-        isDragging => {
-            /** @type {?} */
-            const el = element.nativeElement;
+        this.dragging.subscribe(isDragging => {
+            const el = this.originalElement.nativeElement;
             if (isDragging) {
                 el.classList.add('pbl-ngrid-column-list-dragging');
             }
             else {
                 el.classList.remove('pbl-ngrid-column-list-dragging');
             }
-            this.lastSwap = undefined;
-        }));
-        this.monkeyPatchDropListRef();
-    }
-    /**
-     * @return {?}
-     */
-    get columnReorder() { return this._columnReorder; }
-    ;
-    /**
-     * @param {?} value
-     * @return {?}
-     */
-    set columnReorder(value) {
-        value = coerceBooleanProperty(value);
-        this._columnReorder = value;
-    }
-    /**
-     * When true, will not move the column on drop.
-     * Instead you need to handle the dropped event.
-     * @return {?}
-     */
-    get manualOverride() { return this._manualOverride; }
-    ;
-    /**
-     * @param {?} value
-     * @return {?}
-     */
-    set manualOverride(value) { this._manualOverride = coerceBooleanProperty(value); }
-    // Stuff to workaround encapsulation in CdkDropList
-    /**
-     * @private
-     * @return {?}
-     */
-    get pblGetItemIndexFromPointerPosition() {
-        return ((/** @type {?} */ (this._dropListRef)))._getItemIndexFromPointerPosition.bind(this._dropListRef);
-    }
-    /**
-     * @private
-     * @return {?}
-     */
-    get pblGetPositionCacheItems() {
-        return ((/** @type {?} */ (this._dropListRef)))._itemPositions;
-    }
-    /**
-     * @return {?}
-     */
-    get pblDropListRef() { return (/** @type {?} */ (this._dropListRef)); }
-    // ngOnInit(): void { CdkLazyDropList.prototype.ngOnInit.call(this); }
-    /**
-     * @param {?} drag
-     * @return {?}
-     */
-    addDrag(drag) { return CdkLazyDropList.prototype.addDrag.call(this, drag); }
-    /**
-     * @param {?} drag
-     * @return {?}
-     */
-    removeDrag(drag) { return CdkLazyDropList.prototype.removeDrag.call(this, drag); }
-    // beforeStarted(): void { CdkLazyDropList.prototype.beforeStarted.call(this); }
-    /* CdkLazyDropList end */
-    /**
-     * @return {?}
-     */
-    ngOnInit() {
-        CdkLazyDropList.prototype.ngOnInit.call(this); // super.ngOnInit();
-        this.dropped.subscribe((/**
-         * @param {?} e
-         * @return {?}
-         */
-        e => this._pblReset()));
-        this.pblDropListRef.beforeExit.subscribe((/**
-         * @param {?} e
-         * @return {?}
-         */
-        e => this._pblReset()));
-    }
-    /**
-     * @return {?}
-     */
-    ngOnDestroy() {
-        super.ngOnDestroy();
-        this._removePlugin(this.table);
-    }
-    /* protected */ /**
-     * @return {?}
-     */
-    beforeStarted() {
-        CdkLazyDropList.prototype.beforeStarted.call(this); // super.beforeStarted();
-        this.lastSorted = undefined;
-        this.dragging.next(true);
-    }
-    /**
-     * @private
-     * @return {?}
-     */
-    _pblReset() {
-        this.dragging.next(false);
-        /** @type {?} */
-        const siblings = this.pblGetPositionCacheItems;
-        siblings.forEach((/**
-         * @param {?} sibling
-         * @param {?} index
-         * @return {?}
-         */
-        (sibling, index) => {
-            for (const c of sibling.drag.data.getCells()) {
-                c.style.transform = ``;
-            }
-        }));
-    }
-    /**
-     * @private
-     * @return {?}
-     */
-    monkeyPatchDropListRef() {
-        const { _sortItem, enter } = this._dropListRef;
-        this.pblDropListRef.enter = (/**
-         * @param {?} item
-         * @param {?} pointerX
-         * @param {?} pointerY
-         * @return {?}
-         */
-        (item, pointerX, pointerY) => {
-            /** @type {?} */
-            const lastSorted = this.lastSorted;
-            this.lastSorted = undefined;
-            if (lastSorted && lastSorted.drag === item) {
-                /** @type {?} */
-                const isHorizontal = this.orientation === 'horizontal';
-                pointerX = lastSorted.clientRect.left + 1 - (isHorizontal ? lastSorted.offset : 0);
-                pointerY = lastSorted.clientRect.top + 1 - (!isHorizontal ? lastSorted.offset : 0);
-            }
-            enter.call(this._dropListRef, item, pointerX, pointerY);
         });
-        this.pblDropListRef._sortItem = (/**
-         * @param {?} item
-         * @param {?} pointerX
-         * @param {?} pointerY
-         * @param {?} pointerDelta
-         * @return {?}
-         */
-        (item, pointerX, pointerY, pointerDelta) => {
-            /** @type {?} */
-            const siblings = this.pblGetPositionCacheItems;
-            this.lastSorted = siblings.find((/**
-             * @param {?} s
-             * @return {?}
-             */
-            s => s.drag === item));
-            /** @type {?} */
-            const newIndex = this.pblGetItemIndexFromPointerPosition((/** @type {?} */ (item)), pointerX, pointerY, pointerDelta);
-            if (newIndex === -1 && siblings.length > 0) {
-                return;
-            }
-            /** @type {?} */
-            const oldOrder = siblings.slice();
-            /** @type {?} */
-            const isHorizontal = this.orientation === 'horizontal';
-            /** @type {?} */
-            const siblingAtNewPosition = siblings[newIndex];
-            if (siblingAtNewPosition.drag.data.column.wontBudge) {
-                return;
-            }
-            // we now need to find if between current and new position there are items with `wontBudge`
-            /** @type {?} */
-            const itemAtOriginalPosition = this.lastSwap ? this.lastSwap : item;
-            /** @type {?} */
-            const currentIndex = siblings.findIndex((/**
-             * @param {?} currentItem
-             * @return {?}
-             */
-            currentItem => currentItem.drag === itemAtOriginalPosition));
-            /** @type {?} */
-            const start = Math.min(newIndex, currentIndex);
-            /** @type {?} */
-            const itemsDraggedOver = siblings.slice(start, Math.abs(newIndex - currentIndex) + start);
-            for (const dragItem of itemsDraggedOver) {
-                if (dragItem.drag.data.column.wontBudge && dragItem.drag !== item) {
-                    return;
-                }
-            }
-            // check if we move the item outside of locked group OR into a locked group... both are invalid.
-            if (!item.data.column.checkGroupLockConstraint(siblingAtNewPosition.drag.data.column)) {
-                return;
-            }
-            _sortItem.call(this._dropListRef, item, pointerX, pointerY, pointerDelta);
-            this.lastSwap = siblingAtNewPosition.drag;
-            if (isHorizontal) {
-                siblings.forEach((/**
-                 * @param {?} sibling
-                 * @param {?} index
-                 * @return {?}
-                 */
-                (sibling, index) => {
-                    // Don't do anything if the position hasn't changed.
-                    if (oldOrder[index] === sibling) {
-                        return;
-                    }
-                    for (const c of sibling.drag.data.getCells()) {
-                        c.style.transform = `translate3d(${sibling.offset}px, 0, 0)`;
-                    }
-                }));
-            }
-        });
+        this.sortingDisabled = true;
     }
 }
-PblNgridColumnReorderPluginDirective.decorators = [
-    { type: Directive, args: [{
-                selector: 'pbl-ngrid[columnReorder]',
-                exportAs: 'pblNgridColumnReorder',
-                inputs: [
-                    'directContainerElement:cdkDropListDirectContainerElement'
-                ],
-                host: {
-                    // tslint:disable-line:use-host-property-decorator
-                    'class': 'cdk-drop-list',
-                    '[id]': 'id',
-                    '[class.cdk-drop-list-dragging]': '_dropListRef.isDragging()',
-                    '[class.cdk-drop-list-receiving]': '_dropListRef.isReceiving()',
-                },
-                providers: [
-                    { provide: DragDrop, useExisting: PblDragDrop },
-                    { provide: CDK_DROP_LIST, useExisting: PblNgridColumnReorderPluginDirective },
-                ],
-            },] }
-];
-/** @nocollapse */
-PblNgridColumnReorderPluginDirective.ctorParameters = () => [
-    { type: PblNgridComponent },
-    { type: PblNgridPluginController },
-    { type: ElementRef },
-    { type: DragDrop },
-    { type: ChangeDetectorRef },
-    { type: Directionality, decorators: [{ type: Optional }] },
-    { type: CdkDropListGroup, decorators: [{ type: Optional }, { type: SkipSelf }] }
-];
-PblNgridColumnReorderPluginDirective.propDecorators = {
-    columnReorder: [{ type: Input }],
-    manualOverride: [{ type: Input }],
-    dragging: [{ type: Output, args: ['cdkDropDragging',] }]
-};
-if (false) {
-    /** @type {?} */
-    PblNgridColumnReorderPluginDirective.prototype.id;
-    /** @type {?} */
-    PblNgridColumnReorderPluginDirective.prototype.orientation;
-    /** @type {?} */
-    PblNgridColumnReorderPluginDirective.prototype.dragging;
-    /** @type {?} */
-    PblNgridColumnReorderPluginDirective.prototype._draggables;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridColumnReorderPluginDirective.prototype._columnReorder;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridColumnReorderPluginDirective.prototype._manualOverride;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridColumnReorderPluginDirective.prototype._removePlugin;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridColumnReorderPluginDirective.prototype.lastSwap;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridColumnReorderPluginDirective.prototype.lastSorted;
-    /**
-     * Selector that will be used to determine the direct container element, starting from
-     * the `cdkDropList` element and going down the DOM. Passing an alternate direct container element
-     * is useful when the `cdkDropList` is not the direct parent (i.e. ancestor but not father)
-     * of the draggable elements.
-     * @type {?}
-     */
-    PblNgridColumnReorderPluginDirective.prototype.directContainerElement;
-    /** @type {?} */
-    PblNgridColumnReorderPluginDirective.prototype.originalElement;
-    /** @type {?} */
-    PblNgridColumnReorderPluginDirective.prototype._draggablesSet;
-    /** @type {?} */
-    PblNgridColumnReorderPluginDirective.prototype.table;
-    /* Skipping unhandled member: ;*/
-    /* Skipping unhandled member: ;*/
-}
-/**
- * @template T
- */
-class PblNgridColumnDragDirective extends CdkDrag {
-    // CTOR IS REQUIRED OR IT WONT WORK IN AOT
-    // TODO: Try to remove when supporting IVY
-    /**
-     * @param {?} element
-     * @param {?} dropContainer
-     * @param {?} _document
-     * @param {?} _ngZone
-     * @param {?} _viewContainerRef
-     * @param {?} config
-     * @param {?} _dir
-     * @param {?} dragDrop
-     * @param {?} _changeDetectorRef
-     */
-    constructor(element, dropContainer, _document, _ngZone, _viewContainerRef, config, _dir, dragDrop, _changeDetectorRef) {
-        super(element, dropContainer, _document, _ngZone, _viewContainerRef, config, _dir, dragDrop, _changeDetectorRef);
+/** @nocollapse */ PblNgridColumnDragContainerDirective.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridColumnDragContainerDirective, deps: null, target: i0.ɵɵFactoryTarget.Directive });
+/** @nocollapse */ PblNgridColumnDragContainerDirective.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "12.0.0", version: "12.0.0", type: PblNgridColumnDragContainerDirective, selector: "pbl-ngrid[columnDrag]:not([columnReorder])", inputs: { columnDrag: "columnDrag" }, outputs: { dragging: "cdkDropDragging", connectionsChanged: "cdkDropConnectionsChanged" }, host: { properties: { "id": "id", "class.cdk-drop-list-dragging": "_dropListRef.isDragging()", "class.cdk-drop-list-receiving": "_dropListRef.isReceiving()" }, classAttribute: "cdk-drop-list" }, providers: [
+        { provide: DragDrop, useExisting: PblDragDrop },
+        { provide: CDK_DROP_LIST, useExisting: PblNgridColumnDragContainerDirective },
+    ], exportAs: ["pblNgridColumnDragContainer"], usesInheritance: true, ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridColumnDragContainerDirective, decorators: [{
+            type: Directive,
+            args: [{
+                    selector: 'pbl-ngrid[columnDrag]:not([columnReorder])',
+                    exportAs: 'pblNgridColumnDragContainer',
+                    host: {
+                        'class': 'cdk-drop-list',
+                        '[id]': 'id',
+                        '[class.cdk-drop-list-dragging]': '_dropListRef.isDragging()',
+                        '[class.cdk-drop-list-receiving]': '_dropListRef.isReceiving()',
+                    },
+                    providers: [
+                        { provide: DragDrop, useExisting: PblDragDrop },
+                        { provide: CDK_DROP_LIST, useExisting: PblNgridColumnDragContainerDirective },
+                    ],
+                }]
+        }], propDecorators: { columnDrag: [{
+                type: Input
+            }], dragging: [{
+                type: Output,
+                args: ['cdkDropDragging']
+            }], connectionsChanged: [{
+                type: Output,
+                args: ['cdkDropConnectionsChanged']
+            }] } });
+
+class PblNgridColumnDragDirective extends CdkLazyDrag {
+    constructor() {
+        super(...arguments);
         this.rootElementSelector = 'pbl-ngrid-header-cell';
-        this._hostNotRoot = false;
     }
-    /**
-     * @param {?} value
-     * @return {?}
-     */
-    set context(value) {
-        this._context = value;
-        this.column = value && value.col;
-        /** @type {?} */
-        const pluginCtrl = this.pluginCtrl = value && PblNgridPluginController.find(value.grid);
-        /** @type {?} */
-        const plugin = pluginCtrl && pluginCtrl.getPlugin(COL_REORDER_PLUGIN_KEY);
-        this.cdkDropList = plugin || undefined;
-        this.disabled = this.column && this.column.reorder ? false : true;
-    }
-    /* CdkLazyDrag start */
-    /**
-     * A class to set when the root element is not the host element. (i.e. when `cdkDragRootElement` is used).
-     * @param {?} value
-     * @return {?}
-     */
-    set rootElementSelectorClass(value) {
-        if (value !== this._rootClass && this._hostNotRoot) {
-            if (this._rootClass) {
-                this.getRootElement().classList.remove(...this._rootClass.split(' '));
-            }
-            if (value) {
-                this.getRootElement().classList.add(...value.split(' '));
-            }
-        }
-        this._rootClass = value;
-    }
-    /**
-     * @return {?}
-     */
-    get pblDragRef() { return (/** @type {?} */ (this._dragRef)); }
-    /**
-     * @return {?}
-     */
-    get cdkDropList() { return (/** @type {?} */ (this.dropContainer)); }
-    /**
-     * @param {?} value
-     * @return {?}
-     */
-    set cdkDropList(value) {
-        // TO SUPPORT `cdkDropList` via string input (ID) we need a reactive registry...
-        if (this.cdkDropList) {
-            this.cdkDropList.removeDrag(this);
-        }
-        this.dropContainer = value;
-        if (value) {
-            this._dragRef._withDropContainer(value._dropListRef);
-            value.addDrag(this);
+    get column() { return this._column; }
+    set column(value) {
+        if (value !== this._column) {
+            this._column = value;
+            this.updateDisabledState();
         }
     }
-    /**
-     * @return {?}
-     */
-    ngOnInit() { CdkLazyDrag.prototype.ngOnInit.call(this); }
-    // ngAfterViewInit(): void { CdkLazyDrag.prototype.ngAfterViewInit.call(this); super.ngAfterViewInit(); }
-    /**
-     * @return {?}
-     */
-    ngOnDestroy() { CdkLazyDrag.prototype.ngOnDestroy.call(this); super.ngOnDestroy(); }
-    /* CdkLazyDrag end */
-    /**
-     * @return {?}
-     */
     ngAfterViewInit() {
-        CdkLazyDrag.prototype.ngAfterViewInit.call(this);
+        if (!this.cdkDropList) {
+            this.cdkDropList = PblNgridPluginController.findPlugin(this.column.columnDef.grid, COL_DRAG_CONTAINER_PLUGIN_KEY);
+        }
         super.ngAfterViewInit();
-        this._dragRef.beforeStarted.subscribe((/**
-         * @return {?}
-         */
-        () => {
+        this._dragRef.beforeStarted.subscribe(() => {
             const { cdkDropList } = this;
-            if (cdkDropList && cdkDropList.columnReorder && this._context.col.reorder) {
+            if (cdkDropList === null || cdkDropList === void 0 ? void 0 : cdkDropList.canDrag(this.column)) {
                 // we don't allow a new dragging session before the previous ends.
                 // this sound impossible, but due to animation transitions its actually is.
                 // if the `transitionend` is long enough, a new drag can start...
@@ -1274,28 +695,28 @@ class PblNgridColumnDragDirective extends CdkDrag {
                     return this.disabled = true;
                 }
             }
-        }));
-        this.started.subscribe((/**
-         * @return {?}
-         */
-        () => this._context.col.columnDef.isDragging = true));
-        this.ended.subscribe((/**
-         * @return {?}
-         */
-        () => this._context.col.columnDef.isDragging = false));
+        });
+        this.started.subscribe(() => {
+            if (this._column.columnDef) {
+                this.column.columnDef.isDragging = true;
+            }
+        });
+        this.ended.subscribe(() => {
+            if (this._column.columnDef) {
+                this.column.columnDef.isDragging = false;
+            }
+        });
     }
-    /**
-     * @return {?}
-     */
+    ngOnDestroy() {
+        unrx.kill(this);
+        super.ngOnDestroy();
+    }
     getCells() {
         if (!this.cache) {
-            this.cache = this._context.col.columnDef.queryCellElements('table');
+            this.cache = this.column.columnDef.queryCellElements('table');
         }
         return this.cache;
     }
-    /**
-     * @return {?}
-     */
     reset() {
         super.reset();
         if (this.cache) {
@@ -1305,70 +726,194 @@ class PblNgridColumnDragDirective extends CdkDrag {
             this.cache = undefined;
         }
     }
+    dropContainerChanged(prev) {
+        if (prev) {
+            unrx.kill(this, prev);
+        }
+        this.updateDisabledState();
+        this.updateBoundaryElement();
+        if (this.cdkDropList) {
+            this.cdkDropList.connectionsChanged
+                .pipe(unrx(this, this.cdkDropList))
+                .subscribe(() => this.updateBoundaryElement());
+        }
+    }
+    updateDisabledState() {
+        this.disabled = this.column && this.cdkDropList ? !this.cdkDropList.canDrag(this.column) : true;
+    }
+    updateBoundaryElement() {
+        var _a;
+        if ((_a = this.cdkDropList) === null || _a === void 0 ? void 0 : _a.hasConnections()) {
+            this.boundaryElement = undefined;
+        }
+        else {
+            this.boundaryElement = this.cdkDropList.directContainerElement;
+        }
+    }
 }
-PblNgridColumnDragDirective.decorators = [
-    { type: Directive, args: [{
-                selector: '[pblNgridColumnDrag]',
-                exportAs: 'pblNgridColumnDrag',
-                host: {
-                    // tslint:disable-line:use-host-property-decorator
-                    'class': 'cdk-drag',
-                    '[class.cdk-drag-dragging]': '_dragRef.isDragging()',
-                },
-                providers: [
-                    { provide: DragDrop, useExisting: PblDragDrop },
-                    { provide: CdkDrag, useExisting: PblNgridColumnDragDirective }
-                ]
-            },] }
-];
-/** @nocollapse */
-PblNgridColumnDragDirective.ctorParameters = () => [
-    { type: ElementRef },
-    { type: CdkDropList, decorators: [{ type: Inject, args: [CDK_DROP_LIST,] }, { type: Optional }, { type: SkipSelf }] },
-    { type: undefined, decorators: [{ type: Inject, args: [DOCUMENT,] }] },
-    { type: NgZone },
-    { type: ViewContainerRef },
-    { type: undefined, decorators: [{ type: Inject, args: [CDK_DRAG_CONFIG,] }] },
-    { type: Directionality },
-    { type: DragDrop },
-    { type: ChangeDetectorRef }
-];
-PblNgridColumnDragDirective.propDecorators = {
-    context: [{ type: Input, args: ['pblNgridColumnDrag',] }],
-    rootElementSelectorClass: [{ type: Input, args: ['cdkDragRootElementClass',] }],
-    cdkDropList: [{ type: Input }]
-};
-if (false) {
-    /** @type {?} */
-    PblNgridColumnDragDirective.prototype.rootElementSelector;
-    /** @type {?} */
-    PblNgridColumnDragDirective.prototype.column;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridColumnDragDirective.prototype._context;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridColumnDragDirective.prototype.pluginCtrl;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridColumnDragDirective.prototype.cache;
-    /** @type {?} */
-    PblNgridColumnDragDirective.prototype._rootClass;
-    /** @type {?} */
-    PblNgridColumnDragDirective.prototype._hostNotRoot;
-}
+/** @nocollapse */ PblNgridColumnDragDirective.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridColumnDragDirective, deps: null, target: i0.ɵɵFactoryTarget.Directive });
+/** @nocollapse */ PblNgridColumnDragDirective.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "12.0.0", version: "12.0.0", type: PblNgridColumnDragDirective, selector: "[pblNgridColumnDrag]", inputs: { column: ["pblNgridColumnDrag", "column"] }, host: { properties: { "class.cdk-drag-dragging": "_dragRef.isDragging()" }, classAttribute: "cdk-drag" }, providers: [
+        { provide: DragDrop, useExisting: PblDragDrop },
+        { provide: CDK_DRAG_PARENT, useExisting: PblNgridColumnDragDirective }
+    ], exportAs: ["pblNgridColumnDrag"], usesInheritance: true, ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridColumnDragDirective, decorators: [{
+            type: Directive,
+            args: [{
+                    selector: '[pblNgridColumnDrag]',
+                    exportAs: 'pblNgridColumnDrag',
+                    host: {
+                        'class': 'cdk-drag',
+                        '[class.cdk-drag-dragging]': '_dragRef.isDragging()',
+                    },
+                    providers: [
+                        { provide: DragDrop, useExisting: PblDragDrop },
+                        { provide: CDK_DRAG_PARENT, useExisting: PblNgridColumnDragDirective }
+                    ]
+                }]
+        }], propDecorators: { column: [{
+                type: Input,
+                args: ['pblNgridColumnDrag']
+            }] } });
 
-/**
- * @fileoverview added by tsickle
- * Generated from: lib/column-resize/cdk-encapsulated-code.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
+// tslint:disable:no-output-rename
+let _uniqueIdCounter$1 = 0;
+class PblNgridColumnDropContainerDirective extends CdkLazyDropList {
+    constructor() {
+        super(...arguments);
+        this.id = `pbl-ngrid-column-drop-container-${_uniqueIdCounter$1++}`;
+        this.orientation = 'horizontal';
+        this.columnEntered = this.entered;
+        this.columnExited = this.exited;
+        this.columnDropped = this.dropped;
+    }
+    get columnContainer() { return this._columnContainer; }
+    canDrag(column) {
+        return true;
+    }
+    ngOnDestroy() {
+        super.ngOnDestroy();
+        if (this._columnContainer) {
+            this._columnContainer.disconnectFrom(this);
+        }
+    }
+    gridChanged() {
+        var _a;
+        const columnContainer = (_a = this.gridApi) === null || _a === void 0 ? void 0 : _a.pluginCtrl.getPlugin(COL_DRAG_CONTAINER_PLUGIN_KEY);
+        if (columnContainer !== this._columnContainer) {
+            if (this._columnContainer) {
+                this._columnContainer.disconnectFrom(this);
+            }
+            this._columnContainer = columnContainer;
+            if (columnContainer) {
+                columnContainer.connectTo(this);
+            }
+        }
+    }
+}
+/** @nocollapse */ PblNgridColumnDropContainerDirective.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridColumnDropContainerDirective, deps: null, target: i0.ɵɵFactoryTarget.Directive });
+/** @nocollapse */ PblNgridColumnDropContainerDirective.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "12.0.0", version: "12.0.0", type: PblNgridColumnDropContainerDirective, selector: "[pblColumnDropContainer]", inputs: { grid: ["pblColumnDropContainer", "grid"] }, outputs: { columnEntered: "columnEntered", columnExited: "columnExited", columnDropped: "columnDropped" }, host: { properties: { "id": "id" }, classAttribute: "cdk-drop-list" }, providers: [
+        { provide: DragDrop, useExisting: PblDragDrop },
+        { provide: CDK_DROP_LIST_GROUP, useValue: undefined },
+        { provide: CDK_DROP_LIST, useExisting: PblNgridColumnDropContainerDirective },
+    ], exportAs: ["pblColumnDropContainer"], usesInheritance: true, ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridColumnDropContainerDirective, decorators: [{
+            type: Directive,
+            args: [{
+                    selector: '[pblColumnDropContainer]',
+                    exportAs: 'pblColumnDropContainer',
+                    inputs: ['grid: pblColumnDropContainer'],
+                    host: {
+                        'class': 'cdk-drop-list',
+                        '[id]': 'id',
+                    },
+                    providers: [
+                        { provide: DragDrop, useExisting: PblDragDrop },
+                        { provide: CDK_DROP_LIST_GROUP, useValue: undefined },
+                        { provide: CDK_DROP_LIST, useExisting: PblNgridColumnDropContainerDirective },
+                    ],
+                }]
+        }], propDecorators: { columnEntered: [{
+                type: Output
+            }], columnExited: [{
+                type: Output
+            }], columnDropped: [{
+                type: Output
+            }] } });
+
+// tslint:disable:no-output-rename
+const COL_REORDER_PLUGIN_KEY = 'columnReorder';
+class PblNgridColumnReorderPluginDirective extends PblNgridColumnDragContainerDirective {
+    constructor() {
+        super(...arguments);
+        this._columnReorder = false;
+        this._manualOverride = false;
+    }
+    get columnReorder() { return this._columnReorder; }
+    ;
+    set columnReorder(value) {
+        this._columnReorder = coerceBooleanProperty(value);
+        this.sortingDisabled = !this._columnReorder;
+    }
+    /**
+     * When true, will not move the column on drop.
+     * Instead you need to handle the dropped event.
+     */
+    get manualOverride() { return this._manualOverride; }
+    ;
+    set manualOverride(value) { this._manualOverride = coerceBooleanProperty(value); }
+    canDrag(column) {
+        return (this._columnReorder && column.reorder) || super.canDrag(column);
+    }
+    ngOnInit() {
+        super.ngOnInit();
+        this.dropped.subscribe(e => this._pblReset());
+        this.pblDropListRef.beforeExit.subscribe(e => this._pblReset());
+    }
+    gridChanged() {
+        super.gridChanged();
+        this.dropped.subscribe((event) => {
+            if (!this.manualOverride && this._columnReorder) {
+                this.grid.columnApi.moveColumn(event.item.column, event.currentIndex);
+            }
+        });
+    }
+    _pblReset() {
+        this.dragging.next(false);
+        const siblings = this.getSortedItems().map(c => c._dragRef);
+        siblings.forEach((sibling, index) => {
+            for (const c of sibling.data.getCells()) {
+                c.style.transform = ``;
+            }
+        });
+    }
+}
+/** @nocollapse */ PblNgridColumnReorderPluginDirective.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridColumnReorderPluginDirective, deps: null, target: i0.ɵɵFactoryTarget.Directive });
+/** @nocollapse */ PblNgridColumnReorderPluginDirective.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "12.0.0", version: "12.0.0", type: PblNgridColumnReorderPluginDirective, selector: "pbl-ngrid[columnReorder]", inputs: { columnReorder: "columnReorder", manualOverride: "manualOverride" }, host: { properties: { "id": "id", "class.cdk-drop-list-dragging": "_dropListRef.isDragging()", "class.cdk-drop-list-receiving": "_dropListRef.isReceiving()" }, classAttribute: "cdk-drop-list" }, providers: [
+        { provide: DragDrop, useExisting: PblDragDrop },
+        { provide: CDK_DROP_LIST, useExisting: PblNgridColumnReorderPluginDirective },
+    ], exportAs: ["pblNgridColumnReorder"], usesInheritance: true, ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridColumnReorderPluginDirective, decorators: [{
+            type: Directive,
+            args: [{
+                    selector: 'pbl-ngrid[columnReorder]',
+                    exportAs: 'pblNgridColumnReorder',
+                    host: {
+                        'class': 'cdk-drop-list',
+                        '[id]': 'id',
+                        '[class.cdk-drop-list-dragging]': '_dropListRef.isDragging()',
+                        '[class.cdk-drop-list-receiving]': '_dropListRef.isReceiving()',
+                    },
+                    providers: [
+                        { provide: DragDrop, useExisting: PblDragDrop },
+                        { provide: CDK_DROP_LIST, useExisting: PblNgridColumnReorderPluginDirective },
+                    ],
+                }]
+        }], propDecorators: { columnReorder: [{
+                type: Input
+            }], manualOverride: [{
+                type: Input
+            }] } });
+
 /**
  * Code from angular/material2 repository
  * File: https://github.com/angular/material2/blob/master/src/cdk/drag-drop/drag-styling.ts
@@ -1377,48 +922,24 @@ if (false) {
  * This code is not public but required for the drag so duplicated here.
  **/
 /**
- * @license
- * Copyright Google LLC All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-/**
- * Extended CSSStyleDeclaration that includes a couple of drag-related
- * properties that aren't in the built-in TS typings.
- * @record
- */
-function DragCSSStyleDeclaration() { }
-if (false) {
-    /** @type {?} */
-    DragCSSStyleDeclaration.prototype.webkitUserDrag;
-    /** @type {?} */
-    DragCSSStyleDeclaration.prototype.MozUserSelect;
-}
-/**
  * Shallow-extends a stylesheet object with another stylesheet object.
- * \@docs-private
- * @param {?} dest
- * @param {?} source
- * @return {?}
+ * @docs-private
  */
 function extendStyles(dest, source) {
     for (let key in source) {
         if (source.hasOwnProperty(key)) {
-            dest[key] = source[(/** @type {?} */ (key))];
+            dest[key] = source[key];
         }
     }
     return dest;
 }
 /**
  * Toggles whether the native drag interactions should be enabled for an element.
- * \@docs-private
- * @param {?} element Element on which to toggle the drag interactions.
- * @param {?} enable Whether the drag interactions should be enabled.
- * @return {?}
+ * @param element Element on which to toggle the drag interactions.
+ * @param enable Whether the drag interactions should be enabled.
+ * @docs-private
  */
 function toggleNativeDragInteractions(element, enable) {
-    /** @type {?} */
     const userSelect = enable ? '' : 'none';
     extendStyles(element.style, {
         touchAction: enable ? '' : 'none',
@@ -1431,39 +952,18 @@ function toggleNativeDragInteractions(element, enable) {
     });
 }
 
-/**
- * @fileoverview added by tsickle
- * Generated from: lib/column-resize/column-resize.component.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const COL_RESIZE_PLUGIN_KEY = 'columnResize';
-/**
- * Options that can be used to bind a passive event listener.
- * @type {?}
- */
+/** Options that can be used to bind a passive event listener. */
 const passiveEventListenerOptions = normalizePassiveListenerOptions({ passive: true });
-/**
- * Options that can be used to bind an active event listener.
- * @type {?}
- */
+/** Options that can be used to bind an active event listener. */
 const activeEventListenerOptions = normalizePassiveListenerOptions({ passive: false });
 class PblNgridDragResizeComponent {
-    /**
-     * @param {?} element
-     * @param {?} _ngZone
-     * @param {?} _viewportRuler
-     * @param {?} _dragDropRegistry
-     * @param {?} _config
-     * @param {?} _dir
-     */
-    constructor(element, _ngZone, _viewportRuler, _dragDropRegistry, _config, _dir) {
+    constructor(element, _ngZone, _viewportRuler, _dragDropRegistry, _config) {
         this.element = element;
         this._ngZone = _ngZone;
         this._viewportRuler = _viewportRuler;
         this._dragDropRegistry = _dragDropRegistry;
         this._config = _config;
-        this._dir = _dir;
         /**
          * The area (in pixels) in which the handle can be grabbed and resize the cell.
          * Default: 6
@@ -1472,26 +972,13 @@ class PblNgridDragResizeComponent {
         this._pointerMoveSubscription = Subscription.EMPTY;
         this._pointerUpSubscription = Subscription.EMPTY;
         this._rootElementInitSubscription = Subscription.EMPTY;
-        this._pointerDown = (/**
-         * @param {?} event
-         * @return {?}
-         */
-        (event) => {
+        this._pointerDown = (event) => {
             this._initializeDragSequence(this._rootElement, event);
-        });
-        /**
-         * Handler that is invoked when the user moves their pointer after they've initiated a drag.
-         */
-        this._pointerMove = (/**
-         * @param {?} event
-         * @return {?}
-         */
-        (event) => {
-            /** @type {?} */
+        };
+        /** Handler that is invoked when the user moves their pointer after they've initiated a drag. */
+        this._pointerMove = (event) => {
             const pointerPosition = this._getPointerPositionOnPage(event);
-            /** @type {?} */
             const distanceX = pointerPosition.x - this._pickupPositionOnPage.x;
-            /** @type {?} */
             const distanceY = pointerPosition.y - this._pickupPositionOnPage.y;
             if (!this._hasStartedDragging) {
                 // Only start dragging after the user has moved more than the minimum distance in either
@@ -1514,8 +1001,8 @@ class PblNgridDragResizeComponent {
             this._hasMoved = true;
             event.preventDefault();
             event.stopPropagation();
-            /** @type {?} */
-            let newWidth = Math.max(0, this._initialWidth + distanceX);
+            const dir = this._extApi.getDirection() === 'rtl' ? -1 : 1;
+            let newWidth = Math.max(0, this._initialWidth + (distanceX * dir));
             if (newWidth > this.column.maxWidth) {
                 newWidth = this.column.maxWidth;
             }
@@ -1525,19 +1012,14 @@ class PblNgridDragResizeComponent {
             if (this._lastWidth !== newWidth) {
                 this._lastWidth = newWidth;
                 this.column.updateWidth(`${newWidth}px`);
-                this.grid.resetColumnsWidth();
+                this._extApi.widthCalc.resetColumnsWidth();
                 // `this.column.updateWidth` will update the grid width cell only, which will trigger a resize that will update all other cells
                 // `this.grid.resetColumnsWidth()` will re-adjust all other grid width cells, and if their size changes they will trigger the resize event...
             }
-        });
-        /**
-         * Handler that is invoked when the user lifts their pointer up, after initiating a drag.
-         */
-        this._pointerUp = (/**
-         * @return {?}
-         */
-        () => {
-            if (!this._isDragging()) {
+        };
+        /** Handler that is invoked when the user lifts their pointer up, after initiating a drag. */
+        this._pointerUp = () => {
+            if (!this.isDragging()) {
                 return;
             }
             this._removeSubscriptions();
@@ -1547,55 +1029,41 @@ class PblNgridDragResizeComponent {
             }
             // this.column.columnDef.isDragging = false;
             this.grid.columnApi.resizeColumn(this.column, this._lastWidth + 'px');
-        });
+        };
+        this._config = {
+            dragStartThreshold: _config && _config.dragStartThreshold != null ? _config.dragStartThreshold : 5,
+            pointerDirectionChangeThreshold: _config && _config.pointerDirectionChangeThreshold != null ? _config.pointerDirectionChangeThreshold : 5,
+            zIndex: _config === null || _config === void 0 ? void 0 : _config.zIndex
+        };
         _dragDropRegistry.registerDragItem(this);
     }
     // tslint:disable-next-line:no-input-rename
-    /**
-     * @param {?} value
-     * @return {?}
-     */
     set context(value) {
         if (value) {
             const { col, grid } = value;
             if (isPblColumn(col)) {
                 this.column = col;
                 this.grid = grid;
+                this._extApi = PblNgridPluginController.find(grid).extApi;
                 return;
             }
         }
-        this.column = this.grid = undefined;
+        this.column = this._extApi = this.grid = undefined;
     }
-    /**
-     * @deprecated use grid instead
-     * @return {?}
-     */
-    get table() { return this.grid; }
-    /**
-     * @return {?}
-     */
     ngAfterViewInit() {
         // We need to wait for the zone to stabilize, in order for the reference
         // element to be in the proper place in the DOM. This is mostly relevant
         // for draggable elements inside portals since they get stamped out in
         // their original DOM position and then they get transferred to the portal.
-        this._rootElementInitSubscription = this._ngZone.onStable.asObservable().pipe(take(1)).subscribe((/**
-         * @return {?}
-         */
-        () => {
-            /** @type {?} */
+        this._rootElementInitSubscription = this._ngZone.onStable.asObservable().pipe(take(1)).subscribe(() => {
             const rootElement = this._rootElement = this._getRootElement();
-            /** @type {?} */
             const cell = rootElement.parentElement;
             cell.classList.add('pbl-ngrid-column-resize');
             rootElement.addEventListener('mousedown', this._pointerDown, activeEventListenerOptions);
             rootElement.addEventListener('touchstart', this._pointerDown, passiveEventListenerOptions);
             toggleNativeDragInteractions(rootElement, false);
-        }));
+        });
     }
-    /**
-     * @return {?}
-     */
     ngOnDestroy() {
         if (this._rootElement) {
             this._rootElement.removeEventListener('mousedown', this._pointerDown, activeEventListenerOptions);
@@ -1605,28 +1073,22 @@ class PblNgridDragResizeComponent {
         this._dragDropRegistry.removeDragItem(this);
         this._removeSubscriptions();
     }
-    /**
-     * @param {?} event
-     * @return {?}
-     */
     onDoubleClick(event) {
         this.grid.columnApi.autoSizeColumn(this.column);
     }
     /**
-     * Sets up the different variables and subscriptions
-     * that will be necessary for the dragging sequence.
-     * @private
-     * @param {?} referenceElement Element that started the drag sequence.
-     * @param {?} event Browser event object that started the sequence.
-     * @return {?}
-     */
+   * Sets up the different variables and subscriptions
+   * that will be necessary for the dragging sequence.
+   * @param referenceElement Element that started the drag sequence.
+   * @param event Browser event object that started the sequence.
+   */
     _initializeDragSequence(referenceElement, event) {
         // Always stop propagation for the event that initializes
         // the dragging sequence, in order to prevent it from potentially
         // starting another sequence for a draggable parent somewhere up the DOM tree.
         event.stopPropagation();
         // Abort if the user is already dragging or is using a mouse button other than the primary one.
-        if (this._isDragging() || (!this._isTouchEvent(event) && event.button !== 0)) {
+        if (this.isDragging() || (!this._isTouchEvent(event) && event.button !== 0)) {
             return;
         }
         this._hasStartedDragging = this._hasMoved = false;
@@ -1638,255 +1100,65 @@ class PblNgridDragResizeComponent {
         this._pickupPositionOnPage = this._getPointerPositionOnPage(event);
         this._dragDropRegistry.startDragging(this, event);
     }
-    /**
-     * @private
-     * @param {?} event
-     * @return {?}
-     */
     _getPointerPositionOnPage(event) {
-        /** @type {?} */
         const point = this._isTouchEvent(event) ? event.touches[0] : event;
         return {
             x: point.pageX - this._scrollPosition.left,
             y: point.pageY - this._scrollPosition.top
         };
     }
-    /**
-     * @private
-     * @param {?} event
-     * @return {?}
-     */
     _isTouchEvent(event) {
         return event.type.startsWith('touch');
     }
     /**
-     * @return {?}
+     *
+     * @deprecated Will be removed in v5, use `isDragging()` instead
      */
     _isDragging() {
+        return this.isDragging();
+    }
+    isDragging() {
         return this._dragDropRegistry.isDragging(this);
     }
-    /**
-     * @private
-     * @return {?}
-     */
     _getRootElement() {
         return this.element.nativeElement;
     }
-    /**
-     * @private
-     * @return {?}
-     */
     _removeSubscriptions() {
         this._pointerMoveSubscription.unsubscribe();
         this._pointerUpSubscription.unsubscribe();
     }
 }
-PblNgridDragResizeComponent.decorators = [
-    { type: Component, args: [{
-                selector: 'pbl-ngrid-drag-resize',
-                // tslint:disable-line:component-selector
-                host: {
-                    // tslint:disable-line:use-host-property-decorator
-                    'class': 'pbl-ngrid-column-resizer',
-                    '[style.width.px]': 'grabAreaWidth',
-                },
-                template: "<ng-content></ng-content>\n",
-                changeDetection: ChangeDetectionStrategy.OnPush,
-                encapsulation: ViewEncapsulation.None,
-                styles: [".pbl-ngrid-column-resizer{position:absolute;right:0;height:100%;cursor:col-resize;z-index:50000}"]
-            }] }
-];
-/** @nocollapse */
-PblNgridDragResizeComponent.ctorParameters = () => [
-    { type: ElementRef },
-    { type: NgZone },
-    { type: ViewportRuler },
-    { type: DragDropRegistry },
-    { type: undefined, decorators: [{ type: Inject, args: [CDK_DRAG_CONFIG,] }] },
-    { type: Directionality, decorators: [{ type: Optional }] }
-];
-PblNgridDragResizeComponent.propDecorators = {
-    context: [{ type: Input }],
-    grabAreaWidth: [{ type: Input }],
-    onDoubleClick: [{ type: HostListener, args: ['dblclick', ['$event'],] }]
-};
-if (false) {
-    /**
-     * The area (in pixels) in which the handle can be grabbed and resize the cell.
-     * Default: 6
-     * @type {?}
-     */
-    PblNgridDragResizeComponent.prototype.grabAreaWidth;
-    /** @type {?} */
-    PblNgridDragResizeComponent.prototype.column;
-    /** @type {?} */
-    PblNgridDragResizeComponent.prototype.grid;
-    /** @type {?} */
-    PblNgridDragResizeComponent.prototype._hasStartedDragging;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridDragResizeComponent.prototype._hasMoved;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridDragResizeComponent.prototype._rootElement;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridDragResizeComponent.prototype._pointerMoveSubscription;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridDragResizeComponent.prototype._pointerUpSubscription;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridDragResizeComponent.prototype._scrollPosition;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridDragResizeComponent.prototype._pickupPositionOnPage;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridDragResizeComponent.prototype._initialWidth;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridDragResizeComponent.prototype._lastWidth;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridDragResizeComponent.prototype._rootElementInitSubscription;
-    /** @type {?} */
-    PblNgridDragResizeComponent.prototype._pointerDown;
-    /**
-     * Handler that is invoked when the user moves their pointer after they've initiated a drag.
-     * @type {?}
-     * @private
-     */
-    PblNgridDragResizeComponent.prototype._pointerMove;
-    /**
-     * Handler that is invoked when the user lifts their pointer up, after initiating a drag.
-     * @type {?}
-     * @private
-     */
-    PblNgridDragResizeComponent.prototype._pointerUp;
-    /** @type {?} */
-    PblNgridDragResizeComponent.prototype.element;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridDragResizeComponent.prototype._ngZone;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridDragResizeComponent.prototype._viewportRuler;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridDragResizeComponent.prototype._dragDropRegistry;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridDragResizeComponent.prototype._config;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridDragResizeComponent.prototype._dir;
-}
-/**
- * @record
- */
-function Point() { }
-if (false) {
-    /** @type {?} */
-    Point.prototype.x;
-    /** @type {?} */
-    Point.prototype.y;
-}
+/** @nocollapse */ PblNgridDragResizeComponent.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridDragResizeComponent, deps: [{ token: i0.ElementRef }, { token: i0.NgZone }, { token: i1.ViewportRuler }, { token: i2.DragDropRegistry }, { token: CDK_DRAG_CONFIG, optional: true }], target: i0.ɵɵFactoryTarget.Component });
+/** @nocollapse */ PblNgridDragResizeComponent.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "12.0.0", version: "12.0.0", type: PblNgridDragResizeComponent, selector: "pbl-ngrid-drag-resize", inputs: { context: "context", grabAreaWidth: "grabAreaWidth" }, host: { listeners: { "dblclick": "onDoubleClick($event)" }, properties: { "style.width.px": "grabAreaWidth" }, classAttribute: "pbl-ngrid-column-resizer" }, ngImport: i0, template: "<ng-content></ng-content>\n", styles: [".pbl-ngrid-column-resizer{position:absolute;right:0;height:100%;cursor:col-resize;z-index:50000}[dir=rtl] .pbl-ngrid-column-resizer{right:unset;left:0}"], changeDetection: i0.ChangeDetectionStrategy.OnPush, encapsulation: i0.ViewEncapsulation.None });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridDragResizeComponent, decorators: [{
+            type: Component,
+            args: [{
+                    selector: 'pbl-ngrid-drag-resize',
+                    host: {
+                        'class': 'pbl-ngrid-column-resizer',
+                        '[style.width.px]': 'grabAreaWidth',
+                    },
+                    templateUrl: './column-resize.component.html',
+                    styleUrls: ['./column-resize.component.scss'],
+                    changeDetection: ChangeDetectionStrategy.OnPush,
+                    encapsulation: ViewEncapsulation.None,
+                }]
+        }], ctorParameters: function () { return [{ type: i0.ElementRef }, { type: i0.NgZone }, { type: i1.ViewportRuler }, { type: i2.DragDropRegistry }, { type: undefined, decorators: [{
+                    type: Optional
+                }, {
+                    type: Inject,
+                    args: [CDK_DRAG_CONFIG]
+                }] }]; }, propDecorators: { context: [{
+                type: Input
+            }], grabAreaWidth: [{
+                type: Input
+            }], onDoubleClick: [{
+                type: HostListener,
+                args: ['dblclick', ['$event']]
+            }] } });
 
-/**
- * @fileoverview added by tsickle
- * Generated from: lib/drag-and-drop/column/cell-dragger-ref.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * Marks the element as the resizer template for cells.
- */
-class PblNgridCellDraggerRefDirective extends PblNgridMultiTemplateRegistry {
-    /**
-     * @param {?} tRef
-     * @param {?} registry
-     */
-    constructor(tRef, registry) {
-        super(tRef, registry);
-        this.name = 'cellDragger';
-        this.kind = 'dataHeaderExtensions';
-    }
-    /**
-     * @param {?} context
-     * @return {?}
-     */
-    shouldRender(context) {
-        // We dont check for `context.col.reorder` because even if a specific column does not "reorder" we still need to render the cdk-drag
-        // so the cdk-drop-list will be aware of this item, so if another item does reorder it will be able to move while taking this element into consideration.
-        // I.E: It doesn't reorder but it's part of the playground.
-        //
-        // However, when the plugin does not exists for this table we don't need to render...
-        // We dont check for `context.col.reorder` because even if a specific column does not "reorder" we still need to render the cdk-drag
-        // so the cdk-drop-list will be aware of this item, so if another item does reorder it will be able to move while taking this element into consideration.
-        // I.E: It doesn't reorder but it's part of the playground.
-        //
-        // However, when the plugin does not exists for this table we don't need to render...
-        /** @type {?} */
-        const pluginCtrl = PblNgridPluginController.find(context.grid);
-        return pluginCtrl.hasPlugin(COL_REORDER_PLUGIN_KEY);
-    }
-}
-PblNgridCellDraggerRefDirective.decorators = [
-    { type: Directive, args: [{ selector: '[pblNgridCellDraggerRef]' },] }
-];
-/** @nocollapse */
-PblNgridCellDraggerRefDirective.ctorParameters = () => [
-    { type: TemplateRef },
-    { type: PblNgridRegistryService }
-];
-if (false) {
-    /** @type {?} */
-    PblNgridCellDraggerRefDirective.prototype.name;
-    /** @type {?} */
-    PblNgridCellDraggerRefDirective.prototype.kind;
-}
-
-/**
- * @fileoverview added by tsickle
- * Generated from: lib/drag-and-drop/column/extend-grid.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @this {?}
- * @param {?} column
- * @return {?}
- */
 function checkGroupLockConstraint(column) {
     for (const id of this.groups) {
-        /** @type {?} */
         const g = this.groupStore.find(id);
         if (g && g.lockColumns && !column.isInGroup(g)) {
             return false;
@@ -1894,257 +1166,157 @@ function checkGroupLockConstraint(column) {
     }
     return true;
 }
-/**
- * @return {?}
- */
 function colReorderExtendGrid() {
     PblColumn.extendProperty('reorder');
     PblColumn.extendProperty('wontBudge');
     PblColumnGroup.extendProperty('lockColumns');
-    PblColumn.prototype.checkGroupLockConstraint = (/**
-     * @this {?}
-     * @param {?} column
-     * @return {?}
-     */
-    function (column) {
+    PblColumn.prototype.checkGroupLockConstraint = function (column) {
         return checkGroupLockConstraint.call(this, column) && checkGroupLockConstraint.call(column, this);
-    });
+    };
 }
 
-/**
- * @fileoverview added by tsickle
- * Generated from: lib/drag-and-drop/column/aggregation-column.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
-let _uniqueIdCounter$2 = 0;
-/**
- * @template T
- */
-class PblNgridAggregationContainerDirective extends CdkDropList {
-    /**
-     * @param {?} grid
-     * @param {?} pluginCtrl
-     * @param {?} element
-     * @param {?} dragDrop
-     * @param {?} changeDetectorRef
-     * @param {?=} dir
-     * @param {?=} group
-     */
-    constructor(grid, pluginCtrl, element, dragDrop, changeDetectorRef, dir, group) {
-        super(element, dragDrop, changeDetectorRef, dir, group);
-        this.grid = grid;
-        this.id = `pbl-ngrid-column-aggregation-container-${_uniqueIdCounter$2++}`;
+// tslint:disable:no-output-rename
+let _uniqueIdCounter = 0;
+class PblNgridAggregationContainerDirective extends CdkLazyDropList {
+    constructor() {
+        super(...arguments);
+        this.id = `pbl-ngrid-column-aggregation-container-${_uniqueIdCounter++}`;
         this.orientation = 'horizontal';
-        this._draggablesSet = new Set();
-        /** @type {?} */
-        const reorder = pluginCtrl.getPlugin('columnReorder');
-        reorder.connectedTo = this.id;
+    }
+    ngOnInit() {
+        super.ngOnInit();
         this.pblDropListRef.dropped
-            .subscribe((/**
-         * @param {?} event
-         * @return {?}
-         */
-        event => {
-            /** @type {?} */
-            const item = (/** @type {?} */ (event.item));
+            .subscribe(event => {
+            const item = event.item;
             this.pending = undefined;
             this.grid.columnApi.addGroupBy(item.data.column);
-        }));
+        });
         this.pblDropListRef.entered
-            .subscribe((/**
-         * @param {?} event
-         * @return {?}
-         */
-        event => {
-            /** @type {?} */
-            const item = (/** @type {?} */ (event.item));
+            .subscribe(event => {
+            const item = event.item;
             this.pending = item.data.column;
             item.getPlaceholderElement().style.display = 'none';
             for (const c of item.data.getCells()) {
                 c.style.display = 'none';
             }
-        }));
+        });
         this.pblDropListRef.exited
-            .subscribe((/**
-         * @param {?} event
-         * @return {?}
-         */
-        event => {
-            /** @type {?} */
-            const item = (/** @type {?} */ (event.item));
+            .subscribe(event => {
+            const item = event.item;
             this.pending = undefined;
             item.getPlaceholderElement().style.display = '';
             for (const c of item.data.getCells()) {
                 c.style.display = '';
             }
-        }));
+        });
     }
-    /**
-     * @return {?}
-     */
-    get pblDropListRef() { return (/** @type {?} */ (this._dropListRef)); }
-    /**
-     * @return {?}
-     */
-    ngOnInit() { CdkLazyDropList.prototype.ngOnInit.call(this); }
-    /**
-     * @param {?} drag
-     * @return {?}
-     */
-    addDrag(drag) { return CdkLazyDropList.prototype.addDrag.call(this, drag); }
-    /**
-     * @param {?} drag
-     * @return {?}
-     */
-    removeDrag(drag) { return CdkLazyDropList.prototype.removeDrag.call(this, drag); }
-    /**
-     * @return {?}
-     */
-    beforeStarted() { CdkLazyDropList.prototype.beforeStarted.call(this); }
+    ngOnDestroy() {
+        super.ngOnDestroy();
+        this.columnContainer.disconnectFrom(this);
+    }
+    gridChanged() {
+        this.columnContainer = this.gridApi.pluginCtrl.getPlugin('columnReorder');
+        this.columnContainer.connectTo(this);
+    }
 }
-PblNgridAggregationContainerDirective.decorators = [
-    { type: Directive, args: [{
-                selector: '[pblAggregationContainer]',
-                exportAs: 'pblAggregationContainer',
-                inputs: [
-                    'directContainerElement:cdkDropListDirectContainerElement'
-                ],
-                host: {
-                    // tslint:disable-line:use-host-property-decorator
-                    'class': 'cdk-drop-list',
-                    '[id]': 'id',
-                },
-                providers: [
-                    { provide: DragDrop, useExisting: PblDragDrop },
-                    { provide: CDK_DROP_LIST, useExisting: PblNgridAggregationContainerDirective },
-                ],
-            },] }
-];
-/** @nocollapse */
-PblNgridAggregationContainerDirective.ctorParameters = () => [
-    { type: PblNgridComponent },
-    { type: PblNgridPluginController },
-    { type: ElementRef },
-    { type: DragDrop },
-    { type: ChangeDetectorRef },
-    { type: Directionality, decorators: [{ type: Optional }] },
-    { type: CdkDropListGroup, decorators: [{ type: Optional }, { type: SkipSelf }] }
-];
-if (false) {
-    /** @type {?} */
-    PblNgridAggregationContainerDirective.prototype.id;
-    /** @type {?} */
-    PblNgridAggregationContainerDirective.prototype.orientation;
-    /** @type {?} */
-    PblNgridAggregationContainerDirective.prototype.pending;
-    /** @type {?} */
-    PblNgridAggregationContainerDirective.prototype._draggables;
-    /**
-     * Selector that will be used to determine the direct container element, starting from
-     * the `cdkDropList` element and going down the DOM. Passing an alternate direct container element
-     * is useful when the `cdkDropList` is not the direct parent (i.e. ancestor but not father)
-     * of the draggable elements.
-     * @type {?}
-     */
-    PblNgridAggregationContainerDirective.prototype.directContainerElement;
-    /** @type {?} */
-    PblNgridAggregationContainerDirective.prototype.originalElement;
-    /** @type {?} */
-    PblNgridAggregationContainerDirective.prototype._draggablesSet;
-    /** @type {?} */
-    PblNgridAggregationContainerDirective.prototype.grid;
-}
+/** @nocollapse */ PblNgridAggregationContainerDirective.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridAggregationContainerDirective, deps: null, target: i0.ɵɵFactoryTarget.Directive });
+/** @nocollapse */ PblNgridAggregationContainerDirective.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "12.0.0", version: "12.0.0", type: PblNgridAggregationContainerDirective, selector: "[pblAggregationContainer]", host: { properties: { "id": "id" }, classAttribute: "cdk-drop-list" }, providers: [
+        { provide: DragDrop, useExisting: PblDragDrop },
+        { provide: CDK_DROP_LIST_GROUP, useValue: undefined },
+        { provide: CDK_DROP_LIST, useExisting: PblNgridAggregationContainerDirective },
+    ], exportAs: ["pblAggregationContainer"], usesInheritance: true, ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridAggregationContainerDirective, decorators: [{
+            type: Directive,
+            args: [{
+                    selector: '[pblAggregationContainer]',
+                    exportAs: 'pblAggregationContainer',
+                    host: {
+                        'class': 'cdk-drop-list',
+                        '[id]': 'id',
+                    },
+                    providers: [
+                        { provide: DragDrop, useExisting: PblDragDrop },
+                        { provide: CDK_DROP_LIST_GROUP, useValue: undefined },
+                        { provide: CDK_DROP_LIST, useExisting: PblNgridAggregationContainerDirective },
+                    ],
+                }]
+        }] });
 
 /**
- * @fileoverview added by tsickle
- * Generated from: lib/column-resize/cell-resizer-ref.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Marks the element as the resizer template for cells.
  */
+class PblNgridCellDraggerRefDirective extends PblNgridMultiTemplateRegistry {
+    constructor(tRef, registry) {
+        super(tRef, registry);
+        this.name = 'cellDragger';
+        this.kind = 'dataHeaderExtensions';
+    }
+    shouldRender(context) {
+        // We dont check for `context.col.reorder` because even if a specific column does not "reorder" we still need to render the cdk-drag
+        // so the cdk-drop-list will be aware of this item, so if another item does reorder it will be able to move while taking this element into consideration.
+        // I.E: It doesn't reorder but it's part of the playground.
+        //
+        // However, when the plugin does not exists for this table we don't need to render...
+        const pluginCtrl = PblNgridPluginController.find(context.grid);
+        return pluginCtrl.hasPlugin(COL_DRAG_CONTAINER_PLUGIN_KEY);
+    }
+}
+/** @nocollapse */ PblNgridCellDraggerRefDirective.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridCellDraggerRefDirective, deps: [{ token: i0.TemplateRef }, { token: i1$1.PblNgridRegistryService }], target: i0.ɵɵFactoryTarget.Directive });
+/** @nocollapse */ PblNgridCellDraggerRefDirective.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "12.0.0", version: "12.0.0", type: PblNgridCellDraggerRefDirective, selector: "[pblNgridCellDraggerRef]", usesInheritance: true, ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridCellDraggerRefDirective, decorators: [{
+            type: Directive,
+            args: [{ selector: '[pblNgridCellDraggerRef]' }]
+        }], ctorParameters: function () { return [{ type: i0.TemplateRef }, { type: i1$1.PblNgridRegistryService }]; } });
+
 /**
  * Marks the element as the resizer template for cells.
  */
 class PblNgridCellResizerRefDirective extends PblNgridMultiTemplateRegistry {
-    /**
-     * @param {?} tRef
-     * @param {?} registry
-     */
     constructor(tRef, registry) {
         super(tRef, registry);
         this.name = 'cellResizer';
         this.kind = 'dataHeaderExtensions';
     }
-    /**
-     * @param {?} context
-     * @return {?}
-     */
     shouldRender(context) {
         return !!context.col.resize;
     }
 }
-PblNgridCellResizerRefDirective.decorators = [
-    { type: Directive, args: [{ selector: '[pblNgridCellResizerRef]' },] }
-];
-/** @nocollapse */
-PblNgridCellResizerRefDirective.ctorParameters = () => [
-    { type: TemplateRef },
-    { type: PblNgridRegistryService }
-];
-if (false) {
-    /** @type {?} */
-    PblNgridCellResizerRefDirective.prototype.name;
-    /** @type {?} */
-    PblNgridCellResizerRefDirective.prototype.kind;
-}
+/** @nocollapse */ PblNgridCellResizerRefDirective.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridCellResizerRefDirective, deps: [{ token: i0.TemplateRef }, { token: i1$1.PblNgridRegistryService }], target: i0.ɵɵFactoryTarget.Directive });
+/** @nocollapse */ PblNgridCellResizerRefDirective.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "12.0.0", version: "12.0.0", type: PblNgridCellResizerRefDirective, selector: "[pblNgridCellResizerRef]", usesInheritance: true, ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridCellResizerRefDirective, decorators: [{
+            type: Directive,
+            args: [{ selector: '[pblNgridCellResizerRef]' }]
+        }], ctorParameters: function () { return [{ type: i0.TemplateRef }, { type: i1$1.PblNgridRegistryService }]; } });
 
-/**
- * @fileoverview added by tsickle
- * Generated from: lib/column-resize/extend-grid.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @return {?}
- */
 function colResizeExtendGrid() {
     PblColumn.extendProperty('resize');
 }
 
-/**
- * @fileoverview added by tsickle
- * Generated from: lib/default-settings.component.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class DragPluginDefaultTemplatesComponent {
 }
-DragPluginDefaultTemplatesComponent.decorators = [
-    { type: Component, args: [{
-                selector: 'pbl-drag-plugin-default-templates',
-                template: `<pbl-ngrid-drag-resize *pblNgridCellResizerRef="let ctx" [context]="ctx"></pbl-ngrid-drag-resize>
-<span *pblNgridCellDraggerRef="let ctx" [pblNgridColumnDrag]="ctx" cdkDragRootElementClass="cdk-drag"></span>`,
-                changeDetection: ChangeDetectionStrategy.OnPush,
-                encapsulation: ViewEncapsulation.None
-            }] }
-];
+/** @nocollapse */ DragPluginDefaultTemplatesComponent.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: DragPluginDefaultTemplatesComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
+/** @nocollapse */ DragPluginDefaultTemplatesComponent.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "12.0.0", version: "12.0.0", type: DragPluginDefaultTemplatesComponent, selector: "pbl-drag-plugin-default-templates", ngImport: i0, template: `<pbl-ngrid-drag-resize *pblNgridCellResizerRef="let ctx" [context]="ctx"></pbl-ngrid-drag-resize>
+<span *pblNgridCellDraggerRef="let ctx" [pblNgridColumnDrag]="ctx.col" cdkDragRootElementClass="cdk-drag"></span>`, isInline: true, components: [{ type: PblNgridDragResizeComponent, selector: "pbl-ngrid-drag-resize", inputs: ["context", "grabAreaWidth"] }], directives: [{ type: PblNgridCellResizerRefDirective, selector: "[pblNgridCellResizerRef]" }, { type: PblNgridCellDraggerRefDirective, selector: "[pblNgridCellDraggerRef]" }, { type: PblNgridColumnDragDirective, selector: "[pblNgridColumnDrag]", inputs: ["pblNgridColumnDrag"], exportAs: ["pblNgridColumnDrag"] }], changeDetection: i0.ChangeDetectionStrategy.OnPush, encapsulation: i0.ViewEncapsulation.None });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: DragPluginDefaultTemplatesComponent, decorators: [{
+            type: Component,
+            args: [{
+                    selector: 'pbl-drag-plugin-default-templates',
+                    template: `<pbl-ngrid-drag-resize *pblNgridCellResizerRef="let ctx" [context]="ctx"></pbl-ngrid-drag-resize>
+<span *pblNgridCellDraggerRef="let ctx" [pblNgridColumnDrag]="ctx.col" cdkDragRootElementClass="cdk-drag"></span>`,
+                    changeDetection: ChangeDetectionStrategy.OnPush,
+                    encapsulation: ViewEncapsulation.None,
+                }]
+        }] });
 
-/**
- * @fileoverview added by tsickle
- * Generated from: lib/table-drag.module.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @return {?}
- */
 function ngridPlugins() {
     return [
         ngridPlugin({ id: ROW_REORDER_PLUGIN_KEY }, PblNgridRowReorderPluginDirective),
+        ngridPlugin({ id: COL_DRAG_CONTAINER_PLUGIN_KEY }, PblNgridColumnDragContainerDirective),
         ngridPlugin({ id: COL_REORDER_PLUGIN_KEY, runOnce: colReorderExtendGrid }, PblNgridColumnReorderPluginDirective),
         ngridPlugin({ id: COL_RESIZE_PLUGIN_KEY, runOnce: colResizeExtendGrid }, PblNgridDragResizeComponent),
     ];
 }
 class PblNgridDragModule {
-    /**
-     * @return {?}
-     */
     static withDefaultTemplates() {
         return {
             ngModule: PblNgridDragModule,
@@ -2153,49 +1325,61 @@ class PblNgridDragModule {
     }
 }
 PblNgridDragModule.NGRID_PLUGIN = ngridPlugins();
-PblNgridDragModule.decorators = [
-    { type: NgModule, args: [{
-                imports: [
-                    CommonModule,
-                    PblNgridModule,
-                    DragDropModule
-                ],
-                declarations: [
-                    DragPluginDefaultTemplatesComponent,
-                    CdkLazyDropList, CdkLazyDrag, PblDragHandle,
-                    PblNgridRowReorderPluginDirective, PblNgridRowDragDirective,
-                    PblNgridColumnReorderPluginDirective, PblNgridColumnDragDirective, PblNgridCellDraggerRefDirective,
-                    PblNgridAggregationContainerDirective,
-                    PblNgridDragResizeComponent, PblNgridCellResizerRefDirective,
-                ],
-                exports: [
-                    DragDropModule,
-                    CdkLazyDropList, CdkLazyDrag, PblDragHandle,
-                    PblNgridRowReorderPluginDirective, PblNgridRowDragDirective,
-                    PblNgridColumnReorderPluginDirective, PblNgridColumnDragDirective, PblNgridCellDraggerRefDirective,
-                    PblNgridAggregationContainerDirective,
-                    PblNgridDragResizeComponent, PblNgridCellResizerRefDirective,
-                ],
-                // TODO: remove when ViewEngine is no longer supported by angular (V11 ???)
-                entryComponents: [DragPluginDefaultTemplatesComponent]
-            },] }
-];
-if (false) {
-    /** @type {?} */
-    PblNgridDragModule.NGRID_PLUGIN;
-}
+/** @nocollapse */ PblNgridDragModule.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridDragModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule });
+/** @nocollapse */ PblNgridDragModule.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridDragModule, declarations: [DragPluginDefaultTemplatesComponent,
+        CdkLazyDropList, CdkLazyDrag, PblDragHandle,
+        PblNgridRowReorderPluginDirective, PblNgridRowDragDirective,
+        PblNgridColumnDragContainerDirective,
+        PblNgridColumnDropContainerDirective, PblNgridColumnReorderPluginDirective, PblNgridColumnDragDirective, PblNgridCellDraggerRefDirective,
+        PblNgridAggregationContainerDirective,
+        PblNgridDragResizeComponent, PblNgridCellResizerRefDirective], imports: [CommonModule,
+        PblNgridModule,
+        DragDropModule], exports: [DragDropModule,
+        CdkLazyDropList, CdkLazyDrag, PblDragHandle,
+        PblNgridRowReorderPluginDirective, PblNgridRowDragDirective,
+        PblNgridColumnDragContainerDirective,
+        PblNgridColumnDropContainerDirective, PblNgridColumnReorderPluginDirective, PblNgridColumnDragDirective, PblNgridCellDraggerRefDirective,
+        PblNgridAggregationContainerDirective,
+        PblNgridDragResizeComponent, PblNgridCellResizerRefDirective] });
+/** @nocollapse */ PblNgridDragModule.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridDragModule, imports: [[
+            CommonModule,
+            PblNgridModule,
+            DragDropModule
+        ], DragDropModule] });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridDragModule, decorators: [{
+            type: NgModule,
+            args: [{
+                    imports: [
+                        CommonModule,
+                        PblNgridModule,
+                        DragDropModule
+                    ],
+                    declarations: [
+                        DragPluginDefaultTemplatesComponent,
+                        CdkLazyDropList, CdkLazyDrag, PblDragHandle,
+                        PblNgridRowReorderPluginDirective, PblNgridRowDragDirective,
+                        PblNgridColumnDragContainerDirective,
+                        PblNgridColumnDropContainerDirective, PblNgridColumnReorderPluginDirective, PblNgridColumnDragDirective, PblNgridCellDraggerRefDirective,
+                        PblNgridAggregationContainerDirective,
+                        PblNgridDragResizeComponent, PblNgridCellResizerRefDirective,
+                    ],
+                    exports: [
+                        DragDropModule,
+                        CdkLazyDropList, CdkLazyDrag, PblDragHandle,
+                        PblNgridRowReorderPluginDirective, PblNgridRowDragDirective,
+                        PblNgridColumnDragContainerDirective,
+                        PblNgridColumnDropContainerDirective, PblNgridColumnReorderPluginDirective, PblNgridColumnDragDirective, PblNgridCellDraggerRefDirective,
+                        PblNgridAggregationContainerDirective,
+                        PblNgridDragResizeComponent, PblNgridCellResizerRefDirective,
+                    ],
+                    // TODO(REFACTOR_REF 2): remove when ViewEngine is no longer supported by angular (V12 ???)
+                    entryComponents: [DragPluginDefaultTemplatesComponent]
+                }]
+        }] });
 
 /**
- * @fileoverview added by tsickle
- * Generated from: index.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated bundle index. Do not edit.
  */
 
-/**
- * @fileoverview added by tsickle
- * Generated from: pebula-ngrid-drag.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-export { CdkLazyDrag, CdkLazyDropList, PblDragHandle, PblNgridColumnDragDirective, PblNgridColumnReorderPluginDirective, PblNgridDragModule, PblNgridDragResizeComponent, PblNgridRowDragDirective, PblNgridRowReorderPluginDirective, ROW_REORDER_PLUGIN_KEY as ɵa, COL_REORDER_PLUGIN_KEY as ɵb, COL_RESIZE_PLUGIN_KEY as ɵc, ngridPlugins as ɵd, PblDragDrop as ɵe, DragPluginDefaultTemplatesComponent as ɵf, PblNgridCellDraggerRefDirective as ɵg, PblNgridAggregationContainerDirective as ɵh, PblNgridCellResizerRefDirective as ɵi, colReorderExtendGrid as ɵj, colResizeExtendGrid as ɵk };
+export { CdkLazyDrag, CdkLazyDropList, PblDragDrop, PblDragHandle, PblDragRef, PblDropListRef, PblNgridAggregationContainerDirective, PblNgridCellDraggerRefDirective, PblNgridCellResizerRefDirective, PblNgridColumnDragContainerDirective, PblNgridColumnDragDirective, PblNgridColumnDropContainerDirective, PblNgridColumnReorderPluginDirective, PblNgridDragModule, PblNgridDragResizeComponent, PblNgridRowDragDirective, PblNgridRowReorderPluginDirective };
 //# sourceMappingURL=pebula-ngrid-drag.js.map

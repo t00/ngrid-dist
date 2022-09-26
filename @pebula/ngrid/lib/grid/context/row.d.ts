@@ -1,25 +1,19 @@
-import { RowContext } from '@angular/cdk/table';
-import { PblColumn } from '../columns/column';
+import { _PblNgridComponent } from '../../tokens';
+import { PblColumn } from '../column/model';
 import { PblNgridExtensionApi } from '../../ext/grid-ext-api';
-import { PblNgridComponent } from '../ngrid.component';
-import { RowContextState, PblNgridRowContext } from './types';
+import { RowContextState, PblNgridRowContext, ExternalRowContextState } from './types';
 import { PblCellContext } from './cell';
-declare module '@angular/cdk/table/row.d' {
-    interface CdkCellOutletRowContext<T> {
-        pblRowContext: PblNgridRowContext<T>;
-    }
-    interface CdkCellOutletMultiRowContext<T> {
-        pblRowContext: PblNgridRowContext<T>;
-    }
-}
+import { PblNgridRowComponent } from '../row/row.component';
 export declare class PblRowContext<T> implements PblNgridRowContext<T> {
-    identity: any;
-    dataIndex: number;
     private extApi;
     /** Data for the row that this cell is located within. */
-    $implicit?: T;
+    get $implicit(): T | undefined;
+    set $implicit(value: T | undefined);
     /** Index of the data object in the provided data array. */
     index?: number;
+    /** Index of the data object in the provided data array. */
+    get dataIndex(): number;
+    set dataIndex(value: number);
     /** Index location of the rendered row that this cell is located within. */
     renderIndex?: number;
     /** Length of the number of total rows. */
@@ -32,24 +26,28 @@ export declare class PblRowContext<T> implements PblNgridRowContext<T> {
     even?: boolean;
     /** True if this cell is contained in a row with an odd-numbered index. */
     odd?: boolean;
-    gridInstance: PblNgridComponent<T>;
+    /** The index at the datasource */
+    dsIndex: number;
+    identity: any;
     firstRender: boolean;
     outOfView: boolean;
-    /** @deprecated use grid instead */
-    readonly table: PblNgridComponent<T>;
-    readonly grid: PblNgridComponent<T>;
+    readonly grid: _PblNgridComponent<T>;
+    private _attachedRow;
+    private external;
     /**
      * Returns the length of cells context stored in this row
      */
     get length(): number;
-    get pblRowContext(): PblNgridRowContext<T>;
-    set pblRowContext(value: PblNgridRowContext<T>);
     private cells;
-    constructor(identity: any, dataIndex: number, extApi: PblNgridExtensionApi<T>);
-    static defaultState<T = any>(identity: any, dataIndex: number, cellsCount: number): RowContextState<T>;
+    private _$implicit?;
+    private _updatePending;
+    constructor(_data: T, dsIndex: number, extApi: PblNgridExtensionApi<T>);
+    static defaultState<T = any>(identity: any, dsIndex: number, cellsCount: number): RowContextState<T>;
+    getExternal<P extends keyof ExternalRowContextState>(key: P): ExternalRowContextState[P];
+    setExternal<P extends keyof ExternalRowContextState>(key: P, value: ExternalRowContextState[P], saveState?: boolean): void;
     getState(): RowContextState<T>;
     fromState(state: RowContextState<T>): void;
-    updateContext(context: RowContext<T>): void;
+    saveState(): void;
     /**
      * Returns the cell context for the column at the specified position.
      * > The position is relative to ALL columns (NOT RENDERED COLUMNS)
@@ -57,8 +55,8 @@ export declare class PblRowContext<T> implements PblNgridRowContext<T> {
     cell(index: number | PblColumn): PblCellContext<T> | undefined;
     getCells(): PblCellContext<T>[];
     updateCell(cell: PblCellContext<T>): void;
-    /**
-   * Updates the `outOfView` property.
-   */
-    updateOutOfViewState(): void;
+    attachRow(row: PblNgridRowComponent<T>): void;
+    detachRow(row: PblNgridRowComponent<T>): void;
+    _rebuildCells(columns: PblColumn[]): void;
+    private updateRowData;
 }

@@ -1,15 +1,15 @@
-/**
- * @fileoverview added by tsickle
- * Generated from: lib/header-context/styles/excel-style-header-menu.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 import { Component, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 import { MatMenu } from '@angular/material/menu';
 import { PblNgridOverlayPanelRef } from '@pebula/ngrid/overlay-panel';
+import * as i0 from "@angular/core";
+import * as i1 from "@pebula/ngrid/overlay-panel";
+import * as i2 from "@angular/material/menu";
+import * as i3 from "@angular/material/icon";
+import * as i4 from "@angular/material/form-field";
+import * as i5 from "@angular/material/button";
+import * as i6 from "@angular/common";
+import * as i7 from "@angular/material/input";
 export class MatExcelStyleHeaderMenu {
-    /**
-     * @param {?} ref
-     */
     constructor(ref) {
         this.ref = ref;
         this.currentFilter = '';
@@ -19,24 +19,15 @@ export class MatExcelStyleHeaderMenu {
             this.currentSort = this.grid.ds.sort.sort.order;
         }
         this.currentPin = this.column.columnDef.sticky ? 'start' : this.column.columnDef.stickyEnd ? 'end' : undefined;
-        /** @type {?} */
         const dsFilter = this.grid.ds.filter;
         if (dsFilter && dsFilter.type === 'value' && dsFilter.columns && dsFilter.columns.indexOf(this.column) >= 0) {
             this.currentFilter = dsFilter.filter;
         }
     }
-    /**
-     * @return {?}
-     */
     ngAfterViewInit() {
-        this.matMenu.closed.subscribe((/**
-         * @param {?} reason
-         * @return {?}
-         */
-        reason => {
+        this.matMenu.closed.subscribe(reason => {
             this.ref.close();
-        }));
-        /** @type {?} */
+        });
         const view = this.menuViewLocation.createEmbeddedView(this.matMenu.templateRef);
         this.matMenu.setElevation(0);
         this.matMenu.focusFirstItem('program');
@@ -45,23 +36,9 @@ export class MatExcelStyleHeaderMenu {
         view.detectChanges();
         this.matMenu._startAnimation();
     }
-    /**
-     * @return {?}
-     */
     hide() {
-        /** @type {?} */
-        const hidden = [this.column.id];
-        for (const col of this.grid.columnApi.columns) {
-            if (col.hidden) {
-                hidden.push(col.id);
-            }
-        }
-        this.grid.hideColumns = hidden;
+        this.grid.columnApi.hideColumns(this.column.id);
     }
-    /**
-     * @param {?} sort
-     * @return {?}
-     */
     onSortToggle(sort) {
         if (this.currentSort === sort) {
             this.grid.ds.setSort();
@@ -70,10 +47,6 @@ export class MatExcelStyleHeaderMenu {
             this.grid.ds.setSort(this.column, { order: sort });
         }
     }
-    /**
-     * @param {?} pin
-     * @return {?}
-     */
     onPinToggle(pin) {
         if (this.currentPin === pin) {
             this.column.columnDef.updatePin();
@@ -82,10 +55,6 @@ export class MatExcelStyleHeaderMenu {
             this.column.columnDef.updatePin(pin);
         }
     }
-    /**
-     * @param {?} filterValue
-     * @return {?}
-     */
     filterColumn(filterValue) {
         this.currentFilter = filterValue;
         if (!filterValue) {
@@ -95,50 +64,26 @@ export class MatExcelStyleHeaderMenu {
             this.grid.setFilter(filterValue.trim(), [this.column]);
         }
     }
-    /**
-     * @param {?} event
-     * @return {?}
-     */
     clickTrap(event) {
         event.preventDefault();
         event.stopPropagation();
     }
 }
-MatExcelStyleHeaderMenu.decorators = [
-    { type: Component, args: [{
-                selector: 'mat-excel-style-header-menu',
-                template: "<mat-menu #columnMenu=\"matMenu\" class=\"pbl-mat-menu-panel\">\n\n  <button *ngIf=\"column.sort\" mat-menu-item [matMenuTriggerFor]=\"sortMenu\">\n    <mat-icon>sort</mat-icon>Sort\n  </button>\n  <button mat-menu-item [matMenuTriggerFor]=\"pinMenu\">\n    <mat-icon>place</mat-icon>Pin\n  </button>\n  <button mat-menu-item (click)=\"grid.columnApi.autoSizeColumn(column)\">\n    <mat-icon>keyboard_tab</mat-icon>Auto Fit\n  </button>\n  <button mat-menu-item (click)=\"hide()\">\n    <mat-icon>visibility_off</mat-icon>Hide Column\n  </button>\n\n  <mat-menu #sortMenu=\"matMenu\">\n    <button mat-menu-item (click)=\"onSortToggle('asc')\" [class.menu-item-selected]=\"currentSort === 'asc'\">\n      <mat-icon [color]=\"currentSort === 'asc' ? 'primary' : ''\">arrow_upward</mat-icon>\n      <span>Ascending</span>\n    </button>\n    <button mat-menu-item (click)=\"onSortToggle('desc')\" [class.menu-item-selected]=\"currentSort === 'desc'\">\n      <mat-icon [color]=\"currentSort === 'desc' ? 'primary' : ''\">arrow_downward</mat-icon>\n      <span>Descending</span>\n    </button>\n  </mat-menu>\n\n  <mat-menu #pinMenu=\"matMenu\">\n    <button mat-menu-item (click)=\"onPinToggle('start')\" [class.menu-item-selected]=\"currentPin === 'start'\">\n      <span>Start</span>\n    </button>\n    <button mat-menu-item (click)=\"onPinToggle('end')\" [class.menu-item-selected]=\"currentPin === 'end'\">\n      <span>End</span>\n    </button>\n  </mat-menu>\n\n  <div class=\"mat-menu-item pbl-mat-menu-row\" (click)=\"clickTrap($event)\">\n    <mat-form-field>\n      <mat-label>Search</mat-label>\n      <input matInput (keyup)=\"filterColumn($event.target.value)\" [value]=\"currentFilter\">\n      <mat-icon matPrefix>search</mat-icon>\n      <button mat-button [style.visibility]=\"currentFilter ? 'visible' : 'hidden'\" matSuffix mat-icon-button aria-label=\"Clear\"\n              (click)=\"filterColumn('')\">\n        <mat-icon>close</mat-icon>\n      </button>\n    </mat-form-field>\n  </div>\n</mat-menu>\n<ng-container #menuViewLocation></ng-container>\n",
-                encapsulation: ViewEncapsulation.None,
-                styles: [".mat-menu-panel.pbl-mat-menu-panel{max-width:400px}.mat-menu-item.pbl-mat-menu-row{width:100%;box-sizing:border-box;line-height:inherit;height:auto;margin:6px 0;cursor:inherit}.mat-menu-item.pbl-mat-menu-row:hover{background:inherit}"]
-            }] }
-];
-/** @nocollapse */
-MatExcelStyleHeaderMenu.ctorParameters = () => [
-    { type: PblNgridOverlayPanelRef }
-];
-MatExcelStyleHeaderMenu.propDecorators = {
-    matMenu: [{ type: ViewChild, args: ['columnMenu', { read: MatMenu, static: true },] }],
-    menuViewLocation: [{ type: ViewChild, args: ['menuViewLocation', { read: ViewContainerRef, static: true },] }]
-};
-if (false) {
-    /** @type {?} */
-    MatExcelStyleHeaderMenu.prototype.column;
-    /** @type {?} */
-    MatExcelStyleHeaderMenu.prototype.grid;
-    /** @type {?} */
-    MatExcelStyleHeaderMenu.prototype.matMenu;
-    /** @type {?} */
-    MatExcelStyleHeaderMenu.prototype.menuViewLocation;
-    /** @type {?} */
-    MatExcelStyleHeaderMenu.prototype.currentSort;
-    /** @type {?} */
-    MatExcelStyleHeaderMenu.prototype.currentPin;
-    /** @type {?} */
-    MatExcelStyleHeaderMenu.prototype.currentFilter;
-    /**
-     * @type {?}
-     * @private
-     */
-    MatExcelStyleHeaderMenu.prototype.ref;
-}
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZXhjZWwtc3R5bGUtaGVhZGVyLW1lbnUuanMiLCJzb3VyY2VSb290Ijoibmc6Ly9AcGVidWxhL25ncmlkLW1hdGVyaWFsL2NvbnRleHQtbWVudS8iLCJzb3VyY2VzIjpbImxpYi9oZWFkZXItY29udGV4dC9zdHlsZXMvZXhjZWwtc3R5bGUtaGVhZGVyLW1lbnUudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7QUFBQSxPQUFPLEVBQUUsU0FBUyxFQUFFLFNBQVMsRUFBRSxnQkFBZ0IsRUFBRSxpQkFBaUIsRUFBRSxNQUFNLGVBQWUsQ0FBQztBQUMxRixPQUFPLEVBQUUsT0FBTyxFQUFFLE1BQU0sd0JBQXdCLENBQUM7QUFHakQsT0FBTyxFQUFFLHVCQUF1QixFQUFFLE1BQU0sNkJBQTZCLENBQUM7QUFRdEUsTUFBTSxPQUFPLHVCQUF1Qjs7OztJQVdsQyxZQUFvQixHQUFnRTtRQUFoRSxRQUFHLEdBQUgsR0FBRyxDQUE2RDtRQUZwRixrQkFBYSxHQUFRLEVBQUUsQ0FBQztRQUd0QixJQUFJLENBQUMsTUFBTSxHQUFHLEdBQUcsQ0FBQyxJQUFJLENBQUMsR0FBRyxDQUFDO1FBQzNCLElBQUksQ0FBQyxJQUFJLEdBQUcsR0FBRyxDQUFDLElBQUksQ0FBQyxJQUFJLENBQUM7UUFFMUIsSUFBSSxJQUFJLENBQUMsSUFBSSxDQUFDLEVBQUUsQ0FBQyxJQUFJLENBQUMsTUFBTSxLQUFLLElBQUksQ0FBQyxNQUFNLEVBQUU7WUFDNUMsSUFBSSxDQUFDLFdBQVcsR0FBRyxJQUFJLENBQUMsSUFBSSxDQUFDLEVBQUUsQ0FBQyxJQUFJLENBQUMsSUFBSSxDQUFDLEtBQUssQ0FBQztTQUNqRDtRQUNELElBQUksQ0FBQyxVQUFVLEdBQUcsSUFBSSxDQUFDLE1BQU0sQ0FBQyxTQUFTLENBQUMsTUFBTSxDQUFDLENBQUMsQ0FBQyxPQUFPLENBQUMsQ0FBQyxDQUFDLElBQUksQ0FBQyxNQUFNLENBQUMsU0FBUyxDQUFDLFNBQVMsQ0FBQyxDQUFDLENBQUMsS0FBSyxDQUFD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RUFBRSxDQUFDO0lBQzFCLENBQUM7OztZQXRGRixTQUFTLFNBQUM7Z0JBQ1QsUUFBUSxFQUFFLDZCQUE2QjtnQkFDdkMscWlFQUE2QztnQkFFN0MsYUFBYSxFQUFFLGlCQUFpQixDQUFDLElBQUk7O2FBQ3RDOzs7O1lBUFEsdUJBQXVCOzs7c0JBWTdCLFNBQVMsU0FBQyxZQUFZLEVBQUUsRUFBRSxJQUFJLEVBQUUsT0FBTyxFQUFFLE1BQU0sRUFBRSxJQUFJLEVBQUU7K0JBQ3ZELFNBQVMsU0FBQyxrQkFBa0IsRUFBRSxFQUFFLElBQUksRUFBRSxnQkFBZ0IsRUFBRSxNQUFNLEVBQUUsSUFBSSxFQUFFOzs7O0lBSnZFLHlDQUFrQjs7SUFDbEIsdUNBQXVCOztJQUV2QiwwQ0FBMkU7O0lBQzNFLG1EQUE0Rzs7SUFFNUcsOENBQXdDOztJQUN4Qyw2Q0FBd0M7O0lBQ3hDLGdEQUF3Qjs7Ozs7SUFFWixzQ0FBd0UiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBDb21wb25lbnQsIFZpZXdDaGlsZCwgVmlld0NvbnRhaW5lclJlZiwgVmlld0VuY2Fwc3VsYXRpb24gfSBmcm9tICdAYW5ndWxhci9jb3JlJztcbmltcG9ydCB7IE1hdE1lbnUgfSBmcm9tICdAYW5ndWxhci9tYXRlcmlhbC9tZW51JztcblxuaW1wb3J0IHsgUGJsTmdyaWRDb21wb25lbnQsIFBibENvbHVtbiwgUGJsTmdyaWREYXRhSGVhZGVyRXh0ZW5zaW9uQ29udGV4dCB9IGZyb20gJ0BwZWJ1bGEvbmdyaWQnO1xuaW1wb3J0IHsgUGJsTmdyaWRPdmVybGF5UGFuZWxSZWYgfSBmcm9tICdAcGVidWxhL25ncmlkL292ZXJsYXktcGFuZWwnO1xuXG5AQ29tcG9uZW50KHtcbiAgc2VsZWN0b3I6ICdtYXQtZXhjZWwtc3R5bGUtaGVhZGVyLW1lbnUnLFxuICB0ZW1wbGF0ZVVybDogYC4vZXhjZWwtc3R5bGUtaGVhZGVyLW1lbnUuaHRtbGAsXG4gIHN0eWxlVXJsczogWyBgLi9leGNlbC1zdHlsZS1oZWFkZXItbWVudS5zY3NzYCBdLFxuICBlbmNhcHN1bGF0aW9uOiBWaWV3RW5jYXBzdWxhdGlvbi5Ob25lLFxufSlcbmV4cG9ydCBjbGFzcyBNYXRFeGNlbFN0eWxlSGVhZGVyTWVudSB7XG4gIGNvbHVtbjogUGJsQ29sdW1uO1xuICBncmlkOiBQYmxOZ3JpZENvbXBvbmVudFxuXG4gIEBWaWV3Q2hpbGQoJ2NvbHVtbk1lbnUnLCB7IHJlYWQ6IE1hdE1lbnUsIHN0YXRpYzogdHJ1ZSB9KSBtYXRNZW51OiBNYXRNZW51O1xuICBAVmlld0NoaWxkKCdtZW51Vmlld0xvY2F0aW9uJywgeyByZWFkOiBWaWV3Q29udGFpbmVyUmVmLCBzdGF0aWM6IHRydWUgfSkgbWVudVZpZXdMb2NhdGlvbjogVmlld0NvbnRhaW5lclJlZjtcblxuICBjdXJyZW50U29ydDogJ2FzYycgfCAnZGVzYycgfCB1bmRlZmluZWQ7XG4gIGN1cnJlbnRQaW46ICdzdGFydCcgfCAnZW5kJyB8IHVuZGVmaW5lZDtcbiAgY3VycmVudEZpbHRlcjogYW55ID0gJyc7XG5cbiAgY29uc3RydWN0b3IocHJpdmF0ZSByZWY6IFBibE5ncmlkT3ZlcmxheVBhbmVsUmVmPFBibE5ncmlkRGF0YUhlYWRlckV4dGVuc2lvbkNvbnRleHQ+KSB7XG4gICAgdGhpcy5jb2x1bW4gPSByZWYuZGF0YS5jb2w7XG4gICAgdGhpcy5ncmlkID0gcmVmLmRhdGEuZ3JpZDtcblxuICAgIGlmICh0aGlzLmdyaWQuZHMuc29ydC5jb2x1bW4gPT09IHRoaXMuY29sdW1uKSB7XG4gICAgICB0aGlzLmN1cnJlbnRTb3J0ID0gdGhpcy5ncmlkLmRzLnNvcnQuc29ydC5vcmRlcjtcbiAgICB9XG4gICAgdGhpcy5jdXJyZW50UGluID0gdGhpcy5jb2x1bW4uY29sdW1uRGVmLnN0aWNreSA/ICdzdGFydCcgOiB0aGlzLmNvbHVtbi5jb2x1bW5EZWYuc3RpY2t5RW5kID8gJ2VuZCcgOiB1bmRlZmluZWQ7XG4gICAgY29uc3QgZHNGaWx0ZXIgPSB0aGlzLmdyaWQuZHMuZmlsdGVyO1xuICAgIGlmIChkc0ZpbHRlciAmJiBkc0ZpbHRlci50eXBlID09PSAndmFsdWUnICYmIGRzRmlsdGVyLmNvbHVtbnMgJiYgZHNGaWx0ZXIuY29sdW1ucy5pbmRleE9mKHRoaXMuY29sdW1uKSA+PSAwKSB7XG4gICAgICB0aGlzLmN1cnJlbnRGaWx0ZXIgPSBkc0ZpbHRlci5maWx0ZXI7XG4gICAgfVxuICB9XG5cbiAgbmdBZnRlclZpZXdJbml0KCkge1xuICAgIHRoaXMubWF0TWVudS5jbG9zZWQuc3Vic2NyaWJlKCByZWFzb24gPT4ge1xuICAgICAgdGhpcy5yZWYuY2xvc2UoKTtcbiAgICB9KTtcblxuICAgIGNvbnN0IHZpZXcgPSB0aGlzLm1lbnVWaWV3TG9jYXRpb24uY3JlYXRlRW1iZWRkZWRWaWV3KHRoaXMubWF0TWVudS50ZW1wbGF0ZVJlZik7XG4gICAgdGhpcy5tYXRNZW51LnNldEVsZXZhdGlvbigwKTtcbiAgICB0aGlzLm1hdE1lbnUuZm9jdXNGaXJzdEl0ZW0oJ3Byb2dyYW0nKTtcbiAgICB0aGlzLm1hdE1lbnUuX3Jlc2V0QW5pbWF0aW9uKCk7XG4gICAgdmlldy5tYXJrRm9yQ2hlY2soKTtcbiAgICB2aWV3LmRldGVjdENoYW5nZXMoKTtcbiAgICB0aGlzLm1hdE1lbnUuX3N0YXJ0QW5pbWF0aW9uKCk7XG4gIH1cblxuICBoaWRlKCk6IHZvaWQge1xuICAgIGNvbnN0IGhpZGRlbjogc3RyaW5nW10gPSBbdGhpcy5jb2x1bW4uaWRdO1xuXG4gICAgZm9yIChjb25zdCBjb2wgb2YgdGhpcy5ncmlkLmNvbHVtbkFwaS5jb2x1bW5zKSB7XG4gICAgICBpZiAoY29sLmhpZGRlbikge1xuICAgICAgICBoaWRkZW4ucHVzaChjb2wuaWQpO1xuICAgICAgfVxuICAgIH1cblxuICAgIHRoaXMuZ3JpZC5oaWRlQ29sdW1ucyA9IGhpZGRlbjtcbiAgfVxuXG4gIG9uU29ydFRvZ2dsZShzb3J0OiAnYXNjJyB8ICdkZXNjJyk6IHZvaWQge1xuICAgIGlmICh0aGlzLmN1cnJlbnRTb3J0ID09PSBzb3J0KSB7XG4gICAgICB0aGlzLmdyaWQuZHMuc2V0U29ydCgpO1xuICAgIH0gZWxzZSB7XG4gICAgICB0aGlzLmdyaWQuZHMuc2V0U29ydCh0aGlzLmNvbHVtbiwgeyBvcmRlcjogc29ydCB9KTtcbiAgICB9XG4gIH1cblxuICBvblBpblRvZ2dsZShwaW46ICdzdGFydCcgfCAnZW5kJyk6IHZvaWQge1xuICAgIGlmICh0aGlzLmN1cnJlbnRQaW4gPT09IHBpbikge1xuICAgICAgdGhpcy5jb2x1bW4uY29sdW1uRGVmLnVwZGF0ZVBpbigpXG4gICAgfSBlbHNlIHtcbiAgICAgIHRoaXMuY29sdW1uLmNvbHVtbkRlZi51cGRhdGVQaW4ocGluKVxuICAgIH1cbiAgfVxuXG5cbiAgZmlsdGVyQ29sdW1uKGZpbHRlclZhbHVlOiBzdHJpbmcpIHtcbiAgICB0aGlzLmN1cnJlbnRGaWx0ZXIgPSBmaWx0ZXJWYWx1ZTtcbiAgICBpZiAoIWZpbHRlclZhbHVlKSB7XG4gICAgICB0aGlzLmdyaWQuc2V0RmlsdGVyKCk7XG4gICAgfSBlbHNlIHtcbiAgICAgIHRoaXMuZ3JpZC5zZXRGaWx0ZXIoZmlsdGVyVmFsdWUudHJpbSgpLCBbIHRoaXMuY29sdW1uIF0pO1xuICAgIH1cbiAgfVxuXG4gIGNsaWNrVHJhcChldmVudDogTW91c2VFdmVudCk6IHZvaWQge1xuICAgIGV2ZW50LnByZXZlbnREZWZhdWx0KCk7XG4gICAgZXZlbnQuc3RvcFByb3BhZ2F0aW9uKCk7XG4gIH1cbn1cbiJdfQ==
+/** @nocollapse */ MatExcelStyleHeaderMenu.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: MatExcelStyleHeaderMenu, deps: [{ token: i1.PblNgridOverlayPanelRef }], target: i0.ɵɵFactoryTarget.Component });
+/** @nocollapse */ MatExcelStyleHeaderMenu.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "12.0.0", version: "12.0.0", type: MatExcelStyleHeaderMenu, selector: "mat-excel-style-header-menu", viewQueries: [{ propertyName: "matMenu", first: true, predicate: ["columnMenu"], descendants: true, read: MatMenu, static: true }, { propertyName: "menuViewLocation", first: true, predicate: ["menuViewLocation"], descendants: true, read: ViewContainerRef, static: true }], ngImport: i0, template: "<mat-menu #columnMenu=\"matMenu\" class=\"pbl-mat-menu-panel\">\n\n  <button *ngIf=\"column.sort\" mat-menu-item [matMenuTriggerFor]=\"sortMenu\">\n    <mat-icon>sort</mat-icon>Sort\n  </button>\n  <button mat-menu-item [matMenuTriggerFor]=\"pinMenu\">\n    <mat-icon>place</mat-icon>Pin\n  </button>\n  <button mat-menu-item (click)=\"grid.columnApi.autoSizeColumn(column)\">\n    <mat-icon>keyboard_tab</mat-icon>Auto Fit\n  </button>\n  <button mat-menu-item (click)=\"hide()\">\n    <mat-icon>visibility_off</mat-icon>Hide Column\n  </button>\n\n  <mat-menu #sortMenu=\"matMenu\">\n    <button mat-menu-item (click)=\"onSortToggle('asc')\" [class.menu-item-selected]=\"currentSort === 'asc'\">\n      <mat-icon [color]=\"currentSort === 'asc' ? 'primary' : ''\">arrow_upward</mat-icon>\n      <span>Ascending</span>\n    </button>\n    <button mat-menu-item (click)=\"onSortToggle('desc')\" [class.menu-item-selected]=\"currentSort === 'desc'\">\n      <mat-icon [color]=\"currentSort === 'desc' ? 'primary' : ''\">arrow_downward</mat-icon>\n      <span>Descending</span>\n    </button>\n  </mat-menu>\n\n  <mat-menu #pinMenu=\"matMenu\">\n    <button mat-menu-item (click)=\"onPinToggle('start')\" [class.menu-item-selected]=\"currentPin === 'start'\">\n      <span>Start</span>\n    </button>\n    <button mat-menu-item (click)=\"onPinToggle('end')\" [class.menu-item-selected]=\"currentPin === 'end'\">\n      <span>End</span>\n    </button>\n  </mat-menu>\n\n  <div class=\"mat-menu-item pbl-mat-menu-row\" (click)=\"clickTrap($event)\">\n    <mat-form-field>\n      <mat-label>Search</mat-label>\n      <input #input matInput (keyup)=\"filterColumn(input.value)\" [value]=\"currentFilter\">\n      <mat-icon matPrefix>search</mat-icon>\n      <button mat-button [style.visibility]=\"currentFilter ? 'visible' : 'hidden'\" matSuffix mat-icon-button aria-label=\"Clear\"\n              (click)=\"filterColumn('')\">\n        <mat-icon>close</mat-icon>\n      </button>\n    </mat-form-field>\n  </div>\n</mat-menu>\n<ng-container #menuViewLocation></ng-container>\n", styles: [".mat-menu-panel.pbl-mat-menu-panel{max-width:400px}.mat-menu-item.pbl-mat-menu-row{width:100%;box-sizing:border-box;line-height:inherit;height:auto;margin:6px 0;cursor:inherit}.mat-menu-item.pbl-mat-menu-row:hover{background:inherit}"], components: [{ type: i2.MatMenu, selector: "mat-menu", exportAs: ["matMenu"] }, { type: i2.MatMenuItem, selector: "[mat-menu-item]", inputs: ["disabled", "disableRipple", "role"], exportAs: ["matMenuItem"] }, { type: i3.MatIcon, selector: "mat-icon", inputs: ["color", "inline", "svgIcon", "fontSet", "fontIcon"], exportAs: ["matIcon"] }, { type: i4.MatFormField, selector: "mat-form-field", inputs: ["color", "floatLabel", "appearance", "hideRequiredMarker", "hintLabel"], exportAs: ["matFormField"] }, { type: i5.MatButton, selector: "button[mat-button], button[mat-raised-button], button[mat-icon-button],             button[mat-fab], button[mat-mini-fab], button[mat-stroked-button],             button[mat-flat-button]", inputs: ["disabled", "disableRipple", "color"], exportAs: ["matButton"] }], directives: [{ type: i6.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { type: i2.MatMenuTrigger, selector: "[mat-menu-trigger-for], [matMenuTriggerFor]", inputs: ["matMenuTriggerRestoreFocus", "mat-menu-trigger-for", "matMenuTriggerFor", "matMenuTriggerData"], outputs: ["menuOpened", "onMenuOpen", "menuClosed", "onMenuClose"], exportAs: ["matMenuTrigger"] }, { type: i4.MatLabel, selector: "mat-label" }, { type: i7.MatInput, selector: "input[matInput], textarea[matInput], select[matNativeControl],      input[matNativeControl], textarea[matNativeControl]", inputs: ["id", "disabled", "required", "type", "value", "readonly", "placeholder", "errorStateMatcher", "aria-describedby"], exportAs: ["matInput"] }, { type: i4.MatPrefix, selector: "[matPrefix]" }, { type: i4.MatSuffix, selector: "[matSuffix]" }], encapsulation: i0.ViewEncapsulation.None });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: MatExcelStyleHeaderMenu, decorators: [{
+            type: Component,
+            args: [{
+                    selector: 'mat-excel-style-header-menu',
+                    templateUrl: `./excel-style-header-menu.html`,
+                    styleUrls: [`./excel-style-header-menu.scss`],
+                    encapsulation: ViewEncapsulation.None,
+                }]
+        }], ctorParameters: function () { return [{ type: i1.PblNgridOverlayPanelRef }]; }, propDecorators: { matMenu: [{
+                type: ViewChild,
+                args: ['columnMenu', { read: MatMenu, static: true }]
+            }], menuViewLocation: [{
+                type: ViewChild,
+                args: ['menuViewLocation', { read: ViewContainerRef, static: true }]
+            }] } });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZXhjZWwtc3R5bGUtaGVhZGVyLW1lbnUuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi8uLi8uLi8uLi8uLi9saWJzL25ncmlkLW1hdGVyaWFsL2NvbnRleHQtbWVudS9zcmMvbGliL2hlYWRlci1jb250ZXh0L3N0eWxlcy9leGNlbC1zdHlsZS1oZWFkZXItbWVudS50cyIsIi4uLy4uLy4uLy4uLy4uLy4uLy4uLy4uL2xpYnMvbmdyaWQtbWF0ZXJpYWwvY29udGV4dC1tZW51L3NyYy9saWIvaGVhZGVyLWNvbnRleHQvc3R5bGVzL2V4Y2VsLXN0eWxlLWhlYWRlci1tZW51Lmh0bWwiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsT0FBTyxFQUFFLFNBQVMsRUFBRSxTQUFTLEVBQUUsZ0JBQWdCLEVBQUUsaUJBQWlCLEVBQUUsTUFBTSxlQUFlLENBQUM7QUFDMUYsT0FBTyxFQUFFLE9BQU8sRUFBRSxNQUFNLHdCQUF3QixDQUFDO0FBR2pELE9BQU8sRUFBRSx1QkFBdUIsRUFBRSxNQUFNLDZCQUE2QixDQUFDOzs7Ozs7Ozs7QUFRdEUsTUFBTSxPQUFPLHVCQUF1QjtJQVdsQyxZQUFvQixHQUFnRTtRQUFoRSxRQUFHLEdBQUgsR0FBRyxDQUE2RDtRQUZwRixrQkFBYSxHQUFRLEVBQUUsQ0FBQztRQUd0QixJQUFJLENBQUMsTUFBTSxHQUFHLEdBQUcsQ0FBQyxJQUFJLENBQUMsR0FBRyxDQUFDO1FBQzNCLElBQUksQ0FBQyxJQUFJLEdBQUcsR0FBRyxDQUFDLElBQUksQ0FBQyxJQUFJLENBQUM7UUFFMUIsSUFBSSxJQUFJLENBQUMsSUFBSSxDQUFDLEVBQUUsQ0FBQyxJQUFJLENBQUMsTUFBTSxLQUFLLElBQUksQ0FBQyxNQUFNLEVBQUU7WUFDNUMsSUFBSSxDQUFDLFdBQVcsR0FBRyxJQUFJLENBQUMsSUFBSSxDQUFDLEVBQUUsQ0FBQyxJQUFJLENBQUMsSUFBSSxDQUFDLEtBQUssQ0FBQztTQUNqRDtRQUNELElBQUksQ0FBQyxV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QkFBdUIscUpBSUQsT0FBTyw2SEFDRCxnQkFBZ0IsMkNDakJ6RCwwaEVBZ0RBOzJGRHBDYSx1QkFBdUI7a0JBTm5DLFNBQVM7bUJBQUM7b0JBQ1QsUUFBUSxFQUFFLDZCQUE2QjtvQkFDdkMsV0FBVyxFQUFFLGdDQUFnQztvQkFDN0MsU0FBUyxFQUFFLENBQUUsZ0NBQWdDLENBQUU7b0JBQy9DLGFBQWEsRUFBRSxpQkFBaUIsQ0FBQyxJQUFJO2lCQUN0Qzs4R0FLMkQsT0FBTztzQkFBaEUsU0FBUzt1QkFBQyxZQUFZLEVBQUUsRUFBRSxJQUFJLEVBQUUsT0FBTyxFQUFFLE1BQU0sRUFBRSxJQUFJLEVBQUU7Z0JBQ2lCLGdCQUFnQjtzQkFBeEYsU0FBUzt1QkFBQyxrQkFBa0IsRUFBRSxFQUFFLElBQUksRUFBRSxnQkFBZ0IsRUFBRSxNQUFNLEVBQUUsSUFBSSxFQUFFIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgQ29tcG9uZW50LCBWaWV3Q2hpbGQsIFZpZXdDb250YWluZXJSZWYsIFZpZXdFbmNhcHN1bGF0aW9uIH0gZnJvbSAnQGFuZ3VsYXIvY29yZSc7XG5pbXBvcnQgeyBNYXRNZW51IH0gZnJvbSAnQGFuZ3VsYXIvbWF0ZXJpYWwvbWVudSc7XG5cbmltcG9ydCB7IFBibE5ncmlkQ29tcG9uZW50LCBQYmxDb2x1bW4sIFBibE5ncmlkRGF0YUhlYWRlckV4dGVuc2lvbkNvbnRleHQgfSBmcm9tICdAcGVidWxhL25ncmlkJztcbmltcG9ydCB7IFBibE5ncmlkT3ZlcmxheVBhbmVsUmVmIH0gZnJvbSAnQHBlYnVsYS9uZ3JpZC9vdmVybGF5LXBhbmVsJztcblxuQENvbXBvbmVudCh7XG4gIHNlbGVjdG9yOiAnbWF0LWV4Y2VsLXN0eWxlLWhlYWRlci1tZW51JyxcbiAgdGVtcGxhdGVVcmw6IGAuL2V4Y2VsLXN0eWxlLWhlYWRlci1tZW51Lmh0bWxgLFxuICBzdHlsZVVybHM6IFsgYC4vZXhjZWwtc3R5bGUtaGVhZGVyLW1lbnUuc2Nzc2AgXSxcbiAgZW5jYXBzdWxhdGlvbjogVmlld0VuY2Fwc3VsYXRpb24uTm9uZSxcbn0pXG5leHBvcnQgY2xhc3MgTWF0RXhjZWxTdHlsZUhlYWRlck1lbnUge1xuICBjb2x1bW46IFBibENvbHVtbjtcbiAgZ3JpZDogUGJsTmdyaWRDb21wb25lbnRcblxuICBAVmlld0NoaWxkKCdjb2x1bW5NZW51JywgeyByZWFkOiBNYXRNZW51LCBzdGF0aWM6IHRydWUgfSkgbWF0TWVudTogTWF0TWVudTtcbiAgQFZpZXdDaGlsZCgnbWVudVZpZXdMb2NhdGlvbicsIHsgcmVhZDogVmlld0NvbnRhaW5lclJlZiwgc3RhdGljOiB0cnVlIH0pIG1lbnVWaWV3TG9jYXRpb246IFZpZXdDb250YWluZXJSZWY7XG5cbiAgY3VycmVudFNvcnQ6ICdhc2MnIHwgJ2Rlc2MnIHwgdW5kZWZpbmVkO1xuICBjdXJyZW50UGluOiAnc3RhcnQnIHwgJ2VuZCcgfCB1bmRlZmluZWQ7XG4gIGN1cnJlbnRGaWx0ZXI6IGFueSA9ICcnO1xuXG4gIGNvbnN0cnVjdG9yKHByaXZhdGUgcmVmOiBQYmxOZ3JpZE92ZXJsYXlQYW5lbFJlZjxQYmxOZ3JpZERhdGFIZWFkZXJFeHRlbnNpb25Db250ZXh0Pikge1xuICAgIHRoaXMuY29sdW1uID0gcmVmLmRhdGEuY29sO1xuICAgIHRoaXMuZ3JpZCA9IHJlZi5kYXRhLmdyaWQ7XG5cbiAgICBpZiAodGhpcy5ncmlkLmRzLnNvcnQuY29sdW1uID09PSB0aGlzLmNvbHVtbikge1xuICAgICAgdGhpcy5jdXJyZW50U29ydCA9IHRoaXMuZ3JpZC5kcy5zb3J0LnNvcnQub3JkZXI7XG4gICAgfVxuICAgIHRoaXMuY3VycmVudFBpbiA9IHRoaXMuY29sdW1uLmNvbHVtbkRlZi5zdGlja3kgPyAnc3RhcnQnIDogdGhpcy5jb2x1bW4uY29sdW1uRGVmLnN0aWNreUVuZCA/ICdlbmQnIDogdW5kZWZpbmVkO1xuICAgIGNvbnN0IGRzRmlsdGVyID0gdGhpcy5ncmlkLmRzLmZpbHRlcjtcbiAgICBpZiAoZHNGaWx0ZXIgJiYgZHNGaWx0ZXIudHlwZSA9PT0gJ3ZhbHVlJyAmJiBkc0ZpbHRlci5jb2x1bW5zICYmIGRzRmlsdGVyLmNvbHVtbnMuaW5kZXhPZih0aGlzLmNvbHVtbikgPj0gMCkge1xuICAgICAgdGhpcy5jdXJyZW50RmlsdGVyID0gZHNGaWx0ZXIuZmlsdGVyO1xuICAgIH1cbiAgfVxuXG4gIG5nQWZ0ZXJWaWV3SW5pdCgpIHtcbiAgICB0aGlzLm1hdE1lbnUuY2xvc2VkLnN1YnNjcmliZSggcmVhc29uID0+IHtcbiAgICAgIHRoaXMucmVmLmNsb3NlKCk7XG4gICAgfSk7XG5cbiAgICBjb25zdCB2aWV3ID0gdGhpcy5tZW51Vmlld0xvY2F0aW9uLmNyZWF0ZUVtYmVkZGVkVmlldyh0aGlzLm1hdE1lbnUudGVtcGxhdGVSZWYpO1xuICAgIHRoaXMubWF0TWVudS5zZXRFbGV2YXRpb24oMCk7XG4gICAgdGhpcy5tYXRNZW51LmZvY3VzRmlyc3RJdGVtKCdwcm9ncmFtJyk7XG4gICAgdGhpcy5tYXRNZW51Ll9yZXNldEFuaW1hdGlvbigpO1xuICAgIHZpZXcubWFya0ZvckNoZWNrKCk7XG4gICAgdmlldy5kZXRlY3RDaGFuZ2VzKCk7XG4gICAgdGhpcy5tYXRNZW51Ll9zdGFydEFuaW1hdGlvbigpO1xuICB9XG5cbiAgaGlkZSgpOiB2b2lkIHtcbiAgICB0aGlzLmdyaWQuY29sdW1uQXBpLmhpZGVDb2x1bW5zKHRoaXMuY29sdW1uLmlkKTtcbiAgfVxuXG4gIG9uU29ydFRvZ2dsZShzb3J0OiAnYXNjJyB8ICdkZXNjJyk6IHZvaWQge1xuICAgIGlmICh0aGlzLmN1cnJlbnRTb3J0ID09PSBzb3J0KSB7XG4gICAgICB0aGlzLmdyaWQuZHMuc2V0U29ydCgpO1xuICAgIH0gZWxzZSB7XG4gICAgICB0aGlzLmdyaWQuZHMuc2V0U29ydCh0aGlzLmNvbHVtbiwgeyBvcmRlcjogc29ydCB9KTtcbiAgICB9XG4gIH1cblxuICBvblBpblRvZ2dsZShwaW46ICdzdGFydCcgfCAnZW5kJyk6IHZvaWQge1xuICAgIGlmICh0aGlzLmN1cnJlbnRQaW4gPT09IHBpbikge1xuICAgICAgdGhpcy5jb2x1bW4uY29sdW1uRGVmLnVwZGF0ZVBpbigpXG4gICAgfSBlbHNlIHtcbiAgICAgIHRoaXMuY29sdW1uLmNvbHVtbkRlZi51cGRhdGVQaW4ocGluKVxuICAgIH1cbiAgfVxuXG4gIGZpbHRlckNvbHVtbihmaWx0ZXJWYWx1ZTogc3RyaW5nKSB7XG4gICAgdGhpcy5jdXJyZW50RmlsdGVyID0gZmlsdGVyVmFsdWU7XG4gICAgaWYgKCFmaWx0ZXJWYWx1ZSkge1xuICAgICAgdGhpcy5ncmlkLnNldEZpbHRlcigpO1xuICAgIH0gZWxzZSB7XG4gICAgICB0aGlzLmdyaWQuc2V0RmlsdGVyKGZpbHRlclZhbHVlLnRyaW0oKSwgWyB0aGlzLmNvbHVtbiBdKTtcbiAgICB9XG4gIH1cblxuICBjbGlja1RyYXAoZXZlbnQ6IE1vdXNlRXZlbnQpOiB2b2lkIHtcbiAgICBldmVudC5wcmV2ZW50RGVmYXVsdCgpO1xuICAgIGV2ZW50LnN0b3BQcm9wYWdhdGlvbigpO1xuICB9XG59XG4iLCI8bWF0LW1lbnUgI2NvbHVtbk1lbnU9XCJtYXRNZW51XCIgY2xhc3M9XCJwYmwtbWF0LW1lbnUtcGFuZWxcIj5cblxuICA8YnV0dG9uICpuZ0lmPVwiY29sdW1uLnNvcnRcIiBtYXQtbWVudS1pdGVtIFttYXRNZW51VHJpZ2dlckZvcl09XCJzb3J0TWVudVwiPlxuICAgIDxtYXQtaWNvbj5zb3J0PC9tYXQtaWNvbj5Tb3J0XG4gIDwvYnV0dG9uPlxuICA8YnV0dG9uIG1hdC1tZW51LWl0ZW0gW21hdE1lbnVUcmlnZ2VyRm9yXT1cInBpbk1lbnVcIj5cbiAgICA8bWF0LWljb24+cGxhY2U8L21hdC1pY29uPlBpblxuICA8L2J1dHRvbj5cbiAgPGJ1dHRvbiBtYXQtbWVudS1pdGVtIChjbGljayk9XCJncmlkLmNvbHVtbkFwaS5hdXRvU2l6ZUNvbHVtbihjb2x1bW4pXCI+XG4gICAgPG1hdC1pY29uPmtleWJvYXJkX3RhYjwvbWF0LWljb24+QXV0byBGaXRcbiAgPC9idXR0b24+XG4gIDxidXR0b24gbWF0LW1lbnUtaXRlbSAoY2xpY2spPVwiaGlkZSgpXCI+XG4gICAgPG1hdC1pY29uPnZpc2liaWxpdHlfb2ZmPC9tYXQtaWNvbj5IaWRlIENvbHVtblxuICA8L2J1dHRvbj5cblxuICA8bWF0LW1lbnUgI3NvcnRNZW51PVwibWF0TWVudVwiPlxuICAgIDxidXR0b24gbWF0LW1lbnUtaXRlbSAoY2xpY2spPVwib25Tb3J0VG9nZ2xlKCdhc2MnKVwiIFtjbGFzcy5tZW51LWl0ZW0tc2VsZWN0ZWRdPVwiY3VycmVudFNvcnQgPT09ICdhc2MnXCI+XG4gICAgICA8bWF0LWljb24gW2NvbG9yXT1cImN1cnJlbnRTb3J0ID09PSAnYXNjJyA/ICdwcmltYXJ5JyA6ICcnXCI+YXJyb3dfdXB3YXJkPC9tYXQtaWNvbj5cbiAgICAgIDxzcGFuPkFzY2VuZGluZzwvc3Bhbj5cbiAgICA8L2J1dHRvbj5cbiAgICA8YnV0dG9uIG1hdC1tZW51LWl0ZW0gKGNsaWNrKT1cIm9uU29ydFRvZ2dsZSgnZGVzYycpXCIgW2NsYXNzLm1lbnUtaXRlbS1zZWxlY3RlZF09XCJjdXJyZW50U29ydCA9PT0gJ2Rlc2MnXCI+XG4gICAgICA8bWF0LWljb24gW2NvbG9yXT1cImN1cnJlbnRTb3J0ID09PSAnZGVzYycgPyAncHJpbWFyeScgOiAnJ1wiPmFycm93X2Rvd253YXJkPC9tYXQtaWNvbj5cbiAgICAgIDxzcGFuPkRlc2NlbmRpbmc8L3NwYW4+XG4gICAgPC9idXR0b24+XG4gIDwvbWF0LW1lbnU+XG5cbiAgPG1hdC1tZW51ICNwaW5NZW51PVwibWF0TWVudVwiPlxuICAgIDxidXR0b24gbWF0LW1lbnUtaXRlbSAoY2xpY2spPVwib25QaW5Ub2dnbGUoJ3N0YXJ0JylcIiBbY2xhc3MubWVudS1pdGVtLXNlbGVjdGVkXT1cImN1cnJlbnRQaW4gPT09ICdzdGFydCdcIj5cbiAgICAgIDxzcGFuPlN0YXJ0PC9zcGFuPlxuICAgIDwvYnV0dG9uPlxuICAgIDxidXR0b24gbWF0LW1lbnUtaXRlbSAoY2xpY2spPVwib25QaW5Ub2dnbGUoJ2VuZCcpXCIgW2NsYXNzLm1lbnUtaXRlbS1zZWxlY3RlZF09XCJjdXJyZW50UGluID09PSAnZW5kJ1wiPlxuICAgICAgPHNwYW4+RW5kPC9zcGFuPlxuICAgIDwvYnV0dG9uPlxuICA8L21hdC1tZW51PlxuXG4gIDxkaXYgY2xhc3M9XCJtYXQtbWVudS1pdGVtIHBibC1tYXQtbWVudS1yb3dcIiAoY2xpY2spPVwiY2xpY2tUcmFwKCRldmVudClcIj5cbiAgICA8bWF0LWZvcm0tZmllbGQ+XG4gICAgICA8bWF0LWxhYmVsPlNlYXJjaDwvbWF0LWxhYmVsPlxuICAgICAgPGlucHV0ICNpbnB1dCBtYXRJbnB1dCAoa2V5dXApPVwiZmlsdGVyQ29sdW1uKGlucHV0LnZhbHVlKVwiIFt2YWx1ZV09XCJjdXJyZW50RmlsdGVyXCI+XG4gICAgICA8bWF0LWljb24gbWF0UHJlZml4PnNlYXJjaDwvbWF0LWljb24+XG4gICAgICA8YnV0dG9uIG1hdC1idXR0b24gW3N0eWxlLnZpc2liaWxpdHldPVwiY3VycmVudEZpbHRlciA/ICd2aXNpYmxlJyA6ICdoaWRkZW4nXCIgbWF0U3VmZml4IG1hdC1pY29uLWJ1dHRvbiBhcmlhLWxhYmVsPVwiQ2xlYXJcIlxuICAgICAgICAgICAgICAoY2xpY2spPVwiZmlsdGVyQ29sdW1uKCcnKVwiPlxuICAgICAgICA8bWF0LWljb24+Y2xvc2U8L21hdC1pY29uPlxuICAgICAgPC9idXR0b24+XG4gICAgPC9tYXQtZm9ybS1maWVsZD5cbiAgPC9kaXY+XG48L21hdC1tZW51PlxuPG5nLWNvbnRhaW5lciAjbWVudVZpZXdMb2NhdGlvbj48L25nLWNvbnRhaW5lcj5cbiJdfQ==

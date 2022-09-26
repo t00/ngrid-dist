@@ -1,8 +1,10 @@
 import { Injector, OnDestroy } from '@angular/core';
+import { BooleanInput, NumberInput } from '@angular/cdk/coercion';
 import { TooltipPosition } from '@angular/material/tooltip';
 import { PblNgridComponent, PblNgridPluginController } from '@pebula/ngrid';
 import { PblNgridCellEvent } from '@pebula/ngrid/target-events';
-declare module '@pebula/ngrid/lib/grid/services/config' {
+import * as i0 from "@angular/core";
+declare module '@pebula/ngrid/core/lib/configuration/type' {
     interface PblNgridConfig {
         cellTooltip?: CellTooltipOptions & {
             /** When set to true will apply the default cell tooltip to ALL tables */
@@ -51,4 +53,9 @@ export declare class PblNgridCellTooltipDirective<T> implements CellTooltipOptio
     private cellEnter;
     private cellLeave;
     private killTooltip;
+    static ngAcceptInputType_canShow: BooleanInput;
+    static ngAcceptInputType_showDelay: NumberInput;
+    static ngAcceptInputType_hideDelay: NumberInput;
+    static ɵfac: i0.ɵɵFactoryDeclaration<PblNgridCellTooltipDirective<any>, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<PblNgridCellTooltipDirective<any>, "[cellTooltip]", ["pblOverflowTooltip"], { "canShow": "cellTooltip"; "message": "message"; "position": "position"; "tooltipClass": "tooltipClass"; "showDelay": "showDelay"; "hideDelay": "hideDelay"; }, {}, never>;
 }

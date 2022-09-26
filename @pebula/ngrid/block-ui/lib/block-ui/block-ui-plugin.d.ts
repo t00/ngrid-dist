@@ -1,10 +1,12 @@
 import { Observable } from 'rxjs';
 import { OnDestroy } from '@angular/core';
+import { BooleanInput } from '@angular/cdk/coercion';
 import { PblNgridComponent, PblNgridPluginController } from '@pebula/ngrid';
+import * as i0 from "@angular/core";
 declare module '@pebula/ngrid/lib/ext/types' {
     interface PblNgridPluginExtension {
         blockUi?: {
-            blockUi: boolean | 'auto' | Observable<boolean>;
+            blockUi: BooleanInput | 'auto' | Observable<boolean>;
         };
     }
 }
@@ -37,8 +39,8 @@ export declare class PblNgridBlockUiPluginDirective<T> implements OnDestroy {
      * For example, sending the returned value from `HttpClient` will probably result in 2 HTTP calls, if you already subscribed to it
      * > The default value is `auto` which means that `<pbl-ngrid blockUi>` is similar to `<pbl-ngrid blockUi="auto">`
      */
-    get blockUi(): boolean | 'auto' | Observable<boolean>;
-    set blockUi(value: boolean | 'auto' | Observable<boolean>);
+    get blockUi(): BooleanInput | 'auto' | Observable<boolean>;
+    set blockUi(value: BooleanInput | 'auto' | Observable<boolean>);
     private _blockInProgress;
     private _blockUi;
     private _blockerEmbeddedVRef;
@@ -46,4 +48,7 @@ export declare class PblNgridBlockUiPluginDirective<T> implements OnDestroy {
     constructor(grid: PblNgridComponent<any>, pluginCtrl: PblNgridPluginController<T>);
     ngOnDestroy(): void;
     private setupBlocker;
+    static ngAcceptInputType_blockUi: BooleanInput;
+    static ɵfac: i0.ɵɵFactoryDeclaration<PblNgridBlockUiPluginDirective<any>, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<PblNgridBlockUiPluginDirective<any>, "pbl-ngrid[blockUi]", ["blockUi"], { "blockUi": "blockUi"; }, {}, never>;
 }

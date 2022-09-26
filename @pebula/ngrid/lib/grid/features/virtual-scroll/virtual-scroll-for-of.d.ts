@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { NgZone } from '@angular/core';
 import { CollectionViewer, ListRange } from '@angular/cdk/collections';
-import { PblNgridExtensionApi } from '../../../ext/grid-ext-api';
+import { PblNgridInternalExtensionApi } from '../../../ext/grid-ext-api';
 export interface NgeVirtualTableRowInfo {
     readonly headerLength: number;
     readonly rowLength: number;
@@ -14,6 +14,11 @@ export declare class PblVirtualScrollForOf<T> implements CollectionViewer, NgeVi
     get headerLength(): number;
     get rowLength(): number;
     get footerLength(): number;
+    readonly wheelControl: {
+        wheelListen: () => void;
+        wheelUnListen: () => void;
+        readonly listening: boolean;
+    };
     private destroyed;
     private ds;
     private get vcRefs();
@@ -27,7 +32,7 @@ export declare class PblVirtualScrollForOf<T> implements CollectionViewer, NgeVi
     private grid;
     private cdkTable;
     private viewport;
-    constructor(extApi: PblNgridExtensionApi<T>, ngZone: NgZone);
+    constructor(extApi: PblNgridInternalExtensionApi<T>, ngZone: NgZone);
     /**
      * Measures the combined size (width for horizontal orientation, height for vertical) of all items
      * in the specified range. Throws an error if the range includes items that are not currently
@@ -35,6 +40,7 @@ export declare class PblVirtualScrollForOf<T> implements CollectionViewer, NgeVi
      */
     measureRangeSize(range: ListRange, orientation: 'horizontal' | 'vertical'): number;
     destroy(): void;
+    private initWheelControl;
     private attachView;
     private detachView;
 }

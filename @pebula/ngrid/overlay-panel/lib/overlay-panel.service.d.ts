@@ -1,10 +1,10 @@
-import { ElementRef } from '@angular/core';
-import { Directionality } from '@angular/cdk/bidi';
+import { ElementRef, NgZone } from '@angular/core';
 import { Overlay } from '@angular/cdk/overlay';
 import { PblNgridComponent, PblNgridMultiTemplateRegistry } from '@pebula/ngrid';
 import { PblNgridOverlayPanelComponentExtension } from './component-registry-extension';
 import { PblNgridOverlayPanelRef } from './overlay-panel-ref';
-declare module '@pebula/ngrid/lib/grid/services/grid-registry.service' {
+import * as i0 from "@angular/core";
+declare module '@pebula/ngrid/core/lib/registry/types' {
     interface PblNgridMultiRegistryMap {
         overlayPanels?: PblNgridMultiTemplateRegistry<any, 'overlayPanels'> | PblNgridOverlayPanelComponentExtension<any>;
     }
@@ -18,18 +18,20 @@ export interface PblNgridOverlayPanelConfig {
 }
 export declare class PblNgridOverlayPanelFactory {
     private _overlay;
-    private _dir;
-    constructor(_overlay: Overlay, _dir: Directionality);
+    private zone;
+    constructor(_overlay: Overlay, zone: NgZone);
     create<T>(grid: PblNgridComponent<T>): PblNgridOverlayPanel<T>;
+    static ɵfac: i0.ɵɵFactoryDeclaration<PblNgridOverlayPanelFactory, never>;
+    static ɵprov: i0.ɵɵInjectableDeclaration<PblNgridOverlayPanelFactory>;
 }
 export declare class PblNgridOverlayPanel<T = any> {
     private _overlay;
-    private _dir;
+    private zone;
     readonly grid: PblNgridComponent<T>;
     private vcRef;
     private injector;
     private _scrollStrategy;
-    constructor(_overlay: Overlay, _dir: Directionality, grid: PblNgridComponent<T>);
+    constructor(_overlay: Overlay, zone: NgZone, grid: PblNgridComponent<T>);
     /**
      * Opens a panel relative to a cell element using the overlay panel extension registry template/component with the name provided in `extName`.
      * The cell element is referenced by the `columnId` and the `rowRenderPosition`.

@@ -1,13 +1,10 @@
 {
   "name": "@pebula/ngrid/detail-row",
   "main": "../bundles/pebula-ngrid-detail-row.umd.js",
-  "module": "../fesm5/pebula-ngrid-detail-row.js",
+  "module": "../fesm2015/pebula-ngrid-detail-row.js",
   "es2015": "../fesm2015/pebula-ngrid-detail-row.js",
-  "esm5": "../esm5/detail-row/pebula-ngrid-detail-row.js",
   "esm2015": "../esm2015/detail-row/pebula-ngrid-detail-row.js",
-  "fesm5": "../fesm5/pebula-ngrid-detail-row.js",
   "fesm2015": "../fesm2015/pebula-ngrid-detail-row.js",
   "typings": "pebula-ngrid-detail-row.d.ts",
-  "metadata": "pebula-ngrid-detail-row.metadata.json",
   "sideEffects": false
 }

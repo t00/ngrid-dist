@@ -1,7 +1,10 @@
 import { ViewContainerRef } from '@angular/core';
 import { ListRange } from '@angular/cdk/collections';
+import { PblNgridConfigService } from '@pebula/ngrid/core';
+import { PblNgridVirtualScrollStrategy } from './strategies/types';
 export declare type StickyDirectionVt = 'top' | 'bottom';
 export declare type StickyDirectionHz = 'left' | 'right';
+export declare function resolveScrollStrategy(config: PblNgridConfigService, scrollStrategy: PblNgridVirtualScrollStrategy, fallback: () => PblNgridVirtualScrollStrategy): PblNgridVirtualScrollStrategy;
 /**
  * Returns the split range from an aggregated range.
  * An aggregated range describes the range of header, data and footer rows currently in view.
@@ -35,4 +38,5 @@ export declare function updateStickyRows(offset: number, rows: HTMLElement[], st
  *
  * > This is function is identical to `CdkVirtualForOf.measureRangeSize` with minor adjustments
  */
-export declare function measureRangeSize(viewContainer: ViewContainerRef, range: ListRange, renderedRange: ListRange, orientation: 'horizontal' | 'vertical', stickyState?: boolean[]): number;
+export declare function measureRangeSize(viewContainer: ViewContainerRef, range: ListRange, renderedRange: ListRange, stickyState?: boolean[]): number;
+export declare function calculateBrowserPxLimit(): number;

@@ -1,6 +1,7 @@
 import { Injector, OnDestroy, ComponentFactoryResolver } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { PblNgridComponent, PblNgridPluginController } from '@pebula/ngrid';
+import * as i0 from "@angular/core";
 declare module '@pebula/ngrid/lib/ext/types' {
     interface PblNgridPluginExtension {
         matCheckboxSelection?: PblNgridMatCheckboxSelectionDirective;
@@ -39,4 +40,6 @@ export declare class PblNgridMatCheckboxSelectionDirective implements OnDestroy 
     private _isCheckboxDisabled;
     constructor(table: PblNgridComponent<any>, cfr: ComponentFactoryResolver, injector: Injector, pluginCtrl: PblNgridPluginController);
     ngOnDestroy(): void;
+    static ɵfac: i0.ɵɵFactoryDeclaration<PblNgridMatCheckboxSelectionDirective, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<PblNgridMatCheckboxSelectionDirective, "pbl-ngrid[matCheckboxSelection]", never, { "isCheckboxDisabled": "isCheckboxDisabled"; "matCheckboxSelection": "matCheckboxSelection"; "bulkSelectMode": "bulkSelectMode"; "matCheckboxSelectionColor": "matCheckboxSelectionColor"; }, {}, never>;
 }

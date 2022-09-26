@@ -1,29 +1,22 @@
-import { PblDataSource } from '../data-source';
 export interface PblNgridPlugin {
 }
 export interface PblNgridPluginExtension {
 }
 export interface PblNgridPluginExtensionFactories {
 }
-export interface PblNgridOnInitEvent {
-    kind: 'onInit';
+export interface OnPropChangedEvent<T extends (keyof OnPropChangedSources & keyof OnPropChangedProperties) = keyof OnPropChangedSources, P extends keyof OnPropChangedProperties[T] = keyof OnPropChangedProperties[T]> {
+    source: OnPropChangedSources[T];
+    key: P;
+    prev: OnPropChangedProperties[T][P];
+    curr: OnPropChangedProperties[T][P];
 }
-export interface PblNgridOnResizeRowEvent {
-    kind: 'onResizeRow';
+export interface OnPropChangedSources {
 }
-export interface PblNgridOnInvalidateHeadersEvent {
-    kind: 'onInvalidateHeaders';
+export interface OnPropChangedProperties {
 }
-export interface PblNgridBeforeInvalidateHeadersEvent {
-    kind: 'beforeInvalidateHeaders';
-}
-export interface PblNgridOnDestroyEvent {
-    kind: 'onDestroy';
-    wait(p: Promise<void>): void;
-}
-export interface PblNgridOnDataSourceEvent {
-    kind: 'onDataSource';
-    prev: PblDataSource<any>;
-    curr: PblDataSource<any>;
-}
-export declare type PblNgridEvents = PblNgridOnInitEvent | PblNgridOnResizeRowEvent | PblNgridBeforeInvalidateHeadersEvent | PblNgridOnInvalidateHeadersEvent | PblNgridOnDataSourceEvent | PblNgridOnDestroyEvent;
+declare type FilterFlags<Base, Condition> = {
+    [Key in keyof Base]: Base[Key] extends Condition ? Key : never;
+};
+declare type AllowedNames<Base, Condition> = FilterFlags<Base, Condition>[keyof Base];
+export declare type NotifyPropChangeMethod = <T extends OnPropChangedSources[keyof OnPropChangedSources], TP extends OnPropChangedProperties[AllowedNames<OnPropChangedSources, T>], P extends keyof TP>(source: T, key: P, prev: TP[P], curr: TP[P]) => void;
+export {};

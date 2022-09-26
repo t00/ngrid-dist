@@ -1,4 +1,5 @@
-import { PblNgridComponent, PblMetaColumnDefinition, PblMetaColumn, PblColumnGroupDefinition, PblColumnGroup, PblColumnDefinition, PblColumn, PblMetaRowDefinitions, PblColumnSet, PblNgridColumnDefinitionSet, ColumnApi } from '@pebula/ngrid';
+import { PblMetaColumnDefinition, PblColumnGroupDefinition, PblColumnDefinition, PblMetaRowDefinitions, PblColumnSet, PblNgridColumnDefinitionSet } from '@pebula/ngrid/core';
+import { PblMetaColumn, PblColumn, PblColumnGroup, PblNgridComponent, ColumnApi } from '@pebula/ngrid';
 import { PblNgridGlobalState, StateChunkItem } from '../models/index';
 import * as C from './column-def/index';
 import { PblNgridSurfaceState } from './grid-primitives/index';
@@ -9,6 +10,7 @@ export interface PblNgridBuiltInGlobalState {
     grid: PblNgridSurfaceState;
     columns: C.PblNgridColumnDefinitionSetState;
     columnOrder: string[];
+    columnVisibility: string[];
 }
 export interface BuiltInRootStateChunks {
     /**
@@ -37,6 +39,14 @@ export interface BuiltInRootStateChunks {
      * - root chunk.
      */
     columnOrder: StateChunkItem<Pick<PblNgridGlobalState, 'columnOrder'>, ColumnApi<any>, any, true>;
+    /**
+     * A state chunk that handles serialization of the current column visibility.
+     * This is a keyless chunk, in this case an array, so you can only include / exclude it as a whole.
+     *
+     * - keyless chunk.
+     * - root chunk.
+     */
+    columnVisibility: StateChunkItem<Pick<PblNgridGlobalState, 'columnVisibility'>, ColumnApi<any>, any, true>;
 }
 export interface BuiltInStateChunks {
     /**

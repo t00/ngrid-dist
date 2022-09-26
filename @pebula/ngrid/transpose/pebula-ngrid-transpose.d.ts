@@ -1,5 +1,5 @@
 /**
  * Generated bundle index. Do not edit.
  */
+/// <amd-module name="@pebula/ngrid/transpose" />
 export * from './index';
-export { PLUGIN_KEY as ɵa, PblNgridTransposePluginDirective as ɵb } from './lib/transpose-plugin.directive';

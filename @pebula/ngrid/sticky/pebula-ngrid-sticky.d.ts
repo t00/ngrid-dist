@@ -1,5 +1,5 @@
 /**
  * Generated bundle index. Do not edit.
  */
+/// <amd-module name="@pebula/ngrid/sticky" />
 export * from './index';
-export { PLUGIN_KEY as ɵa, PblNgridStickyPluginDirective as ɵb } from './lib/sticky/sticky-plugin';

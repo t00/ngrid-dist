@@ -1,5 +1,5 @@
 /**
  * Generated bundle index. Do not edit.
  */
+/// <amd-module name="@pebula/ngrid-material/sort" />
 export * from './index';
-export { PLUGIN_KEY as ɵa } from './lib/mat-sort.directive';

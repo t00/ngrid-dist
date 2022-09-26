@@ -1,8 +1,8 @@
 import { AfterViewInit, ElementRef, OnDestroy, NgZone } from '@angular/core';
-import { Directionality } from '@angular/cdk/bidi';
 import { ViewportRuler } from '@angular/cdk/scrolling';
-import { DragRefConfig, DragDropRegistry } from '@angular/cdk/drag-drop';
+import { DragDropConfig, DragDropRegistry } from '@angular/cdk/drag-drop';
 import { PblNgridComponent, PblColumn, PblNgridMetaCellContext } from '@pebula/ngrid';
+import * as i0 from "@angular/core";
 declare module '@pebula/ngrid/lib/ext/types' {
     interface PblNgridPluginExtension {
         columnResize?: PblNgridDragResizeComponent;
@@ -15,7 +15,6 @@ export declare class PblNgridDragResizeComponent implements AfterViewInit, OnDes
     private _viewportRuler;
     private _dragDropRegistry;
     private _config;
-    private _dir;
     set context(value: PblNgridMetaCellContext<any>);
     /**
      * The area (in pixels) in which the handle can be grabbed and resize the cell.
@@ -23,8 +22,6 @@ export declare class PblNgridDragResizeComponent implements AfterViewInit, OnDes
      */
     grabAreaWidth: number;
     column: PblColumn;
-    /** @deprecated use grid instead */
-    get table(): PblNgridComponent<any>;
     grid: PblNgridComponent<any>;
     _hasStartedDragging: boolean;
     private _hasMoved;
@@ -35,8 +32,9 @@ export declare class PblNgridDragResizeComponent implements AfterViewInit, OnDes
     private _pickupPositionOnPage;
     private _initialWidth;
     private _lastWidth;
+    private _extApi;
     private _rootElementInitSubscription;
-    constructor(element: ElementRef<HTMLElement>, _ngZone: NgZone, _viewportRuler: ViewportRuler, _dragDropRegistry: DragDropRegistry<PblNgridDragResizeComponent, any>, _config: DragRefConfig, _dir: Directionality);
+    constructor(element: ElementRef<HTMLElement>, _ngZone: NgZone, _viewportRuler: ViewportRuler, _dragDropRegistry: DragDropRegistry<PblNgridDragResizeComponent, any>, _config: DragDropConfig);
     ngAfterViewInit(): void;
     ngOnDestroy(): void;
     onDoubleClick(event: MouseEvent): void;
@@ -54,7 +52,14 @@ export declare class PblNgridDragResizeComponent implements AfterViewInit, OnDes
     private _pointerUp;
     private _getPointerPositionOnPage;
     private _isTouchEvent;
+    /**
+     *
+     * @deprecated Will be removed in v5, use `isDragging()` instead
+     */
     _isDragging(): boolean;
+    isDragging(): boolean;
     private _getRootElement;
     private _removeSubscriptions;
+    static ɵfac: i0.ɵɵFactoryDeclaration<PblNgridDragResizeComponent, [null, null, null, null, { optional: true; }]>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<PblNgridDragResizeComponent, "pbl-ngrid-drag-resize", never, { "context": "context"; "grabAreaWidth": "grabAreaWidth"; }, {}, never, ["*"]>;
 }

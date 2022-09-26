@@ -2,7 +2,8 @@ import { ReplaySubject } from 'rxjs';
 import { EventEmitter, OnDestroy, Injector } from '@angular/core';
 import { PblNgridComponent, PblNgridPluginController } from '@pebula/ngrid';
 import * as Events from './events';
-declare module '@pebula/ngrid/lib/grid/services/config' {
+import * as i0 from "@angular/core";
+declare module '@pebula/ngrid/core/lib/configuration/type' {
     interface PblNgridConfig {
         targetEvents?: {
             /** When set to true will enable the target events plugin on all table instances by default. */
@@ -28,80 +29,14 @@ export declare class PblNgridTargetEventsPlugin<T = any> {
     rowDblClick: EventEmitter<Events.PblNgridRowEvent<T>>;
     rowEnter: EventEmitter<Events.PblNgridRowEvent<T>>;
     rowLeave: EventEmitter<Events.PblNgridRowEvent<T>>;
-    cellClick: EventEmitter<Events.PblNgridDataCellEvent<T, MouseEvent> | (Events.PblNgridBaseCellEvent<MouseEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "data">) | (Events.PblNgridBaseCellEvent<MouseEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta">) | (Events.PblNgridBaseCellEvent<MouseEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta-group">)>;
-    cellDblClick: EventEmitter<Events.PblNgridDataCellEvent<T, MouseEvent> | (Events.PblNgridBaseCellEvent<MouseEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "data">) | (Events.PblNgridBaseCellEvent<MouseEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta">) | (Events.PblNgridBaseCellEvent<MouseEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta-group">)>;
-    cellEnter: EventEmitter<Events.PblNgridDataCellEvent<T, MouseEvent> | (Events.PblNgridBaseCellEvent<MouseEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "data">) | (Events.PblNgridBaseCellEvent<MouseEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta">) | (Events.PblNgridBaseCellEvent<MouseEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta-group">)>;
-    cellLeave: EventEmitter<Events.PblNgridDataCellEvent<T, MouseEvent> | (Events.PblNgridBaseCellEvent<MouseEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "data">) | (Events.PblNgridBaseCellEvent<MouseEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta">) | (Events.PblNgridBaseCellEvent<MouseEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta-group">)>;
-    mouseDown: EventEmitter<({
-        source: MouseEvent | KeyboardEvent;
-        rowTarget: HTMLElement;
-        root?: (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "data">) | (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta">) | (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta-group">) | Events.PblNgridDataCellEvent<T, MouseEvent | KeyboardEvent>;
-    } & Events.PblNgridDataMatrixRow<T>) | ({
-        source: MouseEvent | KeyboardEvent;
-        rowTarget: HTMLElement;
-        root?: (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "data">) | (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta">) | (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta-group">) | Events.PblNgridDataCellEvent<T, MouseEvent | KeyboardEvent>;
-    } & Events.PblNgridMatrixRow<"footer" | "header", "data">) | ({
-        source: MouseEvent | KeyboardEvent;
-        rowTarget: HTMLElement;
-        root?: (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "data">) | (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta">) | (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta-group">) | Events.PblNgridDataCellEvent<T, MouseEvent | KeyboardEvent>;
-    } & Events.PblNgridMatrixRow<"footer" | "header", "meta">) | ({
-        source: MouseEvent | KeyboardEvent;
-        rowTarget: HTMLElement;
-        root?: (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "data">) | (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta">) | (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta-group">) | Events.PblNgridDataCellEvent<T, MouseEvent | KeyboardEvent>;
-    } & Events.PblNgridMatrixRow<"footer" | "header", "meta-group">) | Events.PblNgridDataCellEvent<T, MouseEvent> | (Events.PblNgridBaseCellEvent<MouseEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "data">) | (Events.PblNgridBaseCellEvent<MouseEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta">) | (Events.PblNgridBaseCellEvent<MouseEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta-group">)>;
-    mouseUp: EventEmitter<({
-        source: MouseEvent | KeyboardEvent;
-        rowTarget: HTMLElement;
-        root?: (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "data">) | (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta">) | (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta-group">) | Events.PblNgridDataCellEvent<T, MouseEvent | KeyboardEvent>;
-    } & Events.PblNgridDataMatrixRow<T>) | ({
-        source: MouseEvent | KeyboardEvent;
-        rowTarget: HTMLElement;
-        root?: (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "data">) | (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta">) | (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta-group">) | Events.PblNgridDataCellEvent<T, MouseEvent | KeyboardEvent>;
-    } & Events.PblNgridMatrixRow<"footer" | "header", "data">) | ({
-        source: MouseEvent | KeyboardEvent;
-        rowTarget: HTMLElement;
-        root?: (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "data">) | (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta">) | (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta-group">) | Events.PblNgridDataCellEvent<T, MouseEvent | KeyboardEvent>;
-    } & Events.PblNgridMatrixRow<"footer" | "header", "meta">) | ({
-        source: MouseEvent | KeyboardEvent;
-        rowTarget: HTMLElement;
-        root?: (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "data">) | (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta">) | (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta-group">) | Events.PblNgridDataCellEvent<T, MouseEvent | KeyboardEvent>;
-    } & Events.PblNgridMatrixRow<"footer" | "header", "meta-group">) | Events.PblNgridDataCellEvent<T, MouseEvent> | (Events.PblNgridBaseCellEvent<MouseEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "data">) | (Events.PblNgridBaseCellEvent<MouseEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta">) | (Events.PblNgridBaseCellEvent<MouseEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta-group">)>;
-    keyUp: EventEmitter<Events.PblNgridDataCellEvent<T, KeyboardEvent> | (Events.PblNgridBaseCellEvent<KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "data">) | (Events.PblNgridBaseCellEvent<KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta">) | (Events.PblNgridBaseCellEvent<KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta-group">) | ({
-        source: MouseEvent | KeyboardEvent;
-        rowTarget: HTMLElement;
-        root?: (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "data">) | (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta">) | (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta-group">) | Events.PblNgridDataCellEvent<T, MouseEvent | KeyboardEvent>;
-    } & Events.PblNgridDataMatrixRow<T>) | ({
-        source: MouseEvent | KeyboardEvent;
-        rowTarget: HTMLElement;
-        root?: (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "data">) | (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta">) | (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta-group">) | Events.PblNgridDataCellEvent<T, MouseEvent | KeyboardEvent>;
-    } & Events.PblNgridMatrixRow<"footer" | "header", "data">) | ({
-        source: MouseEvent | KeyboardEvent;
-        rowTarget: HTMLElement;
-        root?: (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "data">) | (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta">) | (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta-group">) | Events.PblNgridDataCellEvent<T, MouseEvent | KeyboardEvent>;
-    } & Events.PblNgridMatrixRow<"footer" | "header", "meta">) | ({
-        source: MouseEvent | KeyboardEvent;
-        rowTarget: HTMLElement;
-        root?: (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "data">) | (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta">) | (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta-group">) | Events.PblNgridDataCellEvent<T, MouseEvent | KeyboardEvent>;
-    } & Events.PblNgridMatrixRow<"footer" | "header", "meta-group">)>;
-    keyDown: EventEmitter<Events.PblNgridDataCellEvent<T, KeyboardEvent> | (Events.PblNgridBaseCellEvent<KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "data">) | (Events.PblNgridBaseCellEvent<KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta">) | (Events.PblNgridBaseCellEvent<KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta-group">) | ({
-        source: MouseEvent | KeyboardEvent;
-        rowTarget: HTMLElement;
-        root?: (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "data">) | (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta">) | (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta-group">) | Events.PblNgridDataCellEvent<T, MouseEvent | KeyboardEvent>;
-    } & Events.PblNgridDataMatrixRow<T>) | ({
-        source: MouseEvent | KeyboardEvent;
-        rowTarget: HTMLElement;
-        root?: (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "data">) | (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta">) | (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta-group">) | Events.PblNgridDataCellEvent<T, MouseEvent | KeyboardEvent>;
-    } & Events.PblNgridMatrixRow<"footer" | "header", "data">) | ({
-        source: MouseEvent | KeyboardEvent;
-        rowTarget: HTMLElement;
-        root?: (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "data">) | (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta">) | (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta-group">) | Events.PblNgridDataCellEvent<T, MouseEvent | KeyboardEvent>;
-    } & Events.PblNgridMatrixRow<"footer" | "header", "meta">) | ({
-        source: MouseEvent | KeyboardEvent;
-        rowTarget: HTMLElement;
-        root?: (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "data">) | (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta">) | (Events.PblNgridBaseCellEvent<MouseEvent | KeyboardEvent> & Events.PblNgridColumnMatrixPoint<"footer" | "header", "meta-group">) | Events.PblNgridDataCellEvent<T, MouseEvent | KeyboardEvent>;
-    } & Events.PblNgridMatrixRow<"footer" | "header", "meta-group">)>;
-    /** @deprecated use `gird` instead */
-    get table(): PblNgridComponent<any>;
+    cellClick: EventEmitter<Events.PblNgridCellEvent<T, MouseEvent>>;
+    cellDblClick: EventEmitter<Events.PblNgridCellEvent<T, MouseEvent>>;
+    cellEnter: EventEmitter<Events.PblNgridCellEvent<T, MouseEvent>>;
+    cellLeave: EventEmitter<Events.PblNgridCellEvent<T, MouseEvent>>;
+    mouseDown: EventEmitter<Events.PblNgridRowEvent<T> | Events.PblNgridCellEvent<T, MouseEvent>>;
+    mouseUp: EventEmitter<Events.PblNgridRowEvent<T> | Events.PblNgridCellEvent<T, MouseEvent>>;
+    keyUp: EventEmitter<Events.PblNgridCellEvent<T, KeyboardEvent> | Events.PblNgridRowEvent<T>>;
+    keyDown: EventEmitter<Events.PblNgridCellEvent<T, KeyboardEvent> | Events.PblNgridRowEvent<T>>;
     protected readonly destroyed: ReplaySubject<void>;
     private _removePlugin;
     constructor(grid: PblNgridComponent<any>, injector: Injector, pluginCtrl: PblNgridPluginController);
@@ -114,4 +49,6 @@ export declare class PblNgridTargetEventsPlugin<T = any> {
 export declare class PblNgridTargetEventsPluginDirective<T> extends PblNgridTargetEventsPlugin<T> implements OnDestroy {
     constructor(table: PblNgridComponent<any>, injector: Injector, pluginCtrl: PblNgridPluginController);
     ngOnDestroy(): void;
+    static ɵfac: i0.ɵɵFactoryDeclaration<PblNgridTargetEventsPluginDirective<any>, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<PblNgridTargetEventsPluginDirective<any>, "pbl-ngrid[targetEvents], pbl-ngrid[rowClick], pbl-ngrid[rowDblClick], pbl-ngrid[rowEnter], pbl-ngrid[rowLeave], pbl-ngrid[cellClick], pbl-ngrid[cellDblClick], pbl-ngrid[cellEnter], pbl-ngrid[cellLeave], pbl-ngrid[keyDown], pbl-ngrid[keyUp]", never, {}, { "rowClick": "rowClick"; "rowDblClick": "rowDblClick"; "rowEnter": "rowEnter"; "rowLeave": "rowLeave"; "cellClick": "cellClick"; "cellDblClick": "cellDblClick"; "cellEnter": "cellEnter"; "cellLeave": "cellLeave"; "keyDown": "keyDown"; "keyUp": "keyUp"; }, never>;
 }

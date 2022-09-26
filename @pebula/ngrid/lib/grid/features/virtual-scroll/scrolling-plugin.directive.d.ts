@@ -1,6 +1,7 @@
 import { EventEmitter, NgZone } from '@angular/core';
 import { PblNgridPluginController } from '../../../ext/plugin-control';
 import { PblNgridComponent } from '../../ngrid.component';
+import * as i0 from "@angular/core";
 export declare class PblNgridScrolling<T = any> {
     /**
      * Event emitted when the scrolling state of rows in the table changes.
@@ -16,4 +17,6 @@ export declare class PblNgridScrolling<T = any> {
      */
     scrolling: EventEmitter<0 | 1 | -1>;
     constructor(table: PblNgridComponent<T>, pluginCtrl: PblNgridPluginController, zone: NgZone);
+    static ɵfac: i0.ɵɵFactoryDeclaration<PblNgridScrolling<any>, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<PblNgridScrolling<any>, "pbl-ngrid[scrolling]", never, {}, { "scrolling": "scrolling"; }, never>;
 }

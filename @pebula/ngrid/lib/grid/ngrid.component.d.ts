@@ -1,19 +1,18 @@
-import { AfterViewInit, ElementRef, Injector, QueryList, AfterContentInit, OnChanges, OnDestroy, SimpleChanges, ChangeDetectorRef, TemplateRef, ViewContainerRef, EmbeddedViewRef, NgZone, IterableDiffers, DoCheck } from '@angular/core';
+import { AfterViewInit, ElementRef, Injector, QueryList, AfterContentInit, OnChanges, OnDestroy, SimpleChanges, ChangeDetectorRef, TemplateRef, ViewContainerRef, EmbeddedViewRef, NgZone } from '@angular/core';
+import { Direction, Directionality } from '@angular/cdk/bidi';
+import { BooleanInput, NumberInput } from '@angular/cdk/coercion';
 import { CdkHeaderRowDef, CdkFooterRowDef, CdkRowDef } from '@angular/cdk/table';
+import { PblNgridConfigService, PblNgridPaginatorKind, DataSourcePredicate, PblNgridSortDefinition, PblDataSource, DataSourceOf, PblNgridColumnDefinitionSet, PblMetaRowDefinitions } from '@pebula/ngrid/core';
 import { PblNgridExtensionApi } from '../ext/grid-ext-api';
 import { PblNgridPluginController, PblNgridPluginContext } from '../ext/plugin-control';
-import { PblNgridPaginatorKind } from '../paginator';
-import { DataSourcePredicate, PblNgridSortDefinition, PblDataSource, DataSourceOf } from '../data-source/index';
-import { PblCdkTableComponent } from './pbl-cdk-table/pbl-cdk-table.component';
-import { PblColumn, PblColumnStore, PblNgridColumnSet, PblNgridColumnDefinitionSet } from './columns';
+import { PblNgridRegistryService } from './registry/registry.service';
+import { PblColumn, PblNgridColumnSet } from './column/model';
+import { PblColumnStore, ColumnApi, AutoSizeToFitOptions } from './column/management';
 import { PblNgridCellContext, PblNgridMetaCellContext, PblNgridContextApi, PblNgridRowContext } from './context/index';
-import { PblNgridRegistryService } from './services/grid-registry.service';
-import { PblNgridConfigService } from './services/config';
-import { DynamicColumnWidthLogic } from './col-width-logic/dynamic-column-width';
-import { ColumnApi, AutoSizeToFitOptions } from './column-api';
 import { PblCdkVirtualScrollViewportComponent } from './features/virtual-scroll/virtual-scroll-viewport.component';
-import { PblNgridMetaRowService } from './meta-rows/index';
-import './bind-to-datasource';
+import { PblNgridMetaRowService } from './meta-rows/meta-row.service';
+import { RowsApi } from './row';
+import * as i0 from "@angular/core";
 export declare function internalApiFactory(grid: {
     _extApi: PblNgridExtensionApi;
 }): PblNgridExtensionApi<any>;
@@ -23,12 +22,20 @@ export declare function pluginControllerFactory(grid: {
 export declare function metaRowServiceFactory(grid: {
     _extApi: PblNgridExtensionApi;
 }): PblNgridMetaRowService<any>;
-export declare class PblNgridComponent<T = any> implements AfterContentInit, AfterViewInit, DoCheck, OnChanges, OnDestroy {
+declare module '../ext/types' {
+    interface OnPropChangedSources {
+        grid: PblNgridComponent;
+    }
+    interface OnPropChangedProperties {
+        grid: Pick<PblNgridComponent, 'showFooter' | 'showHeader' | 'rowClassUpdate' | 'rowClassUpdateFreq'>;
+    }
+}
+export declare class PblNgridComponent<T = any> implements AfterContentInit, AfterViewInit, OnChanges, OnDestroy {
     private elRef;
-    private differs;
     private ngZone;
     private cdr;
     private config;
+    /** @deprecated Will be removed in v5 */
     registry: PblNgridRegistryService;
     readonly id: string;
     /**
@@ -59,12 +66,6 @@ export declare class PblNgridComponent<T = any> implements AfterContentInit, Aft
      * ENTER / SPACE only when focusMode is set to `row`.
      */
     focusMode: 'row' | 'cell' | 'none' | '' | false | undefined;
-    /**
-     * @deprecated Use `pIndex` in the column definition. (Removed in 1.0.0)
-     */
-    get identityProp(): string;
-    set identityProp(value: string);
-    private __identityProp;
     /**
      * The grid's source of data
      *
@@ -99,45 +100,74 @@ export declare class PblNgridComponent<T = any> implements AfterContentInit, Aft
      */
     set dataSource(value: PblDataSource<T> | DataSourceOf<T>);
     get ds(): PblDataSource<T>;
-    get usePagination(): PblNgridPaginatorKind | false;
-    set usePagination(value: PblNgridPaginatorKind | false);
+    get usePagination(): PblNgridPaginatorKind | false | '';
+    set usePagination(value: PblNgridPaginatorKind | false | '');
     get noCachePaginator(): boolean;
     set noCachePaginator(value: boolean);
     /**
      * The column definitions for this grid.
      */
     columns: PblNgridColumnSet | PblNgridColumnDefinitionSet;
-    set hideColumns(value: string[]);
-    /**
-     * A fallback height for "the inner scroll container".
-     * The fallback is used only when it LOWER than the rendered height, so no empty gaps are created when setting the fallback.
-     *
-     * The "inner scroll container" is the area in which all data rows are rendered and all meta (header/footer) rows that are of type "row" or "sticky".
-     * The "inner scroll container" is defined to consume all the height left after all external objects are rendered.
-     * External objects can be fixed meta rows (header/footer), pagination row, action row etc...
-     *
-     * If the grid does not have a height (% or px) the "inner scroll container" will always have no height (0).
-     * If the grid has a height, the "inner scroll container" will get the height left, which can also be 0 if there are a lot of external objects.
-     *
-     * To solve the no-height problem we use the fallbackMinHeight property.
-     *
-     * When virtual scroll is disabled and fallbackMinHeight is not set the grid will set the "inner scroll container" height to show all rows.
-     *
-     * Note that when using a fixed (px) height for the grid, if the height of all external objects + the height of the "inner scroll container" is greater then
-     * the grid's height a vertical scroll bar will show.
-     * If the "inner scroll container"s height will be lower then it's rendered content height and additional vertical scroll bar will appear, which is, usually, not good.
-     *
-     * To avoid this, don't use fallbackMinHeight together with a fixed height for the grid. Instead use fallbackMinHeight together with a min height for the grid.
-     */
-    get fallbackMinHeight(): number;
-    set fallbackMinHeight(value: number);
     rowClassUpdate: undefined | ((context: PblNgridRowContext<T>) => (string | string[] | Set<string> | {
         [klass: string]: any;
     }));
     rowClassUpdateFreq: 'item' | 'ngDoCheck' | 'none';
     rowFocus: 0 | '';
     cellFocus: 0 | '';
-    private _fallbackMinHeight;
+    /**
+     * The minimum height to assign to the data viewport (where data rows are shown)
+     *
+     * The data viewport is the scrollable area where all data rows are visible, and some metadata rows might also be there
+     * depending on their type (fixed/row/sticky) as well as outer section items.
+     *
+     * By default, the data viewport has no size and it will grow based on the available space it has left within the container.
+     * The container will first assign height to any fixed rows and dynamic content (before/after) provided.
+     *
+     * If the container height is fixed (e.g. `<pbl-ngrid style="height: 500px"></pbl-ngrid>`) and there is no height left
+     * for the data viewport then it will get no height (0 height).
+     *
+     * To deal with this issue there are 2 options:
+     *
+     * 1. Do not limit the height of the container
+     * 2. Provide a default minimum height for the data viewport
+     *
+     * Option number 1 is not practical, it will disable all scrolling in the table, making it a long box scrollable by the host container.
+     *
+     * This is where we use option number 2.
+     * By defining a default minimum height we ensure visibility and since there's a scroll there, the user can view all of the data.
+     *
+     * There are 2 types of inputs:
+     *
+     * A. Default minimum height in PX
+     * B. Default minimum height in ROW COUNT
+     *
+     * For A, provide a positive value, for B provide a negative value.
+     *
+     * For example:
+     *
+     *  - Minimum data viewport of 100 pixels: `<pbl-ngrid minDataViewHeight="100"></pbl-ngrid>`
+     *  - Minimum data viewport of 2 ros: `<pbl-ngrid minDataViewHeight="-2"></pbl-ngrid>`
+     *
+     * Notes when using rows:
+     *  - The row height is calculated based on an initial row pre-loaded by the grid, this row will get it's height from the CSS theme defined.
+     *  - The ROW COUNT is the lower value between the actual row count provided and the total rows to render.
+     *
+     * ## Container Overflow:
+     *
+     * Note that when using a default minimum height, if the minimum height of the data viewport PLUS the height of all other elements in the container EXCEEDS any fixed
+     * height assigned to the container, the container will render a scrollbar which results in the possibility of 2 scrollbars, 1 for the container and the seconds
+     * for the data viewport, if it has enough data rows.
+     */
+    get minDataViewHeight(): number;
+    set minDataViewHeight(value: number);
+    /**
+     * @deprecated Will be removed in v5, see `minDataViewHeight`
+     */
+    get fallbackMinHeight(): number;
+    set fallbackMinHeight(value: number);
+    get dir(): Direction;
+    private _dir;
+    private _minDataViewHeight;
     private _dataSource;
     _vcRefBeforeTable: ViewContainerRef;
     _vcRefBeforeContent: ViewContainerRef;
@@ -148,34 +178,40 @@ export declare class PblNgridComponent<T = any> implements AfterContentInit, Aft
     _tableRowDef: CdkRowDef<T>;
     _headerRowDefs: QueryList<CdkHeaderRowDef>;
     _footerRowDefs: QueryList<CdkFooterRowDef>;
-    get metaColumnIds(): PblColumnStore['metaColumnIds'];
+    /**
+     * When true, the virtual paging feature is enabled because the virtual content size exceed the supported height of the browser so paging is enable.
+     */
+    get virtualPagingActive(): boolean;
+    get metaHeaderRows(): (import("./column/management").PblColumnStoreMetaRow & {
+        allKeys?: string[];
+    })[];
+    get metaFooterRows(): (import("./column/management").PblColumnStoreMetaRow & {
+        allKeys?: string[];
+    })[];
     get metaColumns(): PblColumnStore['metaColumns'];
     get columnRowDef(): {
-        header: import("./columns").PblMetaRowDefinitions;
-        footer: import("./columns").PblMetaRowDefinitions;
+        header: PblMetaRowDefinitions;
+        footer: PblMetaRowDefinitions;
     };
     /**
      * True when the component is initialized (after AfterViewInit)
      */
     readonly isInit: boolean;
     readonly columnApi: ColumnApi<T>;
-    get contextApi(): PblNgridContextApi<T>;
-    get viewport(): PblCdkVirtualScrollViewportComponent | undefined;
-    _cdkTable: PblCdkTableComponent<T>;
+    readonly rowsApi: RowsApi<T>;
+    readonly contextApi: PblNgridContextApi<T>;
+    get viewport(): PblCdkVirtualScrollViewportComponent;
+    get innerTableMinWidth(): number;
     private _store;
-    private _hideColumnsDirty;
-    private _hideColumns;
-    private _colHideDiffer;
-    private _noDateEmbeddedVRef;
-    private _paginatorEmbeddedVRef;
     private _pagination;
     private _noCachePaginator;
-    private _minimumRowWidth;
-    private _viewport?;
     private _plugin;
     private _extApi;
-    constructor(injector: Injector, vcRef: ViewContainerRef, elRef: ElementRef<HTMLElement>, differs: IterableDiffers, ngZone: NgZone, cdr: ChangeDetectorRef, config: PblNgridConfigService, registry: PblNgridRegistryService, id: string);
-    ngDoCheck(): void;
+    private _cdkTable;
+    private _viewport;
+    constructor(injector: Injector, vcRef: ViewContainerRef, elRef: ElementRef<HTMLElement>, ngZone: NgZone, cdr: ChangeDetectorRef, config: PblNgridConfigService, 
+    /** @deprecated Will be removed in v5 */
+    registry: PblNgridRegistryService, id: string, dir?: Directionality);
     ngAfterContentInit(): void;
     ngAfterViewInit(): void;
     ngOnChanges(changes: SimpleChanges): void;
@@ -192,14 +228,14 @@ export declare class PblNgridComponent<T = any> implements AfterContentInit, Aft
     /**
      * Set the sorting definition for the current data set.
      *
-     * This method is a proxy to `PblDataSource.setSort` with the added sugar of providing column by string that match the `id` or `sortAlias` properties.
+     * This method is a proxy to `PblDataSource.setSort` with the added sugar of providing column by string that match the `id` or `alias` properties.
      * For more information see `PblDataSource.setSort`
      *
-     * @param columnOrSortAlias A column instance or a string matching `PblColumn.sortAlias` or `PblColumn.id`.
+     * @param columnOrAlias A column instance or a string matching `PblColumn.alias` or `PblColumn.id`.
      * @param skipUpdate When true will not update the datasource, use this when the data comes sorted and you want to sync the definitions with the current data set.
      * default to false.
      */
-    setSort(columnOrSortAlias: PblColumn | string, sort: PblNgridSortDefinition, skipUpdate?: boolean): void;
+    setSort(columnOrAlias: PblColumn | string, sort: PblNgridSortDefinition, skipUpdate?: boolean): void;
     /**
      * Clear the filter definition for the current data set.
      *
@@ -226,17 +262,6 @@ export declare class PblNgridComponent<T = any> implements AfterContentInit, Aft
      */
     invalidateColumns(): void;
     /**
-     * Updates the column sizes for all columns in the grid based on the column definition metadata for each column.
-     * The final width represent a static width, it is the value as set in the definition (except column without width, where the calculated global width is set).
-     */
-    resetColumnsWidth(): void;
-    /**
-     * Update the size of all group columns in the grid based on the size of their visible children (not hidden).
-     * @param dynamicWidthLogic - Optional logic container, if not set a new one is created.
-     */
-    syncColumnGroupsSize(dynamicWidthLogic?: DynamicColumnWidthLogic): void;
-    resizeColumns(columns?: PblColumn[]): void;
-    /**
      * Create an embedded view before or after the user projected content.
      */
     createView<C>(location: 'beforeTable' | 'beforeContent' | 'afterContent', templateRef: TemplateRef<C>, context?: C, index?: number): EmbeddedViewRef<C>;
@@ -255,15 +280,14 @@ export declare class PblNgridComponent<T = any> implements AfterContentInit, Aft
     findInitialRowHeight(): number;
     addClass(...cls: string[]): void;
     removeClass(...cls: string[]): void;
-    private initPlugins;
-    private listenToResize;
-    private onResize;
-    private initExtApi;
-    private setupNoData;
     private getInternalVcRef;
-    private setupPaginator;
-    private attachCustomCellTemplates;
-    private attachCustomHeaderCellTemplates;
     private resetHeaderRowDefs;
     private resetFooterRowDefs;
+    static ngAcceptInputType_showHeader: BooleanInput;
+    static ngAcceptInputType_showFooter: BooleanInput;
+    static ngAcceptInputType_noFiller: BooleanInput;
+    static ngAcceptInputType_noCachePaginator: BooleanInput;
+    static ngAcceptInputType_minDataViewHeight: NumberInput;
+    static ɵfac: i0.ɵɵFactoryDeclaration<PblNgridComponent<any>, [null, null, null, null, null, null, null, { attribute: "id"; }, { optional: true; }]>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<PblNgridComponent<any>, "pbl-ngrid", never, { "showHeader": "showHeader"; "showFooter": "showFooter"; "noFiller": "noFiller"; "focusMode": "focusMode"; "dataSource": "dataSource"; "usePagination": "usePagination"; "noCachePaginator": "noCachePaginator"; "columns": "columns"; "rowClassUpdate": "rowClassUpdate"; "rowClassUpdateFreq": "rowClassUpdateFreq"; "minDataViewHeight": "minDataViewHeight"; "fallbackMinHeight": "fallbackMinHeight"; }, {}, never, ["*"]>;
 }

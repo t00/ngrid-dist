@@ -1,12 +1,10 @@
 {
   "name": "@pebula/ngrid",
-  "version": "2.0.0-rc.2",
+  "version": "4.0.0",
   "license": "MIT",
   "peerDependencies": {
-    "@angular/common": "^9.0.6",
-    "@angular/core": "^9.0.6",
-    "@angular/cdk": "^9.0.0",
-    "resize-observer-polyfill": "^1.5.0"
+    "@angular/core": ">=12.0.0",
+    "@angular/cdk": ">=12.0.0"
   },
   "description": "Angular Grid",
   "repository": {
@@ -18,22 +16,20 @@
     "grid",
     "table"
   ],
+  "schematics": "./schematics/collection.json",
   "author": "Shlomi Assaf",
   "homepage": "https://github.com/shlomiassaf/ngrid",
   "bugs": {
     "url": "https://github.com/shlomiassaf/ngrid/issues"
   },
   "main": "bundles/pebula-ngrid.umd.js",
-  "module": "fesm5/pebula-ngrid.js",
+  "module": "fesm2015/pebula-ngrid.js",
   "es2015": "fesm2015/pebula-ngrid.js",
-  "esm5": "esm5/pebula-ngrid.js",
   "esm2015": "esm2015/pebula-ngrid.js",
-  "fesm5": "fesm5/pebula-ngrid.js",
   "fesm2015": "fesm2015/pebula-ngrid.js",
   "typings": "pebula-ngrid.d.ts",
-  "metadata": "pebula-ngrid.metadata.json",
   "sideEffects": false,
   "dependencies": {
-    "tslib": "^1.10.0"
+    "tslib": "^2.1.0"
   }
 }

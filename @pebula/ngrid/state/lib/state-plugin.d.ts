@@ -2,7 +2,8 @@ import { Observable } from 'rxjs';
 import { OnDestroy, Injector } from '@angular/core';
 import { PblNgridComponent, PblNgridPluginController } from '@pebula/ngrid';
 import { PblNgridStateLoadOptions, PblNgridStateSaveOptions } from './core/index';
-declare module '@pebula/ngrid/lib/grid/services/config' {
+import * as i0 from "@angular/core";
+declare module '@pebula/ngrid/core/lib/configuration/type' {
     interface PblNgridConfig {
         state?: {
             /** When set to true will enable the state plugin on all table instances by default. */
@@ -52,4 +53,6 @@ export declare class PblNgridStatePluginDirective extends PblNgridStatePlugin im
     saveOptions: PblNgridStateSaveOptions;
     constructor(grid: PblNgridComponent<any>, injector: Injector, pluginCtrl: PblNgridPluginController);
     ngOnDestroy(): void;
+    static ɵfac: i0.ɵɵFactoryDeclaration<PblNgridStatePluginDirective, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<PblNgridStatePluginDirective, "pbl-ngrid[persistState]", never, { "loadOptions": "loadOptions"; "saveOptions": "saveOptions"; }, { "afterLoadState": "afterLoadState"; "afterSaveState": "afterSaveState"; "onError": "onError"; }, never>;
 }

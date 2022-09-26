@@ -1,6 +1,8 @@
 import { ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { BooleanInput } from '@angular/cdk/coercion';
 import { MatPaginatorIntl } from '@angular/material/paginator';
-import { PblPagingPaginator, PblNgridComponent } from '@pebula/ngrid';
+import { PblNgridComponent, PblPaginator } from '@pebula/ngrid';
+import * as i0 from "@angular/core";
 export declare class PblPaginatorComponent implements OnDestroy {
     _intl: MatPaginatorIntl;
     private cdr;
@@ -8,9 +10,17 @@ export declare class PblPaginatorComponent implements OnDestroy {
     pageSizes: number[];
     get pageSizeOptions(): number[];
     set pageSizeOptions(value: number[]);
-    get paginator(): PblPagingPaginator;
-    set paginator(value: PblPagingPaginator);
-    table: PblNgridComponent<any>;
+    get paginator(): PblPaginator<number>;
+    set paginator(value: PblPaginator<number>);
+    /**
+     * @deprecated Will be removed in v5, Use `grid` instead
+     */
+    get table(): PblNgridComponent<any>;
+    /**
+     * @deprecated Will be removed in v5, Use `grid` instead
+     */
+    set table(value: PblNgridComponent<any>);
+    grid: PblNgridComponent<any>;
     get hidePageSize(): boolean;
     set hidePageSize(value: boolean);
     get hideRangeSelect(): boolean;
@@ -19,8 +29,12 @@ export declare class PblPaginatorComponent implements OnDestroy {
     private _paginator;
     private _hidePageSize;
     private _hideRangeSelect;
-    constructor(table: PblNgridComponent<any>, _intl: MatPaginatorIntl, cdr: ChangeDetectorRef);
+    constructor(grid: PblNgridComponent<any>, _intl: MatPaginatorIntl, cdr: ChangeDetectorRef);
     ngOnDestroy(): void;
     private updatePageSizes;
     private handlePageChange;
+    static ngAcceptInputType_hidePageSize: BooleanInput;
+    static ngAcceptInputType_hideRangeSelect: BooleanInput;
+    static ɵfac: i0.ɵɵFactoryDeclaration<PblPaginatorComponent, [{ optional: true; }, null, null]>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<PblPaginatorComponent, "pbl-ngrid-paginator", never, { "pageSizeOptions": "pageSizeOptions"; "paginator": "paginator"; "table": "table"; "grid": "grid"; "hidePageSize": "hidePageSize"; "hideRangeSelect": "hideRangeSelect"; }, {}, never, never>;
 }

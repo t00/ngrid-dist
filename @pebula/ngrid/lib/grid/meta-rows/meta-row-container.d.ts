@@ -1,6 +1,7 @@
 import { Subject } from 'rxjs';
 import { ElementRef, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 import { PblNgridMetaRowService } from './meta-row.service';
+import * as i0 from "@angular/core";
 export declare class PblNgridMetaRowContainerComponent implements OnChanges, OnDestroy {
     readonly metaRows: PblNgridMetaRowService;
     type: 'header' | 'footer';
@@ -14,9 +15,12 @@ export declare class PblNgridMetaRowContainerComponent implements OnChanges, OnD
     readonly _width$: Subject<number>;
     private _totalColumnWidth;
     private element;
+    private _hzScrollDir;
     constructor(metaRows: PblNgridMetaRowService, elRef: ElementRef<HTMLElement>);
     ngOnChanges(changes: SimpleChanges): void;
     ngOnDestroy(): void;
     private updateWidths;
     private syncRowDefinitions;
+    static ɵfac: i0.ɵɵFactoryDeclaration<PblNgridMetaRowContainerComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<PblNgridMetaRowContainerComponent, "div[pbl-ngrid-fixed-meta-row-container]", never, { "type": "pbl-ngrid-fixed-meta-row-container"; }, {}, never, never>;
 }

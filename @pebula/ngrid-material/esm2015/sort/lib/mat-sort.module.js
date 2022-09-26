@@ -1,47 +1,30 @@
-/**
- * @fileoverview added by tsickle
- * Generated from: lib/mat-sort.module.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 import { NgModule, ComponentFactoryResolver } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatSortModule, MatSortHeader } from '@angular/material/sort';
 import { MatButtonModule } from '@angular/material/button';
-import { PblNgridModule, PblNgridRegistryService, ngridPlugin } from '@pebula/ngrid';
+import { PblNgridRegistryService, PblNgridModule, ngridPlugin } from '@pebula/ngrid';
 import { PblNgridMatSortDirective, PLUGIN_KEY } from './mat-sort.directive';
 import { MatSortExtension } from './mat-sort-component-extension';
+import * as i0 from "@angular/core";
+import * as i1 from "@pebula/ngrid";
 export class PblNgridMatSortModule {
-    /**
-     * @param {?} registry
-     * @param {?} cfr
-     */
     constructor(registry, cfr) {
         this.registry = registry;
         registry.addMulti('dataHeaderExtensions', new MatSortExtension(cfr));
     }
 }
 PblNgridMatSortModule.NGRID_PLUGIN = ngridPlugin({ id: PLUGIN_KEY }, PblNgridMatSortDirective);
-PblNgridMatSortModule.decorators = [
-    { type: NgModule, args: [{
-                imports: [CommonModule, MatButtonModule, MatSortModule, PblNgridModule],
-                declarations: [PblNgridMatSortDirective],
-                exports: [PblNgridMatSortDirective, MatSortModule],
-                // TODO: remove when ViewEngine is no longer supported by angular (V11 ???)
-                entryComponents: [MatSortHeader],
-            },] }
-];
-/** @nocollapse */
-PblNgridMatSortModule.ctorParameters = () => [
-    { type: PblNgridRegistryService },
-    { type: ComponentFactoryResolver }
-];
-if (false) {
-    /** @type {?} */
-    PblNgridMatSortModule.NGRID_PLUGIN;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridMatSortModule.prototype.registry;
-}
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibWF0LXNvcnQubW9kdWxlLmpzIiwic291cmNlUm9vdCI6Im5nOi8vQHBlYnVsYS9uZ3JpZC1tYXRlcmlhbC9zb3J0LyIsInNvdXJjZXMiOlsibGliL21hdC1zb3J0Lm1vZHVsZS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7OztBQUFBLE9BQU8sRUFBRSxRQUFRLEVBQUUsd0JBQXdCLEVBQUUsTUFBTSxlQUFlLENBQUM7QUFDbkUsT0FBTyxFQUFFLFlBQVksRUFBRSxNQUFNLGlCQUFpQixDQUFDO0FBQy9DLE9BQU8sRUFBRSxhQUFhLEVBQUUsYUFBYSxFQUFFLE1BQU0sd0JBQXdCLENBQUM7QUFDdEUsT0FBTyxFQUFFLGVBQWUsRUFBRSxNQUFNLDBCQUEwQixDQUFDO0FBRTNELE9BQU8sRUFBRSxjQUFjLEVBQUUsdUJBQXVCLEVBQUUsV0FBVyxFQUFFLE1BQU0sZUFBZSxDQUFDO0FBQ3JGLE9BQU8sRUFBRSx3QkFBd0IsRUFBRSxVQUFVLEVBQUUsTUFBTSxzQkFBc0IsQ0FBQztBQUM1RSxPQUFPLEVBQUUsZ0JBQWdCLEVBQUUsTUFBTSxnQ0FBZ0MsQ0FBQztBQVNsRSxNQUFNLE9BQU8scUJBQXFCOzs7OztJQUdoQyxZQUFvQixRQUFpQyxFQUFFLEdBQTZCO1FBQWhFLGFBQVEsR0FBUixRQUFRLENBQXlCO1FBQ25ELFFBQVEsQ0FBQyxRQUFRLENBQUMsc0JBQXNCLEVBQUUsSUFBSSxnQkFBZ0IsQ0FBQyxHQUFHLENBQUMsQ0FBQyxDQUFDO0lBQ3ZFLENBQUM7O0FBSmUsa0NBQVksR0FBRyxXQUFXLENBQUMsRUFBRSxFQUFFLEVBQUUsVUFBVSxFQUFFLEVBQUUsd0JBQXdCLENBQUMsQ0FBQzs7WUFSMUYsUUFBUSxTQUFDO2dCQUNSLE9BQU8sRUFBRSxDQUFFLFlBQVksRUFBRSxlQUFlLEVBQUUsYUFBYSxFQUFFLGNBQWMsQ0FBRTtnQkFDekUsWUFBWSxFQUFFLENBQUUsd0JBQXdCLENBQUU7Z0JBQzFDLE9BQU8sRUFBRSxDQUFFLHdCQUF3QixFQUFFLGFBQWEsQ0FBRTs7Z0JBRXBELGVBQWUsRUFBRSxDQUFFLGFBQWEsQ0FBRTthQUNuQzs7OztZQVZ3Qix1QkFBdUI7WUFMN0Isd0JBQXdCOzs7O0lBaUJ6QyxtQ0FBeUY7Ozs7O0lBRTdFLHlDQUF5QyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IE5nTW9kdWxlLCBDb21wb25lbnRGYWN0b3J5UmVzb2x2ZXIgfSBmcm9tICdAYW5ndWxhci9jb3JlJztcbmltcG9ydCB7IENvbW1vbk1vZHVsZSB9IGZyb20gJ0Bhbmd1bGFyL2NvbW1vbic7XG5pbXBvcnQgeyBNYXRTb3J0TW9kdWxlLCBNYXRTb3J0SGVhZGVyIH0gZnJvbSAnQGFuZ3VsYXIvbWF0ZXJpYWwvc29ydCc7XG5pbXBvcnQgeyBNYXRCdXR0b25Nb2R1bGUgfSBmcm9tICdAYW5ndWxhci9tYXRlcmlhbC9idXR0b24nO1xuXG5pbXBvcnQgeyBQYmxOZ3JpZE1vZHVsZSwgUGJsTmdyaWRSZWdpc3RyeVNlcnZpY2UsIG5ncmlkUGx1Z2luIH0gZnJvbSAnQHBlYnVsYS9uZ3JpZCc7XG5pbXBvcnQgeyBQYmxOZ3JpZE1hdFNvcnREaXJlY3RpdmUsIFBMVUdJTl9LRVkgfSBmcm9tICcuL21hdC1zb3J0LmRpcmVjdGl2ZSc7XG5pbXBvcnQgeyBNYXRTb3J0RXh0ZW5zaW9uIH0gZnJvbSAnLi9tYXQtc29ydC1jb21wb25lbnQtZXh0ZW5zaW9uJztcblxuQE5nTW9kdWxlKHtcbiAgaW1wb3J0czogWyBDb21tb25Nb2R1bGUsIE1hdEJ1dHRvbk1vZHVsZSwgTWF0U29ydE1vZHVsZSwgUGJsTmdyaWRNb2R1bGUgXSxcbiAgZGVjbGFyYXRpb25zOiBbIFBibE5ncmlkTWF0U29ydERpcmVjdGl2ZSBdLFxuICBleHBvcnRzOiBbIFBibE5ncmlkTWF0U29ydERpcmVjdGl2ZSwgTWF0U29ydE1vZHVsZSBdLFxuICAvLyBUT0RPOiByZW1vdmUgd2hlbiBWaWV3RW5naW5lIGlzIG5vIGxvbmdlciBzdXBwb3J0ZWQgYnkgYW5ndWxhciAoVjExID8/PylcbiAgZW50cnlDb21wb25lbnRzOiBbIE1hdFNvcnRIZWFkZXIgXSxcbn0pXG5leHBvcnQgY2xhc3MgUGJsTmdyaWRNYXRTb3J0TW9kdWxlIHtcbiAgc3RhdGljIHJlYWRvbmx5IE5HUklEX1BMVUdJTiA9IG5ncmlkUGx1Z2luKHsgaWQ6IFBMVUdJTl9LRVkgfSwgUGJsTmdyaWRNYXRTb3J0RGlyZWN0aXZlKTtcblxuICBjb25zdHJ1Y3Rvcihwcml2YXRlIHJlZ2lzdHJ5OiBQYmxOZ3JpZFJlZ2lzdHJ5U2VydmljZSwgY2ZyOiBDb21wb25lbnRGYWN0b3J5UmVzb2x2ZXIpIHtcbiAgICByZWdpc3RyeS5hZGRNdWx0aSgnZGF0YUhlYWRlckV4dGVuc2lvbnMnLCBuZXcgTWF0U29ydEV4dGVuc2lvbihjZnIpKTtcbiAgfVxufVxuIl19
+/** @nocollapse */ PblNgridMatSortModule.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridMatSortModule, deps: [{ token: i1.PblNgridRegistryService }, { token: i0.ComponentFactoryResolver }], target: i0.ɵɵFactoryTarget.NgModule });
+/** @nocollapse */ PblNgridMatSortModule.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridMatSortModule, declarations: [PblNgridMatSortDirective], imports: [CommonModule, MatButtonModule, MatSortModule, PblNgridModule], exports: [PblNgridMatSortDirective, MatSortModule] });
+/** @nocollapse */ PblNgridMatSortModule.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridMatSortModule, imports: [[CommonModule, MatButtonModule, MatSortModule, PblNgridModule], MatSortModule] });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridMatSortModule, decorators: [{
+            type: NgModule,
+            args: [{
+                    imports: [CommonModule, MatButtonModule, MatSortModule, PblNgridModule],
+                    declarations: [PblNgridMatSortDirective],
+                    exports: [PblNgridMatSortDirective, MatSortModule],
+                    // TODO(REFACTOR_REF 2): remove when ViewEngine is no longer supported by angular (V12 ???)
+                    entryComponents: [MatSortHeader],
+                }]
+        }], ctorParameters: function () { return [{ type: i1.PblNgridRegistryService }, { type: i0.ComponentFactoryResolver }]; } });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibWF0LXNvcnQubW9kdWxlLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vLi4vLi4vLi4vbGlicy9uZ3JpZC1tYXRlcmlhbC9zb3J0L3NyYy9saWIvbWF0LXNvcnQubW9kdWxlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLE9BQU8sRUFBRSxRQUFRLEVBQUUsd0JBQXdCLEVBQUUsTUFBTSxlQUFlLENBQUM7QUFDbkUsT0FBTyxFQUFFLFlBQVksRUFBRSxNQUFNLGlCQUFpQixDQUFDO0FBQy9DLE9BQU8sRUFBRSxhQUFhLEVBQUUsYUFBYSxFQUFFLE1BQU0sd0JBQXdCLENBQUM7QUFDdEUsT0FBTyxFQUFFLGVBQWUsRUFBRSxNQUFNLDBCQUEwQixDQUFDO0FBRTNELE9BQU8sRUFBRSx1QkFBdUIsRUFBRSxjQUFjLEVBQUUsV0FBVyxFQUFFLE1BQU0sZUFBZSxDQUFDO0FBQ3JGLE9BQU8sRUFBRSx3QkFBd0IsRUFBRSxVQUFVLEVBQUUsTUFBTSxzQkFBc0IsQ0FBQztBQUM1RSxPQUFPLEVBQUUsZ0JBQWdCLEVBQUUsTUFBTSxnQ0FBZ0MsQ0FBQzs7O0FBU2xFLE1BQU0sT0FBTyxxQkFBcUI7SUFHaEMsWUFBb0IsUUFBaUMsRUFBRSxHQUE2QjtRQUFoRSxhQUFRLEdBQVIsUUFBUSxDQUF5QjtRQUNuRCxRQUFRLENBQUMsUUFBUSxDQUFDLHNCQUFzQixFQUFFLElBQUksZ0JBQWdCLENBQUMsR0FBRyxDQUFDLENBQUMsQ0FBQztJQUN2RSxDQUFDOztBQUplLGtDQUFZLEdBQUcsV0FBVyxDQUFDLEVBQUUsRUFBRSxFQUFFLFVBQVUsRUFBRSxFQUFFLHdCQUF3QixDQUFDLENBQUM7cUlBRDlFLHFCQUFxQjtzSUFBckIscUJBQXFCLGlCQUxoQix3QkFBd0IsYUFEN0IsWUFBWSxFQUFFLGVBQWUsRUFBRSxhQUFhLEVBQUUsY0FBYyxhQUU1RCx3QkFBd0IsRUFBRSxhQUFhO3NJQUl2QyxxQkFBcUIsWUFOdkIsQ0FBRSxZQUFZLEVBQUUsZUFBZSxFQUFFLGFBQWEsRUFBRSxjQUFjLENBQUUsRUFFcEMsYUFBYTsyRkFJdkMscUJBQXFCO2tCQVBqQyxRQUFRO21CQUFDO29CQUNSLE9BQU8sRUFBRSxDQUFFLFlBQVksRUFBRSxlQUFlLEVBQUUsYUFBYSxFQUFFLGNBQWMsQ0FBRTtvQkFDekUsWUFBWSxFQUFFLENBQUUsd0JBQXdCLENBQUU7b0JBQzFDLE9BQU8sRUFBRSxDQUFFLHdCQUF3QixFQUFFLGFBQWEsQ0FBRTtvQkFDcEQsMkZBQTJGO29CQUMzRixlQUFlLEVBQUUsQ0FBRSxhQUFhLENBQUU7aUJBQ25DIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgTmdNb2R1bGUsIENvbXBvbmVudEZhY3RvcnlSZXNvbHZlciB9IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xuaW1wb3J0IHsgQ29tbW9uTW9kdWxlIH0gZnJvbSAnQGFuZ3VsYXIvY29tbW9uJztcbmltcG9ydCB7IE1hdFNvcnRNb2R1bGUsIE1hdFNvcnRIZWFkZXIgfSBmcm9tICdAYW5ndWxhci9tYXRlcmlhbC9zb3J0JztcbmltcG9ydCB7IE1hdEJ1dHRvbk1vZHVsZSB9IGZyb20gJ0Bhbmd1bGFyL21hdGVyaWFsL2J1dHRvbic7XG5cbmltcG9ydCB7IFBibE5ncmlkUmVnaXN0cnlTZXJ2aWNlLCBQYmxOZ3JpZE1vZHVsZSwgbmdyaWRQbHVnaW4gfSBmcm9tICdAcGVidWxhL25ncmlkJztcbmltcG9ydCB7IFBibE5ncmlkTWF0U29ydERpcmVjdGl2ZSwgUExVR0lOX0tFWSB9IGZyb20gJy4vbWF0LXNvcnQuZGlyZWN0aXZlJztcbmltcG9ydCB7IE1hdFNvcnRFeHRlbnNpb24gfSBmcm9tICcuL21hdC1zb3J0LWNvbXBvbmVudC1leHRlbnNpb24nO1xuXG5ATmdNb2R1bGUoe1xuICBpbXBvcnRzOiBbIENvbW1vbk1vZHVsZSwgTWF0QnV0dG9uTW9kdWxlLCBNYXRTb3J0TW9kdWxlLCBQYmxOZ3JpZE1vZHVsZSBdLFxuICBkZWNsYXJhdGlvbnM6IFsgUGJsTmdyaWRNYXRTb3J0RGlyZWN0aXZlIF0sXG4gIGV4cG9ydHM6IFsgUGJsTmdyaWRNYXRTb3J0RGlyZWN0aXZlLCBNYXRTb3J0TW9kdWxlIF0sXG4gIC8vIFRPRE8oUkVGQUNUT1JfUkVGIDIpOiByZW1vdmUgd2hlbiBWaWV3RW5naW5lIGlzIG5vIGxvbmdlciBzdXBwb3J0ZWQgYnkgYW5ndWxhciAoVjEyID8/PylcbiAgZW50cnlDb21wb25lbnRzOiBbIE1hdFNvcnRIZWFkZXIgXSxcbn0pXG5leHBvcnQgY2xhc3MgUGJsTmdyaWRNYXRTb3J0TW9kdWxlIHtcbiAgc3RhdGljIHJlYWRvbmx5IE5HUklEX1BMVUdJTiA9IG5ncmlkUGx1Z2luKHsgaWQ6IFBMVUdJTl9LRVkgfSwgUGJsTmdyaWRNYXRTb3J0RGlyZWN0aXZlKTtcblxuICBjb25zdHJ1Y3Rvcihwcml2YXRlIHJlZ2lzdHJ5OiBQYmxOZ3JpZFJlZ2lzdHJ5U2VydmljZSwgY2ZyOiBDb21wb25lbnRGYWN0b3J5UmVzb2x2ZXIpIHtcbiAgICByZWdpc3RyeS5hZGRNdWx0aSgnZGF0YUhlYWRlckV4dGVuc2lvbnMnLCBuZXcgTWF0U29ydEV4dGVuc2lvbihjZnIpKTtcbiAgfVxufVxuIl19

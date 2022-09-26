@@ -20,10 +20,14 @@ export interface PblNgridDataMatrixRow<T = any> extends PblNgridMatrixRow<'data'
 }
 export interface PblNgridColumnMatrixPoint<RType extends ROW_TYPE, RMetaType extends keyof ROW_META_TYPE = 'data'> extends PblNgridMatrixPoint<RType, RMetaType> {
     column: ROW_META_TYPE[RMetaType];
+    /**
+     * The context of the cell.
+     * Only applicable when the event is coming from a data cell or a column header of a data cell.
+     */
+    context?: PblNgridCellContext;
 }
 export interface PblNgridDataMatrixPoint<T = any> extends PblNgridColumnMatrixPoint<'data'> {
     row: T;
-    context: PblNgridCellContext;
 }
 export declare type PblNgridBaseCellEvent<TEvent extends Event = MouseEvent | KeyboardEvent> = {
     source: TEvent;

@@ -1,23 +1,25 @@
 import { Observable } from 'rxjs';
 import { RowContext } from '@angular/cdk/table';
-import { PblNgridComponent } from '../ngrid.component';
-import { PblColumnTypeDefinitionDataMap, PblMetaColumn, PblColumn } from '../columns';
+import { PblColumnTypeDefinitionDataMap } from '@pebula/ngrid/core';
+import { _PblNgridComponent } from '../../tokens';
+import { PblMetaColumn, PblColumn } from '../column/model';
 import { PblRowContext } from './row';
-declare module '@angular/cdk/table/table.d' {
-    interface RowContext<T> {
-        gridInstance: PblNgridComponent<T>;
-    }
+export interface RowContextState<T = any> {
+    identity: any;
+    dsIndex: number;
+    cells: CellContextState<T>[];
+    firstRender: boolean;
+    external: any;
 }
 export interface CellContextState<T = any> {
     editing: boolean;
     focused: boolean;
     selected: boolean;
+    external: any;
 }
-export interface RowContextState<T = any> {
-    identity: any;
-    dataIndex: number;
-    cells: CellContextState<T>[];
-    firstRender: boolean;
+export interface ExternalRowContextState {
+}
+export interface ExternalCellContextState {
 }
 /**
  * A reference to a data cell on the grid.
@@ -46,9 +48,7 @@ export interface PblNgridSelectionChangedEvent {
 export interface PblNgridMetaCellContext<T = any, TCol extends PblMetaColumn | PblColumn = PblMetaColumn | PblColumn> {
     $implicit: PblNgridMetaCellContext<T>;
     col: TCol;
-    /** @deprecated use grid instead */
-    table: PblNgridComponent<T>;
-    grid: PblNgridComponent<T>;
+    grid: _PblNgridComponent<T>;
 }
 export interface PblNgridCellContext<T = any, P extends keyof PblColumnTypeDefinitionDataMap = keyof PblColumnTypeDefinitionDataMap> {
     rowContext: PblNgridRowContext<T>;
@@ -56,9 +56,7 @@ export interface PblNgridCellContext<T = any, P extends keyof PblColumnTypeDefin
     row: T;
     value: any;
     col: PblColumn;
-    /** @deprecated use grid instead */
-    table: PblNgridComponent<T>;
-    grid: PblNgridComponent<T>;
+    grid: _PblNgridComponent<T>;
     readonly index: number;
     readonly editing: boolean;
     readonly focused: boolean;
@@ -84,14 +82,12 @@ export interface PblNgridRowContext<T = any> extends RowContext<T> {
      * The indicator is updated when rows are rendered (i.e. not live, on scroll events).
      * Understanding this behavior is important!!!
      *
-     * For live updated, you can use `updateOutOfViewState()` to trigger updates from a scroll stream. (keep track on performance)
-     *
      * Note that when virtual scroll is enabled `true` indicates a buffer row.
      */
     outOfView: boolean;
-    /** @deprecated use grid instead */
-    readonly table: PblNgridComponent<T>;
-    readonly grid: PblNgridComponent<T>;
+    /** The index at the datasource */
+    dsIndex: number;
+    readonly grid: _PblNgridComponent<T>;
     /**
      * Returns the length of cells context stored in this row
      */
@@ -101,10 +97,6 @@ export interface PblNgridRowContext<T = any> extends RowContext<T> {
      * Returns a shallow copy of the current cell's context array.
      */
     getCells(): PblNgridCellContext<T>[];
-    /**
-     * Updates the `outOfView` property.
-     */
-    updateOutOfViewState(): void;
 }
 export interface PblNgridContextApi<T = any> {
     /**
@@ -139,7 +131,7 @@ export interface PblNgridContextApi<T = any> {
      * @param cellRef A Reference to the cell
      * @param markForCheck Mark the row for change detection
      */
-    focusCell(cellRef?: CellReference | boolean, markForCheck?: boolean): void;
+    focusCell(cellRef?: CellReference): void;
     /**
      * Select all provided cells.
      * @param cellRef A Reference to the cell
@@ -147,25 +139,26 @@ export interface PblNgridContextApi<T = any> {
      * @param clearCurrent Clear the current selection before applying the new selection.
      * Default to false (add to current).
      */
-    selectCells(cellRefs: CellReference[], markForCheck?: boolean, clearCurrent?: boolean): void;
+    selectCells(cellRefs: CellReference[], clearCurrent?: boolean): void;
     /**
      * Unselect all provided cells.
      * If cells are not provided will un-select all currently selected cells.
      * @param cellRef A Reference to the cell
      * @param markForCheck Mark the row for change detection
      */
-    unselectCells(cellRefs?: CellReference[] | boolean, markForCheck?: boolean): void;
+    unselectCells(cellRefs?: CellReference[]): void;
     /**
-     * Clear the current context.
+     * Clears the entire context, including view cache and memory cache (rows out of view).
      * This method will reset the context of all cells.
      *
      * In most cases, you do not need to run this method because it will automatically run when
      * the datasource is replaced (entire datasource instance).
-     *
-     * However, if you are keeping the same datasource but switching data internally (onTrigger)
-     * you can clear the context using this method.
+     * @param syncView If true will sync the view and the context right after clearing which will ensure the view cache is hot and synced with the actual rendered rows
+     * Some plugins will expect a row to have a context so this might be required.
+     * The view and context are synced every time rows are rendered so make sure you set this to true only when you know there is no rendering call coming down the pipe.
      */
-    clear(): void;
+    clear(syncView?: boolean): any;
+    saveState(context: PblNgridRowContext<T>): any;
     /**
    * Try to find a specific row context, using the row identity, in the current view.
    * If the row is not in the view (or even not in the cache) it will return undefined, otherwise returns the row's context instance (`PblRowContext`)

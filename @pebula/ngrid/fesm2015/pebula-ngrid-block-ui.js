@@ -1,65 +1,37 @@
-import { Directive, TemplateRef, Input, NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { CdkTableModule } from '@angular/cdk/table';
-import { PblNgridSingleTemplateRegistry, PblNgridRegistryService, utils, PblNgridComponent, PblNgridPluginController, ngridPlugin, PblNgridModule } from '@pebula/ngrid';
+import * as i0 from '@angular/core';
+import { Directive, Input, NgModule } from '@angular/core';
+import * as i1 from '@pebula/ngrid';
+import { PblNgridSingleTemplateRegistry, ngridPlugin, PblNgridModule } from '@pebula/ngrid';
 import { isObservable } from 'rxjs';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
+import { unrx } from '@pebula/ngrid/core';
+import { CommonModule } from '@angular/common';
+import { CdkTableModule } from '@angular/cdk/table';
 
-/**
- * @fileoverview added by tsickle
- * Generated from: lib/block-ui/directives.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
+// tslint:disable:use-host-property-decorator
 /**
  * Marks the element as the display element when the form is busy.
  */
 class PblNgridBlockUiDefDirective extends PblNgridSingleTemplateRegistry {
-    /**
-     * @param {?} tRef
-     * @param {?} registry
-     */
     constructor(tRef, registry) {
         super(tRef, registry);
         this.kind = 'blocker';
     }
 }
-PblNgridBlockUiDefDirective.decorators = [
-    { type: Directive, args: [{ selector: '[pblNgridBlockUiDef]' },] }
-];
-/** @nocollapse */
-PblNgridBlockUiDefDirective.ctorParameters = () => [
-    { type: TemplateRef },
-    { type: PblNgridRegistryService }
-];
-if (false) {
-    /** @type {?} */
-    PblNgridBlockUiDefDirective.prototype.kind;
-}
+/** @nocollapse */ PblNgridBlockUiDefDirective.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridBlockUiDefDirective, deps: [{ token: i0.TemplateRef }, { token: i1.PblNgridRegistryService }], target: i0.ɵɵFactoryTarget.Directive });
+/** @nocollapse */ PblNgridBlockUiDefDirective.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "12.0.0", version: "12.0.0", type: PblNgridBlockUiDefDirective, selector: "[pblNgridBlockUiDef]", usesInheritance: true, ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridBlockUiDefDirective, decorators: [{
+            type: Directive,
+            args: [{ selector: '[pblNgridBlockUiDef]' }]
+        }], ctorParameters: function () { return [{ type: i0.TemplateRef }, { type: i1.PblNgridRegistryService }]; } });
 
-/**
- * @fileoverview added by tsickle
- * Generated from: lib/block-ui/block-ui-plugin.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const PLUGIN_KEY = 'blockUi';
-/**
- * @template T
- */
 class PblNgridBlockUiPluginDirective {
-    /**
-     * @param {?} grid
-     * @param {?} pluginCtrl
-     */
     constructor(grid, pluginCtrl) {
         this.grid = grid;
         this._blockInProgress = false;
         this._removePlugin = pluginCtrl.setPlugin(PLUGIN_KEY, this);
-        grid.registry.changes.subscribe((/**
-         * @param {?} changes
-         * @return {?}
-         */
-        changes => {
+        grid.registry.changes.subscribe(changes => {
             for (const c of changes) {
                 switch (c.type) {
                     case 'blocker':
@@ -67,42 +39,38 @@ class PblNgridBlockUiPluginDirective {
                         break;
                 }
             }
-        }));
+        });
+        pluginCtrl.onInit()
+            .subscribe(isInitNow => {
+            if (isInitNow && this._blockUi && typeof this._blockUi === 'boolean') {
+                this.setupBlocker();
+            }
+        });
         pluginCtrl.events
-            .subscribe((/**
-         * @param {?} event
-         * @return {?}
-         */
-        event => {
+            .subscribe(event => {
             if (event.kind === 'onDataSource') {
                 const { prev, curr } = event;
                 if (prev) {
-                    utils.unrx.kill(this, prev);
+                    unrx.kill(this, prev);
                 }
                 curr.onSourceChanging
-                    .pipe(utils.unrx(this, curr))
-                    .subscribe((/**
-                 * @return {?}
-                 */
-                () => {
+                    .pipe(unrx(this, curr))
+                    .subscribe(() => {
                     if (this._blockUi === 'auto') {
                         this._blockInProgress = true;
                         this.setupBlocker();
                     }
-                }));
+                });
                 curr.onSourceChanged
-                    .pipe(utils.unrx(this, curr))
-                    .subscribe((/**
-                 * @return {?}
-                 */
-                () => {
+                    .pipe(unrx(this, curr))
+                    .subscribe(() => {
                     if (this._blockUi === 'auto') {
                         this._blockInProgress = false;
                         this.setupBlocker();
                     }
-                }));
+                });
             }
-        }));
+        });
     }
     /**
      * Blocks the UI with the template defined via `PblNgridBlockUiDefDirective`.
@@ -129,32 +97,24 @@ class PblNgridBlockUiPluginDirective {
      * Also note that when sending an observable it is treated as "notifier", do not send cold observable as they get subscribed to.
      * For example, sending the returned value from `HttpClient` will probably result in 2 HTTP calls, if you already subscribed to it
      * > The default value is `auto` which means that `<pbl-ngrid blockUi>` is similar to `<pbl-ngrid blockUi="auto">`
-     * @return {?}
      */
     get blockUi() { return this._blockUi; }
-    /**
-     * @param {?} value
-     * @return {?}
-     */
     set blockUi(value) {
-        /** @type {?} */
         let coerced = coerceBooleanProperty(value);
-        if (coerced && (value === 'auto' || ((/** @type {?} */ (value))) === '')) {
+        if (coerced && (value === 'auto' || value === '')) {
             coerced = 'auto';
         }
         if (isObservable(value) && this._blockUi !== value) {
             if (isObservable(this._blockUi)) {
-                utils.unrx.kill(this, this._blockUi);
+                unrx.kill(this, this._blockUi);
             }
             this._blockUi = value;
-            value.pipe(utils.unrx(this, this._blockUi)).subscribe((/**
-             * @param {?} state
-             * @return {?}
-             */
-            state => {
+            value
+                .pipe(unrx(this, this._blockUi))
+                .subscribe(state => {
                 this._blockInProgress = state;
                 this.setupBlocker();
-            }));
+            });
         }
         else if (this._blockUi !== coerced) {
             this._blockUi = coerced;
@@ -164,106 +124,56 @@ class PblNgridBlockUiPluginDirective {
             }
         }
     }
-    /**
-     * @return {?}
-     */
     ngOnDestroy() {
-        utils.unrx.kill(this);
+        unrx.kill(this);
         this._removePlugin(this.grid);
     }
-    /**
-     * @private
-     * @return {?}
-     */
     setupBlocker() {
-        /** @type {?} */
-        const state = this._blockInProgress;
-        if (state) {
-            if (!this._blockerEmbeddedVRef) {
-                /** @type {?} */
-                const blockerTemplate = this.grid.registry.getSingle('blocker');
-                if (blockerTemplate) {
-                    this._blockerEmbeddedVRef = this.grid.createView('afterContent', blockerTemplate.tRef, { $implicit: this.grid });
-                    this._blockerEmbeddedVRef.detectChanges();
+        if (this.grid.isInit) {
+            const state = this._blockInProgress;
+            if (state) {
+                if (!this._blockerEmbeddedVRef) {
+                    const blockerTemplate = this.grid.registry.getSingle('blocker');
+                    if (blockerTemplate) {
+                        this._blockerEmbeddedVRef = this.grid.createView('afterContent', blockerTemplate.tRef, { $implicit: this.grid });
+                        this._blockerEmbeddedVRef.detectChanges();
+                    }
                 }
             }
-        }
-        else if (this._blockerEmbeddedVRef) {
-            this.grid.removeView(this._blockerEmbeddedVRef, 'afterContent');
-            this._blockerEmbeddedVRef = undefined;
+            else if (this._blockerEmbeddedVRef) {
+                this.grid.removeView(this._blockerEmbeddedVRef, 'afterContent');
+                this._blockerEmbeddedVRef = undefined;
+            }
         }
     }
 }
-PblNgridBlockUiPluginDirective.decorators = [
-    { type: Directive, args: [{ selector: 'pbl-ngrid[blockUi]', exportAs: 'blockUi' },] }
-];
-/** @nocollapse */
-PblNgridBlockUiPluginDirective.ctorParameters = () => [
-    { type: PblNgridComponent },
-    { type: PblNgridPluginController }
-];
-PblNgridBlockUiPluginDirective.propDecorators = {
-    blockUi: [{ type: Input }]
-};
-if (false) {
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridBlockUiPluginDirective.prototype._blockInProgress;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridBlockUiPluginDirective.prototype._blockUi;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridBlockUiPluginDirective.prototype._blockerEmbeddedVRef;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridBlockUiPluginDirective.prototype._removePlugin;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridBlockUiPluginDirective.prototype.grid;
-}
+/** @nocollapse */ PblNgridBlockUiPluginDirective.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridBlockUiPluginDirective, deps: [{ token: i1.PblNgridComponent }, { token: i1.PblNgridPluginController }], target: i0.ɵɵFactoryTarget.Directive });
+/** @nocollapse */ PblNgridBlockUiPluginDirective.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "12.0.0", version: "12.0.0", type: PblNgridBlockUiPluginDirective, selector: "pbl-ngrid[blockUi]", inputs: { blockUi: "blockUi" }, exportAs: ["blockUi"], ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridBlockUiPluginDirective, decorators: [{
+            type: Directive,
+            args: [{ selector: 'pbl-ngrid[blockUi]', exportAs: 'blockUi' }]
+        }], ctorParameters: function () { return [{ type: i1.PblNgridComponent }, { type: i1.PblNgridPluginController }]; }, propDecorators: { blockUi: [{
+                type: Input
+            }] } });
 
-/**
- * @fileoverview added by tsickle
- * Generated from: lib/table-block-ui.module.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class PblNgridBlockUiModule {
 }
 PblNgridBlockUiModule.NGRID_PLUGIN = ngridPlugin({ id: PLUGIN_KEY }, PblNgridBlockUiPluginDirective);
-PblNgridBlockUiModule.decorators = [
-    { type: NgModule, args: [{
-                imports: [CommonModule, CdkTableModule, PblNgridModule],
-                declarations: [PblNgridBlockUiDefDirective, PblNgridBlockUiPluginDirective],
-                exports: [PblNgridBlockUiDefDirective, PblNgridBlockUiPluginDirective]
-            },] }
-];
-if (false) {
-    /** @type {?} */
-    PblNgridBlockUiModule.NGRID_PLUGIN;
-}
+/** @nocollapse */ PblNgridBlockUiModule.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridBlockUiModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule });
+/** @nocollapse */ PblNgridBlockUiModule.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridBlockUiModule, declarations: [PblNgridBlockUiDefDirective, PblNgridBlockUiPluginDirective], imports: [CommonModule, CdkTableModule, PblNgridModule], exports: [PblNgridBlockUiDefDirective, PblNgridBlockUiPluginDirective] });
+/** @nocollapse */ PblNgridBlockUiModule.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridBlockUiModule, imports: [[CommonModule, CdkTableModule, PblNgridModule]] });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridBlockUiModule, decorators: [{
+            type: NgModule,
+            args: [{
+                    imports: [CommonModule, CdkTableModule, PblNgridModule],
+                    declarations: [PblNgridBlockUiDefDirective, PblNgridBlockUiPluginDirective],
+                    exports: [PblNgridBlockUiDefDirective, PblNgridBlockUiPluginDirective]
+                }]
+        }] });
 
 /**
- * @fileoverview added by tsickle
- * Generated from: index.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated bundle index. Do not edit.
  */
 
-/**
- * @fileoverview added by tsickle
- * Generated from: pebula-ngrid-block-ui.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-export { PblNgridBlockUiModule, PblNgridBlockUiDefDirective as ɵa, PLUGIN_KEY as ɵb, PblNgridBlockUiPluginDirective as ɵc };
+export { PblNgridBlockUiDefDirective, PblNgridBlockUiModule, PblNgridBlockUiPluginDirective };
 //# sourceMappingURL=pebula-ngrid-block-ui.js.map

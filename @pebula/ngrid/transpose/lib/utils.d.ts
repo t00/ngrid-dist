@@ -1,4 +1,4 @@
-import { PblColumnDefinition, PblColumn } from '@pebula/ngrid';
-export declare function getCellValueAsHeader(row: PblColumn): any;
-export declare function getCellValueTransformed(this: PblColumn, colAsRow: PblColumn): any;
+import { PblColumnDefinition } from '@pebula/ngrid/core';
+export declare function getCellValueAsHeader(row: PblColumnDefinition): any;
+export declare function getCellValueTransformed(this: PblColumnDefinition, colAsRow: PblColumnDefinition): any;
 export declare function createTransformedColumn(row: any, index: number): PblColumnDefinition;

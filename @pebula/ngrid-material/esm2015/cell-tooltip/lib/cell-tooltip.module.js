@@ -1,74 +1,48 @@
-/**
- * @fileoverview added by tsickle
- * Generated from: lib/cell-tooltip.module.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { PblNgridModule, PblNgridPluginController, PblNgridConfigService, ngridPlugin } from '@pebula/ngrid';
+import { PblNgridConfigService } from '@pebula/ngrid/core';
+import { PblNgridModule, PblNgridPluginController, ngridPlugin } from '@pebula/ngrid';
 import { PblNgridTargetEventsModule } from '@pebula/ngrid/target-events';
 import { PblNgridCellTooltipDirective, PLUGIN_KEY } from './cell-tooltip.directive';
+import * as i0 from "@angular/core";
+import * as i1 from "@pebula/ngrid/core";
 export class PblNgridCellTooltipModule {
-    /**
-     * @param {?} parentModule
-     * @param {?} configService
-     */
     constructor(parentModule, configService) {
         if (parentModule) {
             return;
         }
         PblNgridPluginController.created
-            .subscribe((/**
-         * @param {?} event
-         * @return {?}
-         */
-        event => {
+            .subscribe(event => {
             // Do not remove the explicit reference to `PblNgridCellTooltipDirective`
             // We use `PblNgridCellTooltipDirective.PLUGIN_KEY` to create a direct reference to `PblNgridCellTooltipDirective`
             // which will disable dead code elimination for the `PblNgridCellTooltipDirective` plugin.
             // If it is not set, using the plugin will only work when it is used in templates, other wise, if used programmatically (`autoSetAll`)
             // CLI prod builds will remove the plugin's code.
-            /** @type {?} */
             const cellTooltipConfig = configService.get(PblNgridCellTooltipDirective.PLUGIN_KEY);
             if (cellTooltipConfig && cellTooltipConfig.autoSetAll === true) {
-                /** @type {?} */
                 const pluginCtrl = event.controller;
-                /** @type {?} */
-                let subscription = pluginCtrl.events
-                    .subscribe((/**
-                 * @param {?} evt
-                 * @return {?}
-                 */
-                evt => {
-                    if (evt.kind === 'onInit') {
-                        if (!pluginCtrl.hasPlugin(PblNgridCellTooltipDirective.PLUGIN_KEY)) {
-                            pluginCtrl.createPlugin(PblNgridCellTooltipDirective.PLUGIN_KEY);
-                        }
-                        subscription.unsubscribe();
-                        subscription = undefined;
-                    }
-                }));
+                pluginCtrl.onInit()
+                    .subscribe(evt => pluginCtrl.ensurePlugin(PblNgridCellTooltipDirective.PLUGIN_KEY));
             }
-        }));
+        });
     }
 }
 PblNgridCellTooltipModule.NGRID_PLUGIN = ngridPlugin({ id: PLUGIN_KEY, factory: 'create' }, PblNgridCellTooltipDirective);
-PblNgridCellTooltipModule.decorators = [
-    { type: NgModule, args: [{
-                imports: [CommonModule, MatTooltipModule, OverlayModule, PblNgridModule, PblNgridTargetEventsModule],
-                declarations: [PblNgridCellTooltipDirective],
-                exports: [PblNgridCellTooltipDirective, MatTooltipModule],
-            },] }
-];
-/** @nocollapse */
-PblNgridCellTooltipModule.ctorParameters = () => [
-    { type: PblNgridCellTooltipModule, decorators: [{ type: Optional }, { type: SkipSelf }] },
-    { type: PblNgridConfigService }
-];
-if (false) {
-    /** @type {?} */
-    PblNgridCellTooltipModule.NGRID_PLUGIN;
-}
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY2VsbC10b29sdGlwLm1vZHVsZS5qcyIsInNvdXJjZVJvb3QiOiJuZzovL0BwZWJ1bGEvbmdyaWQtbWF0ZXJpYWwvY2VsbC10b29sdGlwLyIsInNvdXJjZXMiOlsibGliL2NlbGwtdG9vbHRpcC5tb2R1bGUudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7QUFBQSxPQUFPLEVBQUUsUUFBUSxFQUFFLFFBQVEsRUFBRSxRQUFRLEVBQUUsTUFBTSxlQUFlLENBQUM7QUFDN0QsT0FBTyxFQUFFLFlBQVksRUFBRSxNQUFNLGlCQUFpQixDQUFDO0FBQy9DLE9BQU8sRUFBRSxhQUFhLEVBQUUsTUFBTSxzQkFBc0IsQ0FBQztBQUNyRCxPQUFPLEVBQUUsZ0JBQWdCLEVBQUUsTUFBTSwyQkFBMkIsQ0FBQztBQUU3RCxPQUFPLEVBQUUsY0FBYyxFQUFFLHdCQUF3QixFQUFFLHFCQUFxQixFQUFFLFdBQVcsRUFBRSxNQUFNLGVBQWUsQ0FBQztBQUM3RyxPQUFPLEVBQUUsMEJBQTBCLEVBQUUsTUFBTSw2QkFBNkIsQ0FBQztBQUV6RSxPQUFPLEVBQUUsNEJBQTRCLEVBQUUsVUFBVSxFQUFFLE1BQU0sMEJBQTBCLENBQUM7QUFPcEYsTUFBTSxPQUFPLHlCQUF5Qjs7Ozs7SUFHcEMsWUFBb0MsWUFBdUMsRUFDL0QsYUFBb0M7UUFDOUMsSUFBSSxZQUFZLEVBQUU7WUFDaEIsT0FBTztTQUNSO1FBRUQsd0JBQXdCLENBQUMsT0FBTzthQUM3QixTQUFTOzs7O1FBQUUsS0FBSyxDQUFDLEVBQUU7Ozs7Ozs7a0JBTVosaUJBQWlCLEdBQUcsYUFBYSxDQUFDLEdBQUcsQ0FBQyw0QkFBNEIsQ0FBQyxVQUFVLENBQUM7WUFDcEYsSUFBSSxpQkFBaUIsSUFBSSxpQkFBaUIsQ0FBQyxVQUFVLEtBQUssSUFBSSxFQUFFOztzQkFDeEQsVUFBVSxHQUFHLEtBQUssQ0FBQyxVQUFVOztvQkFDL0IsWUFBWSxHQUFHLFVBQVUsQ0FBQyxNQUFNO3FCQUNqQyxTQUFTOzs7O2dCQUFFLEdBQUcsQ0FBQyxFQUFFO29CQUNoQixJQUFJLEdBQUcsQ0FBQyxJQUFJLEtBQUssUUFBUSxFQUFFO3dCQUN6QixJQUFJLENBQUMsVUFBVSxDQUFDLFNBQVMsQ0FBQyw0QkFBNEIsQ0FBQyxVQUFVLENBQUMsRUFBRTs0QkFDbEUsVUFBVSxDQUFDLFlBQVksQ0FBQyw0QkFBNEIsQ0FBQyxVQUFVLENBQUMsQ0FBQzt5QkFDbEU7d0JBQ0QsWUFBWSxDQUFDLFdBQVcsRUFBRSxDQUFDO3dCQUMzQixZQUFZLEdBQUcsU0FBUyxDQUFDO3FCQUMxQjtnQkFDSCxDQUFDLEVBQUM7YUFDTDtRQUNILENBQUMsRUFBQyxDQUFDO0lBQ1AsQ0FBQzs7QUE5QmUsc0NBQVksR0FBRyxXQUFXLENBQUMsRUFBRSxFQUFFLEVBQUUsVUFBVSxFQUFFLE9BQU8sRUFBRSxRQUFRLEVBQUUsRUFBRSw0QkFBNEIsQ0FBQyxDQUFDOztZQU5qSCxRQUFRLFNBQUM7Z0JBQ1IsT0FBTyxFQUFFLENBQUUsWUFBWSxFQUFFLGdCQUFnQixFQUFFLGFBQWEsRUFBRSxjQUFjLEVBQUUsMEJBQTBCLENBQUU7Z0JBQ3RHLFlBQVksRUFBRSxDQUFFLDRCQUE0QixDQUFFO2dCQUM5QyxPQUFPLEVBQUUsQ0FBRSw0QkFBNEIsRUFBRSxnQkFBZ0IsQ0FBRTthQUM1RDs7OztZQUltRCx5QkFBeUIsdUJBQTlELFFBQVEsWUFBSSxRQUFRO1lBYmdCLHFCQUFxQjs7OztJQVd0RSx1Q0FBZ0giLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBOZ01vZHVsZSwgT3B0aW9uYWwsIFNraXBTZWxmIH0gZnJvbSAnQGFuZ3VsYXIvY29yZSc7XG5pbXBvcnQgeyBDb21tb25Nb2R1bGUgfSBmcm9tICdAYW5ndWxhci9jb21tb24nO1xuaW1wb3J0IHsgT3ZlcmxheU1vZHVsZSB9IGZyb20gJ0Bhbmd1bGFyL2Nkay9vdmVybGF5JztcbmltcG9ydCB7IE1hdFRvb2x0aXBNb2R1bGUgfSBmcm9tICdAYW5ndWxhci9tYXRlcmlhbC90b29sdGlwJztcblxuaW1wb3J0IHsgUGJsTmdyaWRNb2R1bGUsIFBibE5ncmlkUGx1Z2luQ29udHJvbGxlciwgUGJsTmdyaWRDb25maWdTZXJ2aWNlLCBuZ3JpZFBsdWdpbiB9IGZyb20gJ0BwZWJ1bGEvbmdyaWQnO1xuaW1wb3J0IHsgUGJsTmdyaWRUYXJnZXRFdmVudHNNb2R1bGUgfSBmcm9tICdAcGVidWxhL25ncmlkL3RhcmdldC1ldmVudHMnO1xuXG5pbXBvcnQgeyBQYmxOZ3JpZENlbGxUb29sdGlwRGlyZWN0aXZlLCBQTFVHSU5fS0VZIH0gZnJvbSAnLi9jZWxsLXRvb2x0aXAuZGlyZWN0aXZlJztcblxuQE5nTW9kdWxlKHtcbiAgaW1wb3J0czogWyBDb21tb25Nb2R1bGUsIE1hdFRvb2x0aXBNb2R1bGUsIE92ZXJsYXlNb2R1bGUsIFBibE5ncmlkTW9kdWxlLCBQYmxOZ3JpZFRhcmdldEV2ZW50c01vZHVsZSBdLFxuICBkZWNsYXJhdGlvbnM6IFsgUGJsTmdyaWRDZWxsVG9vbHRpcERpcmVjdGl2ZSBdLFxuICBleHBvcnRzOiBbIFBibE5ncmlkQ2VsbFRvb2x0aXBEaXJlY3RpdmUsIE1hdFRvb2x0aXBNb2R1bGUgXSxcbn0pXG5leHBvcnQgY2xhc3MgUGJsTmdyaWRDZWxsVG9vbHRpcE1vZHVsZSB7XG4gIHN0YXRpYyByZWFkb25seSBOR1JJRF9QTFVHSU4gPSBuZ3JpZFBsdWdpbih7IGlkOiBQTFVHSU5fS0VZLCBmYWN0b3J5OiAnY3JlYXRlJyB9LCBQYmxOZ3JpZENlbGxUb29sdGlwRGlyZWN0aXZlKTtcblxuICBjb25zdHJ1Y3RvcihAT3B0aW9uYWwoKSBAU2tpcFNlbGYoKSBwYXJlbnRNb2R1bGU6IFBibE5ncmlkQ2VsbFRvb2x0aXBNb2R1bGUsXG4gICAgICAgICAgICAgIGNvbmZpZ1NlcnZpY2U6IFBibE5ncmlkQ29uZmlnU2VydmljZSkge1xuICAgIGlmIChwYXJlbnRNb2R1bGUpIHtcbiAgICAgIHJldHVybjtcbiAgICB9XG5cbiAgICBQYmxOZ3JpZFBsdWdpbkNvbnRyb2xsZXIuY3JlYXRlZFxuICAgICAgLnN1YnNjcmliZSggZXZlbnQgPT4ge1xuICAgICAgICAvLyBEbyBub3QgcmVtb3ZlIHRoZSBleHBsaWNpdCByZWZlcmVuY2UgdG8gYFBibE5ncmlkQ2VsbFRvb2x0aXBEaXJlY3RpdmVgXG4gICAgICAgIC8vIFdlIHVzZSBgUGJsTmdyaWRDZWxsVG9vbHRpcERpcmVjdGl2ZS5QTFVHSU5fS0VZYCB0byBjcmVhdGUgYSBkaXJlY3QgcmVmZXJlbmNlIHRvIGBQYmxOZ3JpZENlbGxUb29sdGlwRGlyZWN0aXZlYFxuICAgICAgICAvLyB3aGljaCB3aWxsIGRpc2FibGUgZGVhZCBjb2RlIGVsaW1pbmF0aW9uIGZvciB0aGUgYFBibE5ncmlkQ2VsbFRvb2x0aXBEaXJlY3RpdmVgIHBsdWdpbi5cbiAgICAgICAgLy8gSWYgaXQgaXMgbm90IHNldCwgdXNpbmcgdGhlIHBsdWdpbiB3aWxsIG9ubHkgd29yayB3aGVuIGl0IGlzIHVzZWQgaW4gdGVtcGxhdGVzLCBvdGhlciB3aXNlLCBpZiB1c2VkIHByb2dyYW1tYXRpY2FsbHkgKGBhdXRvU2V0QWxsYClcbiAgICAgICAgLy8gQ0xJIHByb2QgYnVpbGRzIHdpbGwgcmVtb3ZlIHRoZSBwbHVnaW4ncyBjb2RlLlxuICAgICAgICBjb25zdCBjZWxsVG9vbHRpcENvbmZpZyA9IGNvbmZpZ1NlcnZpY2UuZ2V0KFBibE5ncmlkQ2VsbFRvb2x0aXBEaXJlY3RpdmUuUExVR0lOX0tFWSk7XG4gICAgICAgIGlmIChjZWxsVG9vbHRpcENvbmZpZyAmJiBjZWxsVG9vbHRpcENvbmZpZy5hdXRvU2V0QWxsID09PSB0cnVlKSB7XG4gICAgICAgICAgY29uc3QgcGx1Z2luQ3RybCA9IGV2ZW50LmNvbnRyb2xsZXI7XG4gICAgICAgICAgbGV0IHN1YnNjcmlwdGlvbiA9IHBsdWdpbkN0cmwuZXZlbnRzXG4gICAgICAgICAgICAuc3Vic2NyaWJlKCBldnQgPT4ge1xuICAgICAgICAgICAgICBpZiAoZXZ0LmtpbmQgPT09ICdvbkluaXQnKSB7XG4gICAgICAgICAgICAgICAgaWYgKCFwbHVnaW5DdHJsLmhhc1BsdWdpbihQYmxOZ3JpZENlbGxUb29sdGlwRGlyZWN0aXZlLlBMVUdJTl9LRVkpKSB7XG4gICAgICAgICAgICAgICAgICBwbHVnaW5DdHJsLmNyZWF0ZVBsdWdpbihQYmxOZ3JpZENlbGxUb29sdGlwRGlyZWN0aXZlLlBMVUdJTl9LRVkpO1xuICAgICAgICAgICAgICAgIH1cbiAgICAgICAgICAgICAgICBzdWJzY3JpcHRpb24udW5zdWJzY3JpYmUoKTtcbiAgICAgICAgICAgICAgICBzdWJzY3JpcHRpb24gPSB1bmRlZmluZWQ7XG4gICAgICAgICAgICAgIH1cbiAgICAgICAgICAgIH0pO1xuICAgICAgICB9XG4gICAgICB9KTtcbiAgfVxufVxuIl19
+/** @nocollapse */ PblNgridCellTooltipModule.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridCellTooltipModule, deps: [{ token: PblNgridCellTooltipModule, optional: true, skipSelf: true }, { token: i1.PblNgridConfigService }], target: i0.ɵɵFactoryTarget.NgModule });
+/** @nocollapse */ PblNgridCellTooltipModule.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridCellTooltipModule, declarations: [PblNgridCellTooltipDirective], imports: [CommonModule, MatTooltipModule, OverlayModule, PblNgridModule, PblNgridTargetEventsModule], exports: [PblNgridCellTooltipDirective, MatTooltipModule] });
+/** @nocollapse */ PblNgridCellTooltipModule.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridCellTooltipModule, imports: [[CommonModule, MatTooltipModule, OverlayModule, PblNgridModule, PblNgridTargetEventsModule], MatTooltipModule] });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridCellTooltipModule, decorators: [{
+            type: NgModule,
+            args: [{
+                    imports: [CommonModule, MatTooltipModule, OverlayModule, PblNgridModule, PblNgridTargetEventsModule],
+                    declarations: [PblNgridCellTooltipDirective],
+                    exports: [PblNgridCellTooltipDirective, MatTooltipModule],
+                }]
+        }], ctorParameters: function () { return [{ type: PblNgridCellTooltipModule, decorators: [{
+                    type: Optional
+                }, {
+                    type: SkipSelf
+                }] }, { type: i1.PblNgridConfigService }]; } });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY2VsbC10b29sdGlwLm1vZHVsZS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uLy4uL2xpYnMvbmdyaWQtbWF0ZXJpYWwvY2VsbC10b29sdGlwL3NyYy9saWIvY2VsbC10b29sdGlwLm1vZHVsZS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxPQUFPLEVBQUUsUUFBUSxFQUFFLFFBQVEsRUFBRSxRQUFRLEVBQUUsTUFBTSxlQUFlLENBQUM7QUFDN0QsT0FBTyxFQUFFLFlBQVksRUFBRSxNQUFNLGlCQUFpQixDQUFDO0FBQy9DLE9BQU8sRUFBRSxhQUFhLEVBQUUsTUFBTSxzQkFBc0IsQ0FBQztBQUNyRCxPQUFPLEVBQUUsZ0JBQWdCLEVBQUUsTUFBTSwyQkFBMkIsQ0FBQztBQUU3RCxPQUFPLEVBQUUscUJBQXFCLEVBQUUsTUFBTSxvQkFBb0IsQ0FBQztBQUMzRCxPQUFPLEVBQUUsY0FBYyxFQUFFLHdCQUF3QixFQUFFLFdBQVcsRUFBRSxNQUFNLGVBQWUsQ0FBQztBQUN0RixPQUFPLEVBQUUsMEJBQTBCLEVBQUUsTUFBTSw2QkFBNkIsQ0FBQztBQUV6RSxPQUFPLEVBQUUsNEJBQTRCLEVBQUUsVUFBVSxFQUFFLE1BQU0sMEJBQTBCLENBQUM7OztBQU9wRixNQUFNLE9BQU8seUJBQXlCO0lBR3BDLFlBQW9DLFlBQXVDLEVBQy9ELGFBQW9DO1FBQzlDLElBQUksWUFBWSxFQUFFO1lBQ2hCLE9BQU87U0FDUjtRQUVELHdCQUF3QixDQUFDLE9BQU87YUFDN0IsU0FBUyxDQUFFLEtBQUssQ0FBQyxFQUFFO1lBQ2xCLHlFQUF5RTtZQUN6RSxrSEFBa0g7WUFDbEgsMEZBQTBGO1lBQzFGLHNJQUFzSTtZQUN0SSxpREFBaUQ7WUFDakQsTUFBTSxpQkFBaUIsR0FBRyxhQUFhLENBQUMsR0FBRyxDQUFDLDRCQUE0QixDQUFDLFVBQVUsQ0FBQyxDQUFDO1lBQ3JGLElBQUksaUJBQWlCLElBQUksaUJBQWlCLENBQUMsVUFBVSxLQUFLLElBQUksRUFBRTtnQkFDOUQsTUFBTSxVQUFVLEdBQUcsS0FBSyxDQUFDLFVBQVUsQ0FBQztnQkFDcEMsVUFBVSxDQUFDLE1BQU0sRUFBRTtxQkFDbEIsU0FBUyxDQUFFLEdBQUcsQ0FBQyxFQUFFLENBQUMsVUFBVSxDQUFDLFlBQVksQ0FBQyw0QkFBNEIsQ0FBQyxVQUFVLENBQUMsQ0FBRSxDQUFDO2FBQ3ZGO1FBQ0gsQ0FBQyxDQUFDLENBQUM7SUFDUCxDQUFDOztBQXRCZSxzQ0FBWSxHQUFHLFdBQVcsQ0FBQyxFQUFFLEVBQUUsRUFBRSxVQUFVLEVBQUUsT0FBTyxFQUFFLFFBQVEsRUFBRSxFQUFFLDRCQUE0QixDQUFDLENBQUM7eUlBRHJHLHlCQUF5QixrQkFHYyx5QkFBeUI7MElBSGhFLHlCQUF5QixpQkFIcEIsNEJBQTRCLGFBRGpDLFlBQVksRUFBRSxnQkFBZ0IsRUFBRSxhQUFhLEVBQUUsY0FBYyxFQUFFLDBCQUEwQixhQUV6Riw0QkFBNEIsRUFBRSxnQkFBZ0I7MElBRTlDLHlCQUF5QixZQUozQixDQUFFLFlBQVksRUFBRSxnQkFBZ0IsRUFBRSxhQUFhLEVBQUUsY0FBYyxFQUFFLDBCQUEwQixDQUFFLEVBRTdELGdCQUFnQjsyRkFFOUMseUJBQXlCO2tCQUxyQyxRQUFRO21CQUFDO29CQUNSLE9BQU8sRUFBRSxDQUFFLFlBQVksRUFBRSxnQkFBZ0IsRUFBRSxhQUFhLEVBQUUsY0FBYyxFQUFFLDBCQUEwQixDQUFFO29CQUN0RyxZQUFZLEVBQUUsQ0FBRSw0QkFBNEIsQ0FBRTtvQkFDOUMsT0FBTyxFQUFFLENBQUUsNEJBQTRCLEVBQUUsZ0JBQWdCLENBQUU7aUJBQzVEOzBEQUltRCx5QkFBeUI7MEJBQTlELFFBQVE7OzBCQUFJLFFBQVEiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBOZ01vZHVsZSwgT3B0aW9uYWwsIFNraXBTZWxmIH0gZnJvbSAnQGFuZ3VsYXIvY29yZSc7XG5pbXBvcnQgeyBDb21tb25Nb2R1bGUgfSBmcm9tICdAYW5ndWxhci9jb21tb24nO1xuaW1wb3J0IHsgT3ZlcmxheU1vZHVsZSB9IGZyb20gJ0Bhbmd1bGFyL2Nkay9vdmVybGF5JztcbmltcG9ydCB7IE1hdFRvb2x0aXBNb2R1bGUgfSBmcm9tICdAYW5ndWxhci9tYXRlcmlhbC90b29sdGlwJztcblxuaW1wb3J0IHsgUGJsTmdyaWRDb25maWdTZXJ2aWNlIH0gZnJvbSAnQHBlYnVsYS9uZ3JpZC9jb3JlJztcbmltcG9ydCB7IFBibE5ncmlkTW9kdWxlLCBQYmxOZ3JpZFBsdWdpbkNvbnRyb2xsZXIsIG5ncmlkUGx1Z2luIH0gZnJvbSAnQHBlYnVsYS9uZ3JpZCc7XG5pbXBvcnQgeyBQYmxOZ3JpZFRhcmdldEV2ZW50c01vZHVsZSB9IGZyb20gJ0BwZWJ1bGEvbmdyaWQvdGFyZ2V0LWV2ZW50cyc7XG5cbmltcG9ydCB7IFBibE5ncmlkQ2VsbFRvb2x0aXBEaXJlY3RpdmUsIFBMVUdJTl9LRVkgfSBmcm9tICcuL2NlbGwtdG9vbHRpcC5kaXJlY3RpdmUnO1xuXG5ATmdNb2R1bGUoe1xuICBpbXBvcnRzOiBbIENvbW1vbk1vZHVsZSwgTWF0VG9vbHRpcE1vZHVsZSwgT3ZlcmxheU1vZHVsZSwgUGJsTmdyaWRNb2R1bGUsIFBibE5ncmlkVGFyZ2V0RXZlbnRzTW9kdWxlIF0sXG4gIGRlY2xhcmF0aW9uczogWyBQYmxOZ3JpZENlbGxUb29sdGlwRGlyZWN0aXZlIF0sXG4gIGV4cG9ydHM6IFsgUGJsTmdyaWRDZWxsVG9vbHRpcERpcmVjdGl2ZSwgTWF0VG9vbHRpcE1vZHVsZSBdLFxufSlcbmV4cG9ydCBjbGFzcyBQYmxOZ3JpZENlbGxUb29sdGlwTW9kdWxlIHtcbiAgc3RhdGljIHJlYWRvbmx5IE5HUklEX1BMVUdJTiA9IG5ncmlkUGx1Z2luKHsgaWQ6IFBMVUdJTl9LRVksIGZhY3Rvcnk6ICdjcmVhdGUnIH0sIFBibE5ncmlkQ2VsbFRvb2x0aXBEaXJlY3RpdmUpO1xuXG4gIGNvbnN0cnVjdG9yKEBPcHRpb25hbCgpIEBTa2lwU2VsZigpIHBhcmVudE1vZHVsZTogUGJsTmdyaWRDZWxsVG9vbHRpcE1vZHVsZSxcbiAgICAgICAgICAgICAgY29uZmlnU2VydmljZTogUGJsTmdyaWRDb25maWdTZXJ2aWNlKSB7XG4gICAgaWYgKHBhcmVudE1vZHVsZSkge1xuICAgICAgcmV0dXJuO1xuICAgIH1cblxuICAgIFBibE5ncmlkUGx1Z2luQ29udHJvbGxlci5jcmVhdGVkXG4gICAgICAuc3Vic2NyaWJlKCBldmVudCA9PiB7XG4gICAgICAgIC8vIERvIG5vdCByZW1vdmUgdGhlIGV4cGxpY2l0IHJlZmVyZW5jZSB0byBgUGJsTmdyaWRDZWxsVG9vbHRpcERpcmVjdGl2ZWBcbiAgICAgICAgLy8gV2UgdXNlIGBQYmxOZ3JpZENlbGxUb29sdGlwRGlyZWN0aXZlLlBMVUdJTl9LRVlgIHRvIGNyZWF0ZSBhIGRpcmVjdCByZWZlcmVuY2UgdG8gYFBibE5ncmlkQ2VsbFRvb2x0aXBEaXJlY3RpdmVgXG4gICAgICAgIC8vIHdoaWNoIHdpbGwgZGlzYWJsZSBkZWFkIGNvZGUgZWxpbWluYXRpb24gZm9yIHRoZSBgUGJsTmdyaWRDZWxsVG9vbHRpcERpcmVjdGl2ZWAgcGx1Z2luLlxuICAgICAgICAvLyBJZiBpdCBpcyBub3Qgc2V0LCB1c2luZyB0aGUgcGx1Z2luIHdpbGwgb25seSB3b3JrIHdoZW4gaXQgaXMgdXNlZCBpbiB0ZW1wbGF0ZXMsIG90aGVyIHdpc2UsIGlmIHVzZWQgcHJvZ3JhbW1hdGljYWxseSAoYGF1dG9TZXRBbGxgKVxuICAgICAgICAvLyBDTEkgcHJvZCBidWlsZHMgd2lsbCByZW1vdmUgdGhlIHBsdWdpbidzIGNvZGUuXG4gICAgICAgIGNvbnN0IGNlbGxUb29sdGlwQ29uZmlnID0gY29uZmlnU2VydmljZS5nZXQoUGJsTmdyaWRDZWxsVG9vbHRpcERpcmVjdGl2ZS5QTFVHSU5fS0VZKTtcbiAgICAgICAgaWYgKGNlbGxUb29sdGlwQ29uZmlnICYmIGNlbGxUb29sdGlwQ29uZmlnLmF1dG9TZXRBbGwgPT09IHRydWUpIHtcbiAgICAgICAgICBjb25zdCBwbHVnaW5DdHJsID0gZXZlbnQuY29udHJvbGxlcjtcbiAgICAgICAgICBwbHVnaW5DdHJsLm9uSW5pdCgpXG4gICAgICAgICAgLnN1YnNjcmliZSggZXZ0ID0+IHBsdWdpbkN0cmwuZW5zdXJlUGx1Z2luKFBibE5ncmlkQ2VsbFRvb2x0aXBEaXJlY3RpdmUuUExVR0lOX0tFWSkgKTtcbiAgICAgICAgfVxuICAgICAgfSk7XG4gIH1cbn1cbiJdfQ==

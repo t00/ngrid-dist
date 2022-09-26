@@ -1,6 +1,7 @@
 import { OnDestroy } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { PblNgridComponent, PblNgridPluginController } from '@pebula/ngrid';
+import * as i0 from "@angular/core";
 declare module '@pebula/ngrid/lib/ext/types' {
     interface PblNgridPluginExtension {
         matSort?: PblNgridMatSortDirective;
@@ -15,4 +16,6 @@ export declare class PblNgridMatSortDirective implements OnDestroy {
     constructor(table: PblNgridComponent<any>, pluginCtrl: PblNgridPluginController, sort: MatSort);
     ngOnDestroy(): void;
     private onSort;
+    static ɵfac: i0.ɵɵFactoryDeclaration<PblNgridMatSortDirective, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<PblNgridMatSortDirective, "pbl-ngrid[matSort]", ["pblMatSort"], {}, {}, never>;
 }

@@ -1,17 +1,14 @@
+import { _PblNgridComponent } from '../../tokens';
 import { PblNgridExtensionApi } from '../../ext/grid-ext-api';
-import { PblNgridComponent } from '../ngrid.component';
-import { CellContextState, PblNgridCellContext, PblNgridMetaCellContext, PblNgridRowContext } from './types';
-import { PblColumn } from '../columns/column';
-import { PblMetaColumn } from '../columns/meta-column';
+import { CellContextState, ExternalCellContextState, PblNgridCellContext, PblNgridMetaCellContext, PblNgridRowContext } from './types';
+import { PblColumn, PblMetaColumn } from '../column/model';
 import { PblRowContext } from './row';
 export declare class MetaCellContext<T = any, TCol extends PblMetaColumn | PblColumn = PblMetaColumn> implements PblNgridMetaCellContext<T, TCol> {
     col: TCol;
-    grid: PblNgridComponent<any>;
+    grid: _PblNgridComponent<any>;
     get $implicit(): MetaCellContext<T, TCol>;
-    /** @deprecated use grid instead */
-    get table(): PblNgridComponent<T>;
     protected constructor();
-    static create<T = any, TCol extends PblMetaColumn | PblColumn = PblMetaColumn>(col: TCol, grid: PblNgridComponent<T>): MetaCellContext<T, TCol>;
+    static create<T = any, TCol extends PblMetaColumn | PblColumn = PblMetaColumn>(col: TCol, grid: _PblNgridComponent<T>): MetaCellContext<T, TCol>;
 }
 export declare class PblCellContext<T = any> implements PblNgridCellContext<T> {
     get $implicit(): PblCellContext<T>;
@@ -22,20 +19,21 @@ export declare class PblCellContext<T = any> implements PblNgridCellContext<T> {
     get editing(): boolean;
     get focused(): boolean;
     get selected(): boolean;
-    readonly grid: PblNgridComponent<any>;
+    readonly grid: _PblNgridComponent<any>;
     readonly index: number;
-    /** @deprecated use grid instead */
-    get table(): PblNgridComponent<any>;
     private _editing;
     private _focused;
     private _selected;
+    private _external;
     private _rowContext;
     col: PblColumn;
     private extApi;
     protected constructor();
     static create<T = any>(rowContext: PblRowContext<T>, col: PblColumn, extApi: PblNgridExtensionApi<T>): PblCellContext<T>;
     static defaultState<T = any>(): CellContextState<T>;
-    clone(): PblCellContext<T>;
+    clone(col?: PblColumn): PblCellContext<T>;
+    getExternal<P extends keyof ExternalCellContextState>(key: P): ExternalCellContextState[P];
+    setExternal<P extends keyof ExternalCellContextState>(key: P, value: ExternalCellContextState[P], saveState?: boolean): void;
     getState(): CellContextState<T>;
     fromState(state: CellContextState<T>, rowContext: PblRowContext<T>, skipRowUpdate?: boolean): void;
     startEdit(markForCheck?: boolean): void;

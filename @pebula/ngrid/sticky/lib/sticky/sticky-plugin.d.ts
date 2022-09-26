@@ -1,5 +1,6 @@
-import { IterableDiffers, IterableDiffer, OnDestroy } from '@angular/core';
+import { IterableDiffers, IterableDiffer, OnDestroy, AfterViewInit } from '@angular/core';
 import { PblNgridComponent, PblNgridPluginController } from '@pebula/ngrid';
+import * as i0 from "@angular/core";
 declare module '@pebula/ngrid/lib/ext/types' {
     interface PblNgridPluginExtension {
         sticky?: PblNgridStickyPluginDirective;
@@ -10,7 +11,7 @@ export declare function setStickyRow(grid: PblNgridComponent<any>, type: 'header
 export declare function setStickyRow(grid: PblNgridComponent<any>, type: 'header' | 'footer', value: 'table' | number, state: boolean): void;
 export declare function setStickyColumns(grid: PblNgridComponent<any>, type: 'start' | 'end', bulk: Array<[string | number, boolean]>): void;
 export declare function setStickyColumns(grid: PblNgridComponent<any>, type: 'start' | 'end', value: string | number, state: boolean): void;
-export declare class PblNgridStickyPluginDirective implements OnDestroy {
+export declare class PblNgridStickyPluginDirective implements AfterViewInit, OnDestroy {
     protected readonly grid: PblNgridComponent<any>;
     protected readonly _differs: IterableDiffers;
     protected readonly pluginCtrl: PblNgridPluginController;
@@ -60,8 +61,12 @@ export declare class PblNgridStickyPluginDirective implements OnDestroy {
     private _footerDiffer;
     private _columnCache;
     private _removePlugin;
+    private viewInitialized;
     constructor(grid: PblNgridComponent<any>, _differs: IterableDiffers, pluginCtrl: PblNgridPluginController);
+    ngAfterViewInit(): void;
     ngOnDestroy(): void;
     protected applyColumnDiff(type: 'start' | 'end', value: Array<string | number>, differ: IterableDiffer<string | number>): void;
     protected applyRowDiff(type: 'header' | 'footer', value: Array<'table' | number>, differ: IterableDiffer<'table' | number>): void;
+    static ɵfac: i0.ɵɵFactoryDeclaration<PblNgridStickyPluginDirective, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<PblNgridStickyPluginDirective, "pbl-ngrid[stickyColumnStart], pbl-ngrid[stickyColumnEnd], pbl-ngrid[stickyHeader], pbl-ngrid[stickyFooter]", never, { "stickyColumnStart": "stickyColumnStart"; "stickyColumnEnd": "stickyColumnEnd"; "stickyHeader": "stickyHeader"; "stickyFooter": "stickyFooter"; }, {}, never>;
 }

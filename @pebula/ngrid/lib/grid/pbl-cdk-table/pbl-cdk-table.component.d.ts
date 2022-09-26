@@ -1,10 +1,13 @@
 import { Observable } from 'rxjs';
 import { ChangeDetectorRef, ElementRef, IterableDiffers, OnDestroy, Injector } from '@angular/core';
 import { Platform } from '@angular/cdk/platform';
-import { CdkTable, DataRowOutlet, CdkHeaderRowDef, CdkFooterRowDef } from '@angular/cdk/table';
+import { _ViewRepeater } from '@angular/cdk/collections';
+import { ViewportRuler } from '@angular/cdk/scrolling';
+import { CdkTable, DataRowOutlet, CdkHeaderRowDef, CdkFooterRowDef, RowContext, _CoalescedStyleScheduler, RenderRow, StickyPositioningListener } from '@angular/cdk/table';
 import { Directionality } from '@angular/cdk/bidi';
-import { PblNgridComponent } from '../ngrid.component';
-import { PblNgridExtensionApi } from '../../ext/grid-ext-api';
+import { _PblNgridComponent } from '../../tokens';
+import { PblNgridInternalExtensionApi } from '../../ext/grid-ext-api';
+import * as i0 from "@angular/core";
 /**
  * Wrapper for the CdkTable that extends it's functionality to support various table features.
  * This wrapper also applies Material Design table styles (i.e. `MatTable` styles).
@@ -14,18 +17,23 @@ import { PblNgridExtensionApi } from '../../ext/grid-ext-api';
  */
 export declare class PblCdkTableComponent<T> extends CdkTable<T> implements OnDestroy {
     protected injector: Injector;
-    protected grid: PblNgridComponent<T>;
-    protected extApi: PblNgridExtensionApi<T>;
+    protected grid: _PblNgridComponent<T>;
+    protected extApi: PblNgridInternalExtensionApi<T>;
+    protected platform: Platform;
     get _element(): HTMLElement;
+    get beforeRenderRows(): Observable<void>;
     get onRenderRows(): Observable<DataRowOutlet>;
     get minWidth(): number | null;
     set minWidth(value: number | null);
+    readonly cdRef: ChangeDetectorRef;
     private _minWidth;
+    private beforeRenderRows$;
     private onRenderRows$;
-    private _lastSticky;
-    private _lastStickyEnd;
     private _isStickyPending;
-    constructor(_differs: IterableDiffers, _changeDetectorRef: ChangeDetectorRef, _elementRef: ElementRef<HTMLElement>, role: string, _dir: Directionality, injector: Injector, grid: PblNgridComponent<T>, extApi: PblNgridExtensionApi<T>, _document?: any, platform?: Platform);
+    private pblStickyStyler;
+    private pblStickyColumnStylesNeedReset;
+    constructor(_differs: IterableDiffers, _changeDetectorRef: ChangeDetectorRef, _elementRef: ElementRef<HTMLElement>, role: string, _dir: Directionality, injector: Injector, grid: _PblNgridComponent<T>, extApi: PblNgridInternalExtensionApi<T>, _document: any, platform: Platform, _viewRepeater: _ViewRepeater<T, RenderRow<T>, RowContext<T>>, _coalescedStyleScheduler: _CoalescedStyleScheduler, _viewportRuler: ViewportRuler, _stickyPositioningListener?: StickyPositioningListener);
+    ngOnInit(): void;
     updateStickyColumnStyles(): void;
     ngOnDestroy(): void;
     addClass(cssClassName: string): void;
@@ -35,22 +43,13 @@ export declare class PblCdkTableComponent<T> extends CdkTable<T> implements OnDe
     clearHeaderRowDefs(): void;
     addFooterRowDef(footerRowDef: CdkFooterRowDef): void;
     clearFooterRowDefs(): void;
-    private forOf;
-    attachViewPort(): void;
-    detachViewPort(): void;
-    private virtualScrollDestroy;
     /**
      * An alias for `_cacheRowDefs()`
      */
     updateRowDefCache(): void;
     renderRows(): void;
-    /**
-     * Force run change detection for rows.
-     * You can run it for specific groups or for all rows.
-     */
-    syncRows(rowType?: 'all' | boolean, detectChanges?: boolean): void;
-    syncRows(rowType: 'header' | 'data' | 'footer', detectChanges: boolean, ...rows: number[]): void;
-    syncRows(rowType: 'header' | 'data' | 'footer', ...rows: number[]): void;
     pblForceRenderDataRows(): void;
     private _updateStickyColumnStyles;
+    static ɵfac: i0.ɵɵFactoryDeclaration<PblCdkTableComponent<any>, [null, null, null, { attribute: "role"; }, { optional: true; }, null, null, null, null, null, null, null, null, { optional: true; skipSelf: true; }]>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<PblCdkTableComponent<any>, "pbl-cdk-table", ["pblCdkTable"], {}, {}, never, ["caption", "colgroup, col"]>;
 }

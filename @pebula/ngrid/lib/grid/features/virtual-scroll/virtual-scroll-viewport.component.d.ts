@@ -1,26 +1,32 @@
 import { Observable } from 'rxjs';
-import { AfterViewInit, ElementRef, EventEmitter, ChangeDetectorRef, NgZone, OnInit, OnDestroy } from '@angular/core';
+import { AfterViewInit, ElementRef, EventEmitter, InjectionToken, ChangeDetectorRef, NgZone, OnInit, OnDestroy } from '@angular/core';
 import { Directionality } from '@angular/cdk/bidi';
-import { CdkVirtualScrollViewport, VirtualScrollStrategy, ScrollDispatcher, CdkVirtualForOf } from '@angular/cdk/scrolling';
-import { PblNgridPluginController } from '../../../ext/plugin-control';
-import { PblNgridConfigService } from '../../services/config';
-import { PblNgridComponent } from '../../ngrid.component';
-import { PblCdkVirtualScrollDirective } from './strategies';
+import { ListRange } from '@angular/cdk/collections';
+import { CdkVirtualScrollViewport, ScrollDispatcher, CdkVirtualForOf, ViewportRuler } from '@angular/cdk/scrolling';
+import { PblNgridConfigService } from '@pebula/ngrid/core';
+import { PblNgridBaseVirtualScrollDirective } from './strategies/base-v-scroll.directive';
+import { PblNgridVirtualScrollStrategy } from './strategies/types';
 import { NgeVirtualTableRowInfo } from './virtual-scroll-for-of';
-declare module '../../services/config' {
+import { PblNgridInternalExtensionApi } from '../../../ext/grid-ext-api';
+import { RowIntersectionTracker } from './row-intersection';
+import * as i0 from "@angular/core";
+declare module '@pebula/ngrid/core/lib/configuration/type' {
     interface PblNgridConfig {
         virtualScroll?: {
-            wheelMode?: PblCdkVirtualScrollDirective['wheelMode'];
-            defaultStrategy?(): VirtualScrollStrategy;
+            wheelMode?: PblNgridBaseVirtualScrollDirective['wheelMode'];
+            defaultStrategy?(): PblNgridVirtualScrollStrategy;
         };
     }
 }
+export declare const DISABLE_INTERSECTION_OBSERVABLE: InjectionToken<boolean>;
 export declare class PblCdkVirtualScrollViewportComponent extends CdkVirtualScrollViewport implements OnInit, AfterViewInit, OnDestroy {
     private cdr;
-    pblScrollStrategy: VirtualScrollStrategy;
-    private grid;
+    pblScrollStrategy: PblNgridVirtualScrollStrategy;
+    private extApi;
     get isScrolling(): boolean;
     readonly enabled: boolean;
+    /** @internal */
+    _innerBoxHelper: ElementRef<HTMLElement>;
     /**
      * Emits the offset (in pixels) of the rendered content every time it changes.
      * The emission is done OUTSIDE of angular (i.e. no change detection cycle is triggered).
@@ -75,44 +81,68 @@ export declare class PblCdkVirtualScrollViewportComponent extends CdkVirtualScro
     scrollHeight: number;
     ngeRenderedContentSize: number;
     pblFillerHeight: string;
-    get wheelMode(): PblCdkVirtualScrollDirective['wheelMode'];
+    get wheelMode(): PblNgridBaseVirtualScrollDirective['wheelMode'];
+    /**
+     * Get the current bounding client rectangle boxes for the virtual scroll container
+     * Since performing these measurements impact performance the values are are cached between request animation frames.
+     * I.E 2 subsequent measurements will always return the same value, the next measurement will only take place after
+     * the next animation frame (using `requestAnimationFrame` API)
+     */
+    get getBoundingClientRects(): {
+        clientRect: DOMRect;
+        innerWidth: number;
+        innerHeight: number;
+        scrollBarWidth: number;
+        scrollBarHeight: number;
+    };
     get innerWidth(): number;
     get outerWidth(): number;
     get innerHeight(): number;
     get outerHeight(): number;
     get scrollWidth(): number;
-    /** A string representing the `style.width` property value to be used for the spacer element. */
-    _totalContentWidth: string;
-    /** A string representing the `style.height` property value to be used for the spacer element. */
-    _totalContentHeight: string;
     /**
-   * The transform used to scale the spacer to the same size as all content, including content that
-   * is not currently rendered.
-   * @deprecated
-   */
-    _totalContentSizeTransform: string;
+     * When true, the virtual paging feature is enabled because the virtual content size exceed the supported height of the browser so paging is enable.
+     */
+    get virtualPagingActive(): boolean;
+    readonly intersection: RowIntersectionTracker;
+    readonly element: HTMLElement;
     readonly _minWidth$: Observable<number>;
     private offsetChange$;
     private offset;
     private isCDPending;
     private _isScrolling;
     private wheelModeDefault;
-    constructor(elementRef: ElementRef<HTMLElement>, cdr: ChangeDetectorRef, ngZone: NgZone, config: PblNgridConfigService, pblScrollStrategy: VirtualScrollStrategy, dir: Directionality, scrollDispatcher: ScrollDispatcher, pluginCtrl: PblNgridPluginController, grid: PblNgridComponent<any>);
+    private grid;
+    private forOf?;
+    private _boundingClientRects;
+    private heightPaging;
+    constructor(elRef: ElementRef<HTMLElement>, cdr: ChangeDetectorRef, ngZone: NgZone, config: PblNgridConfigService, pblScrollStrategy: PblNgridVirtualScrollStrategy, dir: Directionality, scrollDispatcher: ScrollDispatcher, viewportRuler: ViewportRuler, extApi: PblNgridInternalExtensionApi, disableIntersectionObserver?: boolean);
     ngOnInit(): void;
     ngAfterViewInit(): void;
     ngOnDestroy(): void;
+    reMeasureCurrentRenderedContent(): void;
+    measureScrollOffset(from?: 'top' | 'left' | 'right' | 'bottom' | 'start' | 'end'): number;
+    getOffsetToRenderedContentStart(): number | null;
+    setRenderedContentOffset(offset: number, to?: 'to-start' | 'to-end'): void;
     setTotalContentSize(size: number): void;
-    checkViewportSize(): void;
     /** Measure the combined size of all of the rendered items. */
     measureRenderedContentSize(): number;
-    private updateFiller;
+    checkViewportSize(): void;
+    detachViewPort(): void;
+    /**
+     * TODO(REFACTOR_REF 1): Move to use rowApi so we can accept rows/cells and not html elements.
+     * It will allow us to bring into view rows as well.
+     * This will change the methods signature!
+     * @internal
+     */
+    _scrollIntoView(cellElement: HTMLElement): void;
     onSourceLengthChange(prev: number, curr: number): void;
     attach(forOf: CdkVirtualForOf<any> & NgeVirtualTableRowInfo): void;
-    setRenderedContentOffset(offset: number, to?: 'to-start' | 'to-end'): void;
-    /**
-     * Init the scrolling watcher which track scroll events an emits `scrolling` and `scrollFrameRate` events.
-     */
-    private initScrollWatcher;
+    setRenderedRange(range: ListRange): void;
+    getScrollBarThickness(location: 'horizontal' | 'vertical'): number;
+    private updateFiller;
+    static ɵfac: i0.ɵɵFactoryDeclaration<PblCdkVirtualScrollViewportComponent, [null, null, null, null, { optional: true; }, { optional: true; }, null, null, null, { optional: true; }]>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<PblCdkVirtualScrollViewportComponent, "pbl-cdk-virtual-scroll-viewport", never, { "stickyRowHeaderContainer": "stickyRowHeaderContainer"; "stickyRowFooterContainer": "stickyRowFooterContainer"; }, { "scrolling": "scrolling"; "scrollFrameRate": "scrollFrameRate"; }, never, [".cdk-virtual-scroll-before-content-wrapper", "*"]>;
 }
 declare global {
     interface CSSStyleDeclaration {

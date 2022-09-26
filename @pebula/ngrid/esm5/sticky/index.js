@@ -1,8 +1,0 @@
-/**
- * @fileoverview added by tsickle
- * Generated from: index.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-export { setStickyRow, setStickyColumns } from './lib/sticky/sticky-plugin';
-export { PblNgridStickyModule } from './lib/sticky.module';
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290Ijoibmc6Ly9AcGVidWxhL25ncmlkL3N0aWNreS8iLCJzb3VyY2VzIjpbImluZGV4LnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7O0FBQUEsT0FBTyxFQUFFLFlBQVksRUFBRSxnQkFBZ0IsRUFBRyxNQUFNLDRCQUE0QixDQUFDO0FBQzdFLE9BQU8sRUFBRSxvQkFBb0IsRUFBRSxNQUFNLHFCQUFxQixDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiZXhwb3J0IHsgc2V0U3RpY2t5Um93LCBzZXRTdGlja3lDb2x1bW5zICB9IGZyb20gJy4vbGliL3N0aWNreS9zdGlja3ktcGx1Z2luJztcbmV4cG9ydCB7IFBibE5ncmlkU3RpY2t5TW9kdWxlIH0gZnJvbSAnLi9saWIvc3RpY2t5Lm1vZHVsZSc7XG4iXX0=

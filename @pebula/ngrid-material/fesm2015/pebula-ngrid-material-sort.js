@@ -1,54 +1,35 @@
-import { Directive, NgModule, ComponentFactoryResolver } from '@angular/core';
+import * as i0 from '@angular/core';
+import { Directive, NgModule } from '@angular/core';
+import * as i2 from '@angular/material/sort';
 import { MatSort, MatSortHeader, MatSortModule } from '@angular/material/sort';
-import { utils, PblNgridComponent, PblNgridPluginController, PblNgridMultiComponentRegistry, ngridPlugin, PblNgridModule, PblNgridRegistryService } from '@pebula/ngrid';
+import { unrx, ON_INVALIDATE_HEADERS } from '@pebula/ngrid/core';
+import * as i1 from '@pebula/ngrid';
+import { PblNgridMultiComponentRegistry, ngridPlugin, PblNgridModule } from '@pebula/ngrid';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 
-/**
- * @fileoverview added by tsickle
- * Generated from: lib/mat-sort.directive.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const PLUGIN_KEY = 'matSort';
 class PblNgridMatSortDirective {
-    /**
-     * @param {?} table
-     * @param {?} pluginCtrl
-     * @param {?} sort
-     */
     constructor(table, pluginCtrl, sort) {
         this.table = table;
         this.pluginCtrl = pluginCtrl;
         this.sort = sort;
         this._removePlugin = pluginCtrl.setPlugin(PLUGIN_KEY, this);
-        /** @type {?} */
         let origin = 'click';
         this.sort.sortChange
-            .pipe(utils.unrx(this))
-            .subscribe((/**
-         * @param {?} s
-         * @return {?}
-         */
-        s => {
+            .pipe(unrx(this))
+            .subscribe(s => {
             this.onSort(s, origin);
             origin = 'click';
-        }));
-        /** @type {?} */
-        const handleDataSourceSortChange = (/**
-         * @param {?} sortChange
-         * @return {?}
-         */
-        (sortChange) => {
+        });
+        const handleDataSourceSortChange = (sortChange) => {
             const { column } = sortChange;
-            /** @type {?} */
             const order = sortChange.sort ? sortChange.sort.order : undefined;
             if (this.sort && column) {
                 if (this.sort.active === column.id && this.sort.direction === (order || '')) {
                     return;
                 }
-                /** @type {?} */
-                const sortable = (/** @type {?} */ (this.sort.sortables.get(column.id)));
+                const sortable = this.sort.sortables.get(column.id);
                 if (sortable) {
                     origin = 'ds';
                     this.sort.active = undefined;
@@ -57,12 +38,9 @@ class PblNgridMatSortDirective {
                 }
             }
             else if (this.sort.active) { // clear mode (hit from code, not click).
-                // clear mode (hit from code, not click).
-                /** @type {?} */
-                const sortable = (/** @type {?} */ (this.sort.sortables.get(this.sort.active)));
+                const sortable = this.sort.sortables.get(this.sort.active);
                 if (sortable) {
                     if (!sortable.disableClear) {
-                        /** @type {?} */
                         let nextSortDir;
                         while (nextSortDir = this.sort.getNextSortDirection(sortable)) {
                             this.sort.direction = nextSortDir;
@@ -72,72 +50,45 @@ class PblNgridMatSortDirective {
                     sortable._handleClick();
                 }
             }
-        });
+        };
         pluginCtrl.events
-            .subscribe((/**
-         * @param {?} e
-         * @return {?}
-         */
-        e => {
-            if (e.kind === 'onInvalidateHeaders') {
-                /** @type {?} */
-                const hasActiveSort = this.sort && this.sort.active;
-                if (table.ds && table.ds.sort) {
-                    if (!table.ds.sort.column && hasActiveSort) {
-                        this.onSort({ active: this.sort.active, direction: this.sort.direction || 'asc' }, origin);
-                    }
-                    else if (table.ds.sort.column && !hasActiveSort) {
-                        setTimeout((/**
-                         * @return {?}
-                         */
-                        () => handleDataSourceSortChange(table.ds.sort)));
-                    }
+            .pipe(ON_INVALIDATE_HEADERS)
+            .subscribe(e => {
+            const hasActiveSort = this.sort && this.sort.active;
+            if (table.ds && table.ds.sort) {
+                if (!table.ds.sort.column && hasActiveSort) {
+                    this.onSort({ active: this.sort.active, direction: this.sort.direction || 'asc' }, origin);
+                }
+                else if (table.ds.sort.column && !hasActiveSort) {
+                    setTimeout(() => handleDataSourceSortChange(table.ds.sort));
                 }
             }
+        });
+        pluginCtrl.events
+            .subscribe(e => {
             if (e.kind === 'onDataSource') {
-                utils.unrx.kill(this, e.prev);
+                unrx.kill(this, e.prev);
                 if (this.sort && this.sort.active) {
                     this.onSort({ active: this.sort.active, direction: this.sort.direction || 'asc' }, origin);
                 }
                 table.ds.sortChange
-                    .pipe(utils.unrx(this, e.curr))
-                    .subscribe((/**
-                 * @param {?} event
-                 * @return {?}
-                 */
-                event => { handleDataSourceSortChange(event); }));
+                    .pipe(unrx(this, e.curr))
+                    .subscribe(event => { handleDataSourceSortChange(event); });
             }
-        }));
+        });
     }
-    /**
-     * @return {?}
-     */
     ngOnDestroy() {
         this._removePlugin(this.table);
-        utils.unrx.kill(this);
+        unrx.kill(this);
     }
-    /**
-     * @private
-     * @param {?} sort
-     * @param {?} origin
-     * @return {?}
-     */
     onSort(sort, origin) {
-        /** @type {?} */
         const table = this.table;
-        /** @type {?} */
-        const column = table.columnApi.visibleColumns.find((/**
-         * @param {?} c
-         * @return {?}
-         */
-        c => c.id === sort.active));
+        const column = table.columnApi.visibleColumns.find(c => c.id === sort.active);
         if (origin !== 'click' || !column || !column.sort) {
             return;
         }
         else {
-            /** @type {?} */
             const newSort = {};
-            /** @type {?} */
             const sortFn = typeof column.sort === 'function' && column.sort;
             if (sort.direction) {
                 newSort.order = sort.direction;
@@ -145,10 +96,8 @@ class PblNgridMatSortDirective {
             if (sortFn) {
                 newSort.sortFn = sortFn;
             }
-            /** @type {?} */
             const currentSort = table.ds.sort;
             if (column === currentSort.column) {
-                /** @type {?} */
                 const _sort = currentSort.sort || {};
                 if (newSort.order === _sort.order) {
                     return;
@@ -158,41 +107,14 @@ class PblNgridMatSortDirective {
         }
     }
 }
-PblNgridMatSortDirective.decorators = [
-    { type: Directive, args: [{ selector: 'pbl-ngrid[matSort]', exportAs: 'pblMatSort' },] }
-];
-/** @nocollapse */
-PblNgridMatSortDirective.ctorParameters = () => [
-    { type: PblNgridComponent },
-    { type: PblNgridPluginController },
-    { type: MatSort }
-];
-if (false) {
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridMatSortDirective.prototype._removePlugin;
-    /** @type {?} */
-    PblNgridMatSortDirective.prototype.table;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridMatSortDirective.prototype.pluginCtrl;
-    /** @type {?} */
-    PblNgridMatSortDirective.prototype.sort;
-}
+/** @nocollapse */ PblNgridMatSortDirective.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridMatSortDirective, deps: [{ token: i1.PblNgridComponent }, { token: i1.PblNgridPluginController }, { token: i2.MatSort }], target: i0.ɵɵFactoryTarget.Directive });
+/** @nocollapse */ PblNgridMatSortDirective.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "12.0.0", version: "12.0.0", type: PblNgridMatSortDirective, selector: "pbl-ngrid[matSort]", exportAs: ["pblMatSort"], ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridMatSortDirective, decorators: [{
+            type: Directive,
+            args: [{ selector: 'pbl-ngrid[matSort]', exportAs: 'pblMatSort' }]
+        }], ctorParameters: function () { return [{ type: i1.PblNgridComponent }, { type: i1.PblNgridPluginController }, { type: i2.MatSort }]; } });
 
-/**
- * @fileoverview added by tsickle
- * Generated from: lib/mat-sort-component-extension.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class MatSortExtension extends PblNgridMultiComponentRegistry {
-    /**
-     * @param {?} cfr
-     */
     constructor(cfr) {
         super();
         this.cfr = cfr;
@@ -200,25 +122,12 @@ class MatSortExtension extends PblNgridMultiComponentRegistry {
         this.kind = 'dataHeaderExtensions';
         this.projectContent = true;
     }
-    /**
-     * @param {?} context
-     * @return {?}
-     */
     shouldRender(context) {
         return !!context.col.sort && !!context.injector.get(MatSort, false);
     }
-    /**
-     * @param {?} context
-     * @return {?}
-     */
     getFactory(context) {
         return this.cfr.resolveComponentFactory(MatSortHeader);
     }
-    /**
-     * @param {?} context
-     * @param {?} cmpRef
-     * @return {?}
-     */
     onCreated(context, cmpRef) {
         // We assign the ID and also verify that it does not exist on the `MatSort` container
         // It might exists on specific scenarios when a header is removed and added instantly but the "add" part happens before the teardown so the `MatSort` will throw.
@@ -227,86 +136,40 @@ class MatSortExtension extends PblNgridMultiComponentRegistry {
     }
     /**
      * Check that the current `MatSort` does not already have a sortable header with the provided id.
-     * @private
-     * @param {?} context
-     * @param {?} id
-     * @return {?}
      */
     deregisterId(context, id) {
-        /** @type {?} */
         const matSort = context.injector.get(MatSort);
-        /** @type {?} */
         const matSortHeader = matSort.sortables.get(id);
         if (matSortHeader) {
             matSort.deregister(matSortHeader);
         }
     }
 }
-if (false) {
-    /** @type {?} */
-    MatSortExtension.prototype.name;
-    /** @type {?} */
-    MatSortExtension.prototype.kind;
-    /** @type {?} */
-    MatSortExtension.prototype.projectContent;
-    /**
-     * @type {?}
-     * @private
-     */
-    MatSortExtension.prototype.cfr;
-}
 
-/**
- * @fileoverview added by tsickle
- * Generated from: lib/mat-sort.module.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class PblNgridMatSortModule {
-    /**
-     * @param {?} registry
-     * @param {?} cfr
-     */
     constructor(registry, cfr) {
         this.registry = registry;
         registry.addMulti('dataHeaderExtensions', new MatSortExtension(cfr));
     }
 }
 PblNgridMatSortModule.NGRID_PLUGIN = ngridPlugin({ id: PLUGIN_KEY }, PblNgridMatSortDirective);
-PblNgridMatSortModule.decorators = [
-    { type: NgModule, args: [{
-                imports: [CommonModule, MatButtonModule, MatSortModule, PblNgridModule],
-                declarations: [PblNgridMatSortDirective],
-                exports: [PblNgridMatSortDirective, MatSortModule],
-                // TODO: remove when ViewEngine is no longer supported by angular (V11 ???)
-                entryComponents: [MatSortHeader],
-            },] }
-];
-/** @nocollapse */
-PblNgridMatSortModule.ctorParameters = () => [
-    { type: PblNgridRegistryService },
-    { type: ComponentFactoryResolver }
-];
-if (false) {
-    /** @type {?} */
-    PblNgridMatSortModule.NGRID_PLUGIN;
-    /**
-     * @type {?}
-     * @private
-     */
-    PblNgridMatSortModule.prototype.registry;
-}
+/** @nocollapse */ PblNgridMatSortModule.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridMatSortModule, deps: [{ token: i1.PblNgridRegistryService }, { token: i0.ComponentFactoryResolver }], target: i0.ɵɵFactoryTarget.NgModule });
+/** @nocollapse */ PblNgridMatSortModule.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridMatSortModule, declarations: [PblNgridMatSortDirective], imports: [CommonModule, MatButtonModule, MatSortModule, PblNgridModule], exports: [PblNgridMatSortDirective, MatSortModule] });
+/** @nocollapse */ PblNgridMatSortModule.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridMatSortModule, imports: [[CommonModule, MatButtonModule, MatSortModule, PblNgridModule], MatSortModule] });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridMatSortModule, decorators: [{
+            type: NgModule,
+            args: [{
+                    imports: [CommonModule, MatButtonModule, MatSortModule, PblNgridModule],
+                    declarations: [PblNgridMatSortDirective],
+                    exports: [PblNgridMatSortDirective, MatSortModule],
+                    // TODO(REFACTOR_REF 2): remove when ViewEngine is no longer supported by angular (V12 ???)
+                    entryComponents: [MatSortHeader],
+                }]
+        }], ctorParameters: function () { return [{ type: i1.PblNgridRegistryService }, { type: i0.ComponentFactoryResolver }]; } });
 
 /**
- * @fileoverview added by tsickle
- * Generated from: index.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated bundle index. Do not edit.
  */
 
-/**
- * @fileoverview added by tsickle
- * Generated from: pebula-ngrid-material-sort.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-export { PblNgridMatSortDirective, PblNgridMatSortModule, PLUGIN_KEY as ɵa };
+export { PblNgridMatSortDirective, PblNgridMatSortModule };
 //# sourceMappingURL=pebula-ngrid-material-sort.js.map

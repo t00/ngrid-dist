@@ -1,6 +1,9 @@
 import { OnDestroy } from '@angular/core';
-import { PblNgridConfigService, PblColumnDefinition, PblNgridComponent, PblNgridPluginController } from '@pebula/ngrid';
-declare module '@pebula/ngrid/lib/grid/services/config' {
+import { BooleanInput } from '@angular/cdk/coercion';
+import { PblNgridConfigService, PblColumnDefinition } from '@pebula/ngrid/core';
+import { PblNgridComponent, PblNgridPluginController } from '@pebula/ngrid';
+import * as i0 from "@angular/core";
+declare module '@pebula/ngrid/core/lib/configuration/type' {
     interface PblNgridConfig {
         transposePlugin?: {
             header?: Partial<PblColumnDefinition>;
@@ -83,4 +86,8 @@ export declare class PblNgridTransposePluginDirective implements OnDestroy {
     enable(refreshDataSource?: boolean): void;
     private updateState;
     private updateColumns;
+    static ngAcceptInputType_transpose: BooleanInput;
+    static ngAcceptInputType_matchTemplates: BooleanInput;
+    static ɵfac: i0.ɵɵFactoryDeclaration<PblNgridTransposePluginDirective, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<PblNgridTransposePluginDirective, "pbl-ngrid[transpose]", never, { "transpose": "transpose"; "header": "transposeHeaderCol"; "defaultCol": "transposeDefaultCol"; "matchTemplates": "matchTemplates"; }, {}, never>;
 }

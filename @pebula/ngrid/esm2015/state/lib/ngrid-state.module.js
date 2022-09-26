@@ -1,80 +1,52 @@
-/**
- * @fileoverview added by tsickle
- * Generated from: lib/ngrid-state.module.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-import { NgModule, Optional, SkipSelf } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PblNgridPluginController, PblNgridModule, PblNgridConfigService, ngridPlugin } from '@pebula/ngrid';
+import { PblNgridConfigService } from '@pebula/ngrid/core';
+import { PblNgridPluginController, PblNgridModule, ngridPlugin } from '@pebula/ngrid';
 import { registerBuiltInHandlers } from './core/built-in-handlers/_register';
 import { PblNgridStatePlugin, PblNgridStatePluginDirective, PLUGIN_KEY } from './state-plugin';
+import * as i0 from "@angular/core";
+import * as i1 from "@pebula/ngrid/core";
 export class PblNgridStatePluginModule {
-    /**
-     * @param {?} parentModule
-     * @param {?} configService
-     */
-    constructor(parentModule, configService) {
-        if (parentModule) {
-            return;
-        }
-        PblNgridPluginController.created
-            .subscribe((/**
-         * @param {?} event
-         * @return {?}
-         */
-        event => {
-            /** @type {?} */
+    constructor(configService) {
+        PblNgridPluginController.onCreatedSafe(PblNgridStatePluginModule, (grid, controller) => {
             const targetEventsConfig = configService.get(PLUGIN_KEY);
             if (targetEventsConfig && targetEventsConfig.autoEnable === true) {
-                /** @type {?} */
-                const pluginCtrl = event.controller;
-                /** @type {?} */
-                let subscription = pluginCtrl.events
-                    .subscribe((/**
-                 * @param {?} evt
-                 * @return {?}
-                 */
-                evt => {
-                    if (evt.kind === 'onInit') {
-                        if (!pluginCtrl.hasPlugin(PLUGIN_KEY)) {
-                            /** @type {?} */
-                            const instance = pluginCtrl.createPlugin(PLUGIN_KEY);
-                            if (targetEventsConfig.autoEnableOptions) {
-                                instance.loadOptions = targetEventsConfig.autoEnableOptions.loadOptions;
-                                instance.saveOptions = targetEventsConfig.autoEnableOptions.saveOptions;
-                            }
+                controller.onInit()
+                    .subscribe(() => {
+                    if (!controller.hasPlugin(PLUGIN_KEY)) {
+                        const instance = controller.createPlugin(PLUGIN_KEY);
+                        if (targetEventsConfig.autoEnableOptions) {
+                            instance.loadOptions = targetEventsConfig.autoEnableOptions.loadOptions;
+                            instance.saveOptions = targetEventsConfig.autoEnableOptions.saveOptions;
                         }
-                        subscription.unsubscribe();
-                        subscription = undefined;
                     }
-                }));
+                });
             }
-        }));
+        });
     }
 }
 PblNgridStatePluginModule.NGRID_PLUGIN = ngridPlugin({ id: PLUGIN_KEY, factory: 'create', runOnce: registerBuiltInHandlers }, PblNgridStatePlugin);
-PblNgridStatePluginModule.decorators = [
-    { type: NgModule, args: [{
-                imports: [
-                    CommonModule,
-                    PblNgridModule,
-                ],
-                declarations: [
-                    PblNgridStatePluginDirective,
-                ],
-                exports: [
-                    PblNgridStatePluginDirective,
-                ],
-                providers: [],
-            },] }
-];
-/** @nocollapse */
-PblNgridStatePluginModule.ctorParameters = () => [
-    { type: PblNgridStatePluginModule, decorators: [{ type: Optional }, { type: SkipSelf }] },
-    { type: PblNgridConfigService }
-];
-if (false) {
-    /** @type {?} */
-    PblNgridStatePluginModule.NGRID_PLUGIN;
-}
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibmdyaWQtc3RhdGUubW9kdWxlLmpzIiwic291cmNlUm9vdCI6Im5nOi8vQHBlYnVsYS9uZ3JpZC9zdGF0ZS8iLCJzb3VyY2VzIjpbImxpYi9uZ3JpZC1zdGF0ZS5tb2R1bGUudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7QUFBQSxPQUFPLEVBQUUsUUFBUSxFQUFFLFFBQVEsRUFBRSxRQUFRLEVBQUUsTUFBTSxlQUFlLENBQUM7QUFDN0QsT0FBTyxFQUFFLFlBQVksRUFBRSxNQUFNLGlCQUFpQixDQUFDO0FBQy9DLE9BQU8sRUFBRSx3QkFBd0IsRUFBRSxjQUFjLEVBQUUscUJBQXFCLEVBQUUsV0FBVyxFQUFFLE1BQU0sZUFBZSxDQUFDO0FBRTdHLE9BQU8sRUFBRSx1QkFBdUIsRUFBRSxNQUFNLG9DQUFvQyxDQUFDO0FBQzdFLE9BQU8sRUFBRSxtQkFBbUIsRUFBRSw0QkFBNEIsRUFBRSxVQUFVLEVBQUUsTUFBTSxnQkFBZ0IsQ0FBQztBQWUvRixNQUFNLE9BQU8seUJBQXlCOzs7OztJQUlwQyxZQUFvQyxZQUF1QyxFQUMvRCxhQUFvQztRQUVoRCxJQUFJLFlBQVksRUFBRTtZQUNoQixPQUFPO1NBQ1I7UUFFRCx3QkFBd0IsQ0FBQyxPQUFPO2FBQzdCLFNBQVM7Ozs7UUFBRSxLQUFLLENBQUMsRUFBRTs7a0JBQ1osa0JBQWtCLEdBQUcsYUFBYSxDQUFDLEdBQUcsQ0FBQyxVQUFVLENBQUM7WUFDeEQsSUFBSSxrQkFBa0IsSUFBSSxrQkFBa0IsQ0FBQyxVQUFVLEtBQUssSUFBSSxFQUFFOztzQkFDMUQsVUFBVSxHQUFHLEtBQUssQ0FBQyxVQUFVOztvQkFDL0IsWUFBWSxHQUFHLFVBQVUsQ0FBQyxNQUFNO3FCQUNqQyxTQUFTOzs7O2dCQUFFLEdBQUcsQ0FBQyxFQUFFO29CQUNoQixJQUFJLEdBQUcsQ0FBQyxJQUFJLEtBQUssUUFBUSxFQUFFO3dCQUN6QixJQUFJLENBQUMsVUFBVSxDQUFDLFNBQVMsQ0FBQyxVQUFVLENBQUMsRUFBRTs7a0NBQy9CLFFBQVEsR0FBRyxVQUFVLENBQUMsWUFBWSxDQUFDLFVBQVUsQ0FBQzs0QkFDcEQsSUFBSSxrQkFBa0IsQ0FBQyxpQkFBaUIsRUFBRTtnQ0FDeEMsUUFBUSxDQUFDLFdBQVcsR0FBRyxrQkFBa0IsQ0FBQyxpQkFBaUIsQ0FBQyxXQUFXLENBQUM7Z0NBQ3hFLFFBQVEsQ0FBQyxXQUFXLEdBQUcsa0JBQWtCLENBQUMsaUJBQWlCLENBQUMsV0FBVyxDQUFDOzZCQUN6RTt5QkFDRjt3QkFDRCxZQUFZLENBQUMsV0FBVyxFQUFFLENBQUM7d0JBQzNCLFlBQVksR0FBRyxTQUFTLENBQUM7cUJBQzFCO2dCQUNILENBQUMsRUFBQzthQUNMO1FBQ0gsQ0FBQyxFQUFDLENBQUM7SUFDTCxDQUFDOztBQTlCZSxzQ0FBWSxHQUFHLFdBQVcsQ0FBQyxFQUFFLEVBQUUsRUFBRSxVQUFVLEVBQUUsT0FBTyxFQUFFLFFBQVEsRUFBRSxPQUFPLEVBQUUsdUJBQXVCLEVBQUUsRUFBRSxtQkFBbUIsQ0FBQyxDQUFDOztZQWYxSSxRQUFRLFNBQUM7Z0JBQ1IsT0FBTyxFQUFFO29CQUNQLFlBQVk7b0JBQ1osY0FBYztpQkFDZjtnQkFDRCxZQUFZLEVBQUU7b0JBQ1osNEJBQTRCO2lCQUM3QjtnQkFDRCxPQUFPLEVBQUU7b0JBQ1AsNEJBQTRCO2lCQUM3QjtnQkFDRCxTQUFTLEVBQUUsRUFBRzthQUNmOzs7O1lBS21ELHlCQUF5Qix1QkFBOUQsUUFBUSxZQUFJLFFBQVE7WUF0QmdCLHFCQUFxQjs7OztJQW9CdEUsdUNBQXlJIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgTmdNb2R1bGUsIE9wdGlvbmFsLCBTa2lwU2VsZiB9IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xuaW1wb3J0IHsgQ29tbW9uTW9kdWxlIH0gZnJvbSAnQGFuZ3VsYXIvY29tbW9uJztcbmltcG9ydCB7IFBibE5ncmlkUGx1Z2luQ29udHJvbGxlciwgUGJsTmdyaWRNb2R1bGUsIFBibE5ncmlkQ29uZmlnU2VydmljZSwgbmdyaWRQbHVnaW4gfSBmcm9tICdAcGVidWxhL25ncmlkJztcblxuaW1wb3J0IHsgcmVnaXN0ZXJCdWlsdEluSGFuZGxlcnMgfSBmcm9tICcuL2NvcmUvYnVpbHQtaW4taGFuZGxlcnMvX3JlZ2lzdGVyJztcbmltcG9ydCB7IFBibE5ncmlkU3RhdGVQbHVnaW4sIFBibE5ncmlkU3RhdGVQbHVnaW5EaXJlY3RpdmUsIFBMVUdJTl9LRVkgfSBmcm9tICcuL3N0YXRlLXBsdWdpbic7XG5cbkBOZ01vZHVsZSh7XG4gIGltcG9ydHM6IFtcbiAgICBDb21tb25Nb2R1bGUsXG4gICAgUGJsTmdyaWRNb2R1bGUsXG4gIF0sXG4gIGRlY2xhcmF0aW9uczogW1xuICAgIFBibE5ncmlkU3RhdGVQbHVnaW5EaXJlY3RpdmUsXG4gIF0sXG4gIGV4cG9ydHM6IFtcbiAgICBQYmxOZ3JpZFN0YXRlUGx1Z2luRGlyZWN0aXZlLFxuICBdLFxuICBwcm92aWRlcnM6IFsgXSxcbn0pXG5leHBvcnQgY2xhc3MgUGJsTmdyaWRTdGF0ZVBsdWdpbk1vZHVsZSB7XG5cbiAgc3RhdGljIHJlYWRvbmx5IE5HUklEX1BMVUdJTiA9IG5ncmlkUGx1Z2luKHsgaWQ6IFBMVUdJTl9LRVksIGZhY3Rvcnk6ICdjcmVhdGUnLCBydW5PbmNlOiByZWdpc3RlckJ1aWx0SW5IYW5kbGVycyB9LCBQYmxOZ3JpZFN0YXRlUGx1Z2luKTtcblxuICBjb25zdHJ1Y3RvcihAT3B0aW9uYWwoKSBAU2tpcFNlbGYoKSBwYXJlbnRNb2R1bGU6IFBibE5ncmlkU3RhdGVQbHVnaW5Nb2R1bGUsXG4gICAgICAgICAgICAgIGNvbmZpZ1NlcnZpY2U6IFBibE5ncmlkQ29uZmlnU2VydmljZSkge1xuXG4gIGlmIChwYXJlbnRNb2R1bGUpIHtcbiAgICByZXR1cm47XG4gIH1cblxuICBQYmxOZ3JpZFBsdWdpbkNvbnRyb2xsZXIuY3JlYXRlZFxuICAgIC5zdWJzY3JpYmUoIGV2ZW50ID0+IHtcbiAgICAgIGNvbnN0IHRhcmdldEV2ZW50c0NvbmZpZyA9IGNvbmZpZ1NlcnZpY2UuZ2V0KFBMVUdJTl9LRVkpO1xuICAgICAgaWYgKHRhcmdldEV2ZW50c0NvbmZpZyAmJiB0YXJnZXRFdmVudHNDb25maWcuYXV0b0VuYWJsZSA9PT0gdHJ1ZSkge1xuICAgICAgICBjb25zdCBwbHVnaW5DdHJsID0gZXZlbnQuY29udHJvbGxlcjtcbiAgICAgICAgbGV0IHN1YnNjcmlwdGlvbiA9IHBsdWdpbkN0cmwuZXZlbnRzXG4gICAgICAgICAgLnN1YnNjcmliZSggZXZ0ID0+IHtcbiAgICAgICAgICAgIGlmIChldnQua2luZCA9PT0gJ29uSW5pdCcpIHtcbiAgICAgICAgICAgICAgaWYgKCFwbHVnaW5DdHJsLmhhc1BsdWdpbihQTFVHSU5fS0VZKSkge1xuICAgICAgICAgICAgICAgIGNvbnN0IGluc3RhbmNlID0gcGx1Z2luQ3RybC5jcmVhdGVQbHVnaW4oUExVR0lOX0tFWSk7XG4gICAgICAgICAgICAgICAgaWYgKHRhcmdldEV2ZW50c0NvbmZpZy5hdXRvRW5hYmxlT3B0aW9ucykge1xuICAgICAgICAgICAgICAgICAgaW5zdGFuY2UubG9hZE9wdGlvbnMgPSB0YXJnZXRFdmVudHNDb25maWcuYXV0b0VuYWJsZU9wdGlvbnMubG9hZE9wdGlvbnM7XG4gICAgICAgICAgICAgICAgICBpbnN0YW5jZS5zYXZlT3B0aW9ucyA9IHRhcmdldEV2ZW50c0NvbmZpZy5hdXRvRW5hYmxlT3B0aW9ucy5zYXZlT3B0aW9ucztcbiAgICAgICAgICAgICAgICB9XG4gICAgICAgICAgICAgIH1cbiAgICAgICAgICAgICAgc3Vic2NyaXB0aW9uLnVuc3Vic2NyaWJlKCk7XG4gICAgICAgICAgICAgIHN1YnNjcmlwdGlvbiA9IHVuZGVmaW5lZDtcbiAgICAgICAgICAgIH1cbiAgICAgICAgICB9KTtcbiAgICAgIH1cbiAgICB9KTtcbiAgfVxufVxuIl19
+/** @nocollapse */ PblNgridStatePluginModule.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridStatePluginModule, deps: [{ token: i1.PblNgridConfigService }], target: i0.ɵɵFactoryTarget.NgModule });
+/** @nocollapse */ PblNgridStatePluginModule.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridStatePluginModule, declarations: [PblNgridStatePluginDirective], imports: [CommonModule,
+        PblNgridModule], exports: [PblNgridStatePluginDirective] });
+/** @nocollapse */ PblNgridStatePluginModule.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridStatePluginModule, providers: [], imports: [[
+            CommonModule,
+            PblNgridModule,
+        ]] });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.0.0", ngImport: i0, type: PblNgridStatePluginModule, decorators: [{
+            type: NgModule,
+            args: [{
+                    imports: [
+                        CommonModule,
+                        PblNgridModule,
+                    ],
+                    declarations: [
+                        PblNgridStatePluginDirective,
+                    ],
+                    exports: [
+                        PblNgridStatePluginDirective,
+                    ],
+                    providers: [],
+                }]
+        }], ctorParameters: function () { return [{ type: i1.PblNgridConfigService }]; } });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibmdyaWQtc3RhdGUubW9kdWxlLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vLi4vLi4vLi4vbGlicy9uZ3JpZC9zdGF0ZS9zcmMvbGliL25ncmlkLXN0YXRlLm1vZHVsZS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxPQUFPLEVBQUUsUUFBUSxFQUFFLE1BQU0sZUFBZSxDQUFDO0FBQ3pDLE9BQU8sRUFBRSxZQUFZLEVBQUUsTUFBTSxpQkFBaUIsQ0FBQztBQUMvQyxPQUFPLEVBQUUscUJBQXFCLEVBQUUsTUFBTSxvQkFBb0IsQ0FBQztBQUMzRCxPQUFPLEVBQUUsd0JBQXdCLEVBQUUsY0FBYyxFQUFFLFdBQVcsRUFBRSxNQUFNLGVBQWUsQ0FBQztBQUV0RixPQUFPLEVBQUUsdUJBQXVCLEVBQUUsTUFBTSxvQ0FBb0MsQ0FBQztBQUM3RSxPQUFPLEVBQUUsbUJBQW1CLEVBQUUsNEJBQTRCLEVBQUUsVUFBVSxFQUFFLE1BQU0sZ0JBQWdCLENBQUM7OztBQWUvRixNQUFNLE9BQU8seUJBQXlCO0lBSXBDLFlBQVksYUFBb0M7UUFDOUMsd0JBQXdCLENBQUMsYUFBYSxDQUNwQyx5QkFBeUIsRUFDekIsQ0FBQyxJQUFJLEVBQUUsVUFBVSxFQUFFLEVBQUU7WUFDbkIsTUFBTSxrQkFBa0IsR0FBRyxhQUFhLENBQUMsR0FBRyxDQUFDLFVBQVUsQ0FBQyxDQUFDO1lBQ3pELElBQUksa0JBQWtCLElBQUksa0JBQWtCLENBQUMsVUFBVSxLQUFLLElBQUksRUFBRTtnQkFDaEUsVUFBVSxDQUFDLE1BQU0sRUFBRTtxQkFDaEIsU0FBUyxDQUFDLEdBQUcsRUFBRTtvQkFDZCxJQUFJLENBQUMsVUFBVSxDQUFDLFNBQVMsQ0FBQyxVQUFVLENBQUMsRUFBRTt3QkFDckMsTUFBTSxRQUFRLEdBQUcsVUFBVSxDQUFDLFlBQVksQ0FBQyxVQUFVLENBQUMsQ0FBQzt3QkFDckQsSUFBSSxrQkFBa0IsQ0FBQyxpQkFBaUIsRUFBRTs0QkFDeEMsUUFBUSxDQUFDLFdBQVcsR0FBRyxrQkFBa0IsQ0FBQyxpQkFBaUIsQ0FBQyxXQUFXLENBQUM7NEJBQ3hFLFFBQVEsQ0FBQyxXQUFXLEdBQUcsa0JBQWtCLENBQUMsaUJBQWlCLENBQUMsV0FBVyxDQUFDO3lCQUN6RTtxQkFDRjtnQkFDSCxDQUFDLENBQUMsQ0FBQzthQUNOO1FBQ0gsQ0FBQyxDQUNGLENBQUM7SUFDSixDQUFDOztBQXJCZSxzQ0FBWSxHQUFHLFdBQVcsQ0FBQyxFQUFFLEVBQUUsRUFBRSxVQUFVLEVBQUUsT0FBTyxFQUFFLFFBQVEsRUFBRSxPQUFPLEVBQUUsdUJBQXVCLEVBQUUsRUFBRSxtQkFBbUIsQ0FBQyxDQUFDO3lJQUY5SCx5QkFBeUI7MElBQXpCLHlCQUF5QixpQkFQbEMsNEJBQTRCLGFBSjVCLFlBQVk7UUFDWixjQUFjLGFBTWQsNEJBQTRCOzBJQUluQix5QkFBeUIsYUFGekIsRUFBRyxZQVZMO1lBQ1AsWUFBWTtZQUNaLGNBQWM7U0FDZjsyRkFTVSx5QkFBeUI7a0JBYnJDLFFBQVE7bUJBQUM7b0JBQ1IsT0FBTyxFQUFFO3dCQUNQLFlBQVk7d0JBQ1osY0FBYztxQkFDZjtvQkFDRCxZQUFZLEVBQUU7d0JBQ1osNEJBQTRCO3FCQUM3QjtvQkFDRCxPQUFPLEVBQUU7d0JBQ1AsNEJBQTRCO3FCQUM3QjtvQkFDRCxTQUFTLEVBQUUsRUFBRztpQkFDZiIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IE5nTW9kdWxlIH0gZnJvbSAnQGFuZ3VsYXIvY29yZSc7XG5pbXBvcnQgeyBDb21tb25Nb2R1bGUgfSBmcm9tICdAYW5ndWxhci9jb21tb24nO1xuaW1wb3J0IHsgUGJsTmdyaWRDb25maWdTZXJ2aWNlIH0gZnJvbSAnQHBlYnVsYS9uZ3JpZC9jb3JlJztcbmltcG9ydCB7IFBibE5ncmlkUGx1Z2luQ29udHJvbGxlciwgUGJsTmdyaWRNb2R1bGUsIG5ncmlkUGx1Z2luIH0gZnJvbSAnQHBlYnVsYS9uZ3JpZCc7XG5cbmltcG9ydCB7IHJlZ2lzdGVyQnVpbHRJbkhhbmRsZXJzIH0gZnJvbSAnLi9jb3JlL2J1aWx0LWluLWhhbmRsZXJzL19yZWdpc3Rlcic7XG5pbXBvcnQgeyBQYmxOZ3JpZFN0YXRlUGx1Z2luLCBQYmxOZ3JpZFN0YXRlUGx1Z2luRGlyZWN0aXZlLCBQTFVHSU5fS0VZIH0gZnJvbSAnLi9zdGF0ZS1wbHVnaW4nO1xuXG5ATmdNb2R1bGUoe1xuICBpbXBvcnRzOiBbXG4gICAgQ29tbW9uTW9kdWxlLFxuICAgIFBibE5ncmlkTW9kdWxlLFxuICBdLFxuICBkZWNsYXJhdGlvbnM6IFtcbiAgICBQYmxOZ3JpZFN0YXRlUGx1Z2luRGlyZWN0aXZlLFxuICBdLFxuICBleHBvcnRzOiBbXG4gICAgUGJsTmdyaWRTdGF0ZVBsdWdpbkRpcmVjdGl2ZSxcbiAgXSxcbiAgcHJvdmlkZXJzOiBbIF0sXG59KVxuZXhwb3J0IGNsYXNzIFBibE5ncmlkU3RhdGVQbHVnaW5Nb2R1bGUge1xuXG4gIHN0YXRpYyByZWFkb25seSBOR1JJRF9QTFVHSU4gPSBuZ3JpZFBsdWdpbih7IGlkOiBQTFVHSU5fS0VZLCBmYWN0b3J5OiAnY3JlYXRlJywgcnVuT25jZTogcmVnaXN0ZXJCdWlsdEluSGFuZGxlcnMgfSwgUGJsTmdyaWRTdGF0ZVBsdWdpbik7XG5cbiAgY29uc3RydWN0b3IoY29uZmlnU2VydmljZTogUGJsTmdyaWRDb25maWdTZXJ2aWNlKSB7XG4gICAgUGJsTmdyaWRQbHVnaW5Db250cm9sbGVyLm9uQ3JlYXRlZFNhZmUoXG4gICAgICBQYmxOZ3JpZFN0YXRlUGx1Z2luTW9kdWxlLFxuICAgICAgKGdyaWQsIGNvbnRyb2xsZXIpID0+IHtcbiAgICAgICAgY29uc3QgdGFyZ2V0RXZlbnRzQ29uZmlnID0gY29uZmlnU2VydmljZS5nZXQoUExVR0lOX0tFWSk7XG4gICAgICAgIGlmICh0YXJnZXRFdmVudHNDb25maWcgJiYgdGFyZ2V0RXZlbnRzQ29uZmlnLmF1dG9FbmFibGUgPT09IHRydWUpIHtcbiAgICAgICAgICBjb250cm9sbGVyLm9uSW5pdCgpXG4gICAgICAgICAgICAuc3Vic2NyaWJlKCgpID0+IHtcbiAgICAgICAgICAgICAgaWYgKCFjb250cm9sbGVyLmhhc1BsdWdpbihQTFVHSU5fS0VZKSkge1xuICAgICAgICAgICAgICAgIGNvbnN0IGluc3RhbmNlID0gY29udHJvbGxlci5jcmVhdGVQbHVnaW4oUExVR0lOX0tFWSk7XG4gICAgICAgICAgICAgICAgaWYgKHRhcmdldEV2ZW50c0NvbmZpZy5hdXRvRW5hYmxlT3B0aW9ucykge1xuICAgICAgICAgICAgICAgICAgaW5zdGFuY2UubG9hZE9wdGlvbnMgPSB0YXJnZXRFdmVudHNDb25maWcuYXV0b0VuYWJsZU9wdGlvbnMubG9hZE9wdGlvbnM7XG4gICAgICAgICAgICAgICAgICBpbnN0YW5jZS5zYXZlT3B0aW9ucyA9IHRhcmdldEV2ZW50c0NvbmZpZy5hdXRvRW5hYmxlT3B0aW9ucy5zYXZlT3B0aW9ucztcbiAgICAgICAgICAgICAgICB9XG4gICAgICAgICAgICAgIH1cbiAgICAgICAgICAgIH0pO1xuICAgICAgICB9XG4gICAgICB9LFxuICAgICk7XG4gIH1cbn1cbiJdfQ==

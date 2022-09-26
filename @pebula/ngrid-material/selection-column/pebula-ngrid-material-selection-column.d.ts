@@ -1,6 +1,5 @@
 /**
  * Generated bundle index. Do not edit.
  */
+/// <amd-module name="@pebula/ngrid-material/selection-column" />
 export * from './index';
-export { PLUGIN_KEY as ɵa, PblNgridMatCheckboxSelectionDirective as ɵb } from './lib/checkbox-plugin.directive';
-export { PblNgridCheckboxComponent as ɵc } from './lib/table-checkbox.component';
